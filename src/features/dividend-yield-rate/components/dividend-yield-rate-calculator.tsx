@@ -45,6 +45,7 @@ export function DividendYieldRateCalculator({
     requestResultScroll,
     cancelResultScroll,
   } = useStableResultScroll(result ?? null);
+  const currencySuffix = locale === "ko" ? "원" : "KRW";
 
   function submit(event: FormEvent) {
     event.preventDefault();
@@ -98,6 +99,7 @@ export function DividendYieldRateCalculator({
             label={copy.sharePrice}
             value={values.sharePrice}
             error={errors.sharePrice}
+            suffix={currencySuffix}
             onChange={(value) => update("sharePrice", value)}
           />
           <MoneyField
@@ -105,6 +107,7 @@ export function DividendYieldRateCalculator({
             label={copy.annualDividendPerShare}
             value={values.annualDividendPerShare}
             error={errors.annualDividendPerShare}
+            suffix={currencySuffix}
             onChange={(value) => update("annualDividendPerShare", value)}
           />
           <MoneyField
@@ -112,6 +115,7 @@ export function DividendYieldRateCalculator({
             label={copy.investmentAmount}
             value={values.investmentAmount}
             error={errors.investmentAmount}
+            suffix={currencySuffix}
             onChange={(value) => update("investmentAmount", value)}
           />
           <div className="mt-4 grid grid-cols-[1fr_auto] gap-2">
@@ -170,6 +174,7 @@ type MoneyFieldProps = {
   label: string;
   value: string;
   error?: string;
+  suffix: string;
   onChange: (value: string) => void;
 };
 
@@ -178,6 +183,7 @@ function MoneyField({
   label,
   value,
   error,
+  suffix,
   onChange,
 }: MoneyFieldProps) {
   return (
@@ -196,7 +202,7 @@ function MoneyField({
           className={fieldClass}
         />
         <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center pt-1.5 text-sm text-muted-foreground">
-          {localeSuffix(id)}
+          {suffix}
         </span>
       </div>
       {error ? (
@@ -206,10 +212,6 @@ function MoneyField({
       ) : null}
     </div>
   );
-}
-
-function localeSuffix(_id: string) {
-  return "원";
 }
 
 type DisplayValue =
