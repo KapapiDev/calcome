@@ -6,7 +6,9 @@ export type DividendYieldRateValues = {
   annualDividendPerShare: string;
   investmentAmount: string;
 };
-export type DividendYieldRateErrors = Partial<Record<keyof DividendYieldRateValues, string>>;
+export type DividendYieldRateErrors = Partial<
+  Record<keyof DividendYieldRateValues, string>
+>;
 
 function parsePositive(value: string) {
   const normalized = value.replaceAll(",", "").trim();
@@ -23,7 +25,10 @@ export function validateDividendYieldRate(
   values: DividendYieldRateValues,
   locale: DividendYieldRateLocale,
 ) {
-  const required = locale === "ko" ? "0보다 큰 숫자를 입력해 주세요." : "Enter a number greater than zero.";
+  const required =
+    locale === "ko"
+      ? "0보다 큰 숫자를 입력해 주세요."
+      : "Enter a number greater than zero.";
   const sharePrice = parsePositive(values.sharePrice);
   const annualDividendPerShare = parsePositive(values.annualDividendPerShare);
   const investmentAmount = parsePositive(values.investmentAmount);
