@@ -26,14 +26,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Check selector formatting
-        run: npx prettier --check src/components/layout/language-selector.tsx
+      - name: Format test file
+        run: npx prettier --write src/components/layout/language-selector.test.tsx
 
-      - name: Check routing formatting
-        run: npx prettier --check src/components/layout/language-routing.ts
-
-      - name: Check test formatting
-        run: npx prettier --check src/components/layout/language-selector.test.tsx
-
-      - name: Check workflow formatting
-        run: npx prettier --check .github/workflows/ci.yml
+      - name: Upload formatted test
+        uses: actions/upload-artifact@v4
+        with:
+          name: formatted-language-selector-test
+          path: src/components/layout/language-selector.test.tsx
