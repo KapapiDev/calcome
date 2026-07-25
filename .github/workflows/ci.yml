@@ -32,7 +32,31 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
-      - name: Check formatting
+      - name: Format route
+        run: npx prettier --check 'src/app/[locale]/finance/dividend-yield/page.tsx'
+
+      - name: Format calculation test
+        run: npx prettier --check src/features/dividend-yield-rate/calculate.test.ts
+
+      - name: Format calculation
+        run: npx prettier --check src/features/dividend-yield-rate/calculate.ts
+
+      - name: Format calculator UI
+        run: npx prettier --check src/features/dividend-yield-rate/components/dividend-yield-rate-calculator.tsx
+
+      - name: Format localized page
+        run: npx prettier --check src/features/dividend-yield-rate/components/localized-dividend-yield-rate-page.tsx
+
+      - name: Format content
+        run: npx prettier --check src/features/dividend-yield-rate/content.ts
+
+      - name: Format metadata
+        run: npx prettier --check src/features/dividend-yield-rate/metadata.ts
+
+      - name: Format validation
+        run: npx prettier --check src/features/dividend-yield-rate/validation.ts
+
+      - name: Check repository formatting
         run: npm run format:check
 
       - name: Run tests
