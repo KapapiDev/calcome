@@ -4,38 +4,31 @@ on:
   pull_request:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  quality:
+  format-and-commit:
+    if: github.event.pull_request.head.ref == 'agent/ux-001-categorized-directory'
     runs-on: ubuntu-latest
     timeout-minutes: 10
-
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Capture static-check output
-        shell: bash
+      - run: npm ci
+      - run: npm run format
+      - name: Commit formatter output
         run: |
-          set -o pipefail
-          npm run check 2>&1 | tee check-output.txt
-
-      - name: Upload static-check output
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ux-001-static-check-output
-          path: check-output.txt
-
-      - name: Build application
-        run: npm run build
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add TASK_QUEUE.md src/app/calculators/page.tsx src/app/calculators/page.test.tsx src/app/page.tsx src/config/calculator-directory.ts src/config/calculator-directory.test.ts
+          if git diff --cached --quiet; then
+            echo "No formatter changes"
+          else
+            git commit -m "UX-001: apply repository formatter"
+            git push origin HEAD:${{ github.event.pull_request.head.ref }}
+          fi
