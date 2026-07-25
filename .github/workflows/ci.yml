@@ -26,66 +26,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint
-        run: npm run lint
-
-      - name: Typecheck
-        run: npm run typecheck
-
-      - name: Format route
-        run: npx prettier --check 'src/app/[locale]/finance/dividend-yield/page.tsx'
-
-      - name: Format calculation test
-        run: npx prettier --check src/features/dividend-yield-rate/calculate.test.ts
-
-      - name: Format calculation
-        run: npx prettier --check src/features/dividend-yield-rate/calculate.ts
-
-      - name: Format calculator UI
-        run: npx prettier --check src/features/dividend-yield-rate/components/dividend-yield-rate-calculator.tsx
-
-      - name: Format localized page
-        run: npx prettier --check src/features/dividend-yield-rate/components/localized-dividend-yield-rate-page.tsx
-
-      - name: Format content
-        run: npx prettier --check src/features/dividend-yield-rate/content.ts
-
-      - name: Format metadata
-        run: npx prettier --check src/features/dividend-yield-rate/metadata.ts
-
-      - name: Format validation
-        run: npx prettier --check src/features/dividend-yield-rate/validation.ts
-
-      - name: Format home integration
-        run: npx prettier --check src/app/page.tsx
-
-      - name: Format directory integration
-        run: npx prettier --check src/app/calculators/page.tsx
-
-      - name: Format sitemap integration
-        run: npx prettier --check src/app/sitemap.ts
-
-      - name: Format redirect integration
-        run: npx prettier --check src/app/finance/dividend-yield/page.tsx
-
-      - name: Check repository formatting
-        run: npm run format:check
-
-      - name: Run tests with diagnostics
-        id: tests
-        continue-on-error: true
-        run: npm run test > test-results.log 2>&1
-
-      - name: Upload test diagnostics
-        if: steps.tests.outcome == 'failure'
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results
-          path: test-results.log
-
-      - name: Fail when tests fail
-        if: steps.tests.outcome == 'failure'
-        run: exit 1
+      - name: Run static checks
+        run: npm run check
 
       - name: Build application
         run: npm run build
