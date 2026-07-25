@@ -3,98 +3,139 @@
 ## Operating rules
 
 - Complete exactly one task per scheduled execution.
-- Reconcile this file with actual GitHub Pull Requests, branches, checks, and Vercel deployments before selecting work.
-- GitHub state overrides stale queue text.
+- Reconcile this queue with actual GitHub Pull Requests, branches, checks, and Vercel deployments before selecting work.
+- GitHub and production state override stale queue text.
 - Only the first effectively `OPEN` task may be selected.
-- A task with a merged matching Pull Request is effectively `DONE`.
-- A task with an open matching Pull Request is effectively `IN_REVIEW`.
-- Keep only one task `OPEN`; later work remains `BLOCKED` until the previous task is completed in production.
-- Priorities: critical correctness and UX blockers, SEO growth, AdSense readiness, then additional calculator expansion.
+- Keep exactly one task `OPEN`; all later work remains `BLOCKED` until the previous task passes production verification.
+- Priority order: calculation correctness and critical UX, site-wide UI/UX consistency, technical SEO, content quality, AdSense readiness, then calculator expansion.
+- Never publish a policy-sensitive calculator without official sources and a visible verification date.
+- Never create a near-duplicate calculator merely to increase the count.
 
-## Current product state
+## Product milestone
 
-- P-001 through P-044 are merged in production.
-- SEO-001 XML sitemap standardization is merged through PR #49.
-- SEO-002 shared JSON-LD foundation is merged through PR #51.
-- The static statuses in the previous queue were stale and did not reflect merged Pull Requests.
-- P-041 through P-044 added four production calculators, so the next task is a required production UX audit before additional growth work.
+- Published calculator registry: 50 calculators.
+- Separately published P-044 Dividend Yield Calculator: 1 calculator.
+- Current verified public total: **51 calculators**.
+- Target: **100 public calculators**.
+- Required expansion: **49 calculators**, represented by P-045 through P-093.
+- P-001 through P-044 are merged and effectively `DONE`.
+- SEO-001 XML sitemap and SEO-002 shared JSON-LD foundation are merged.
+- Demand ordering is qualitative and documented in `QUEUE_RESEARCH_2026-07-25.md`; exact search volumes must not be invented.
 
 ## Completed calculator program
 
-| Task range | Status | Evidence |
+| Tasks | Status | Evidence |
 |---|---|---|
-| P-001 | DONE | PR #35 merged |
-| P-002 | DONE | PR #43 merged |
-| P-003 | DONE | PR #58 merged |
-| P-004 | DONE | PR #60 merged |
-| P-005 | DONE | PR #46 merged |
-| P-006 | DONE | PR #47 merged |
-| P-007 | DONE | PR #48 merged |
-| P-008 | DONE | PR #50 merged |
-| P-009 | DONE | PR #52 merged |
-| P-010 | DONE | PR #53 merged |
-| P-011 | DONE | PR #54 merged |
-| P-012 | DONE | PR #55 merged |
-| P-013 | DONE | PR #56 merged |
-| P-014 | DONE | PR #59 merged |
-| P-015 | DONE | PR #61 merged |
-| P-016 | DONE | PR #62 merged |
-| P-017 | DONE | PR #63 merged |
-| P-018 | DONE | PR #64 merged |
-| P-019 | DONE | PR #65 merged |
-| P-020 | DONE | PR #66 merged |
-| P-021 | DONE | PR #67 merged |
-| P-022 | DONE | PR #68 merged |
-| P-023 | DONE | PR #69 merged |
-| P-024 | DONE | PR #70 merged |
-| P-025 | DONE | PR #71 merged |
-| P-026 | DONE | PR #72 merged |
-| P-027 | DONE | PR #73 merged |
-| P-028 | DONE | PR #74 merged |
-| P-029 | DONE | PR #75 merged |
-| P-030 | DONE | PR #76 merged |
-| P-031 | DONE | PR #77 merged |
-| P-032 | DONE | PR #78 merged |
-| P-033 | DONE | PR #79 merged |
-| P-034 | DONE | PR #80 merged |
-| P-035 | DONE | PR #81 merged |
-| P-036 | DONE | PR #82 merged |
-| P-037 | DONE | PR #83 merged |
-| P-038 | DONE | PR #84 merged |
-| P-039 | DONE | PR #85 merged |
-| P-040 | DONE | PR #86 merged |
-| P-041 | DONE | PR #87 merged |
-| P-042 | DONE | PR #88 merged |
-| P-043 | DONE | PR #89 merged |
+| P-001 through P-043 | DONE | Matching merged PRs #35 through #89 |
 | P-044 | DONE | PR #91 merged |
 
 ---
 
+# Phase 1: Site-wide UI/UX audit
+
 UX-001
 
-Title: Production UX Audit After P-041 Through P-044
+Title: Shared Calculator Shell and Production Entry Audit
 
 Status: OPEN
 
 Priority: CRITICAL
 
-Goal: Verify the newest four calculators and a representative site-wide flow on the public production site before further expansion.
+Goal: Establish a verified inventory and shared UX baseline across all 51 public calculators before adding more pages.
 
 Scope:
 
-- Inspect P-041 stock average cost, P-042 stock profit and loss, P-043 dividend, and P-044 dividend yield.
-- Test desktop and mobile entry from home and calculator directory, valid input, invalid input, reset, Korean and English switching, reload, back navigation, locale-less redirects, dark mode, keyboard focus, touch targets, long-number overflow, and result interpretation.
-- Manually recalculate representative examples.
-- Fix critical or high-impact defects in the same task.
-- Record screenshots and exact production URLs when browser tooling permits.
+- Verify home search, calculator directory, category discovery, direct URL entry, locale-less redirects, Korean and English switching, theme persistence, refresh, back navigation, and URL restoration.
+- Inspect shared calculator workspace, input controls, validation, reset, result scrolling, disclosures, tables, charts, mobile keyboard behavior, focus indicators, reduced motion, and long-number containment.
+- Produce a route-by-route audit matrix with severity, reproduction steps, screenshots when possible, and reusable fixes.
+- Fix shared critical defects in the same task; do not redesign without evidence.
 
 Acceptance:
 
-- No blocked user flow, incorrect result, broken locale switch, mobile overflow, inaccessible primary control, or production-only failure remains.
+- Every published route is inventoried and reachable.
+- No shared critical blocker remains.
 - `npm run check`, `npm run build`, and `git diff --check` pass.
-- Production verification evidence is recorded.
+- Desktop and mobile production evidence is recorded.
 
 ---
+
+UX-002
+
+Title: Employment and Payroll Calculator UX Audit
+
+Status: BLOCKED
+
+Priority: CRITICAL
+
+Scope: Audit every employment, salary, wage, benefit, leave, insurance, and pension calculator for input clarity, official-rate disclosure, result interpretation, mobile usability, accessibility, and bilingual consistency.
+
+---
+
+UX-003
+
+Title: Loan and Credit Calculator UX Audit
+
+Status: BLOCKED
+
+Priority: CRITICAL
+
+Scope: Audit every loan, mortgage, DSR, DTI, LTV, repayment, refinancing, credit-card, and affordability calculator, including amortization tables, comparison states, impossible-payment errors, and long schedules.
+
+---
+
+UX-004
+
+Title: Tax and Payroll Filing Calculator UX Audit
+
+Status: BLOCKED
+
+Priority: CRITICAL
+
+Scope: Audit VAT, withholding, comprehensive income, freelancer, property, acquisition, capital-gains, gift, inheritance, and holding-tax flows for source dates, assumptions, error prevention, result caveats, and user comprehension.
+
+---
+
+UX-005
+
+Title: Housing and Real-Estate Calculator UX Audit
+
+Status: BLOCKED
+
+Priority: HIGH
+
+Scope: Audit brokerage, rent conversion, jeonse-to-rent, housing payment, property-tax, and transaction-cost journeys across desktop and mobile.
+
+---
+
+UX-006
+
+Title: Savings and Investment Calculator UX Audit
+
+Status: BLOCKED
+
+Priority: HIGH
+
+Scope: Audit compound interest, savings, fixed deposit, CAGR, stocks, dividends, and investment-related flows, including charts, tables, result comparison, large values, and bilingual terminology.
+
+---
+
+UX-007
+
+Title: Full-Site Accessibility and Visual Consistency Regression
+
+Status: BLOCKED
+
+Priority: HIGH
+
+Scope:
+
+- Run keyboard-only, focus-order, accessible-name, contrast, zoom, reduced-motion, touch-target, mobile overflow, light-mode, and dark-mode regression checks.
+- Standardize only proven inconsistencies in typography, spacing, inputs, buttons, error messages, result hierarchy, tables, charts, and disclosures.
+- Record shared UI rules to prevent future drift.
+
+---
+
+# Phase 2: SEO growth and AdSense readiness
 
 SEO-003
 
@@ -104,18 +145,7 @@ Status: BLOCKED
 
 Priority: HIGH
 
-Goal: Ensure Google and Naver can crawl, canonicalize, and index every intended public page without duplicate-route ambiguity.
-
-Scope:
-
-- Audit robots, sitemap XML, canonical, hreflang, x-default, redirects, status codes, noindex directives, metadata-route ownership, and production origin consistency.
-- Detect orphaned calculators, duplicate canonical targets, redirect chains, soft-404 behavior, preview or localhost URLs, and locale-less 200 aliases.
-- Add automated regression tests and a production audit report.
-
-Acceptance:
-
-- Every published calculator has one Korean canonical, one English canonical, reciprocal hreflang, one-hop locale-less redirect, and sitemap inclusion.
-- No unintended indexable duplicates or contradictory signals remain.
+Scope: Audit robots, sitemap XML, canonical, hreflang, x-default, redirects, status codes, noindex, orphan routes, duplicate targets, soft 404s, and production-origin consistency.
 
 ---
 
@@ -127,44 +157,19 @@ Status: BLOCKED
 
 Priority: HIGH
 
-Goal: Reduce low-value-content risk by making calculator pages genuinely useful before and after calculation.
-
-Scope:
-
-- Define reusable page sections for what the result means, formula or method, worked example, assumptions, limitations, FAQ, related calculators, and source verification date.
-- Audit existing calculators for thin or duplicated copy.
-- Upgrade the highest-search-intent pages first without inventing legal, tax, pension, or financial policy.
-- Preserve concise input-first usability while adding useful crawlable content below results.
-
-Acceptance:
-
-- Target pages contain unique, task-specific explanations and examples rather than boilerplate.
-- Official sources and verification dates are present where policy or rates matter.
-- Content remains readable on mobile and does not bury the calculator.
+Scope: Add unique result interpretation, method, worked example, assumptions, limitations, FAQ, official sources, verification dates, and useful related calculators without burying inputs.
 
 ---
 
 SEO-005
 
-Title: Search Intent Metadata and Landing Page Optimization
+Title: Search Intent and Metadata Optimization
 
 Status: BLOCKED
 
 Priority: HIGH
 
-Goal: Align titles, descriptions, headings, and landing-page copy with real Korean and English calculator search intent.
-
-Scope:
-
-- Audit duplicate or generic titles and descriptions.
-- Map one primary intent and a small set of supporting intents to each priority page.
-- Improve home, calculator directory, employment, loan, tax, real-estate, and investment landing copy where supported by actual routes.
-- Keep metadata natural and avoid keyword stuffing.
-
-Acceptance:
-
-- Priority pages have distinct titles, descriptions, H1s, and canonical intent.
-- No duplicate metadata clusters remain among audited pages.
+Scope: Map primary and supporting search intent to each priority page; eliminate duplicate titles, descriptions, H1s, generic copy, and keyword cannibalization.
 
 ---
 
@@ -176,19 +181,7 @@ Status: BLOCKED
 
 Priority: HIGH
 
-Goal: Help users and crawlers move between related calculators while strengthening topical authority.
-
-Scope:
-
-- Build or improve category hubs for employment, loans, tax, real estate, savings, and investing.
-- Add contextual related-calculator links based on user next steps, not arbitrary card grids.
-- Prevent orphan pages and excessive repeated links.
-- Include breadcrumbs and structured data only where accurate.
-
-Acceptance:
-
-- Every published calculator is reachable through a relevant hub and at least one contextual related link.
-- Link labels explain the next user goal.
+Scope: Build useful employment, tax, loan, housing, savings, investment, and business clusters; ensure every calculator has contextual inbound and next-step links.
 
 ---
 
@@ -198,21 +191,23 @@ Title: Core Web Vitals and Crawl Performance Audit
 
 Status: BLOCKED
 
-Priority: MEDIUM
+Priority: HIGH
 
-Goal: Improve mobile performance, layout stability, and crawl efficiency without degrading calculator UX.
+Scope: Measure and improve LCP, CLS, INP, client bundles, charts, fonts, animation, hydration, and crawl efficiency while preserving calculator accuracy and accessibility.
 
-Scope:
+---
 
-- Audit LCP, CLS, INP risks, client bundle weight, chart loading, fonts, images, animation, and hydration.
-- Prioritize shared fixes with measurable impact.
-- Preserve accessibility, dark mode, and calculation accuracy.
+SEO-008
 
-Acceptance:
+Title: Search Console Query and Cannibalization Feedback Loop
 
-- No known advertisement or UI placeholder causes layout shift.
-- Heavy non-critical calculator visuals are deferred where safe.
-- Before-and-after measurements are recorded.
+Status: BLOCKED
+
+Priority: HIGH
+
+Dependency: Sufficient Google Search Console impression data.
+
+Scope: Use real impressions, queries, positions, CTR, indexed-page status, and duplicate-page signals to reorder P-045 through P-093. Never claim exact search volume without an authorized data source.
 
 ---
 
@@ -224,22 +219,25 @@ Status: BLOCKED
 
 Priority: HIGH
 
-Goal: Remove policy and trust blockers before an AdSense application or re-review.
-
-Scope:
-
-- Audit About, Contact, Privacy Policy, Terms, cookie and consent disclosures, navigation clarity, authorship or editorial responsibility, source transparency, and misleading claims.
-- Check for thin pages, unfinished pages, broken links, duplicated content, and unclear financial disclaimers.
-- Do not claim approval certainty or fabricate business details.
-
-Acceptance:
-
-- Required trust pages are complete, linked globally, localized where appropriate, and consistent with actual site behavior.
-- No obvious low-value, deceptive-navigation, or unfinished-site signals remain.
+Scope: Audit About, Contact, Privacy, Terms, editorial responsibility, financial disclaimers, source transparency, broken links, thin pages, duplicate content, unfinished states, and deceptive-navigation risks.
 
 ---
 
 ADS-002
+
+Title: Original Guide and Decision-Support Content Program
+
+Status: BLOCKED
+
+Priority: HIGH
+
+Goal: Reduce tool-site low-value-content risk with original textual resources that help users make financial decisions rather than merely repeat calculator descriptions.
+
+Scope: Create evidence-based guides, worked scenarios, comparison pages, source methodology, update policy, and calculator-linked explanations. Avoid mass-generated filler and unsupported financial advice.
+
+---
+
+ADS-003
 
 Title: Ad Placement Architecture Without Layout Shift
 
@@ -247,23 +245,11 @@ Status: BLOCKED
 
 Priority: HIGH
 
-Goal: Prepare safe responsive advertisement slots without harming calculation flow or Core Web Vitals.
-
-Scope:
-
-- Define reserved ad containers for desktop and mobile.
-- Keep ads away from calculate, reset, input labels, validation messages, and primary results.
-- Prevent accidental clicks, deceptive placement, sticky obstruction, and CLS.
-- Keep ads disabled until valid publisher configuration is available.
-
-Acceptance:
-
-- Placeholder geometry is responsive and causes no measurable layout shift.
-- Calculator interaction remains visually distinct from advertising.
+Scope: Define responsive reserved ad containers away from inputs, validation, calculate/reset controls, and primary results; prevent accidental clicks, obstruction, and CLS. Keep ads disabled until valid configuration exists.
 
 ---
 
-ADS-003
+ADS-004
 
 Title: Consent and Regional Privacy Controls
 
@@ -271,22 +257,11 @@ Status: BLOCKED
 
 Priority: MEDIUM
 
-Goal: Support lawful ad and analytics behavior for international traffic.
-
-Scope:
-
-- Audit current cookies, analytics, storage, and third-party scripts.
-- Add consent handling only for technologies actually used.
-- Support regional requirements without blocking essential calculator functionality.
-
-Acceptance:
-
-- Consent state is accessible, reversible, and documented.
-- Non-essential scripts respect the applicable consent state.
+Scope: Audit actual cookies, analytics, storage, and scripts; implement accessible and reversible consent only for technologies in use.
 
 ---
 
-ADS-004
+ADS-005
 
 Title: AdSense Integration and ads.txt
 
@@ -294,79 +269,93 @@ Status: BLOCKED
 
 Priority: MEDIUM
 
-Dependency: Valid AdSense publisher ID and approved integration details supplied by the site owner.
+Dependency: Exact verified AdSense publisher ID and integration details supplied by the owner.
 
-Goal: Add production AdSense configuration only after credentials and approval-stage requirements are known.
-
-Scope:
-
-- Add verified publisher configuration, ads.txt, script loading, and environment safeguards.
-- Never invent a publisher ID.
-- Verify production response and prevent preview or local accidental ad serving.
-
-Acceptance:
-
-- ads.txt and page configuration use the exact verified publisher ID.
-- Production-only behavior and failure-safe loading are tested.
+Scope: Add production-only configuration, ads.txt, safe script loading, and preview/local safeguards. Never invent a publisher ID.
 
 ---
 
-P-045
+# Phase 3: Expansion from 51 to 100 calculators
 
-Title: Investment Fee Impact Calculator
+## Tier A: Highest commercial and recurring Korean intent
 
-Status: BLOCKED
+| Task | Calculator | Category | Status | Priority |
+|---|---|---|---|---|
+| P-045 | Investment Fee Impact Calculator | Investment | BLOCKED | HIGH |
+| P-046 | Inflation and Purchasing Power Calculator | Savings | BLOCKED | HIGH |
+| P-047 | Currency Conversion Calculator | Foreign exchange | BLOCKED | HIGH |
+| P-048 | Pension Savings Tax Credit Calculator | Pension and tax | BLOCKED | HIGH |
+| P-049 | ISA Tax Savings Calculator | Investment and tax | BLOCKED | HIGH |
+| P-050 | Retirement Pension Tax Credit Calculator | Pension and tax | BLOCKED | HIGH |
+| P-051 | Year-End Tax Settlement Refund Calculator | Payroll and tax | BLOCKED | HIGH |
+| P-052 | Retirement Income Tax Calculator | Employment and tax | BLOCKED | HIGH |
+| P-053 | Earned Income Withholding Tax Calculator | Payroll and tax | BLOCKED | HIGH |
+| P-054 | Part-Time Monthly Pay Calculator | Employment | BLOCKED | HIGH |
+| P-055 | Daily Worker Pay Calculator | Employment | BLOCKED | HIGH |
+| P-056 | Weekly and Monthly Work-Hours Converter | Employment | BLOCKED | HIGH |
+| P-057 | Job Offer Total Compensation Comparison Calculator | Employment | BLOCKED | HIGH |
+| P-058 | Salary Negotiation Target Calculator | Employment | BLOCKED | HIGH |
+| P-059 | Employer Total Labor Cost Calculator | Business and payroll | BLOCKED | HIGH |
+| P-060 | Parental Leave Benefit Calculator | Employment benefits | BLOCKED | HIGH |
+| P-061 | Maternity Leave Benefit Calculator | Employment benefits | BLOCKED | HIGH |
+| P-062 | Stress DSR Calculator | Loan | BLOCKED | HIGH |
+| P-063 | Mortgage Loan Limit Calculator | Loan and housing | BLOCKED | HIGH |
+| P-064 | Jeonse Loan Limit Calculator | Loan and housing | BLOCKED | HIGH |
+| P-065 | Rent Affordability Calculator | Housing | BLOCKED | HIGH |
+| P-066 | Jeonse Deposit vs Monthly Rent Cost Calculator | Housing | BLOCKED | HIGH |
+| P-067 | Home Purchase Total Cost Calculator | Real estate | BLOCKED | HIGH |
+| P-068 | Home Sale Net Proceeds Calculator | Real estate | BLOCKED | HIGH |
+| P-069 | Rental Yield Calculator | Real estate and investment | BLOCKED | HIGH |
+| P-070 | Apartment Management Fee Budget Calculator | Housing | BLOCKED | MEDIUM |
 
-Priority: LOW
+## Tier B: Broad utility searches and personal-finance planning
 
-Reason: Additional calculator expansion is paused until UX-001 and the high-priority SEO and AdSense readiness program are completed.
+| Task | Calculator | Category | Status | Priority |
+|---|---|---|---|---|
+| P-071 | Percentage Calculator | General utility | BLOCKED | HIGH |
+| P-072 | Discount Rate and Sale Price Calculator | Shopping and utility | BLOCKED | HIGH |
+| P-073 | Age Calculator | Date utility | BLOCKED | HIGH |
+| P-074 | D-Day Calculator | Date utility | BLOCKED | HIGH |
+| P-075 | Date Difference Calculator | Date utility | BLOCKED | HIGH |
+| P-076 | Savings Goal Calculator | Savings | BLOCKED | HIGH |
+| P-077 | Emergency Fund Calculator | Personal finance | BLOCKED | HIGH |
+| P-078 | FIRE Retirement Target Calculator | Retirement | BLOCKED | HIGH |
+| P-079 | Retirement Withdrawal Calculator | Retirement | BLOCKED | HIGH |
+| P-080 | Pension Future Monthly Income Calculator | Pension | BLOCKED | HIGH |
+| P-081 | Dividend Reinvestment Calculator | Investment | BLOCKED | MEDIUM |
+| P-082 | Portfolio Rebalancing Calculator | Investment | BLOCKED | MEDIUM |
+| P-083 | Bond Yield to Maturity Calculator | Investment | BLOCKED | MEDIUM |
+| P-084 | Bond Price Calculator | Investment | BLOCKED | MEDIUM |
+| P-085 | APR and APY Conversion Calculator | Interest | BLOCKED | MEDIUM |
 
----
+## Tier C: Emerging investment and small-business intent
 
-P-046
+| Task | Calculator | Category | Status | Priority |
+|---|---|---|---|---|
+| P-086 | Cryptocurrency Average Cost Calculator | Digital assets | BLOCKED | MEDIUM |
+| P-087 | Cryptocurrency Profit and Loss Calculator | Digital assets | BLOCKED | MEDIUM |
+| P-088 | Staking Reward Calculator | Digital assets | BLOCKED | MEDIUM |
+| P-089 | Dollar-Cost Averaging Calculator | Investment | BLOCKED | MEDIUM |
+| P-090 | Foreign-Currency Average Cost Calculator | Foreign exchange | BLOCKED | MEDIUM |
+| P-091 | Break-Even Sales Calculator | Small business | BLOCKED | MEDIUM |
+| P-092 | Gross Margin and Markup Calculator | Small business | BLOCKED | MEDIUM |
+| P-093 | Business Cash Runway Calculator | Small business | BLOCKED | MEDIUM |
 
-Title: Inflation Calculator
+## 100-calculator completion rule
 
-Status: BLOCKED
-
-Priority: LOW
-
----
-
-P-047
-
-Title: Currency Conversion Calculator
-
-Status: BLOCKED
-
-Priority: LOW
-
----
-
-P-048
-
-Title: Pension Savings Tax Credit Calculator
-
-Status: BLOCKED
-
-Priority: LOW
-
----
-
-P-049
-
-Title: ISA Tax Savings Calculator
-
-Status: BLOCKED
-
-Priority: LOW
-
----
-
-P-050
-
-Title: Retirement Pension Tax Credit Calculator
-
-Status: BLOCKED
-
-Priority: LOW
+- P-045 through P-093 add exactly 49 calculators to the current verified total of 51.
+- The milestone is complete only when the public production inventory contains 100 distinct, usable calculators, not merely 100 task IDs or routes.
+- Each new calculator must provide:
+  - distinct user intent and non-duplicate calculation logic
+  - Korean and English routes
+  - canonical, reciprocal hreflang, and x-default behavior
+  - one-hop locale-less redirect
+  - sitemap and directory discovery
+  - home or category search discovery
+  - contextual related-calculator links
+  - unique explanatory and worked-example content
+  - official sources and verification date when policy-sensitive
+  - calculation tests, validation tests, metadata tests, integration tests, and manual verification
+  - desktop and mobile production UX evidence
+- After every four newly merged calculators, insert and complete a production UX regression task before continuing expansion.
+- Search Console performance data may reorder unstarted expansion tasks, but must not silently delete the 100-calculator milestone.
