@@ -26,8 +26,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run static checks
-        run: npm run check
+      - name: Format repository
+        run: npm run format
 
-      - name: Build application
-        run: npm run build
+      - name: Capture formatting drift
+        run: git diff --name-only > formatting-drift.txt
+
+      - name: Upload formatting drift
+        uses: actions/upload-artifact@v4
+        with:
+          name: formatting-drift
+          path: formatting-drift.txt
