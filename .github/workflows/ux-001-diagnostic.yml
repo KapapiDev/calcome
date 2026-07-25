@@ -1,0 +1,27 @@
+name: UX-001 Diagnostic
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check-output:
+    if: github.event.pull_request.head.ref == 'agent/ux-001-categorized-directory'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Capture check output
+        run: npm run check > check-output.txt 2>&1
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ux-001-check-output
+          path: check-output.txt
