@@ -6,25 +6,7 @@ import { useState } from "react";
 
 import type { CompoundLocale } from "@/features/compound-interest/i18n";
 import { sharedLayoutCopy } from "./layout-i18n";
-
-export function localizedDestination(
-  pathname: string,
-  locale: CompoundLocale,
-): string {
-  const normalizedPathname = pathname.startsWith("/")
-    ? pathname
-    : `/${pathname}`;
-  const localizedPathname = normalizedPathname.replace(
-    /^\/(?:ko|en)(?=\/|$)/,
-    `/${locale}`,
-  );
-
-  if (localizedPathname !== normalizedPathname) {
-    return localizedPathname;
-  }
-
-  return `/${locale}${normalizedPathname === "/" ? "" : normalizedPathname}`;
-}
+import { localizedDestination } from "./language-routing";
 
 export function LanguageSelector({
   locale,
