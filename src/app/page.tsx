@@ -5,9 +5,9 @@ import { CalculatorCard } from "@/components/calculators/calculator-card";
 import { CalculatorSearch } from "@/components/calculators/calculator-search";
 import { buttonVariants } from "@/components/ui/button";
 import {
-  publishedCalculators,
-  type PublishedCalculator,
-} from "@/config/calculators";
+  directorySearchCalculators,
+  popularCalculators,
+} from "@/config/calculator-directory";
 import {
   JsonLdScript,
   createWebsiteStructuredData,
@@ -22,27 +22,6 @@ const websiteStructuredData = {
   "@context": "https://schema.org",
   ...createWebsiteStructuredData(),
 };
-const dividendYieldCalculator = {
-  id: "dividend-yield",
-  name: "배당수익률 계산기",
-  description:
-    "현재 주가와 주당 연간 배당금으로 배당수익률과 투자금 기준 예상 배당금을 계산합니다.",
-  keywords: ["배당수익률", "배당률", "예상 배당금", "dividend yield"],
-  category: "금융",
-  href: "/ko/finance/dividend-yield",
-} as const satisfies PublishedCalculator;
-const allCalculators = [...publishedCalculators, dividendYieldCalculator];
-const popularCalculatorOrder = [
-  "compound-interest",
-  "loan",
-  "deposit",
-  "savings",
-  "cagr",
-  "severance-pay",
-] as const;
-const popularCalculators = popularCalculatorOrder.map((id) =>
-  publishedCalculators.find((calculator) => calculator.id === id)!,
-);
 
 export default function Home() {
   return (
@@ -62,7 +41,7 @@ export default function Home() {
               누구나 쉽게 사용할 수 있는 금융 계산기를 제공합니다.
             </span>
           </p>
-          <CalculatorSearch calculators={allCalculators} />
+          <CalculatorSearch calculators={directorySearchCalculators} />
         </div>
       </section>
       <section
