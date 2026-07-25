@@ -1,26 +1,20 @@
 import Link from "next/link";
 
 import { CalculatorCard } from "@/components/calculators/calculator-card";
+import { CalculatorSearch } from "@/components/calculators/calculator-search";
 import {
-  publishedCalculators,
-  type PublishedCalculator,
-} from "@/config/calculators";
+  allPublishedCalculators,
+  directorySearchCalculators,
+  popularCalculators,
+  visibleCalculatorDirectory,
+} from "@/config/calculator-directory";
 import { absoluteUrl } from "@/config/site";
 import { createPageMetadata } from "@/lib/seo/metadata";
 import { JsonLdScript } from "@/lib/seo/structured-data";
 
 const path = "/calculators";
 const description =
-  "CalCome에서 현재 제공하는 금융 계산기를 한곳에서 확인하세요.";
-const dividendYieldCalculator = {
-  id: "dividend-yield",
-  name: "배당수익률 계산기",
-  description:
-    "현재 주가와 주당 연간 배당금으로 배당수익률과 투자금 기준 예상 배당금을 계산합니다.",
-  keywords: ["배당수익률", "배당률", "예상 배당금", "dividend yield"],
-  category: "금융",
-  href: "/ko/finance/dividend-yield",
-} as const satisfies PublishedCalculator;
+  "CalCome에서 현재 제공하는 금융 계산기를 카테고리별로 찾고 검색하세요.";
 
 export const metadata = createPageMetadata({
   title: "금융 계산기 모음",
@@ -38,8 +32,8 @@ const structuredData = {
   url: absoluteUrl(path),
   mainEntity: {
     "@type": "ItemList",
-    numberOfItems: publishedCalculators.length,
-    itemListElement: publishedCalculators.map((calculator, index) => ({
+    numberOfItems: allPublishedCalculators.length,
+    itemListElement: allPublishedCalculators.map((calculator, index) => ({
       "@type": "ListItem",
       position: index + 1,
       name: calculator.name,
@@ -75,38 +69,90 @@ export default function CalculatorsPage() {
             모든 계산기
           </h1>
           <p className="mt-5 text-pretty text-lg leading-8 text-muted-foreground">
-            현재 공개되어 검증을 마친 금융 계산기를 확인하세요. 새로운 계산기는
-            준비와 검증이 끝난 뒤 이 목록에 추가됩니다.
+            필요한 계산기를 검색하거나 목적에 맞는 카테고리에서 빠르게
+            찾아보세요.
           </p>
+          <CalculatorSearch calculators={directorySearchCalculators} />
         </header>
 
-        <section className="mt-10" aria-labelledby="new-calculator">
-          <h2 id="new-calculator" className="text-lg font-semibold">
-            새 계산기
-          </h2>
-          <div className="mt-4 max-w-md">
-            <CalculatorCard calculator={dividendYieldCalculator} />
-          </div>
-        </section>
+        <nav aria-label="계산기 카테고리" className="mt-10">
+          <ul className="flex snap-x gap-2 overflow-x-auto pb-2">
+            {visibleCalculatorDirectory.map((category) => (
+              <li key={category.id} className="shrink-0 snap-start">
+                <a
+                  href={`#${category.id}`}
+                  className="inline-flex min-h-11 items-center rounded-lg border bg-background px-4 text-sm font-medium transition hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/30"
+                >
+                  {category.name}
+                  <span className="ml-2 text-muted-foreground">
+                    {category.calculators.length}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-        <section className="mt-12" aria-labelledby="finance-calculators">
-          <h2
-            id="finance-calculators"
-            className="text-2xl font-semibold tracking-tight"
-          >
-            금융 계산기
-          </h2>
-          <ul
-            aria-label="공개 계산기"
-            className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
-          >
-            {publishedCalculators.map((calculator) => (
+        <section className="mt-12" aria-labelledby="popular-calculators">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <h2
+                id="popular-calculators"
+                className="text-2xl font-semibold tracking-tight"
+              >
+                인기 계산기
+              </h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                자주 찾는 계산기를 먼저 모았습니다.
+              </p>
+            </div>
+          </div>
+          <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {popularCalculators.map((calculator) => (
               <li key={calculator.id}>
                 <CalculatorCard calculator={calculator} />
               </li>
             ))}
           </ul>
         </section>
+
+        <div className="mt-16 space-y-16">
+          {visibleCalculatorDirectory.map((category) => (
+            <section
+              key={category.id}
+              id={category.id}
+              aria-labelledby={`${category.id}-heading`}
+              className="scroll-mt-24"
+            >
+              <div className="flex flex-wrap items-end justify-between gap-3 border-b pb-4">
+                <div>
+                  <h2
+                    id={`${category.id}-heading`}
+                    className="text-2xl font-semibold tracking-tight"
+                  >
+                    {category.name}
+                  </h2>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                    {category.description}
+                  </p>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  {category.calculators.length}개
+                </p>
+              </div>
+              <ul
+                aria-label={`${category.name} 계산기`}
+                className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+              >
+                {category.calculators.map((calculator) => (
+                  <li key={calculator.id}>
+                    <CalculatorCard calculator={calculator} />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
       </div>
     </main>
   );
