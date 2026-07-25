@@ -121,7 +121,11 @@ export default function CalculatorsPage() {
           </ul>
         </section>
 
-        <div role="list" aria-label="공개 계산기" className="mt-16 space-y-16">
+        <div
+          role="region"
+          aria-label="공개 계산기"
+          className="mt-16 space-y-16"
+        >
           {visibleCalculatorDirectory.map((category) => (
             <section
               key={category.id}
@@ -150,7 +154,7 @@ export default function CalculatorsPage() {
                 className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
               >
                 {category.calculators.map((calculator) => (
-                  <li key={calculator.id} role="listitem">
+                  <li key={calculator.id}>
                     <CalculatorCard calculator={calculator} />
                   </li>
                 ))}
