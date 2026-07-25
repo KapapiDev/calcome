@@ -22,7 +22,7 @@ describe("calculator directory", () => {
       within(screen.getByRole("list", { name: "공개 계산기" })).getAllByRole(
         "listitem",
       ),
-    ).toHaveLength(50);
+    ).toHaveLength(51);
     expect(screen.getByRole("link", { name: /배당금 계산기/ })).toHaveAttribute(
       "href",
       "/ko/finance/dividend",
@@ -195,7 +195,7 @@ describe("calculator directory", () => {
       "@type": "CollectionPage",
       mainEntity: {
         "@type": "ItemList",
-        numberOfItems: 50,
+        numberOfItems: 51,
         itemListElement: [
           {
             position: 1,
