@@ -21,7 +21,6 @@ const dividendYieldCalculator = {
   category: "금융",
   href: "/ko/finance/dividend-yield",
 } as const satisfies PublishedCalculator;
-const allCalculators = [...publishedCalculators, dividendYieldCalculator];
 
 export const metadata = createPageMetadata({
   title: "금융 계산기 모음",
@@ -39,8 +38,8 @@ const structuredData = {
   url: absoluteUrl(path),
   mainEntity: {
     "@type": "ItemList",
-    numberOfItems: allCalculators.length,
-    itemListElement: allCalculators.map((calculator, index) => ({
+    numberOfItems: publishedCalculators.length,
+    itemListElement: publishedCalculators.map((calculator, index) => ({
       "@type": "ListItem",
       position: index + 1,
       name: calculator.name,
@@ -81,6 +80,15 @@ export default function CalculatorsPage() {
           </p>
         </header>
 
+        <section className="mt-10" aria-labelledby="new-calculator">
+          <h2 id="new-calculator" className="text-lg font-semibold">
+            새 계산기
+          </h2>
+          <div className="mt-4 max-w-md">
+            <CalculatorCard calculator={dividendYieldCalculator} />
+          </div>
+        </section>
+
         <section className="mt-12" aria-labelledby="finance-calculators">
           <h2
             id="finance-calculators"
@@ -92,7 +100,7 @@ export default function CalculatorsPage() {
             aria-label="공개 계산기"
             className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
           >
-            {allCalculators.map((calculator) => (
+            {publishedCalculators.map((calculator) => (
               <li key={calculator.id}>
                 <CalculatorCard calculator={calculator} />
               </li>
