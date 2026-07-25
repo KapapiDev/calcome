@@ -42,6 +42,10 @@ const structuredData = {
   },
 };
 
+function compactName(name: string) {
+  return name.replace(/ 계산기$/, "");
+}
+
 export default function CalculatorsPage() {
   return (
     <main id="main-content" className="flex-1">
@@ -94,29 +98,34 @@ export default function CalculatorsPage() {
         </nav>
 
         <section className="mt-12" aria-labelledby="popular-calculators">
-          <div className="flex items-end justify-between gap-4">
-            <div>
-              <h2
-                id="popular-calculators"
-                className="text-2xl font-semibold tracking-tight"
-              >
-                인기 계산기
-              </h2>
-              <p className="mt-2 text-sm text-muted-foreground">
-                자주 찾는 계산기를 먼저 모았습니다.
-              </p>
-            </div>
-          </div>
-          <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <h2
+            id="popular-calculators"
+            className="text-2xl font-semibold tracking-tight"
+          >
+            인기 계산기
+          </h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            자주 찾는 계산기를 먼저 모았습니다.
+          </p>
+          <ul className="mt-5 flex flex-wrap gap-2">
             {popularCalculators.map((calculator) => (
               <li key={calculator.id}>
-                <CalculatorCard calculator={calculator} />
+                <Link
+                  href={calculator.href}
+                  className="inline-flex min-h-11 items-center rounded-lg border bg-background px-4 text-sm font-medium transition hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/30"
+                >
+                  {compactName(calculator.name)}
+                </Link>
               </li>
             ))}
           </ul>
         </section>
 
-        <div className="mt-16 space-y-16">
+        <div
+          role="list"
+          aria-label="공개 계산기"
+          className="mt-16 space-y-16"
+        >
           {visibleCalculatorDirectory.map((category) => (
             <section
               key={category.id}
@@ -145,7 +154,7 @@ export default function CalculatorsPage() {
                 className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
               >
                 {category.calculators.map((calculator) => (
-                  <li key={calculator.id}>
+                  <li key={calculator.id} role="listitem">
                     <CalculatorCard calculator={calculator} />
                   </li>
                 ))}
