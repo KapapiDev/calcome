@@ -4,85 +4,89 @@
 
 This document defines the permanent rules for autonomous development in CalCome.
 
-The automation must turn exactly one eligible `TASK_QUEUE.md` entry into a validated Pull Request and may merge it automatically only after the exact head SHA passes repository checks and Vercel Preview verification. After merge, production deployment and public-site UX verification are mandatory before the task may be treated as complete.
+The automation must complete exactly one eligible `TASK_QUEUE.md` task per scheduled execution, validate it, create or update one Pull Request, merge it automatically when code and repository gates pass, and continue future work even when Preview or production inspection is blocked only by external environment limits.
 
-No user approval is required for an eligible automation Pull Request that satisfies every rule below.
+No user approval is required for an eligible automation Pull Request that satisfies these rules.
 
 ---
 
 ## Non-negotiable rules
 
 1. Never commit directly to `main`.
-2. Complete exactly one task per scheduled execution.
-3. Never start a second task in the same execution.
-4. Never create a duplicate task branch or Pull Request.
-5. Start new work from the latest `origin/main`.
-6. Preserve all unrelated behavior already present on `main`.
-7. Run all configured lint, typecheck, format, tests, production build, and `git diff --check` validation.
-8. Never bypass, weaken, remove, or falsify validation.
-9. Only explicitly opted-in automation Pull Requests may merge automatically.
-10. A failed implementation, unverified calculation, security regression, broken route, or unusable UX must never be merged.
-11. Security, calculation correctness, critical production failures, and blocked user flows override normal feature, SEO, and advertising priority.
-12. Never publish policy-sensitive tax, pension, labor, insurance, real-estate, or financial values without official sources and a visible verification date.
+2. Handle exactly one task per scheduled execution.
+3. Never create duplicate task branches or Pull Requests.
+4. Start new work from the latest `origin/main`.
+5. Preserve unrelated behavior already present on `main`.
+6. Run lint, typecheck, format verification, all tests, production build, and `git diff --check`.
+7. Never bypass, weaken, remove, or falsify validation.
+8. Never merge a failed implementation, unverified calculation, security regression, broken route, or unusable UX.
+9. Security, calculation correctness, critical failures, and blocked user flows override feature, SEO, and advertising priority.
+10. Never publish policy-sensitive values without official sources and a visible verification date.
+11. Preview or production inspection limits alone must not freeze the development queue indefinitely.
 
 ---
 
 ## Startup and effective state
 
-At the start of every scheduled execution:
+At every scheduled execution:
 
 1. Fetch all origin references.
-2. Inspect whether a rebase, merge, cherry-pick, or revert is already in progress.
-3. Read `AUTOMATION.md` and `TASK_QUEUE.md` from the latest `origin/main`.
-4. Inspect matching GitHub Pull Requests, task branches, checks, and Vercel deployment state.
-5. Reconcile the queue with actual repository state. GitHub and deployment state override stale queue text.
+2. Read the latest `AUTOMATION.md` and `TASK_QUEUE.md` from `origin/main`.
+3. Inspect matching Pull Requests, branches, checks, and Vercel deployment state.
+4. Reconcile queue text with actual repository and deployment state.
+5. Resume the earliest existing task before starting a new one.
 
-Effective task status is determined in this order:
+Effective status order:
 
-- `DONE`: a matching Pull Request is merged and required production verification passed, or the queue explicitly declares the task `DONE` based on verified evidence.
-- `IN_REVIEW`: the task is not `DONE` and has a matching open Draft or normal Pull Request.
-- `IN_PROGRESS`: the task is neither `DONE` nor `IN_REVIEW` and has genuinely recoverable branch work without an open Pull Request.
-- `OPEN`: the queue declares the task `OPEN` and no matching merged Pull Request, open Pull Request, or recoverable task branch exists.
+- `IN_REVIEW`: matching open Pull Request exists.
+- `IN_PROGRESS`: recoverable task branch exists without an open Pull Request.
+- `POST_MERGE_VERIFY`: task Pull Request is merged, code gates passed, but production UX has not yet been observed because deployment propagation or inspection-environment limits prevented it.
+- `DONE`: implementation is merged and either production UX passed or production observation remains unavailable only because of a documented external inspection limitation after required retries, with no evidence of a product failure.
+- `OPEN`: queue marks the task open and no earlier effective state applies.
 
-A stale branch belonging to a merged task is not recoverable work.
+GitHub, Vercel, and actual branch state override stale queue text.
 
-If an interrupted operation belongs to a merged task, abort only the stale operation, fast-forward `main`, and continue selection. If it belongs to an open Pull Request, verify and complete that Pull Request first and never create a duplicate.
+A merged task awaiting only external production observation must not be treated as a recoverable coding task and must not cause duplicate branches or Pull Requests.
 
 ---
 
-## Task selection
+## Task selection and continuity
 
-1. Reconcile tasks in `TASK_QUEUE.md` order.
-2. Resume the earliest genuinely recoverable `IN_PROGRESS` task if one exists.
-3. Otherwise verify and complete the earliest `IN_REVIEW` task that blocks the queue.
-4. Otherwise select the first effectively `OPEN` task.
-5. Stop scanning after selecting one task.
-6. Implement only that task.
+Use this order:
 
-If no recoverable, reviewable, or effectively open task exists, reply exactly:
+1. Repair or finish the earliest `IN_REVIEW` task.
+2. Resume the earliest recoverable `IN_PROGRESS` task.
+3. Attempt pending `POST_MERGE_VERIFY` production UX checks.
+4. Select the first effectively `OPEN` task.
 
-`NO OPEN TASKS`
+A `POST_MERGE_VERIFY` check must be attempted first, but an inspection-environment failure alone must not consume every future execution forever.
+
+After the required retries:
+
+- If production is reachable, complete the UX check and record the result.
+- If a real product defect is found, fix or roll back before new feature work.
+- If production cannot be inspected only because of DNS, timeout, administrator blocking, Vercel protection, execution-network policy, or similar external limitations, record the evidence and continue to the first effectively `OPEN` task in the same execution.
+
+The one-task rule applies to implementation work. A lightweight pending production inspection does not count as a second implementation task.
 
 ---
 
 ## Branch, architecture, and UI rules
 
-For a new task, create one task-specific branch from the latest `origin/main`. For recoverable work, resume the existing branch.
+For a new task, create one task-specific branch from latest `origin/main`. For recoverable work, resume the existing branch.
 
 Implementation must:
 
-- follow the current architecture and existing design system
-- inspect and reuse shared components before creating new ones
-- remain limited to the selected task
+- follow the current architecture and design system
+- inspect and reuse shared components first
+- stay limited to the selected task
 - avoid unrelated refactoring and unnecessary dependencies
-- preserve all calculators, routes, redirects, metadata, navigation, tests, sitemap, language switching, structured data, and SEO behavior
-- preserve CalCome's finance-calculator focus, high information clarity, trustworthy but not cold product tone
+- preserve calculators, routes, redirects, metadata, navigation, tests, sitemap, language switching, structured data, and SEO behavior
+- preserve CalCome's finance-calculator focus, high information clarity, and trustworthy but not cold product tone
 - avoid generic purple gradients, excessive rounded cards, decorative glass effects, meaningless oversized copy, and cloned AI dashboard styling
-- avoid evidence-free full redesigns
+- avoid evidence-free redesigns
 
-Before editing shared files, inspect their latest `origin/main` version. Shared registries, redirects, navigation, language selection, sitemap, metadata, structured-data utilities, schemas, tests, configuration, and package files must preserve every unrelated newer entry.
-
-Resolve conflicts by preserving current `main` behavior and reapplying only the selected task. Never accept an entire stale shared-file version or delete newer entries. Use `--force-with-lease` only after rewritten history.
+Before editing shared files, inspect their latest `origin/main` version and preserve every unrelated newer entry.
 
 ---
 
@@ -94,34 +98,32 @@ When adding or changing a public calculator:
 - register the route exactly once through the canonical source
 - use only `https://www.calcome.com` as the production origin
 - preserve standards-compliant XML sitemap behavior
-- never add localhost, preview, duplicate, internal, private, or non-canonical URLs
 - preserve Korean and English routes and reciprocal language switching
 - preserve canonical, hreflang, and x-default behavior
 - preserve or add a one-hop locale-less redirect
 - include the calculator in home or directory discovery
 - assign exactly one valid primary directory category
-- document useful aliases and colloquial search terms where relevant
+- document useful aliases where relevant
 - add contextual related-calculator links where appropriate
 - include unique explanatory content and worked examples
 - add official sources and verification dates when policy-sensitive
-- verify structured data contains each published calculator exactly once
+- verify structured data contains each calculator exactly once
 
-Never fabricate `lastmod`, `changefreq`, `priority`, search volume, legal rules, tax rates, or official policy values.
+Never fabricate search volume, legal rules, tax rates, policy values, `lastmod`, `changefreq`, or `priority`.
 
 ---
 
-## Local validation gate
+## Validation gate
 
 Before validation:
 
-1. Confirm the branch contains the latest `origin/main`.
+1. Confirm latest `origin/main` is included without conflict.
 2. Inspect the complete diff against `origin/main`.
 3. Confirm only the selected task is included.
 4. Confirm no existing entry or behavior disappeared.
 5. Confirm no Git operation remains unresolved.
-6. Remove only repository-local generated build output when necessary.
 
-Run the repository's configured validation, including at minimum:
+Run at minimum:
 
 - lint
 - typecheck
@@ -131,80 +133,112 @@ Run the repository's configured validation, including at minimum:
 - production build
 - `git diff --check`
 
-`npm run check` and `npm run build` remain mandatory when defined by the repository.
+`npm run check` and `npm run build` remain mandatory when defined.
 
 For calculators, manually verify representative examples, boundary values, units, rounding, monthly versus annual conversion, tax treatment, and invalid inputs. Record expected and actual results.
 
-A first validation failure is not terminal. Diagnose, fix, and rerun until successful or a genuine blocker is proven. Never weaken or delete a legitimate test merely to pass.
+A first failure is not terminal. Diagnose, fix, and rerun. Never weaken a legitimate test merely to pass.
 
 ---
 
 ## Pull Request and automatic merge
 
-After local validation succeeds:
+After validation succeeds:
 
-1. Review the complete diff against latest `origin/main`.
+1. Review the final diff against latest `origin/main`.
 2. Commit only the selected task.
 3. Push one task branch.
-4. Create exactly one non-Draft Pull Request against `main` unless a critical unresolved issue requires Draft status.
+4. Create or update exactly one non-Draft Pull Request against `main` unless a real unresolved defect requires Draft status.
 5. Include the exact task ID in title and body.
-6. Include the exact standalone line `AUTO_MERGE: true` only when fully eligible.
-7. Record implementation, integration, manual calculation verification, and all validation results.
-8. Verify the exact head SHA, base branch, body marker, checks, mergeability, and Vercel Preview state.
+6. Include the standalone line `AUTO_MERGE: true` only when eligible.
+7. Record implementation, integration, calculation verification, and validation results.
+8. Verify exact head SHA, base, mergeability, GitHub Actions, and Vercel state.
 
-Automatic squash merge is allowed only when all are true:
+Automatic squash merge is allowed when:
 
 - base is `main`
 - head belongs to this repository
 - Pull Request is not Draft
-- body contains exact `AUTO_MERGE: true`
+- body contains `AUTO_MERGE: true`
 - latest main is included without conflict
 - GitHub Actions succeeded for the exact final head SHA
-- Vercel Preview is `READY` for the exact final head SHA
 - lint, typecheck, format, all tests, production build, and `git diff --check` passed
 - calculation accuracy and required integration were verified
-- no unresolved review, security, regression, route, or UX blocker remains
+- no security, regression, route, calculation, or known UX blocker remains
 
-A Preview blocked only by the execution environment's network or protection policy must not cause infinite waiting when Preview itself is `READY` and all code validation passed. Record the limitation precisely. Do not use this exception for application errors or failed deployment state.
+### Preview continuity rule
+
+Preview browser access is preferred but is not an absolute merge gate.
+
+Merge may continue when all code and GitHub gates pass and Preview cannot be observed only because of:
+
+- Vercel free-plan deployment quota or rate limit
+- administrator or protection-policy blocking
+- Preview authentication or access protection unavailable to the execution environment
+- DNS, timeout, connection reset, or execution-network restriction
+- browser tooling failure unrelated to the application
+
+Record the exact Preview state, tool, failure code, retry result, and why it is classified as an external limitation.
+
+Do not use this exception when:
+
+- Preview build failed because of application code
+- GitHub Actions failed
+- production build failed
+- tests failed
+- routes or public entry points are missing
+- calculation accuracy is unverified
+- a known critical UX or security defect exists
+
+A Vercel Preview marked `READY` strengthens the merge decision, but absence of a viewable Preview must not stall otherwise validated work indefinitely.
 
 ---
 
-## Post-merge production deployment gate
+## Post-merge production verification
 
 After merge:
 
-1. Verify the final merge SHA and latest `main` checks.
-2. Verify Vercel production deployment reaches `READY`.
-3. Verify the Production Smoke workflow when available.
-4. Test all of the following public paths:
+1. Verify final merge SHA and latest `main` checks.
+2. Check Vercel production deployment state when available.
+3. Check Production Smoke when available.
+4. Test independently:
    - `https://www.calcome.com`
    - `https://www.calcome.com/ko`
-   - every selected-task target route
-5. Prefer cross-checking with both an HTTP client such as `curl` and an actual browser.
+   - selected-task target routes
+5. Prefer both HTTP and browser checks.
 
-An initial DNS lookup failure, `ERR_NAME_NOT_RESOLVED`, `ERR_CONNECTION_RESET`, timeout, or transient execution-network failure is not automatically a product outage.
+For DNS failure, `ERR_NAME_NOT_RESOLVED`, `ERR_CONNECTION_RESET`, timeout, deployment propagation, or execution-network failure:
 
-Within the same execution:
-
-- retry public access up to three times
+- retry up to three times in the same execution
 - wait approximately 5 to 15 seconds between retries
-- test the root, `/ko`, and target route independently
-- continue when any valid production path confirms the public site is reachable
-- record the failing tool, error code, retry results, and any successful alternative path
+- test root, `/ko`, and target routes independently
+- record failing tools, codes, retries, and any successful alternative path
 
-When browser, HTTP, Vercel, GitHub Actions, and known user access evidence conflict, classify the result first as a possible inspection-environment limitation rather than declaring a site outage. Continue with every available production-verification method.
+Do not declare a product outage from inspection-environment failure alone.
+
+### Production continuity rule
+
+When production cannot be inspected after required retries but GitHub Actions and deployment evidence show no product failure:
+
+- record `POST_MERGE_VERIFY` evidence
+- do not create duplicate repair work
+- do not hold the entire queue indefinitely
+- on the next execution, retry the pending production inspection first
+- if the same external limitation persists and there is still no product-failure evidence, continue with the next effectively `OPEN` task after recording the retry
+- include previously unobserved changes in the next successful production regression inspection
+
+A real production failure, incorrect calculation, broken route, blocked flow, mobile unusability, accessibility blocker, language-switching failure, or layout collapse remains a hard blocker and must be fixed before new feature work.
 
 ---
 
-## Mandatory production UX verification
+## Browser UX verification
 
-Use `agent-browser`, Playwright, Chromium, or an equivalent real browser after production is `READY`.
+When Preview or production is reachable, use an actual browser at desktop and mobile widths and test as applicable:
 
-Verify desktop and mobile widths, starting from the homepage or calculator directory and navigating to the target route. Test as applicable:
-
+- navigation from homepage or calculator directory
 - normal input and calculation
-- representative manual result comparison
-- invalid input and understandable error messages
+- manual result comparison
+- invalid input and error messages
 - reset
 - Korean and English switching
 - refresh and back navigation
@@ -212,45 +246,41 @@ Verify desktop and mobile widths, starting from the homepage or calculator direc
 - URL or state restoration when designed
 - long numbers, tables, charts, and small-screen overflow
 - mobile keyboard behavior
-- keyboard-only navigation and visible focus
+- keyboard navigation and focus visibility
 - accessible labels and result announcements
 - touch target size
 - light and dark mode
 - directory search, aliases, categories, and target discovery
 
-When possible, save desktop and mobile screenshots and record URL, viewport, inputs, expected result, and actual result in the Pull Request or follow-up report.
+Save screenshots and evidence when possible.
 
-Production access that remains unavailable after all retries does not become a false product failure. Record code validation and deployment success, keep the task incomplete, and prioritize production UX verification in the next execution.
+Minor visual defects become follow-up UX tasks. Critical defects block progress.
 
 ---
 
-## Production defects and queue transition
+## Queue transition
 
-If production verification finds a critical error, blocked flow, incorrect calculation, mobile unusability, accessibility blocker, broken language switching, route failure, or layout collapse:
+After a merged task:
 
-- do not mark the task `DONE`
-- fix it in the same execution when safe
-- create or update a correction branch and Draft Pull Request when more work is needed
-- roll back only when clearly safer and authorized
-
-For minor visual or wording defects, record reproduction steps, user impact, and acceptance criteria as a follow-up UX task.
-
-Only after production deployment and production UX verification succeed may the completed task become `DONE`, the immediately following task become the single `OPEN` task, and all later tasks remain `BLOCKED`.
-
-Do not edit queue status merely to claim progress. Every transition must be supported by verified GitHub, deployment, and production evidence.
+- If production UX succeeds, mark it `DONE` and open the next task.
+- If production UX cannot be observed only because of documented external limitations and all implementation gates passed, the task may be treated as operationally complete for queue continuity while retaining a `POST_MERGE_VERIFY` audit record.
+- Keep exactly one implementation task `OPEN`.
+- Never claim an unperformed browser check succeeded.
+- Never let the same external Preview or production inspection limitation freeze all future development runs.
 
 ---
 
 ## Final reporting
 
-Report in Korean and include only verified facts:
+Report in Korean and separate:
 
-- selected task and effective starting status
-- branch and Pull Request
-- code and integration changes
-- validation and manual calculation results
+- verified implementation facts
 - exact GitHub Actions and Vercel states
-- production retry and UX verification evidence
-- whether the task is complete, incomplete, blocked, or requires correction
+- Preview and production attempts
+- external inspection limitations
+- known product defects
+- whether merge occurred
+- whether queue work continues
+- pending production regression evidence
 
-Never describe pending work as completed and never start a second task in the same execution.
+Never describe pending inspection as completed, but do not confuse an inspection-environment limitation with a product failure.
