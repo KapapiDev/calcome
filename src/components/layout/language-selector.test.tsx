@@ -25,9 +25,7 @@ describe("localizedDestination", () => {
     );
     expect(localizedDestination("/en/about", "ko")).toBe("/ko/about");
     expect(localizedDestination("/", "en")).toBe("/en");
-    expect(localizedDestination("calculators", "ko")).toBe(
-      "/ko/calculators",
-    );
+    expect(localizedDestination("calculators", "ko")).toBe("/ko/calculators");
   });
 });
 
