@@ -2,23 +2,32 @@ name: CI
 
 on:
   pull_request:
+  push:
+    branches: [main]
 
 permissions:
   contents: read
 
 jobs:
-  format-task-queue:
+  quality:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
-      - run: npm ci
-      - run: npm run format
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ux-001-formatted-task-queue
-          path: TASK_QUEUE.md
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run static checks
+        run: npm run check
+
+      - name: Build application
+        run: npm run build
