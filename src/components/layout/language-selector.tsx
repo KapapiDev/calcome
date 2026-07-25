@@ -5,8 +5,9 @@ import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
 import type { CompoundLocale } from "@/features/compound-interest/i18n";
-import { sharedLayoutCopy } from "./layout-i18n";
+
 import { localizedDestination } from "./language-routing";
+import { sharedLayoutCopy } from "./layout-i18n";
 
 export function LanguageSelector({
   locale,
