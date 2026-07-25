@@ -37,6 +37,26 @@ export const allPublishedCalculators = [
   dividendYieldCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
+const directoryAliases: Readonly<Record<string, readonly string[]>> = {
+  ltv: ["주담대", "담보대출"],
+  dsr: ["대출규제", "총부채원리금"],
+  "mortgage-payment": ["주담대", "주택 대출"],
+  "real-estate-brokerage-fee": ["복비", "중개수수료"],
+  "stock-average-cost": ["물타기", "평단", "평단가"],
+  "net-salary": ["연봉 실수령", "월급 실수령"],
+  "freelancer-3-3-tax": ["3.3", "삼쩜삼"],
+};
+
+export const directorySearchCalculators = allPublishedCalculators.map(
+  (calculator) => ({
+    ...calculator,
+    keywords: [
+      ...calculator.keywords,
+      ...(directoryAliases[calculator.id] ?? []),
+    ],
+  }),
+) satisfies readonly PublishedCalculator[];
+
 export const calculatorDirectoryCategories = [
   {
     id: "employment",
@@ -150,6 +170,10 @@ export const groupedCalculatorDirectory = calculatorDirectoryCategories.map(
       return calculator;
     }),
   }),
+);
+
+export const visibleCalculatorDirectory = groupedCalculatorDirectory.filter(
+  (category) => category.calculators.length > 0,
 );
 
 export const popularCalculatorIds = [
