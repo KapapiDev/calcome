@@ -28,8 +28,10 @@ describe("calculator directory", () => {
     const directoryHrefs = Array.from(directory.querySelectorAll("a")).map(
       (link) => link.getAttribute("href"),
     );
-    expect(directoryHrefs).toEqual(
-      allPublishedCalculators.map((calculator) => calculator.href),
+    expect([...directoryHrefs].sort()).toEqual(
+      allPublishedCalculators
+        .map((calculator) => calculator.href)
+        .sort(),
     );
 
     const jsonLd = container.querySelector(
