@@ -176,10 +176,10 @@ export const visibleCalculatorDirectory = groupedCalculatorDirectory.filter(
 export const popularCalculatorIds = [
   "compound-interest",
   "loan",
-  "net-salary",
+  "deposit",
+  "savings",
+  "cagr",
   "severance-pay",
-  "dsr",
-  "stock-average-cost",
 ] as const;
 
 export const popularCalculators = popularCalculatorIds.map((id) => {
