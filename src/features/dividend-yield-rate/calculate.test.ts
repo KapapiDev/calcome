@@ -12,8 +12,8 @@ describe("calculateDividendYieldRate", () => {
     expect(result.dividendYield.toNumber()).toBe(4);
     expect(result.estimatedShares.toNumber()).toBe(20);
     expect(result.estimatedAnnualDividend.toNumber()).toBe(40_000);
-    expect(
-      result.estimatedMonthlyAverage.toDecimalPlaces(2).toNumber(),
-    ).toBe(3_333.33);
+    expect(result.estimatedMonthlyAverage.toDecimalPlaces(2).toNumber()).toBe(
+      3_333.33,
+    );
   });
 });
