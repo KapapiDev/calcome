@@ -17,12 +17,16 @@ const publicStaticPaths = [
 const dividendYieldCalculator = {
   href: "/ko/finance/dividend-yield",
 } as const satisfies Pick<PublishedCalculator, "href">;
+const sitemapCalculators = [
+  ...publishedCalculators,
+  dividendYieldCalculator,
+] as const;
 
 export function calculatorSitemapEntries(
   calculators: readonly Pick<
     PublishedCalculator,
     "href"
-  >[] = [...publishedCalculators, dividendYieldCalculator],
+  >[] = sitemapCalculators,
 ): MetadataRoute.Sitemap {
   return calculators.flatMap(({ href }) => {
     const englishHref = href.replace(/^\/ko\//, "/en/");
