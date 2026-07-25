@@ -2,6 +2,8 @@ name: CI
 
 on:
   pull_request:
+  push:
+    branches: [main]
 
 permissions:
   contents: read
@@ -10,21 +12,22 @@ jobs:
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
-      - run: npm ci
-      - name: Capture check output
-        shell: bash
-        run: |
-          set -o pipefail
-          npm run check 2>&1 | tee check-output.txt
-      - name: Upload check output
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ux-001-exact-check-output
-          path: check-output.txt
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run static checks
+        run: npm run check
+
+      - name: Build application
+        run: npm run build
