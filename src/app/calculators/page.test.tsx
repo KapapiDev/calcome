@@ -25,11 +25,12 @@ describe("calculator directory", () => {
       allPublishedCalculators.length,
     );
 
-    for (const calculator of allPublishedCalculators) {
-      expect(
-        within(directory).getByRole("link", { name: calculator.name }),
-      ).toHaveAttribute("href", calculator.href);
-    }
+    const directoryHrefs = Array.from(directory.querySelectorAll("a")).map(
+      (link) => link.getAttribute("href"),
+    );
+    expect(directoryHrefs).toEqual(
+      allPublishedCalculators.map((calculator) => calculator.href),
+    );
 
     const jsonLd = container.querySelector(
       'script[type="application/ld+json"]',
