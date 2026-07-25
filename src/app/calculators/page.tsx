@@ -1,7 +1,10 @@
 import Link from "next/link";
 
 import { CalculatorCard } from "@/components/calculators/calculator-card";
-import { publishedCalculators } from "@/config/calculators";
+import {
+  publishedCalculators,
+  type PublishedCalculator,
+} from "@/config/calculators";
 import { absoluteUrl } from "@/config/site";
 import { createPageMetadata } from "@/lib/seo/metadata";
 import { JsonLdScript } from "@/lib/seo/structured-data";
@@ -9,6 +12,16 @@ import { JsonLdScript } from "@/lib/seo/structured-data";
 const path = "/calculators";
 const description =
   "CalCome에서 현재 제공하는 금융 계산기를 한곳에서 확인하세요.";
+const dividendYieldCalculator = {
+  id: "dividend-yield",
+  name: "배당수익률 계산기",
+  description:
+    "현재 주가와 주당 연간 배당금으로 배당수익률과 투자금 기준 예상 배당금을 계산합니다.",
+  keywords: ["배당수익률", "배당률", "예상 배당금", "dividend yield"],
+  category: "금융",
+  href: "/ko/finance/dividend-yield",
+} as const satisfies PublishedCalculator;
+const allCalculators = [...publishedCalculators, dividendYieldCalculator];
 
 export const metadata = createPageMetadata({
   title: "금융 계산기 모음",
@@ -26,8 +39,8 @@ const structuredData = {
   url: absoluteUrl(path),
   mainEntity: {
     "@type": "ItemList",
-    numberOfItems: publishedCalculators.length,
-    itemListElement: publishedCalculators.map((calculator, index) => ({
+    numberOfItems: allCalculators.length,
+    itemListElement: allCalculators.map((calculator, index) => ({
       "@type": "ListItem",
       position: index + 1,
       name: calculator.name,
@@ -79,7 +92,7 @@ export default function CalculatorsPage() {
             aria-label="공개 계산기"
             className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
           >
-            {publishedCalculators.map((calculator) => (
+            {allCalculators.map((calculator) => (
               <li key={calculator.id}>
                 <CalculatorCard calculator={calculator} />
               </li>
