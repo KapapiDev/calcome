@@ -3,7 +3,8 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
 import { publishedCalculators } from "@/config/calculators";
-import { LanguageSelector, localizedDestination } from "./language-selector";
+import { localizedDestination } from "./language-routing";
+import { LanguageSelector } from "./language-selector";
 
 describe("localizedDestination", () => {
   it("preserves every published calculator route in both directions", () => {
