@@ -156,7 +156,9 @@ export const calculatorDirectoryCategories = [
 ] as const satisfies readonly CalculatorDirectoryCategory[];
 
 const calculatorsById = new Map(
-  allPublishedCalculators.map((calculator) => [calculator.id, calculator]),
+  allPublishedCalculators.map(
+    (calculator) => [calculator.id, calculator] as const,
+  ),
 );
 
 export const groupedCalculatorDirectory = calculatorDirectoryCategories.map(
@@ -187,6 +189,8 @@ export const popularCalculatorIds = [
 
 export const popularCalculators = popularCalculatorIds.map((id) => {
   const calculator = calculatorsById.get(id);
-  if (!calculator) throw new Error(`Unknown popular calculator id: ${id}`);
+  if (!calculator) {
+    throw new Error(`Unknown popular calculator id: ${id}`);
+  }
   return calculator;
 });
