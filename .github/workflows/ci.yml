@@ -2,8 +2,6 @@ name: CI
 
 on:
   pull_request:
-  push:
-    branches: [main]
 
 permissions:
   contents: read
@@ -26,8 +24,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run static checks
-        run: npm run check
+      - name: Capture static-check output
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run check 2>&1 | tee check-output.txt
+
+      - name: Upload static-check output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ux-001-static-check-output
+          path: check-output.txt
 
       - name: Build application
         run: npm run build
