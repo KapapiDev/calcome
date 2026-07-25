@@ -18,7 +18,7 @@ describe("calculator directory", () => {
 
   it("lists every published calculator exactly once", () => {
     const { container } = render(<CalculatorsPage />);
-    const directory = screen.getByRole("list", { name: "공개 계산기" });
+    const directory = screen.getByRole("region", { name: "공개 계산기" });
 
     expect(screen.getByRole("heading", { name: "모든 계산기" })).toBeVisible();
     expect(within(directory).getAllByRole("listitem")).toHaveLength(
@@ -29,9 +29,7 @@ describe("calculator directory", () => {
       (link) => link.getAttribute("href"),
     );
     expect([...directoryHrefs].sort()).toEqual(
-      allPublishedCalculators
-        .map((calculator) => calculator.href)
-        .sort(),
+      allPublishedCalculators.map((calculator) => calculator.href).sort(),
     );
 
     const jsonLd = container.querySelector(
