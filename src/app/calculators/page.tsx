@@ -121,11 +121,7 @@ export default function CalculatorsPage() {
           </ul>
         </section>
 
-        <div
-          role="list"
-          aria-label="공개 계산기"
-          className="mt-16 space-y-16"
-        >
+        <div role="list" aria-label="공개 계산기" className="mt-16 space-y-16">
           {visibleCalculatorDirectory.map((category) => (
             <section
               key={category.id}
