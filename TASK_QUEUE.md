@@ -35,7 +35,7 @@ UX-001
 
 Title: Shared Calculator Shell, Categorized Directory, and Production Entry Audit
 
-Status: OPEN
+Status: DONE
 
 Priority: CRITICAL
 
@@ -70,13 +70,18 @@ Acceptance:
 - `npm run check`, `npm run build`, and `git diff --check` pass.
 - Desktop and mobile production evidence is recorded.
 
+Evidence: PR #96 merged with exact-head CI and Vercel Preview success. Production observation remains recorded as external `POST_MERGE_VERIFY`; PR #98 subsequently fixed the confirmed site-wide language-switching regression with 51-calculator round-trip coverage and successful exact-head CI and Preview.
+
 ---
 
 UX-002
 
 Title: Employment and Payroll Calculator UX Audit
-Status: BLOCKED
+
+Status: OPEN
+
 Priority: CRITICAL
+
 Scope: Audit every employment, salary, wage, benefit, leave, insurance, and pension calculator for input clarity, official-rate disclosure, result interpretation, mobile usability, accessibility, bilingual consistency, and correct directory placement.
 
 ---
@@ -84,8 +89,11 @@ Scope: Audit every employment, salary, wage, benefit, leave, insurance, and pens
 UX-003
 
 Title: Loan and Credit Calculator UX Audit
+
 Status: BLOCKED
+
 Priority: CRITICAL
+
 Scope: Audit every loan, mortgage, DSR, DTI, LTV, repayment, refinancing, credit-card, and affordability calculator, including amortization tables, comparison states, impossible-payment errors, long schedules, and correct directory placement.
 
 ---
@@ -93,8 +101,11 @@ Scope: Audit every loan, mortgage, DSR, DTI, LTV, repayment, refinancing, credit
 UX-004
 
 Title: Tax and Payroll Filing Calculator UX Audit
+
 Status: BLOCKED
+
 Priority: CRITICAL
+
 Scope: Audit VAT, withholding, comprehensive income, freelancer, property, acquisition, capital-gains, gift, inheritance, and holding-tax flows for source dates, assumptions, error prevention, result caveats, user comprehension, and correct directory placement.
 
 ---
@@ -102,8 +113,11 @@ Scope: Audit VAT, withholding, comprehensive income, freelancer, property, acqui
 UX-005
 
 Title: Housing and Real-Estate Calculator UX Audit
+
 Status: BLOCKED
+
 Priority: HIGH
+
 Scope: Audit brokerage, rent conversion, jeonse-to-rent, housing payment, property-tax, and transaction-cost journeys across desktop and mobile, including category discovery.
 
 ---
@@ -111,8 +125,11 @@ Scope: Audit brokerage, rent conversion, jeonse-to-rent, housing payment, proper
 UX-006
 
 Title: Savings and Investment Calculator UX Audit
+
 Status: BLOCKED
+
 Priority: HIGH
+
 Scope: Audit compound interest, savings, fixed deposit, CAGR, stocks, dividends, and investment-related flows, including charts, tables, result comparison, large values, bilingual terminology, and category discovery.
 
 ---
@@ -120,8 +137,11 @@ Scope: Audit compound interest, savings, fixed deposit, CAGR, stocks, dividends,
 UX-007
 
 Title: Full-Site Accessibility and Visual Consistency Regression
+
 Status: BLOCKED
+
 Priority: HIGH
+
 Scope:
 
 - Run keyboard-only, focus-order, accessible-name, contrast, zoom, reduced-motion, touch-target, mobile overflow, light-mode, and dark-mode regression checks.
