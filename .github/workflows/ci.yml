@@ -56,6 +56,18 @@ jobs:
       - name: Format validation
         run: npx prettier --check src/features/dividend-yield-rate/validation.ts
 
+      - name: Format home integration
+        run: npx prettier --check src/app/page.tsx
+
+      - name: Format directory integration
+        run: npx prettier --check src/app/calculators/page.tsx
+
+      - name: Format sitemap integration
+        run: npx prettier --check src/app/sitemap.ts
+
+      - name: Format redirect integration
+        run: npx prettier --check src/app/finance/dividend-yield/page.tsx
+
       - name: Check repository formatting
         run: npm run format:check
 
