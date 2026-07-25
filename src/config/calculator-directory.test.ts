@@ -23,13 +23,14 @@ describe("calculator directory", () => {
   it("includes common Korean aliases in directory search data", () => {
     const aliasesById = new Map(
       directorySearchCalculators.map(
-        (calculator) =>
-          [calculator.id, calculator.keywords] as const,
+        (calculator) => [calculator.id, calculator.keywords] as const,
       ),
     );
 
     expect(aliasesById.get("mortgage-payment")).toContain("주담대");
-    expect(aliasesById.get("real-estate-brokerage-fee")).toContain("복비");
+    expect(aliasesById.get("real-estate-brokerage-fee")).toContain(
+      "복비",
+    );
     expect(aliasesById.get("stock-average-cost")).toContain("물타기");
     expect(aliasesById.get("net-salary")).toContain("연봉 실수령");
     expect(aliasesById.get("freelancer-3-3-tax")).toContain("3.3");
