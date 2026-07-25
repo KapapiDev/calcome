@@ -1,993 +1,313 @@
 # CalCome TASK_QUEUE
 
-Rules
+## Operating rules
 
-- Complete only the first task whose effective status is OPEN.
-- One task per scheduled execution.
-- Reconcile task status with existing branches and Draft Pull Requests before selecting work.
-- An OPEN task with a recorded incomplete Branch must resume that branch.
-- A task with an open Draft Pull Request is effectively IN_REVIEW and must be skipped.
-- A failed task remains OPEN and must be retried before any later task.
-- Never merge directly from the feature agent.
-- After validation succeeds, create one non-Draft Pull Request containing the exact `AUTO_MERGE: true` marker.
-- The repository Auto Merge workflow may merge only after CI and Vercel Preview succeed.
-- If there are no effectively OPEN tasks, reply exactly:
-  NO OPEN TASKS
+- Complete exactly one task per scheduled execution.
+- Reconcile this file with actual GitHub Pull Requests, branches, checks, and Vercel deployments before selecting work.
+- GitHub state overrides stale queue text.
+- Only the first effectively `OPEN` task may be selected.
+- A task with a merged matching Pull Request is effectively `DONE`.
+- A task with an open matching Pull Request is effectively `IN_REVIEW`.
+- Keep only one task `OPEN`; later work remains `BLOCKED` until the previous task is completed in production.
+- Priorities: critical correctness and UX blockers, SEO growth, AdSense readiness, then additional calculator expansion.
 
-Status values
+## Current product state
 
-- OPEN: ready for work or waiting for retry after failure
-- IN_PROGRESS: currently being implemented
-- IN_REVIEW: Draft Pull Request created and awaiting review
-- DONE: reviewed and merged or explicitly completed
+- P-001 through P-044 are merged in production.
+- SEO-001 XML sitemap standardization is merged through PR #49.
+- SEO-002 shared JSON-LD foundation is merged through PR #51.
+- The static statuses in the previous queue were stale and did not reflect merged Pull Requests.
+- P-041 through P-044 added four production calculators, so the next task is a required production UX audit before additional growth work.
+
+## Completed calculator program
+
+| Task range | Status | Evidence |
+|---|---|---|
+| P-001 | DONE | PR #35 merged |
+| P-002 | DONE | PR #43 merged |
+| P-003 | DONE | PR #58 merged |
+| P-004 | DONE | PR #60 merged |
+| P-005 | DONE | PR #46 merged |
+| P-006 | DONE | PR #47 merged |
+| P-007 | DONE | PR #48 merged |
+| P-008 | DONE | PR #50 merged |
+| P-009 | DONE | PR #52 merged |
+| P-010 | DONE | PR #53 merged |
+| P-011 | DONE | PR #54 merged |
+| P-012 | DONE | PR #55 merged |
+| P-013 | DONE | PR #56 merged |
+| P-014 | DONE | PR #59 merged |
+| P-015 | DONE | PR #61 merged |
+| P-016 | DONE | PR #62 merged |
+| P-017 | DONE | PR #63 merged |
+| P-018 | DONE | PR #64 merged |
+| P-019 | DONE | PR #65 merged |
+| P-020 | DONE | PR #66 merged |
+| P-021 | DONE | PR #67 merged |
+| P-022 | DONE | PR #68 merged |
+| P-023 | DONE | PR #69 merged |
+| P-024 | DONE | PR #70 merged |
+| P-025 | DONE | PR #71 merged |
+| P-026 | DONE | PR #72 merged |
+| P-027 | DONE | PR #73 merged |
+| P-028 | DONE | PR #74 merged |
+| P-029 | DONE | PR #75 merged |
+| P-030 | DONE | PR #76 merged |
+| P-031 | DONE | PR #77 merged |
+| P-032 | DONE | PR #78 merged |
+| P-033 | DONE | PR #79 merged |
+| P-034 | DONE | PR #80 merged |
+| P-035 | DONE | PR #81 merged |
+| P-036 | DONE | PR #82 merged |
+| P-037 | DONE | PR #83 merged |
+| P-038 | DONE | PR #84 merged |
+| P-039 | DONE | PR #85 merged |
+| P-040 | DONE | PR #86 merged |
+| P-041 | DONE | PR #87 merged |
+| P-042 | DONE | PR #88 merged |
+| P-043 | DONE | PR #89 merged |
+| P-044 | DONE | PR #91 merged |
 
 ---
 
-P-001
+UX-001
 
-Title: Unemployment Benefits Calculator
-
-Status: IN_REVIEW
-
-Priority: HIGH
-
-Branch: codex/unemployment-benefits-calculator
-
-Commit SHA: f9e816f31d360f05c906902412acee9080164523
-
-Draft PR: #35 https://github.com/maxtop9843-byte/calcome/pull/35
-
-Last Result: SUCCESS
-
-Failure: -
-
-Updated: 2026-07-17
-
----
-
-P-002
-
-Title: Weekly Holiday Pay Calculator
+Title: Production UX Audit After P-041 Through P-044
 
 Status: OPEN
 
-Priority: HIGH
+Priority: CRITICAL
 
-Branch: -
+Goal: Verify the newest four calculators and a representative site-wide flow on the public production site before further expansion.
 
-Commit SHA: -
+Scope:
 
-Draft PR: -
+- Inspect P-041 stock average cost, P-042 stock profit and loss, P-043 dividend, and P-044 dividend yield.
+- Test desktop and mobile entry from home and calculator directory, valid input, invalid input, reset, Korean and English switching, reload, back navigation, locale-less redirects, dark mode, keyboard focus, touch targets, long-number overflow, and result interpretation.
+- Manually recalculate representative examples.
+- Fix critical or high-impact defects in the same task.
+- Record screenshots and exact production URLs when browser tooling permits.
 
-Last Result: NOT_STARTED
+Acceptance:
 
-Failure: -
-
-Updated: -
-
----
-
-P-003
-
-Title: Annual Leave Allowance Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
+- No blocked user flow, incorrect result, broken locale switch, mobile overflow, inaccessible primary control, or production-only failure remains.
+- `npm run check`, `npm run build`, and `git diff --check` pass.
+- Production verification evidence is recorded.
 
 ---
 
-P-004
+SEO-003
 
-Title: Gross-Up Salary Calculator
+Title: Technical SEO and Indexability Audit
 
-Status: OPEN
+Status: BLOCKED
 
 Priority: HIGH
 
-Branch: -
+Goal: Ensure Google and Naver can crawl, canonicalize, and index every intended public page without duplicate-route ambiguity.
 
-Commit SHA: -
+Scope:
 
-Draft PR: -
+- Audit robots, sitemap XML, canonical, hreflang, x-default, redirects, status codes, noindex directives, metadata-route ownership, and production origin consistency.
+- Detect orphaned calculators, duplicate canonical targets, redirect chains, soft-404 behavior, preview or localhost URLs, and locale-less 200 aliases.
+- Add automated regression tests and a production audit report.
 
-Last Result: NOT_STARTED
+Acceptance:
 
-Failure: -
-
-Updated: -
+- Every published calculator has one Korean canonical, one English canonical, reciprocal hreflang, one-hop locale-less redirect, and sitemap inclusion.
+- No unintended indexable duplicates or contradictory signals remain.
 
 ---
 
-P-005
+SEO-004
 
-Title: Hourly Wage Calculator
+Title: Calculator Content Depth and Trust Template
 
-Status: OPEN
+Status: BLOCKED
 
 Priority: HIGH
 
-Branch: -
+Goal: Reduce low-value-content risk by making calculator pages genuinely useful before and after calculation.
 
-Commit SHA: -
+Scope:
 
-Draft PR: -
+- Define reusable page sections for what the result means, formula or method, worked example, assumptions, limitations, FAQ, related calculators, and source verification date.
+- Audit existing calculators for thin or duplicated copy.
+- Upgrade the highest-search-intent pages first without inventing legal, tax, pension, or financial policy.
+- Preserve concise input-first usability while adding useful crawlable content below results.
 
-Last Result: NOT_STARTED
+Acceptance:
 
-Failure: -
-
-Updated: -
+- Target pages contain unique, task-specific explanations and examples rather than boilerplate.
+- Official sources and verification dates are present where policy or rates matter.
+- Content remains readable on mobile and does not bury the calculator.
 
 ---
 
-P-006
+SEO-005
 
-Title: Four Major Social Insurance Calculator
+Title: Search Intent Metadata and Landing Page Optimization
 
-Status: OPEN
+Status: BLOCKED
 
 Priority: HIGH
 
-Branch: -
+Goal: Align titles, descriptions, headings, and landing-page copy with real Korean and English calculator search intent.
 
-Commit SHA: -
+Scope:
 
-Draft PR: -
+- Audit duplicate or generic titles and descriptions.
+- Map one primary intent and a small set of supporting intents to each priority page.
+- Improve home, calculator directory, employment, loan, tax, real-estate, and investment landing copy where supported by actual routes.
+- Keep metadata natural and avoid keyword stuffing.
 
-Last Result: NOT_STARTED
+Acceptance:
 
-Failure: -
-
-Updated: -
+- Priority pages have distinct titles, descriptions, H1s, and canonical intent.
+- No duplicate metadata clusters remain among audited pages.
 
 ---
 
-P-007
+SEO-006
 
-Title: Average Wage Calculator
+Title: Internal Linking and Topic Cluster Hubs
 
-Status: OPEN
+Status: BLOCKED
 
 Priority: HIGH
 
-Branch: -
+Goal: Help users and crawlers move between related calculators while strengthening topical authority.
 
-Commit SHA: -
+Scope:
 
-Draft PR: -
+- Build or improve category hubs for employment, loans, tax, real estate, savings, and investing.
+- Add contextual related-calculator links based on user next steps, not arbitrary card grids.
+- Prevent orphan pages and excessive repeated links.
+- Include breadcrumbs and structured data only where accurate.
 
-Last Result: NOT_STARTED
+Acceptance:
 
-Failure: -
-
-Updated: -
+- Every published calculator is reachable through a relevant hub and at least one contextual related link.
+- Link labels explain the next user goal.
 
 ---
 
-P-008
+SEO-007
 
-Title: Salary Raise Calculator
+Title: Core Web Vitals and Crawl Performance Audit
 
-Status: OPEN
+Status: BLOCKED
 
-Priority: HIGH
+Priority: MEDIUM
 
-Branch: -
+Goal: Improve mobile performance, layout stability, and crawl efficiency without degrading calculator UX.
 
-Commit SHA: -
+Scope:
 
-Draft PR: -
+- Audit LCP, CLS, INP risks, client bundle weight, chart loading, fonts, images, animation, and hydration.
+- Prioritize shared fixes with measurable impact.
+- Preserve accessibility, dark mode, and calculation accuracy.
 
-Last Result: NOT_STARTED
+Acceptance:
 
-Failure: -
-
-Updated: -
-
----
-
-P-009
-
-Title: Overtime Pay Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
+- No known advertisement or UI placeholder causes layout shift.
+- Heavy non-critical calculator visuals are deferred where safe.
+- Before-and-after measurements are recorded.
 
 ---
 
-P-010
+ADS-001
 
-Title: Night Work Pay Calculator
+Title: AdSense Policy and Site Trust Readiness Audit
 
-Status: OPEN
+Status: BLOCKED
 
 Priority: HIGH
 
-Branch: -
+Goal: Remove policy and trust blockers before an AdSense application or re-review.
 
-Commit SHA: -
+Scope:
 
-Draft PR: -
+- Audit About, Contact, Privacy Policy, Terms, cookie and consent disclosures, navigation clarity, authorship or editorial responsibility, source transparency, and misleading claims.
+- Check for thin pages, unfinished pages, broken links, duplicated content, and unclear financial disclaimers.
+- Do not claim approval certainty or fabricate business details.
 
-Last Result: NOT_STARTED
+Acceptance:
 
-Failure: -
-
-Updated: -
+- Required trust pages are complete, linked globally, localized where appropriate, and consistent with actual site behavior.
+- No obvious low-value, deceptive-navigation, or unfinished-site signals remain.
 
 ---
 
-P-011
+ADS-002
 
-Title: Holiday Work Pay Calculator
+Title: Ad Placement Architecture Without Layout Shift
 
-Status: OPEN
+Status: BLOCKED
 
 Priority: HIGH
 
-Branch: -
+Goal: Prepare safe responsive advertisement slots without harming calculation flow or Core Web Vitals.
 
-Commit SHA: -
+Scope:
 
-Draft PR: -
+- Define reserved ad containers for desktop and mobile.
+- Keep ads away from calculate, reset, input labels, validation messages, and primary results.
+- Prevent accidental clicks, deceptive placement, sticky obstruction, and CLS.
+- Keep ads disabled until valid publisher configuration is available.
 
-Last Result: NOT_STARTED
+Acceptance:
 
-Failure: -
-
-Updated: -
+- Placeholder geometry is responsive and causes no measurable layout shift.
+- Calculator interaction remains visually distinct from advertising.
 
 ---
 
-P-012
+ADS-003
 
-Title: Minimum Wage Calculator
+Title: Consent and Regional Privacy Controls
 
-Status: OPEN
+Status: BLOCKED
 
-Priority: HIGH
+Priority: MEDIUM
 
-Branch: -
+Goal: Support lawful ad and analytics behavior for international traffic.
 
-Commit SHA: -
+Scope:
 
-Draft PR: -
+- Audit current cookies, analytics, storage, and third-party scripts.
+- Add consent handling only for technologies actually used.
+- Support regional requirements without blocking essential calculator functionality.
 
-Last Result: NOT_STARTED
+Acceptance:
 
-Failure: -
-
-Updated: -
-
----
-
-P-013
-
-Title: Salary Conversion Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
+- Consent state is accessible, reversible, and documented.
+- Non-essential scripts respect the applicable consent state.
 
 ---
 
-P-014
+ADS-004
 
-Title: Retirement Pension Calculator
+Title: AdSense Integration and ads.txt
 
-Status: OPEN
+Status: BLOCKED
 
-Priority: HIGH
+Priority: MEDIUM
 
-Branch: -
+Dependency: Valid AdSense publisher ID and approved integration details supplied by the site owner.
 
-Commit SHA: -
+Goal: Add production AdSense configuration only after credentials and approval-stage requirements are known.
 
-Draft PR: -
+Scope:
 
-Last Result: NOT_STARTED
+- Add verified publisher configuration, ads.txt, script loading, and environment safeguards.
+- Never invent a publisher ID.
+- Verify production response and prevent preview or local accidental ad serving.
 
-Failure: -
+Acceptance:
 
-Updated: -
-
----
-
-P-015
-
-Title: DSR Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-016
-
-Title: LTV Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-017
-
-Title: Loan Interest Comparison Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-018
-
-Title: Loan Refinancing Savings Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-019
-
-Title: Balloon Payment Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-020
-
-Title: Mortgage Payment Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-021
-
-Title: Jeonse Loan Interest Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-022
-
-Title: Credit Loan Interest Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-023
-
-Title: Early Loan Repayment Fee Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-024
-
-Title: DTI Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-025
-
-Title: Real Estate Acquisition Tax Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-026
-
-Title: Capital Gains Tax Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-027
-
-Title: Gift Tax Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-028
-
-Title: Inheritance Tax Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-029
-
-Title: Property Tax Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-030
-
-Title: Comprehensive Real Estate Holding Tax Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-031
-
-Title: Value Added Tax Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-032
-
-Title: Comprehensive Income Tax Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-033
-
-Title: Withholding Tax Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-034
-
-Title: Freelancer 3.3 Percent Tax Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-035
-
-Title: Loan Affordability Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-036
-
-Title: Debt Repayment Period Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-037
-
-Title: Credit Card Installment Interest Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-038
-
-Title: Rent Conversion Rate Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-039
-
-Title: Jeonse to Monthly Rent Conversion Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-040
-
-Title: Real Estate Brokerage Fee Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-041
-
-Title: Stock Average Cost Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-042
-
-Title: Stock Profit and Loss Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-043
-
-Title: Dividend Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
-
----
-
-P-044
-
-Title: Dividend Yield Calculator
-
-Status: OPEN
-
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
+- ads.txt and page configuration use the exact verified publisher ID.
+- Production-only behavior and failure-safe loading are tested.
 
 ---
 
@@ -995,21 +315,11 @@ P-045
 
 Title: Investment Fee Impact Calculator
 
-Status: OPEN
+Status: BLOCKED
 
-Priority: HIGH
+Priority: LOW
 
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
+Reason: Additional calculator expansion is paused until UX-001 and the high-priority SEO and AdSense readiness program are completed.
 
 ---
 
@@ -1017,21 +327,9 @@ P-046
 
 Title: Inflation Calculator
 
-Status: OPEN
+Status: BLOCKED
 
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
+Priority: LOW
 
 ---
 
@@ -1039,21 +337,9 @@ P-047
 
 Title: Currency Conversion Calculator
 
-Status: OPEN
+Status: BLOCKED
 
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
+Priority: LOW
 
 ---
 
@@ -1061,21 +347,9 @@ P-048
 
 Title: Pension Savings Tax Credit Calculator
 
-Status: OPEN
+Status: BLOCKED
 
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
+Priority: LOW
 
 ---
 
@@ -1083,21 +357,9 @@ P-049
 
 Title: ISA Tax Savings Calculator
 
-Status: OPEN
+Status: BLOCKED
 
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
+Priority: LOW
 
 ---
 
@@ -1105,18 +367,6 @@ P-050
 
 Title: Retirement Pension Tax Credit Calculator
 
-Status: OPEN
+Status: BLOCKED
 
-Priority: HIGH
-
-Branch: -
-
-Commit SHA: -
-
-Draft PR: -
-
-Last Result: NOT_STARTED
-
-Failure: -
-
-Updated: -
+Priority: LOW
