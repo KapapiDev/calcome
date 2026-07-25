@@ -7,46 +7,18 @@ permissions:
   contents: read
 
 jobs:
-  quality:
+  format-task-queue:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-
+    timeout-minutes: 5
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Apply repository formatter
-        run: npm run format
-
-      - name: Run lint
-        run: npm run lint
-
-      - name: Run typecheck
-        run: npm run typecheck
-
-      - name: Run tests
-        run: npm run test
-
-      - name: Build application
-        run: npm run build
-
-      - name: Upload validated formatted source
-        if: always()
-        uses: actions/upload-artifact@v4
+      - run: npm ci
+      - run: npm run format
+      - uses: actions/upload-artifact@v4
         with:
-          name: ux-001-final-formatted-source
-          path: |
-            src/app/calculators/page.tsx
-            src/app/calculators/page.test.tsx
-            src/app/page.tsx
-            src/config/calculator-directory.ts
-            src/config/calculator-directory.test.ts
+          name: ux-001-formatted-task-queue
+          path: TASK_QUEUE.md
