@@ -1,7 +1,10 @@
 import Link from "next/link";
 
 import { CalculatorCard } from "@/components/calculators/calculator-card";
-import { publishedCalculators } from "@/config/calculators";
+import {
+  publishedCalculators,
+  type PublishedCalculator,
+} from "@/config/calculators";
 import { absoluteUrl } from "@/config/site";
 import { createPageMetadata } from "@/lib/seo/metadata";
 import { JsonLdScript } from "@/lib/seo/structured-data";
@@ -9,6 +12,15 @@ import { JsonLdScript } from "@/lib/seo/structured-data";
 const path = "/calculators";
 const description =
   "CalCome에서 현재 제공하는 금융 계산기를 한곳에서 확인하세요.";
+const dividendYieldCalculator = {
+  id: "dividend-yield",
+  name: "배당수익률 계산기",
+  description:
+    "현재 주가와 주당 연간 배당금으로 배당수익률과 투자금 기준 예상 배당금을 계산합니다.",
+  keywords: ["배당수익률", "배당률", "예상 배당금", "dividend yield"],
+  category: "금융",
+  href: "/ko/finance/dividend-yield",
+} as const satisfies PublishedCalculator;
 
 export const metadata = createPageMetadata({
   title: "금융 계산기 모음",
@@ -67,6 +79,15 @@ export default function CalculatorsPage() {
             준비와 검증이 끝난 뒤 이 목록에 추가됩니다.
           </p>
         </header>
+
+        <section className="mt-10" aria-labelledby="new-calculator">
+          <h2 id="new-calculator" className="text-lg font-semibold">
+            새 계산기
+          </h2>
+          <div className="mt-4 max-w-md">
+            <CalculatorCard calculator={dividendYieldCalculator} />
+          </div>
+        </section>
 
         <section className="mt-12" aria-labelledby="finance-calculators">
           <h2
