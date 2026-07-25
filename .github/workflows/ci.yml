@@ -26,6 +26,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Format diagnostic copy
+        run: npm run format
+
+      - name: Upload formatted source
+        uses: actions/upload-artifact@v4
+        with:
+          name: ux-001-formatted-source
+          path: |
+            src/app/calculators/page.tsx
+            src/app/page.tsx
+            src/config/calculator-directory.ts
+            src/config/calculator-directory.test.ts
+
       - name: Run lint
         run: npm run lint
 
