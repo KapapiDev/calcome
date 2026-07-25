@@ -1,0 +1,31 @@
+name: UX-001 Final Diagnostic
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check-output:
+    if: github.event.pull_request.head.ref == 'agent/ux-001-categorized-directory'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Capture check output
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run check 2>&1 | tee check-output.txt
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ux-001-current-check-output
+          path: check-output.txt
