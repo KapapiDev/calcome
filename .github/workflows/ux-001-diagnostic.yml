@@ -7,7 +7,7 @@ permissions:
   contents: read
 
 jobs:
-  check-output:
+  format-output:
     if: github.event.pull_request.head.ref == 'agent/ux-001-categorized-directory'
     runs-on: ubuntu-latest
     steps:
@@ -17,11 +17,12 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      - name: Capture check output
-        run: npm run check > check-output.txt 2>&1
-      - name: Upload output
-        if: always()
+      - name: Format affected files
+        run: npx prettier --write src/app/calculators/page.tsx TASK_QUEUE.md
+      - name: Upload formatted files
         uses: actions/upload-artifact@v4
         with:
-          name: ux-001-check-output
-          path: check-output.txt
+          name: ux-001-formatted-files
+          path: |
+            src/app/calculators/page.tsx
+            TASK_QUEUE.md
