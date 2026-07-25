@@ -22,10 +22,10 @@
 
 ## Completed calculator program
 
-| Tasks | Status | Evidence |
-|---|---|---|
-| P-001 through P-043 | DONE | Matching merged PRs #35 through #89 |
-| P-044 | DONE | PR #91 merged |
+| Tasks               | Status | Evidence                            |
+| ------------------- | ------ | ----------------------------------- |
+| P-001 through P-043 | DONE   | Matching merged PRs #35 through #89 |
+| P-044               | DONE   | PR #91 merged                       |
 
 ---
 
@@ -123,6 +123,7 @@ Title: Full-Site Accessibility and Visual Consistency Regression
 Status: BLOCKED
 Priority: HIGH
 Scope:
+
 - Run keyboard-only, focus-order, accessible-name, contrast, zoom, reduced-motion, touch-target, mobile overflow, light-mode, and dark-mode regression checks.
 - Standardize only proven inconsistencies in typography, spacing, inputs, buttons, error messages, result hierarchy, tables, charts, disclosures, directory cards, category controls, and search states.
 - Record shared UI rules to prevent future drift.
@@ -133,67 +134,67 @@ Scope:
 
 ## Tier A: Highest commercial and recurring Korean intent
 
-| Task | Calculator | Primary directory category | Status | Priority |
-|---|---|---|---|---|
-| P-045 | Investment Fee Impact Calculator | 투자 | BLOCKED | HIGH |
-| P-046 | Inflation and Purchasing Power Calculator | 저축·연금 | BLOCKED | HIGH |
-| P-047 | Currency Conversion Calculator | 사업·생활 | BLOCKED | HIGH |
-| P-048 | Pension Savings Tax Credit Calculator | 저축·연금 | BLOCKED | HIGH |
-| P-049 | ISA Tax Savings Calculator | 투자 | BLOCKED | HIGH |
-| P-050 | Retirement Pension Tax Credit Calculator | 저축·연금 | BLOCKED | HIGH |
-| P-051 | Year-End Tax Settlement Refund Calculator | 세금 | BLOCKED | HIGH |
-| P-052 | Retirement Income Tax Calculator | 세금 | BLOCKED | HIGH |
-| P-053 | Earned Income Withholding Tax Calculator | 세금 | BLOCKED | HIGH |
-| P-054 | Part-Time Monthly Pay Calculator | 급여·근로 | BLOCKED | HIGH |
-| P-055 | Daily Worker Pay Calculator | 급여·근로 | BLOCKED | HIGH |
-| P-056 | Weekly and Monthly Work-Hours Converter | 급여·근로 | BLOCKED | HIGH |
-| P-057 | Job Offer Total Compensation Comparison Calculator | 급여·근로 | BLOCKED | HIGH |
-| P-058 | Salary Negotiation Target Calculator | 급여·근로 | BLOCKED | HIGH |
-| P-059 | Employer Total Labor Cost Calculator | 사업·생활 | BLOCKED | HIGH |
-| P-060 | Parental Leave Benefit Calculator | 급여·근로 | BLOCKED | HIGH |
-| P-061 | Maternity Leave Benefit Calculator | 급여·근로 | BLOCKED | HIGH |
-| P-062 | Stress DSR Calculator | 대출·신용 | BLOCKED | HIGH |
-| P-063 | Mortgage Loan Limit Calculator | 대출·신용 | BLOCKED | HIGH |
-| P-064 | Jeonse Loan Limit Calculator | 대출·신용 | BLOCKED | HIGH |
-| P-065 | Rent Affordability Calculator | 부동산·주거 | BLOCKED | HIGH |
-| P-066 | Jeonse Deposit vs Monthly Rent Cost Calculator | 부동산·주거 | BLOCKED | HIGH |
-| P-067 | Home Purchase Total Cost Calculator | 부동산·주거 | BLOCKED | HIGH |
-| P-068 | Home Sale Net Proceeds Calculator | 부동산·주거 | BLOCKED | HIGH |
-| P-069 | Rental Yield Calculator | 부동산·주거 | BLOCKED | HIGH |
-| P-070 | Apartment Management Fee Budget Calculator | 부동산·주거 | BLOCKED | MEDIUM |
+| Task  | Calculator                                         | Primary directory category | Status  | Priority |
+| ----- | -------------------------------------------------- | -------------------------- | ------- | -------- |
+| P-045 | Investment Fee Impact Calculator                   | 투자                       | BLOCKED | HIGH     |
+| P-046 | Inflation and Purchasing Power Calculator          | 저축·연금                  | BLOCKED | HIGH     |
+| P-047 | Currency Conversion Calculator                     | 사업·생활                  | BLOCKED | HIGH     |
+| P-048 | Pension Savings Tax Credit Calculator              | 저축·연금                  | BLOCKED | HIGH     |
+| P-049 | ISA Tax Savings Calculator                         | 투자                       | BLOCKED | HIGH     |
+| P-050 | Retirement Pension Tax Credit Calculator           | 저축·연금                  | BLOCKED | HIGH     |
+| P-051 | Year-End Tax Settlement Refund Calculator          | 세금                       | BLOCKED | HIGH     |
+| P-052 | Retirement Income Tax Calculator                   | 세금                       | BLOCKED | HIGH     |
+| P-053 | Earned Income Withholding Tax Calculator           | 세금                       | BLOCKED | HIGH     |
+| P-054 | Part-Time Monthly Pay Calculator                   | 급여·근로                  | BLOCKED | HIGH     |
+| P-055 | Daily Worker Pay Calculator                        | 급여·근로                  | BLOCKED | HIGH     |
+| P-056 | Weekly and Monthly Work-Hours Converter            | 급여·근로                  | BLOCKED | HIGH     |
+| P-057 | Job Offer Total Compensation Comparison Calculator | 급여·근로                  | BLOCKED | HIGH     |
+| P-058 | Salary Negotiation Target Calculator               | 급여·근로                  | BLOCKED | HIGH     |
+| P-059 | Employer Total Labor Cost Calculator               | 사업·생활                  | BLOCKED | HIGH     |
+| P-060 | Parental Leave Benefit Calculator                  | 급여·근로                  | BLOCKED | HIGH     |
+| P-061 | Maternity Leave Benefit Calculator                 | 급여·근로                  | BLOCKED | HIGH     |
+| P-062 | Stress DSR Calculator                              | 대출·신용                  | BLOCKED | HIGH     |
+| P-063 | Mortgage Loan Limit Calculator                     | 대출·신용                  | BLOCKED | HIGH     |
+| P-064 | Jeonse Loan Limit Calculator                       | 대출·신용                  | BLOCKED | HIGH     |
+| P-065 | Rent Affordability Calculator                      | 부동산·주거                | BLOCKED | HIGH     |
+| P-066 | Jeonse Deposit vs Monthly Rent Cost Calculator     | 부동산·주거                | BLOCKED | HIGH     |
+| P-067 | Home Purchase Total Cost Calculator                | 부동산·주거                | BLOCKED | HIGH     |
+| P-068 | Home Sale Net Proceeds Calculator                  | 부동산·주거                | BLOCKED | HIGH     |
+| P-069 | Rental Yield Calculator                            | 부동산·주거                | BLOCKED | HIGH     |
+| P-070 | Apartment Management Fee Budget Calculator         | 부동산·주거                | BLOCKED | MEDIUM   |
 
 ## Tier B: Broad utility searches and personal-finance planning
 
-| Task | Calculator | Primary directory category | Status | Priority |
-|---|---|---|---|---|
-| P-071 | Percentage Calculator | 사업·생활 | BLOCKED | HIGH |
-| P-072 | Discount Rate and Sale Price Calculator | 사업·생활 | BLOCKED | HIGH |
-| P-073 | Age Calculator | 사업·생활 | BLOCKED | HIGH |
-| P-074 | D-Day Calculator | 사업·생활 | BLOCKED | HIGH |
-| P-075 | Date Difference Calculator | 사업·생활 | BLOCKED | HIGH |
-| P-076 | Savings Goal Calculator | 저축·연금 | BLOCKED | HIGH |
-| P-077 | Emergency Fund Calculator | 저축·연금 | BLOCKED | HIGH |
-| P-078 | FIRE Retirement Target Calculator | 저축·연금 | BLOCKED | HIGH |
-| P-079 | Retirement Withdrawal Calculator | 저축·연금 | BLOCKED | HIGH |
-| P-080 | Pension Future Monthly Income Calculator | 저축·연금 | BLOCKED | HIGH |
-| P-081 | Dividend Reinvestment Calculator | 투자 | BLOCKED | MEDIUM |
-| P-082 | Portfolio Rebalancing Calculator | 투자 | BLOCKED | MEDIUM |
-| P-083 | Bond Yield to Maturity Calculator | 투자 | BLOCKED | MEDIUM |
-| P-084 | Bond Price Calculator | 투자 | BLOCKED | MEDIUM |
-| P-085 | APR and APY Conversion Calculator | 저축·연금 | BLOCKED | MEDIUM |
+| Task  | Calculator                               | Primary directory category | Status  | Priority |
+| ----- | ---------------------------------------- | -------------------------- | ------- | -------- |
+| P-071 | Percentage Calculator                    | 사업·생활                  | BLOCKED | HIGH     |
+| P-072 | Discount Rate and Sale Price Calculator  | 사업·생활                  | BLOCKED | HIGH     |
+| P-073 | Age Calculator                           | 사업·생활                  | BLOCKED | HIGH     |
+| P-074 | D-Day Calculator                         | 사업·생활                  | BLOCKED | HIGH     |
+| P-075 | Date Difference Calculator               | 사업·생활                  | BLOCKED | HIGH     |
+| P-076 | Savings Goal Calculator                  | 저축·연금                  | BLOCKED | HIGH     |
+| P-077 | Emergency Fund Calculator                | 저축·연금                  | BLOCKED | HIGH     |
+| P-078 | FIRE Retirement Target Calculator        | 저축·연금                  | BLOCKED | HIGH     |
+| P-079 | Retirement Withdrawal Calculator         | 저축·연금                  | BLOCKED | HIGH     |
+| P-080 | Pension Future Monthly Income Calculator | 저축·연금                  | BLOCKED | HIGH     |
+| P-081 | Dividend Reinvestment Calculator         | 투자                       | BLOCKED | MEDIUM   |
+| P-082 | Portfolio Rebalancing Calculator         | 투자                       | BLOCKED | MEDIUM   |
+| P-083 | Bond Yield to Maturity Calculator        | 투자                       | BLOCKED | MEDIUM   |
+| P-084 | Bond Price Calculator                    | 투자                       | BLOCKED | MEDIUM   |
+| P-085 | APR and APY Conversion Calculator        | 저축·연금                  | BLOCKED | MEDIUM   |
 
 ## Tier C: Emerging investment and small-business intent
 
-| Task | Calculator | Primary directory category | Status | Priority |
-|---|---|---|---|---|
-| P-086 | Cryptocurrency Average Cost Calculator | 투자 | BLOCKED | MEDIUM |
-| P-087 | Cryptocurrency Profit and Loss Calculator | 투자 | BLOCKED | MEDIUM |
-| P-088 | Staking Reward Calculator | 투자 | BLOCKED | MEDIUM |
-| P-089 | Dollar-Cost Averaging Calculator | 투자 | BLOCKED | MEDIUM |
-| P-090 | Foreign-Currency Average Cost Calculator | 투자 | BLOCKED | MEDIUM |
-| P-091 | Break-Even Sales Calculator | 사업·생활 | BLOCKED | MEDIUM |
-| P-092 | Gross Margin and Markup Calculator | 사업·생활 | BLOCKED | MEDIUM |
-| P-093 | Business Cash Runway Calculator | 사업·생활 | BLOCKED | MEDIUM |
+| Task  | Calculator                                | Primary directory category | Status  | Priority |
+| ----- | ----------------------------------------- | -------------------------- | ------- | -------- |
+| P-086 | Cryptocurrency Average Cost Calculator    | 투자                       | BLOCKED | MEDIUM   |
+| P-087 | Cryptocurrency Profit and Loss Calculator | 투자                       | BLOCKED | MEDIUM   |
+| P-088 | Staking Reward Calculator                 | 투자                       | BLOCKED | MEDIUM   |
+| P-089 | Dollar-Cost Averaging Calculator          | 투자                       | BLOCKED | MEDIUM   |
+| P-090 | Foreign-Currency Average Cost Calculator  | 투자                       | BLOCKED | MEDIUM   |
+| P-091 | Break-Even Sales Calculator               | 사업·생활                  | BLOCKED | MEDIUM   |
+| P-092 | Gross Margin and Markup Calculator        | 사업·생활                  | BLOCKED | MEDIUM   |
+| P-093 | Business Cash Runway Calculator           | 사업·생활                  | BLOCKED | MEDIUM   |
 
 ## 100-calculator completion rule
 
