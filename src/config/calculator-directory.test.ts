@@ -22,10 +22,10 @@ describe("calculator directory", () => {
 
   it("includes common Korean aliases in directory search data", () => {
     const aliasesById = new Map(
-      directorySearchCalculators.map((calculator) => [
-        calculator.id,
-        calculator.keywords,
-      ]),
+      directorySearchCalculators.map(
+        (calculator) =>
+          [calculator.id, calculator.keywords] as const,
+      ),
     );
 
     expect(aliasesById.get("mortgage-payment")).toContain("주담대");
