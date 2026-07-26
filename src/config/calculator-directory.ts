@@ -152,7 +152,9 @@ const primaryCategoryNameByCalculatorId = new Map(
 
 export const directorySearchCalculators = allPublishedCalculators.map(
   (calculator) => {
-    const primaryCategory = primaryCategoryNameByCalculatorId.get(calculator.id);
+    const primaryCategory = primaryCategoryNameByCalculatorId.get(
+      calculator.id,
+    );
     if (!primaryCategory) {
       throw new Error(`Missing primary directory category: ${calculator.id}`);
     }
