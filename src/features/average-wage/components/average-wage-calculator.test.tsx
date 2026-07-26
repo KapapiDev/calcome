@@ -49,7 +49,9 @@ describe("AverageWageCalculator", () => {
 
     expect(screen.getByRole("alert")).toBeVisible();
     expect(days).toHaveAttribute("aria-invalid", "true");
-    expect(screen.getByText("계산 전에는 입력값을 확인해 주세요.")).toBeVisible();
+    expect(
+      screen.getByText("계산하면 산출값과 통상임금 비교 결과가 표시됩니다."),
+    ).toBeVisible();
     expect(
       screen.queryByText(/통상임금과 비교하지 않은 산출값/),
     ).not.toBeInTheDocument();
