@@ -32,13 +32,13 @@ describe("calculator directory", () => {
     );
 
     for (const calculator of directorySearchCalculators) {
-      expect(calculator.category).toBe(categoryById.get(calculator.id));
+      expect(calculator.primaryCategory).toBe(categoryById.get(calculator.id));
     }
 
     expect(
       directorySearchCalculators.find(
         (calculator) => calculator.id === "weekly-holiday-pay",
-      )?.category,
+      )?.primaryCategory,
     ).toBe("급여·근로");
   });
 
