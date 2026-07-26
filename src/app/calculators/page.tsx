@@ -155,7 +155,10 @@ export default function CalculatorsPage() {
               >
                 {category.calculators.map((calculator) => (
                   <li key={calculator.id}>
-                    <CalculatorCard calculator={calculator} />
+                    <CalculatorCard
+                      calculator={calculator}
+                      categoryLabel={category.name}
+                    />
                   </li>
                 ))}
               </ul>
