@@ -37,4 +37,28 @@ describe("MinimumWageCalculator", () => {
       screen.getByText(/유급 주휴시간은 주 15시간 이상 외에도/),
     ).toBeVisible();
   });
+  it("associates invalid input with the alert and clears a stale result", async () => {
+    const user = userEvent.setup();
+    render(<MinimumWageCalculator locale="en" />);
+    const hours = screen.getByLabelText("Scheduled weekly hours");
+
+    await user.type(hours, "40");
+    await user.click(
+      screen.getByRole("button", { name: "Calculate minimum pay" }),
+    );
+    expect(screen.getByText("Official 209-hour monthly minimum")).toBeVisible();
+
+    await user.clear(hours);
+    await user.type(hours, "invalid");
+    await user.click(
+      screen.getByRole("button", { name: "Calculate minimum pay" }),
+    );
+
+    const alert = screen.getByRole("alert");
+    expect(hours).toHaveAttribute("aria-invalid", "true");
+    expect(hours).toHaveAttribute("aria-describedby", alert.id);
+    expect(
+      screen.queryByText("Official 209-hour monthly minimum"),
+    ).not.toBeInTheDocument();
+  });
 });
