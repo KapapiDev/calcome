@@ -34,6 +34,7 @@ export function SalaryConversionCalculator({
     const checked = validateSalaryConversion({ salary, period }, locale);
     if (!checked.data) {
       setError(copy.error);
+      setResult(null);
       return;
     }
     setError("");
@@ -63,6 +64,7 @@ export function SalaryConversionCalculator({
           </h2>
           {error ? (
             <p
+              id="salary-conversion-error"
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -94,6 +96,8 @@ export function SalaryConversionCalculator({
               inputMode="decimal"
               value={salary}
               placeholder={copy.placeholder}
+              aria-invalid={Boolean(error)}
+              aria-describedby={error ? "salary-conversion-error" : undefined}
               onChange={(event) =>
                 setSalary(formatMoneyInput(event.target.value, salary))
               }
