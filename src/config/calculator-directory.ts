@@ -17,6 +17,10 @@ export type CalculatorDirectoryCategory = {
   calculatorIds: readonly string[];
 };
 
+export type DirectorySearchCalculator = PublishedCalculator & {
+  primaryCategory: string;
+};
+
 export const dividendYieldCalculator = {
   id: "dividend-yield",
   name: "배당수익률 계산기",
@@ -148,21 +152,21 @@ const primaryCategoryNameByCalculatorId = new Map(
 
 export const directorySearchCalculators = allPublishedCalculators.map(
   (calculator) => {
-    const category = primaryCategoryNameByCalculatorId.get(calculator.id);
-    if (!category) {
+    const primaryCategory = primaryCategoryNameByCalculatorId.get(calculator.id);
+    if (!primaryCategory) {
       throw new Error(`Missing primary directory category: ${calculator.id}`);
     }
 
     return {
       ...calculator,
-      category,
+      primaryCategory,
       keywords: [
         ...calculator.keywords,
         ...(directoryAliases[calculator.id] ?? []),
       ],
     };
   },
-) satisfies readonly PublishedCalculator[];
+) satisfies readonly DirectorySearchCalculator[];
 
 const calculatorsById = new Map(
   allPublishedCalculators.map(
