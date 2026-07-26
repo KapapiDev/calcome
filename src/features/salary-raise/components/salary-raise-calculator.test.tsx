@@ -18,16 +18,28 @@ describe("SalaryRaiseCalculator", () => {
     expect(salary).toHaveValue("");
     expect(screen.getByRole("radio", { name: /연봉/ })).toBeChecked();
   });
-  it("renders localized validation errors", () => {
+  it("clears a stale result when localized validation fails", () => {
     render(<SalaryRaiseCalculator locale="en" />);
-    fireEvent.change(screen.getByLabelText("Raise rate"), {
-      target: { value: "." },
-    });
+    const salary = screen.getByLabelText("Current salary");
+    const raiseRate = screen.getByLabelText("Raise rate");
+
+    fireEvent.change(salary, { target: { value: "50000000" } });
+    fireEvent.change(raiseRate, { target: { value: "5" } });
     fireEvent.click(
       screen.getByRole("button", { name: "Calculate raised salary" }),
     );
+    expect(screen.getByText("Current annual salary")).toBeVisible();
+
+    fireEvent.change(raiseRate, { target: { value: "." } });
+    fireEvent.click(
+      screen.getByRole("button", { name: "Calculate raised salary" }),
+    );
+
     expect(screen.getByRole("alert")).toHaveTextContent(
       "Check the highlighted values.",
     );
+    expect(raiseRate).toHaveAttribute("aria-invalid", "true");
+    expect(raiseRate).toHaveAttribute("aria-describedby", "rate-error");
+    expect(screen.queryByText("Current annual salary")).not.toBeInTheDocument();
   });
 });

@@ -53,7 +53,11 @@ export function SalaryRaiseCalculator({
     event.preventDefault();
     const checked = validateSalaryRaise({ salary, raiseRate, period }, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateSalaryRaise(checked.data));
     setAnimationKey((value) => value + 1);
