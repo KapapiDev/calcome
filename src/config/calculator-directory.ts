@@ -17,6 +17,10 @@ export type CalculatorDirectoryCategory = {
   calculatorIds: readonly string[];
 };
 
+export type DirectorySearchCalculator = PublishedCalculator & {
+  primaryCategory: string;
+};
+
 export const dividendYieldCalculator = {
   id: "dividend-yield",
   name: "배당수익률 계산기",
@@ -41,16 +45,6 @@ const directoryAliases: Readonly<Record<string, readonly string[]>> = {
   "net-salary": ["연봉 실수령", "월급 실수령"],
   "freelancer-3-3-tax": ["3.3", "삼쩜삼"],
 };
-
-export const directorySearchCalculators = allPublishedCalculators.map(
-  (calculator) => ({
-    ...calculator,
-    keywords: [
-      ...calculator.keywords,
-      ...(directoryAliases[calculator.id] ?? []),
-    ],
-  }),
-) satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories = [
   {
@@ -149,6 +143,32 @@ export const calculatorDirectoryCategories = [
     calculatorIds: [],
   },
 ] as const satisfies readonly CalculatorDirectoryCategory[];
+
+const primaryCategoryNameByCalculatorId = new Map(
+  calculatorDirectoryCategories.flatMap((category) =>
+    category.calculatorIds.map((id) => [id, category.name] as const),
+  ),
+);
+
+export const directorySearchCalculators = allPublishedCalculators.map(
+  (calculator) => {
+    const primaryCategory = primaryCategoryNameByCalculatorId.get(
+      calculator.id,
+    );
+    if (!primaryCategory) {
+      throw new Error(`Missing primary directory category: ${calculator.id}`);
+    }
+
+    return {
+      ...calculator,
+      primaryCategory,
+      keywords: [
+        ...calculator.keywords,
+        ...(directoryAliases[calculator.id] ?? []),
+      ],
+    };
+  },
+) satisfies readonly DirectorySearchCalculator[];
 
 const calculatorsById = new Map(
   allPublishedCalculators.map(

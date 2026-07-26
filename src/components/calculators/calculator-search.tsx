@@ -3,12 +3,12 @@
 import { useMemo, useState } from "react";
 
 import { CalculatorCard } from "@/components/calculators/calculator-card";
-import type { PublishedCalculator } from "@/config/calculators";
+import type { DirectorySearchCalculator } from "@/config/calculator-directory";
 
 export function CalculatorSearch({
   calculators,
 }: {
-  calculators: readonly PublishedCalculator[];
+  calculators: readonly DirectorySearchCalculator[];
 }) {
   const [query, setQuery] = useState("");
   const normalizedQuery = query.trim().toLocaleLowerCase("ko-KR");
@@ -42,7 +42,10 @@ export function CalculatorSearch({
             <ul className="grid gap-3">
               {results.map((calculator) => (
                 <li key={calculator.id}>
-                  <CalculatorCard calculator={calculator} />
+                  <CalculatorCard
+                    calculator={calculator}
+                    categoryLabel={calculator.primaryCategory}
+                  />
                 </li>
               ))}
             </ul>

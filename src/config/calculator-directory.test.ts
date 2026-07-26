@@ -20,6 +20,28 @@ describe("calculator directory", () => {
     expect([...assignedIds].sort()).toEqual([...publishedIds].sort());
   });
 
+  it("uses primary directory categories in search results", () => {
+    const categoryById = new Map(
+      calculatorDirectoryCategories.flatMap((category) =>
+        category.calculatorIds.map((id) => [id, category.name] as const),
+      ),
+    );
+
+    expect(directorySearchCalculators).toHaveLength(
+      allPublishedCalculators.length,
+    );
+
+    for (const calculator of directorySearchCalculators) {
+      expect(calculator.primaryCategory).toBe(categoryById.get(calculator.id));
+    }
+
+    expect(
+      directorySearchCalculators.find(
+        (calculator) => calculator.id === "weekly-holiday-pay",
+      )?.primaryCategory,
+    ).toBe("급여·근로");
+  });
+
   it("includes common Korean aliases in directory search data", () => {
     const aliasesById = new Map(
       directorySearchCalculators.map(
