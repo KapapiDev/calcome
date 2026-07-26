@@ -34,6 +34,26 @@ describe("AverageWageCalculator", () => {
       "Check the highlighted values.",
     );
   });
+  it("clears a previous result when a later submission is invalid", () => {
+    render(<AverageWageCalculator locale="ko" />);
+    const wage = screen.getByLabelText("산정기간 임금총액");
+    const days = screen.getByLabelText("산정기간 총일수");
+
+    fireEvent.change(wage, { target: { value: "9000000" } });
+    fireEvent.change(days, { target: { value: "92" } });
+    fireEvent.click(screen.getByRole("button", { name: "평균임금 계산하기" }));
+    expect(screen.getByText(/통상임금과 비교하지 않은 산출값/)).toBeVisible();
+
+    fireEvent.change(days, { target: { value: "0" } });
+    fireEvent.click(screen.getByRole("button", { name: "평균임금 계산하기" }));
+
+    expect(screen.getByRole("alert")).toBeVisible();
+    expect(days).toHaveAttribute("aria-invalid", "true");
+    expect(screen.getByText("계산 전에는 입력값을 확인해 주세요.")).toBeVisible();
+    expect(
+      screen.queryByText(/통상임금과 비교하지 않은 산출값/),
+    ).not.toBeInTheDocument();
+  });
   it("shows the English ordinary-wage comparison guidance", () => {
     render(<AverageWageCalculator locale="en" />);
     fireEvent.change(screen.getByLabelText("Total wages in period"), {
