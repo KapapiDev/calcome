@@ -52,7 +52,11 @@ export function AverageWageCalculator({
       locale,
     );
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateAverageWage(checked.data));
     setAnimationKey((value) => value + 1);
