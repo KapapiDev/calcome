@@ -26,14 +26,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Generate formatted directory config
-        run: npx prettier src/config/calculator-directory.ts > formatted-calculator-directory.ts
+      - name: Run static checks
+        run: npm run check
 
-      - name: Upload formatted directory config
-        uses: actions/upload-artifact@v4
-        with:
-          name: formatted-calculator-directory
-          path: formatted-calculator-directory.ts
-
-      - name: Require formatting fix
-        run: npx prettier --check src/config/calculator-directory.ts
+      - name: Build application
+        run: npm run build
