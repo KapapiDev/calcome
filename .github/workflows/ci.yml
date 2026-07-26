@@ -26,8 +26,29 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run static checks
-        run: npm run check
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Check directory config formatting
+        run: npx prettier --check src/config/calculator-directory.ts
+
+      - name: Check directory test formatting
+        run: npx prettier --check src/config/calculator-directory.test.ts
+
+      - name: Check search component formatting
+        run: npx prettier --check src/components/calculators/calculator-search.tsx
+
+      - name: Check search test formatting
+        run: npx prettier --check src/components/calculators/calculator-search.test.tsx
+
+      - name: Check all formatting
+        run: npm run format:check
+
+      - name: Run tests
+        run: npm run test
 
       - name: Build application
         run: npm run build
