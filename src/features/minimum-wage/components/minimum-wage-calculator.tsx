@@ -15,6 +15,7 @@ import { validateMinimumWageHours } from "../validation";
 
 const fieldClass =
   "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none placeholder:text-muted-foreground/70 focus-visible:ring-3 focus-visible:ring-ring/30 sm:text-sm";
+const hoursErrorId = "minimum-wage-hours-error";
 
 export function MinimumWageCalculator({
   locale,
@@ -41,6 +42,8 @@ export function MinimumWageCalculator({
     event.preventDefault();
     const weeklyHours = validateMinimumWageHours(hours);
     if (!weeklyHours) {
+      cancelResultScroll();
+      setResult(null);
       setError(copy.error);
       return;
     }
@@ -75,6 +78,7 @@ export function MinimumWageCalculator({
           </h2>
           {error ? (
             <p
+              id={hoursErrorId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -88,6 +92,8 @@ export function MinimumWageCalculator({
               value={hours}
               placeholder={locale === "ko" ? "예: 40" : "e.g. 40"}
               onChange={(event) => setHours(event.target.value)}
+              aria-invalid={Boolean(error)}
+              aria-describedby={error ? hoursErrorId : undefined}
               className={fieldClass}
             />
           </label>
