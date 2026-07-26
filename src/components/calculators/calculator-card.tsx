@@ -4,8 +4,10 @@ import type { PublishedCalculator } from "@/config/calculators";
 
 export function CalculatorCard({
   calculator,
+  categoryLabel,
 }: {
   calculator: PublishedCalculator;
+  categoryLabel?: string;
 }) {
   return (
     <Link
@@ -13,7 +15,7 @@ export function CalculatorCard({
       className="group block h-full rounded-xl border bg-card p-4 transition-colors hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none"
     >
       <span className="text-xs font-semibold tracking-wide text-primary">
-        {calculator.category}
+        {categoryLabel ?? calculator.category}
       </span>
       <h3 className="mt-2 text-lg font-semibold tracking-tight">
         {calculator.name}
