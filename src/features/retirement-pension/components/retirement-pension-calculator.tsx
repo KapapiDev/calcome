@@ -15,6 +15,8 @@ import {
 } from "../content";
 import { validateRetirementPension } from "../validation";
 
+const errorId = "retirement-pension-error";
+
 export function RetirementPensionCalculator({
   locale,
 }: {
@@ -36,6 +38,7 @@ export function RetirementPensionCalculator({
     const checked = validateRetirementPension(values);
     if (!checked) {
       setError(copy.error);
+      setResult(null);
       return;
     }
     setError("");
@@ -67,7 +70,11 @@ export function RetirementPensionCalculator({
             {copy.input}
           </h2>
           {error ? (
-            <p role="alert" className="mt-3 text-sm text-destructive">
+            <p
+              id={errorId}
+              role="alert"
+              className="mt-3 text-sm text-destructive"
+            >
               {error}
             </p>
           ) : null}
@@ -78,6 +85,8 @@ export function RetirementPensionCalculator({
                 <input
                   inputMode="decimal"
                   value={values[field]}
+                  aria-invalid={Boolean(error)}
+                  aria-describedby={error ? errorId : undefined}
                   onChange={(event) =>
                     setValues((current) => ({
                       ...current,
@@ -87,7 +96,7 @@ export function RetirementPensionCalculator({
                           : event.target.value,
                     }))
                   }
-                  className="mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none focus-visible:ring-3 focus-visible:ring-ring/30 sm:text-sm"
+                  className="mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none focus-visible:ring-3 focus-visible:ring-ring/30 aria-invalid:border-destructive sm:text-sm"
                 />
               </label>
             ),
