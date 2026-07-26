@@ -10,24 +10,22 @@ The audit does not treat an HTTP response or a successful deployment as proof th
 
 ## Canonical inventory
 
-| Calculator slug | Korean route | English route | Current audit state |
-| --- | --- | --- | --- |
-| `weekly-holiday-pay` | `/ko/employment/weekly-holiday-pay` | `/en/employment/weekly-holiday-pay` | Code fix and regression tests added in PR #100; Preview interaction still pending |
-| `severance-pay` | `/ko/employment/severance-pay` | `/en/employment/severance-pay` | Pending interactive audit |
-| `unemployment-benefits` | `/ko/employment/unemployment-benefits` | `/en/employment/unemployment-benefits` | Pending interactive audit |
-| `net-salary` | `/ko/employment/net-salary` | `/en/employment/net-salary` | Pending interactive audit |
-| `hourly-wage` | `/ko/employment/hourly-wage` | `/en/employment/hourly-wage` | Pending interactive audit |
-| `social-insurance` | `/ko/employment/social-insurance` | `/en/employment/social-insurance` | Pending interactive audit |
-| `average-wage` | `/ko/employment/average-wage` | `/en/employment/average-wage` | Pending interactive audit |
-| `salary-raise` | `/ko/employment/salary-raise` | `/en/employment/salary-raise` | Pending interactive audit |
-| `salary-conversion` | `/ko/employment/salary-conversion` | `/en/employment/salary-conversion` | Pending interactive audit |
-| `overtime-pay` | `/ko/employment/overtime-pay` | `/en/employment/overtime-pay` | Pending interactive audit |
-| `night-work-pay` | `/ko/employment/night-work-pay` | `/en/employment/night-work-pay` | Pending interactive audit |
-| `holiday-work-pay` | `/ko/employment/holiday-work-pay` | `/en/employment/holiday-work-pay` | Pending interactive audit |
-| `minimum-wage` | `/ko/employment/minimum-wage` | `/en/employment/minimum-wage` | Pending interactive audit |
-| `annual-leave-allowance` | `/ko/employment/annual-leave-allowance` | `/en/employment/annual-leave-allowance` | Pending interactive audit |
-| `retirement-pension` | `/ko/employment/retirement-pension` | `/en/employment/retirement-pension` | Pending interactive audit |
-| `gross-up-salary` | `/ko/employment/gross-up-salary` | `/en/employment/gross-up-salary` | Pending interactive audit |
+- `weekly-holiday-pay`: `/ko/employment/weekly-holiday-pay` and `/en/employment/weekly-holiday-pay`. Code fix and regression tests added in PR #100; Preview interaction still pending.
+- `severance-pay`: `/ko/employment/severance-pay` and `/en/employment/severance-pay`. Pending interactive audit.
+- `unemployment-benefits`: `/ko/employment/unemployment-benefits` and `/en/employment/unemployment-benefits`. Pending interactive audit.
+- `net-salary`: `/ko/employment/net-salary` and `/en/employment/net-salary`. Pending interactive audit.
+- `hourly-wage`: `/ko/employment/hourly-wage` and `/en/employment/hourly-wage`. Pending interactive audit.
+- `social-insurance`: `/ko/employment/social-insurance` and `/en/employment/social-insurance`. Pending interactive audit.
+- `average-wage`: `/ko/employment/average-wage` and `/en/employment/average-wage`. Pending interactive audit.
+- `salary-raise`: `/ko/employment/salary-raise` and `/en/employment/salary-raise`. Pending interactive audit.
+- `salary-conversion`: `/ko/employment/salary-conversion` and `/en/employment/salary-conversion`. Pending interactive audit.
+- `overtime-pay`: `/ko/employment/overtime-pay` and `/en/employment/overtime-pay`. Pending interactive audit.
+- `night-work-pay`: `/ko/employment/night-work-pay` and `/en/employment/night-work-pay`. Pending interactive audit.
+- `holiday-work-pay`: `/ko/employment/holiday-work-pay` and `/en/employment/holiday-work-pay`. Pending interactive audit.
+- `minimum-wage`: `/ko/employment/minimum-wage` and `/en/employment/minimum-wage`. Pending interactive audit.
+- `annual-leave-allowance`: `/ko/employment/annual-leave-allowance` and `/en/employment/annual-leave-allowance`. Pending interactive audit.
+- `retirement-pension`: `/ko/employment/retirement-pension` and `/en/employment/retirement-pension`. Pending interactive audit.
+- `gross-up-salary`: `/ko/employment/gross-up-salary` and `/en/employment/gross-up-salary`. Pending interactive audit.
 
 ## Confirmed defect and repair
 
