@@ -23,15 +23,23 @@ describe("WeeklyHolidayPayCalculator input safety", () => {
       const user = userEvent.setup();
       render(<WeeklyHolidayPayCalculator locale="ko" />);
 
-      await user.type(screen.getByLabelText("시급"), "12000");
-      await user.type(screen.getByLabelText("주 소정근로시간"), hours);
+      const wageInput = screen.getByLabelText("시급");
+      const hoursInput = screen.getByLabelText("주 소정근로시간");
+
+      await user.type(wageInput, "12000");
+      await user.type(hoursInput, hours);
       await user.click(
         screen.getByRole("button", { name: "주휴수당 계산하기" }),
       );
 
-      expect(screen.getByRole("alert")).toHaveTextContent(
+      const alert = screen.getByRole("alert");
+      expect(alert).toHaveTextContent(
         "시급과 1~40시간의 주 소정근로시간을 입력하세요.",
       );
+      expect(wageInput).toHaveAttribute("aria-invalid", "true");
+      expect(hoursInput).toHaveAttribute("aria-invalid", "true");
+      expect(wageInput).toHaveAttribute("aria-describedby", alert.id);
+      expect(hoursInput).toHaveAttribute("aria-describedby", alert.id);
       expect(
         screen.queryByText("예상 적용 대상입니다."),
       ).not.toBeInTheDocument();
@@ -55,6 +63,35 @@ describe("WeeklyHolidayPayCalculator input safety", () => {
     expect(screen.getAllByTestId("animated-won")[0]).toHaveAccessibleName(
       "₩37,200",
     );
+  });
+
+  it("clears a previously calculated result when a later submission is invalid", async () => {
+    const user = userEvent.setup();
+    render(<WeeklyHolidayPayCalculator locale="en" />);
+
+    const wageInput = screen.getByLabelText("Hourly wage");
+    const hoursInput = screen.getByLabelText("Scheduled weekly hours");
+
+    await user.type(wageInput, "12000");
+    await user.type(hoursInput, "15.5");
+    await user.click(
+      screen.getByRole("button", { name: "Calculate holiday pay" }),
+    );
+
+    expect(
+      screen.getByText("The entered conditions are generally eligible."),
+    ).toBeVisible();
+
+    await user.clear(hoursInput);
+    await user.type(hoursInput, "0");
+    await user.click(
+      screen.getByRole("button", { name: "Calculate holiday pay" }),
+    );
+
+    expect(screen.getByRole("alert")).toBeVisible();
+    expect(
+      screen.queryByText("The entered conditions are generally eligible."),
+    ).not.toBeInTheDocument();
   });
 
   it("shows the existing English error for a pasted nonnumeric wage", async () => {

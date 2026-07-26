@@ -45,10 +45,12 @@ describe("LanguageSelector", () => {
     expect(selector).toHaveFocus();
 
     await user.click(selector);
-    expect(screen.getByRole("link", { name: "한국어" })).toHaveAttribute(
-      "aria-current",
-      "page",
-    );
+    expect(
+      screen.queryByRole("link", { name: "한국어" }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByText("한국어", { selector: 'span[aria-current="page"]' }),
+    ).toBeVisible();
     expect(screen.getByRole("link", { name: "English" })).toHaveAttribute(
       "href",
       "/en/employment/weekly-holiday-pay",
@@ -72,10 +74,12 @@ describe("LanguageSelector", () => {
       "href",
       "/ko/employment/weekly-holiday-pay",
     );
-    expect(screen.getByRole("link", { name: "English" })).toHaveAttribute(
-      "aria-current",
-      "page",
-    );
+    expect(
+      screen.queryByRole("link", { name: "English" }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByText("English", { selector: 'span[aria-current="page"]' }),
+    ).toBeVisible();
     expect(screen.queryByText("日本語")).not.toBeInTheDocument();
   });
 });

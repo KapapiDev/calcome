@@ -21,7 +21,8 @@ import {
 import { validateWeeklyHolidayPayInput } from "../validation";
 
 const fieldClass =
-  "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none placeholder:text-muted-foreground/70 focus-visible:ring-3 focus-visible:ring-ring/30 sm:text-sm";
+  "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none placeholder:text-muted-foreground/70 focus-visible:ring-3 focus-visible:ring-ring/30 aria-invalid:border-destructive sm:text-sm";
+const errorId = "weekly-pay-error";
 
 export function WeeklyHolidayPayCalculator({
   locale,
@@ -48,6 +49,8 @@ export function WeeklyHolidayPayCalculator({
       weeklyHours: hours,
     });
     if (!validated) {
+      cancelResultScroll();
+      setResult(null);
       setError(
         locale === "ko"
           ? "시급과 1~40시간의 주 소정근로시간을 입력하세요."
@@ -88,6 +91,7 @@ export function WeeklyHolidayPayCalculator({
           </h2>
           {error ? (
             <p
+              id={errorId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -101,6 +105,8 @@ export function WeeklyHolidayPayCalculator({
               value={wage}
               placeholder={locale === "ko" ? "예: 12,000" : "e.g. 12,000"}
               onChange={(e) => setWage(formatMoneyInput(e.target.value, wage))}
+              aria-invalid={Boolean(error)}
+              aria-describedby={error ? errorId : undefined}
               className={fieldClass}
             />
           </label>
@@ -111,6 +117,8 @@ export function WeeklyHolidayPayCalculator({
               value={hours}
               placeholder={locale === "ko" ? "예: 40" : "e.g. 40"}
               onChange={(e) => setHours(e.target.value)}
+              aria-invalid={Boolean(error)}
+              aria-describedby={error ? errorId : undefined}
               className={fieldClass}
             />
           </label>
