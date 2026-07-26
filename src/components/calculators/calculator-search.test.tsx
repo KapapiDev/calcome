@@ -29,9 +29,9 @@ describe("CalculatorSearch", () => {
 
     await user.type(screen.getByRole("searchbox"), "주휴수당");
 
-    expect(screen.getByRole("link", { name: /주휴수당 계산기/ })).toHaveTextContent(
-      "급여·근로",
-    );
+    expect(
+      screen.getByRole("link", { name: /주휴수당 계산기/ }),
+    ).toHaveTextContent("급여·근로");
     expect(screen.queryByText("금융")).not.toBeInTheDocument();
   });
 
