@@ -1,7 +1,10 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { allPublishedCalculators } from "@/config/calculator-directory";
+import {
+  allPublishedCalculators,
+  visibleCalculatorDirectory,
+} from "@/config/calculator-directory";
 
 import CalculatorsPage, { metadata } from "./page";
 
@@ -52,5 +55,19 @@ describe("calculator directory", () => {
         url: `https://www.calcome.com${calculator.href}`,
       })),
     );
+  });
+
+  it("labels every card with its primary directory category", () => {
+    render(<CalculatorsPage />);
+
+    for (const category of visibleCalculatorDirectory) {
+      const categoryList = screen.getByRole("list", {
+        name: `${category.name} 계산기`,
+      });
+
+      expect(within(categoryList).getAllByText(category.name)).toHaveLength(
+        category.calculators.length,
+      );
+    }
   });
 });
