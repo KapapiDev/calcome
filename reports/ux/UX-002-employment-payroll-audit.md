@@ -4,7 +4,7 @@ Verification date: 2026-07-26
 
 ## Scope and evidence
 
-This audit tracks every currently published calculator under the canonical `/employment/` route family. The production homepage payload exposed 14 Korean employment routes, and the same route slugs are expected under `/en/employment/`.
+This audit tracks every currently published calculator under the canonical `/employment/` route family. The production homepage payload exposed 16 Korean employment routes, and the same route slugs are expected under `/en/employment/`.
 
 The audit does not treat an HTTP response or a successful deployment as proof that interactive behavior passed. Rows remain pending until the calculator has been exercised for normal calculation, invalid input, stale-result clearing, reset, keyboard and screen-reader behavior, mobile layout, bilingual copy, language switching, and policy disclosure where applicable.
 
