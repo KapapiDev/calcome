@@ -23,6 +23,7 @@ const initialValues: DtiValues = {
   termYears: "",
   otherMonthlyDebt: "",
 };
+const errorSummaryId = "dti-error-summary";
 
 export function DtiCalculator({ locale }: { locale: DtiLocale }) {
   const copy = dtiContent[locale];
@@ -49,7 +50,11 @@ export function DtiCalculator({ locale }: { locale: DtiLocale }) {
     event.preventDefault();
     const checked = validateDti(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateDti(checked.data));
     setAnimationKey((value) => value + 1);
@@ -77,6 +82,7 @@ export function DtiCalculator({ locale }: { locale: DtiLocale }) {
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -89,6 +95,7 @@ export function DtiCalculator({ locale }: { locale: DtiLocale }) {
             value={values.annualIncome}
             placeholder="60,000,000"
             error={errors.annualIncome}
+            errorSummaryId={errorSummaryId}
             onChange={(value) => setMoney("annualIncome", value)}
           />
           <Field
@@ -97,6 +104,7 @@ export function DtiCalculator({ locale }: { locale: DtiLocale }) {
             value={values.mortgagePrincipal}
             placeholder="300,000,000"
             error={errors.mortgagePrincipal}
+            errorSummaryId={errorSummaryId}
             onChange={(value) => setMoney("mortgagePrincipal", value)}
           />
           <Field
@@ -106,6 +114,7 @@ export function DtiCalculator({ locale }: { locale: DtiLocale }) {
             placeholder="4.5"
             suffix="%"
             error={errors.annualInterestRate}
+            errorSummaryId={errorSummaryId}
             onChange={(value) =>
               setValues((current) => ({
                 ...current,
@@ -120,6 +129,7 @@ export function DtiCalculator({ locale }: { locale: DtiLocale }) {
             placeholder="30"
             suffix={locale === "ko" ? "년" : "years"}
             error={errors.termYears}
+            errorSummaryId={errorSummaryId}
             onChange={(value) =>
               setValues((current) => ({ ...current, termYears: value }))
             }
@@ -130,6 +140,7 @@ export function DtiCalculator({ locale }: { locale: DtiLocale }) {
             value={values.otherMonthlyDebt}
             placeholder="500,000"
             error={errors.otherMonthlyDebt}
+            errorSummaryId={errorSummaryId}
             onChange={(value) => setMoney("otherMonthlyDebt", value)}
           />
           <div className="mt-4 grid grid-cols-[1fr_auto] gap-2">
@@ -219,6 +230,7 @@ function Field({
   placeholder,
   suffix,
   error,
+  errorSummaryId,
   onChange,
 }: {
   id: string;
@@ -227,8 +239,11 @@ function Field({
   placeholder: string;
   suffix?: string;
   error?: string;
+  errorSummaryId: string;
   onChange: (value: string) => void;
 }) {
+  const describedBy = error ? `${id}-error ${errorSummaryId}` : undefined;
+
   return (
     <div className="mt-4">
       <label htmlFor={id} className="block text-sm font-medium">
@@ -242,7 +257,7 @@ function Field({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={describedBy}
           className={`${fieldClass} ${suffix ? "pr-14" : ""}`}
         />
         {suffix ? (
