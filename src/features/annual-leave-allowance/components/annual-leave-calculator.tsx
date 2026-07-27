@@ -13,6 +13,8 @@ import { calculateAnnualLeaveAllowance } from "../calculate";
 import { annualLeaveContent, type AnnualLeaveLocale } from "../content";
 import { validateAnnualLeaveAllowance } from "../validation";
 
+const errorSummaryId = "annual-leave-error-summary";
+
 export function AnnualLeaveCalculator({
   locale,
 }: {
@@ -25,7 +27,7 @@ export function AnnualLeaveCalculator({
   const [usedDays, setUsedDays] = useState("0");
   const [hourlyWage, setHourlyWage] = useState("");
   const [dailyHours, setDailyHours] = useState("8");
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [result, setResult] = useState<ReturnType<
     typeof calculateAnnualLeaveAllowance
   > | null>(null);
@@ -42,11 +44,11 @@ export function AnnualLeaveCalculator({
       },
       locale,
     );
+    setErrors(checked.errors);
     if (!checked.data) {
-      setError(copy.error);
+      setResult(null);
       return;
     }
-    setError("");
     setResult(calculateAnnualLeaveAllowance(checked.data));
   }
   function reset() {
@@ -56,11 +58,13 @@ export function AnnualLeaveCalculator({
     setUsedDays("0");
     setHourlyWage("");
     setDailyHours("8");
-    setError("");
+    setErrors({});
     setResult(null);
   }
   const numberField =
-    "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none focus-visible:ring-3 focus-visible:ring-ring/30 sm:text-sm";
+    "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none focus-visible:ring-3 focus-visible:ring-ring/30 aria-invalid:border-destructive sm:text-sm";
+  const describedBy = (field: string) =>
+    errors[field] ? `${field}-error ${errorSummaryId}` : undefined;
   return (
     <section aria-labelledby="annual-leave-title">
       <div className={dashboardCalculatorWorkspaceClass}>
@@ -73,19 +77,23 @@ export function AnnualLeaveCalculator({
           <h2 id="annual-leave-title" className="mt-1 text-xl font-semibold">
             {copy.input}
           </h2>
-          {error ? (
+          {Object.keys(errors).length ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
-              {error}
+              {copy.error}
             </p>
           ) : null}
           <label className="mt-4 block text-sm font-medium">
             {copy.completedYears}
             <span className="relative mt-1.5 block">
               <input
+                id="completedYears"
                 aria-label={copy.completedYears}
+                aria-invalid={Boolean(errors.completedYears)}
+                aria-describedby={describedBy("completedYears")}
                 inputMode="numeric"
                 value={completedYears}
                 onChange={(e) => setCompletedYears(e.target.value)}
@@ -95,6 +103,14 @@ export function AnnualLeaveCalculator({
                 {copy.years}
               </span>
             </span>
+            {errors.completedYears ? (
+              <span
+                id="completedYears-error"
+                className="mt-1 block text-sm text-destructive"
+              >
+                {errors.completedYears}
+              </span>
+            ) : null}
           </label>
           <label className="mt-4 flex min-h-11 items-center gap-3 rounded-lg border px-3 text-sm">
             <input
@@ -108,7 +124,10 @@ export function AnnualLeaveCalculator({
             {copy.fullMonths}
             <span className="relative mt-1.5 block">
               <input
+                id="fullAttendanceMonths"
                 aria-label={copy.fullMonths}
+                aria-invalid={Boolean(errors.fullAttendanceMonths)}
+                aria-describedby={describedBy("fullAttendanceMonths")}
                 inputMode="numeric"
                 value={fullAttendanceMonths}
                 onChange={(e) => setFullAttendanceMonths(e.target.value)}
@@ -118,12 +137,23 @@ export function AnnualLeaveCalculator({
                 {copy.months}
               </span>
             </span>
+            {errors.fullAttendanceMonths ? (
+              <span
+                id="fullAttendanceMonths-error"
+                className="mt-1 block text-sm text-destructive"
+              >
+                {errors.fullAttendanceMonths}
+              </span>
+            ) : null}
           </label>
           <label className="mt-4 block text-sm font-medium">
             {copy.usedDays}
             <span className="relative mt-1.5 block">
               <input
+                id="usedDays"
                 aria-label={copy.usedDays}
+                aria-invalid={Boolean(errors.usedDays)}
+                aria-describedby={describedBy("usedDays")}
                 inputMode="numeric"
                 value={usedDays}
                 onChange={(e) => setUsedDays(e.target.value)}
@@ -133,12 +163,23 @@ export function AnnualLeaveCalculator({
                 {copy.days}
               </span>
             </span>
+            {errors.usedDays ? (
+              <span
+                id="usedDays-error"
+                className="mt-1 block text-sm text-destructive"
+              >
+                {errors.usedDays}
+              </span>
+            ) : null}
           </label>
           <label className="mt-4 block text-sm font-medium">
             {copy.hourlyWage}
             <span className="relative mt-1.5 block">
               <input
+                id="hourlyWage"
                 aria-label={copy.hourlyWage}
+                aria-invalid={Boolean(errors.hourlyWage)}
+                aria-describedby={describedBy("hourlyWage")}
                 inputMode="decimal"
                 value={hourlyWage}
                 placeholder="12,000"
@@ -151,12 +192,23 @@ export function AnnualLeaveCalculator({
                 {copy.won}
               </span>
             </span>
+            {errors.hourlyWage ? (
+              <span
+                id="hourlyWage-error"
+                className="mt-1 block text-sm text-destructive"
+              >
+                {errors.hourlyWage}
+              </span>
+            ) : null}
           </label>
           <label className="mt-4 block text-sm font-medium">
             {copy.dailyHours}
             <span className="relative mt-1.5 block">
               <input
+                id="dailyHours"
                 aria-label={copy.dailyHours}
+                aria-invalid={Boolean(errors.dailyHours)}
+                aria-describedby={describedBy("dailyHours")}
                 inputMode="decimal"
                 value={dailyHours}
                 onChange={(e) => setDailyHours(e.target.value)}
@@ -166,6 +218,14 @@ export function AnnualLeaveCalculator({
                 h
               </span>
             </span>
+            {errors.dailyHours ? (
+              <span
+                id="dailyHours-error"
+                className="mt-1 block text-sm text-destructive"
+              >
+                {errors.dailyHours}
+              </span>
+            ) : null}
           </label>
           <div className="mt-4 grid grid-cols-[1fr_auto] gap-2">
             <Button type="submit">{copy.calculate}</Button>
