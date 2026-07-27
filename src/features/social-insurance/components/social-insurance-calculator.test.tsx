@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { SocialInsuranceCalculator } from "./social-insurance-calculator";
 
@@ -39,7 +39,7 @@ describe("SocialInsuranceCalculator", () => {
       "Check the highlighted values.",
     );
   });
-  it("clears a previous result when a later submission is invalid", () => {
+  it("clears a previous result when a later submission is invalid", async () => {
     render(<SocialInsuranceCalculator locale="ko" />);
     const pay = screen.getByLabelText("월 보수");
     fireEvent.change(pay, { target: { value: "3500000" } });
@@ -50,7 +50,7 @@ describe("SocialInsuranceCalculator", () => {
       target: { value: "0.7" },
     });
     fireEvent.click(screen.getByRole("button", { name: "4대보험 계산하기" }));
-    expect(screen.getByRole("table")).toBeInTheDocument();
+    expect(await screen.findByRole("table")).toBeInTheDocument();
 
     fireEvent.change(pay, { target: { value: "" } });
     fireEvent.click(screen.getByRole("button", { name: "4대보험 계산하기" }));
@@ -61,7 +61,9 @@ describe("SocialInsuranceCalculator", () => {
       "aria-describedby",
       "monthlyPay-error social-insurance-error-summary",
     );
-    expect(screen.queryByRole("table")).not.toBeInTheDocument();
+    await waitFor(() =>
+      expect(screen.queryByRole("table")).not.toBeInTheDocument(),
+    );
   });
   it("resets the workplace size selection", () => {
     render(<SocialInsuranceCalculator locale="en" />);
