@@ -53,7 +53,9 @@ describe("NightWorkPayCalculator", () => {
       screen.getByRole("button", { name: "Calculate night-work pay" }),
     );
 
-    expect(screen.getByText("₩180,000")).toBeVisible();
+    expect(screen.getAllByTestId("animated-won")[0]).toHaveAccessibleName(
+      "₩180,000",
+    );
 
     fireEvent.change(wage, { target: { value: "" } });
     fireEvent.click(
@@ -67,7 +69,9 @@ describe("NightWorkPayCalculator", () => {
       "aria-describedby",
       "night-work-hourly-wage-error night-work-pay-error",
     );
-    expect(screen.queryByText("₩180,000")).not.toBeInTheDocument();
+    expect(screen.getAllByTestId("animated-won")[0]).not.toHaveAccessibleName(
+      "₩180,000",
+    );
   });
 
   it("shows the Korean under-five legal notice", () => {
