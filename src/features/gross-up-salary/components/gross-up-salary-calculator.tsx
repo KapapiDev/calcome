@@ -20,6 +20,7 @@ import { validateGrossUpSalary, type GrossUpSalaryErrors } from "../validation";
 
 const fieldClass =
   "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none placeholder:text-muted-foreground/70 focus-visible:ring-3 focus-visible:ring-ring/30 aria-invalid:border-destructive sm:text-sm";
+const errorSummaryId = "gross-up-salary-error-summary";
 const won = (
   value: { toDecimalPlaces: (places: number) => { toNumber: () => number } },
   locale: GrossUpSalaryLocale,
@@ -49,6 +50,7 @@ export function GrossUpSalaryCalculator({
     requestResultScroll,
     cancelResultScroll,
   } = useStableResultScroll(result);
+  const hasErrors = Object.keys(errors).length > 0;
 
   function submit(event: FormEvent) {
     event.preventDefault();
@@ -57,7 +59,11 @@ export function GrossUpSalaryCalculator({
       locale,
     );
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateGrossUpSalary(checked.data));
     setAnimationKey((value) => value + 1);
@@ -85,8 +91,9 @@ export function GrossUpSalaryCalculator({
           <h2 id="gross-up-salary-title" className="mt-1 text-xl font-semibold">
             {copy.input}
           </h2>
-          {Object.keys(errors).length ? (
+          {hasErrors ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -112,28 +119,34 @@ export function GrossUpSalaryCalculator({
               ))}
             </div>
           </fieldset>
-          <label className="mt-4 block text-sm font-medium">
+          <label
+            htmlFor="targetNetSalary"
+            className="mt-4 block text-sm font-medium"
+          >
             {copy.salary}
-            <input
-              inputMode="decimal"
-              value={targetNetSalary}
-              placeholder={
-                period === "annual"
-                  ? copy.annualPlaceholder
-                  : copy.monthlyPlaceholder
-              }
-              onChange={(event) =>
-                setTargetNetSalary(
-                  formatMoneyInput(event.target.value, targetNetSalary),
-                )
-              }
-              aria-invalid={Boolean(errors.targetNetSalary)}
-              aria-describedby={
-                errors.targetNetSalary ? "target-net-error" : undefined
-              }
-              className={fieldClass}
-            />
           </label>
+          <input
+            id="targetNetSalary"
+            inputMode="decimal"
+            value={targetNetSalary}
+            placeholder={
+              period === "annual"
+                ? copy.annualPlaceholder
+                : copy.monthlyPlaceholder
+            }
+            onChange={(event) =>
+              setTargetNetSalary(
+                formatMoneyInput(event.target.value, targetNetSalary),
+              )
+            }
+            aria-invalid={Boolean(errors.targetNetSalary)}
+            aria-describedby={
+              errors.targetNetSalary
+                ? `target-net-error ${errorSummaryId}`
+                : undefined
+            }
+            className={fieldClass}
+          />
           {errors.targetNetSalary ? (
             <p id="target-net-error" className="mt-1 text-sm text-destructive">
               {errors.targetNetSalary}
@@ -154,7 +167,9 @@ export function GrossUpSalaryCalculator({
               onChange={(event) => setDeductionRate(event.target.value)}
               aria-invalid={Boolean(errors.deductionRate)}
               aria-describedby={
-                errors.deductionRate ? "deduction-rate-error" : undefined
+                errors.deductionRate
+                  ? `deduction-rate-error ${errorSummaryId}`
+                  : undefined
               }
               className={`${fieldClass} pr-10`}
             />
