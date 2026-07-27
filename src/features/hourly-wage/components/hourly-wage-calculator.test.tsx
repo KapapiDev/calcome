@@ -56,6 +56,41 @@ describe("HourlyWageCalculator", () => {
     expect(screen.getByRole("img")).toHaveAccessibleName(/₩12,000/);
   });
 
+  it("clears stale results and associates invalid fields with the alert", async () => {
+    const user = userEvent.setup();
+    render(<HourlyWageCalculator locale="ko" />);
+
+    const payAmount = screen.getByLabelText("급여 금액");
+    const dailyHours = screen.getByLabelText("1일 소정근로시간");
+    const weeklyHours = screen.getByLabelText("주 소정근로시간");
+
+    await user.type(payAmount, "12000");
+    await user.selectOptions(screen.getByLabelText("급여 단위"), "hourly");
+    await user.type(dailyHours, "8");
+    await user.type(weeklyHours, "40");
+    await user.click(screen.getByRole("button", { name: "시급 계산하기" }));
+
+    expect(screen.getByRole("img")).toBeVisible();
+    expect(
+      screen.getByRole("table", { name: "급여 단위별 환산" }),
+    ).toBeVisible();
+
+    await user.clear(payAmount);
+    await user.type(payAmount, "invalid");
+    await user.click(screen.getByRole("button", { name: "시급 계산하기" }));
+
+    const alert = screen.getByRole("alert");
+    expect(alert).toHaveTextContent(/급여와/);
+    for (const field of [payAmount, dailyHours, weeklyHours]) {
+      expect(field).toHaveAttribute("aria-invalid", "true");
+      expect(field).toHaveAttribute("aria-describedby", alert.id);
+    }
+    expect(screen.queryByRole("img")).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("table", { name: "급여 단위별 환산" }),
+    ).not.toBeInTheDocument();
+  });
+
   it("shows validation without results or scrolling and reset restores empty state", async () => {
     const user = userEvent.setup();
     render(<HourlyWageCalculator locale="ko" />);
