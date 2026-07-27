@@ -69,6 +69,9 @@ export function NetSalaryCalculator({
     setErrors(checked.errors);
     setAnnouncement("");
     if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      setDetailsOpen(true);
       const first = Object.keys(checked.errors)[0];
       requestAnimationFrame(() =>
         formRef.current?.querySelector<HTMLElement>(`#${first}`)?.focus(),
