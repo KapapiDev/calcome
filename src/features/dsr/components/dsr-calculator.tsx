@@ -16,6 +16,7 @@ import { validateDsr, type DsrErrors, type DsrValues } from "../validation";
 
 const fieldClass =
   "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none placeholder:text-muted-foreground/70 focus-visible:ring-3 focus-visible:ring-ring/30 aria-invalid:border-destructive sm:text-sm";
+const errorSummaryId = "dsr-error-summary";
 const initialValues: DsrValues = {
   annualIncome: "",
   existingAnnualDebtService: "",
@@ -36,6 +37,7 @@ export function DsrCalculator({ locale }: { locale: DsrLocale }) {
     requestResultScroll,
     cancelResultScroll,
   } = useStableResultScroll(result);
+  const hasErrors = Object.keys(errors).length > 0;
   const setMoney = (
     key: keyof Pick<
       DsrValues,
@@ -52,7 +54,11 @@ export function DsrCalculator({ locale }: { locale: DsrLocale }) {
     event.preventDefault();
     const checked = validateDsr(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateDsr(checked.data));
     setAnimationKey((value) => value + 1);
@@ -83,8 +89,9 @@ export function DsrCalculator({ locale }: { locale: DsrLocale }) {
           <h2 id="dsr-input-title" className="mt-1 text-xl font-semibold">
             {copy.input}
           </h2>
-          {Object.keys(errors).length ? (
+          {hasErrors ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -99,6 +106,7 @@ export function DsrCalculator({ locale }: { locale: DsrLocale }) {
               value={values[key]}
               placeholder={placeholder}
               error={errors[key]}
+              errorSummaryId={hasErrors ? errorSummaryId : undefined}
               onChange={(value) => setMoney(key, value)}
             />
           ))}
@@ -109,6 +117,7 @@ export function DsrCalculator({ locale }: { locale: DsrLocale }) {
             placeholder="4.5"
             suffix="%"
             error={errors.annualInterestRate}
+            errorSummaryId={hasErrors ? errorSummaryId : undefined}
             onChange={(value) =>
               setValues((current) => ({
                 ...current,
@@ -123,6 +132,7 @@ export function DsrCalculator({ locale }: { locale: DsrLocale }) {
             placeholder="20"
             suffix={locale === "ko" ? "년" : "years"}
             error={errors.termYears}
+            errorSummaryId={hasErrors ? errorSummaryId : undefined}
             onChange={(value) =>
               setValues((current) => ({ ...current, termYears: value }))
             }
@@ -214,6 +224,7 @@ function Field({
   placeholder,
   suffix,
   error,
+  errorSummaryId,
   onChange,
 }: {
   id: string;
@@ -222,8 +233,13 @@ function Field({
   placeholder: string;
   suffix?: string;
   error?: string;
+  errorSummaryId?: string;
   onChange: (value: string) => void;
 }) {
+  const describedBy = [error ? `${id}-error` : undefined, errorSummaryId]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <div className="mt-4">
       <label htmlFor={id} className="block text-sm font-medium">
@@ -237,7 +253,7 @@ function Field({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={describedBy || undefined}
           className={`${fieldClass} ${suffix ? "pr-14" : ""}`}
         />
         {suffix ? (
@@ -266,6 +282,7 @@ function won(
       locale === "ko" ? "ko-KR" : "en-US",
     )} ${locale === "ko" ? "원" : "KRW"}`;
 }
+
 function Detail({ label, value }: { label: string; value: string }) {
   return (
     <div>
