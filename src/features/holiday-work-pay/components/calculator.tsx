@@ -20,6 +20,7 @@ import { validateHolidayWorkPay, type Errors } from "../validation";
 
 const inputClass =
   "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums";
+const errorSummaryId = "holiday-work-pay-error-summary";
 
 export function HolidayWorkPayCalculator({ locale }: { locale: Locale }) {
   const c = content[locale];
@@ -45,7 +46,11 @@ export function HolidayWorkPayCalculator({ locale }: { locale: Locale }) {
       locale,
     );
     setErrors(validation.errors);
-    if (!validation.data) return;
+    if (!validation.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateHolidayWorkPay(validation.data));
     setAnimationKey((value) => value + 1);
@@ -61,6 +66,8 @@ export function HolidayWorkPayCalculator({ locale }: { locale: Locale }) {
     setResult(null);
   }
 
+  const hasErrors = Object.keys(errors).length > 0;
+
   return (
     <section aria-labelledby="holiday-input-title">
       <div className={dashboardCalculatorWorkspaceClass}>
@@ -73,23 +80,31 @@ export function HolidayWorkPayCalculator({ locale }: { locale: Locale }) {
           <h2 id="holiday-input-title" className="text-xl font-semibold">
             {c.input}
           </h2>
-          {Object.keys(errors).length ? (
-            <p role="alert" className="mt-3 text-sm text-destructive">
+          {hasErrors ? (
+            <p
+              id={errorSummaryId}
+              role="alert"
+              className="mt-3 text-sm text-destructive"
+            >
               {c.error}
             </p>
           ) : null}
           <Field
+            id="holiday-work-pay-hourly-wage"
             label={c.wage}
             value={hourlyWage}
             error={errors.hourlyWage}
+            summaryErrorId={hasErrors ? errorSummaryId : undefined}
             change={(value) =>
               setHourlyWage(formatMoneyInput(value, hourlyWage))
             }
           />
           <Field
+            id="holiday-work-pay-hours"
             label={c.hours}
             value={holidayHours}
             error={errors.holidayHours}
+            summaryErrorId={hasErrors ? errorSummaryId : undefined}
             change={setHolidayHours}
           />
           <fieldset className="mt-4">
@@ -121,9 +136,11 @@ export function HolidayWorkPayCalculator({ locale }: { locale: Locale }) {
           </fieldset>
           {workplaceSize === "underFive" ? (
             <Field
+              id="holiday-work-pay-contractual-rate"
               label={c.contractualRate}
               value={contractualPremiumRate}
               error={errors.contractualPremiumRate}
+              summaryErrorId={hasErrors ? errorSummaryId : undefined}
               change={setContractualPremiumRate}
             />
           ) : null}
@@ -218,28 +235,44 @@ export function HolidayWorkPayCalculator({ locale }: { locale: Locale }) {
 }
 
 function Field({
+  id,
   label,
   value,
   error,
+  summaryErrorId,
   change,
 }: {
+  id: string;
   label: string;
   value: string;
   error?: string;
+  summaryErrorId?: string;
   change: (value: string) => void;
 }) {
+  const fieldErrorId = `${id}-error`;
+  const describedBy = [error ? fieldErrorId : undefined, summaryErrorId]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <label className="mt-4 block text-sm font-medium">
+    <label className="mt-4 block text-sm font-medium" htmlFor={id}>
       {label}
       <input
+        id={id}
         className={inputClass}
         value={value}
         inputMode="decimal"
         onChange={(event) => change(event.target.value)}
         aria-invalid={Boolean(error)}
+        aria-describedby={describedBy || undefined}
       />
       {error ? (
-        <span className="mt-1 block text-sm text-destructive">{error}</span>
+        <span
+          id={fieldErrorId}
+          className="mt-1 block text-sm text-destructive"
+        >
+          {error}
+        </span>
       ) : null}
     </label>
   );
