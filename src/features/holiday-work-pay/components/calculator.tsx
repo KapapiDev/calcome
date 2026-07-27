@@ -272,10 +272,7 @@ function Field({
         aria-describedby={describedBy || undefined}
       />
       {error ? (
-        <span
-          id={fieldErrorId}
-          className="mt-1 block text-sm text-destructive"
-        >
+        <span id={fieldErrorId} className="mt-1 block text-sm text-destructive">
           {error}
         </span>
       ) : null}
