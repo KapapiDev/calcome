@@ -9,10 +9,9 @@ function calculate(locale: "ko" | "en") {
     fireEvent.change(screen.getByLabelText("통상 시급"), {
       target: { value: "10000" },
     });
-    fireEvent.change(
-      screen.getByLabelText("급여 정산기간의 총 휴일근로시간"),
-      { target: { value: "8" } },
-    );
+    fireEvent.change(screen.getByLabelText("급여 정산기간의 총 휴일근로시간"), {
+      target: { value: "8" },
+    });
     fireEvent.click(
       screen.getByRole("button", { name: "휴일근로수당 계산하기" }),
     );
@@ -78,9 +77,7 @@ describe("HolidayWorkPayCalculator", () => {
       screen.getByText(/표시된 총 보상액보다 적을 수 있습니다/),
     ).toBeVisible();
 
-    const hoursInput = screen.getByLabelText(
-      "급여 정산기간의 총 휴일근로시간",
-    );
+    const hoursInput = screen.getByLabelText("급여 정산기간의 총 휴일근로시간");
     fireEvent.change(hoursInput, { target: { value: "" } });
     fireEvent.click(
       screen.getByRole("button", { name: "휴일근로수당 계산하기" }),
