@@ -50,7 +50,11 @@ export function OvertimePayCalculator({
       locale,
     );
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateOvertimePay(checked.data));
     setAnimationKey((v) => v + 1);
@@ -79,6 +83,7 @@ export function OvertimePayCalculator({
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id="overtime-form-error"
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -231,6 +236,7 @@ function Field({
   onChange: (value: string) => void;
 }) {
   const id = label.replaceAll(" ", "-");
+  const errorId = `${id}-error`;
   return (
     <div className="mt-4">
       <label htmlFor={id} className="text-sm font-medium">
@@ -243,9 +249,14 @@ function Field({
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
         aria-invalid={Boolean(error)}
+        aria-describedby={error ? `${errorId} overtime-form-error` : undefined}
         className={fieldClass}
       />
-      {error ? <p className="mt-1 text-sm text-destructive">{error}</p> : null}
+      {error ? (
+        <p id={errorId} className="mt-1 text-sm text-destructive">
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 }
