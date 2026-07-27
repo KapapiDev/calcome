@@ -20,6 +20,7 @@ import { validateHourlyWageInput } from "../validation";
 
 const fieldClass =
   "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none placeholder:text-muted-foreground/70 focus-visible:ring-3 focus-visible:ring-ring/30 sm:text-sm";
+const validationAlertId = "hourly-wage-validation";
 
 export function HourlyWageCalculator({ locale }: { locale: HourlyWageLocale }) {
   const copy = hourlyWageContent[locale];
@@ -48,6 +49,8 @@ export function HourlyWageCalculator({ locale }: { locale: HourlyWageLocale }) {
       includePaidHoliday,
     });
     if (!input) {
+      cancelResultScroll();
+      setResult(null);
       setError(copy.validation);
       return;
     }
@@ -86,6 +89,7 @@ export function HourlyWageCalculator({ locale }: { locale: HourlyWageLocale }) {
           </h2>
           {error ? (
             <p
+              id={validationAlertId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -101,6 +105,8 @@ export function HourlyWageCalculator({ locale }: { locale: HourlyWageLocale }) {
               onChange={(event) =>
                 setPayAmount(formatMoneyInput(event.target.value, payAmount))
               }
+              aria-invalid={Boolean(error)}
+              aria-describedby={error ? validationAlertId : undefined}
               className={fieldClass}
             />
           </label>
@@ -126,6 +132,8 @@ export function HourlyWageCalculator({ locale }: { locale: HourlyWageLocale }) {
                 value={dailyHours}
                 placeholder={locale === "ko" ? "예: 8" : "e.g. 8"}
                 onChange={(event) => setDailyHours(event.target.value)}
+                aria-invalid={Boolean(error)}
+                aria-describedby={error ? validationAlertId : undefined}
                 className={fieldClass}
               />
             </label>
@@ -136,6 +144,8 @@ export function HourlyWageCalculator({ locale }: { locale: HourlyWageLocale }) {
                 value={weeklyHours}
                 placeholder={locale === "ko" ? "예: 40" : "e.g. 40"}
                 onChange={(event) => setWeeklyHours(event.target.value)}
+                aria-invalid={Boolean(error)}
+                aria-describedby={error ? validationAlertId : undefined}
                 className={fieldClass}
               />
             </label>
