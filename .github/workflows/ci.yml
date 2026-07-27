@@ -27,7 +27,14 @@ jobs:
         run: npm ci
 
       - name: Run static checks
-        run: npm run check
+        run: npm run check 2>&1 | tee check.log
+
+      - name: Upload check diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: check-diagnostics
+          path: check.log
 
       - name: Build application
         run: npm run build
