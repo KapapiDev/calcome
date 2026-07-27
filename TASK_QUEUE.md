@@ -78,11 +78,13 @@ UX-002
 
 Title: Employment and Payroll Calculator UX Audit
 
-Status: OPEN
+Status: DONE
 
 Priority: CRITICAL
 
 Scope: Audit every employment, salary, wage, benefit, leave, insurance, and pension calculator for input clarity, official-rate disclosure, result interpretation, mobile usability, accessibility, bilingual consistency, and correct directory placement.
+
+Evidence: PRs #100 and #102 through #118 audited and hardened all 16 `급여·근로` calculators, including category and search discovery, bilingual route integrity, invalid-resubmission state clearing, validation accessibility, calculation regression coverage, exact-head GitHub Actions, Vercel Preview evidence, and Production verification through merge SHA `eb594f0240e9928db8252dee35d480309007ebf1` on deployment `dpl_H3NzusK8w8JmDbkaQADF17rrP2dz` (`READY`).
 
 ---
 
@@ -90,7 +92,7 @@ UX-003
 
 Title: Loan and Credit Calculator UX Audit
 
-Status: BLOCKED
+Status: OPEN
 
 Priority: CRITICAL
 
