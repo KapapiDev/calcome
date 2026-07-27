@@ -104,7 +104,10 @@ export function AnnualLeaveCalculator({
               </span>
             </span>
             {errors.completedYears ? (
-              <span id="completedYears-error" className="mt-1 block text-sm text-destructive">
+              <span
+                id="completedYears-error"
+                className="mt-1 block text-sm text-destructive"
+              >
                 {errors.completedYears}
               </span>
             ) : null}
@@ -135,7 +138,10 @@ export function AnnualLeaveCalculator({
               </span>
             </span>
             {errors.fullAttendanceMonths ? (
-              <span id="fullAttendanceMonths-error" className="mt-1 block text-sm text-destructive">
+              <span
+                id="fullAttendanceMonths-error"
+                className="mt-1 block text-sm text-destructive"
+              >
                 {errors.fullAttendanceMonths}
               </span>
             ) : null}
@@ -158,7 +164,10 @@ export function AnnualLeaveCalculator({
               </span>
             </span>
             {errors.usedDays ? (
-              <span id="usedDays-error" className="mt-1 block text-sm text-destructive">
+              <span
+                id="usedDays-error"
+                className="mt-1 block text-sm text-destructive"
+              >
                 {errors.usedDays}
               </span>
             ) : null}
@@ -184,7 +193,10 @@ export function AnnualLeaveCalculator({
               </span>
             </span>
             {errors.hourlyWage ? (
-              <span id="hourlyWage-error" className="mt-1 block text-sm text-destructive">
+              <span
+                id="hourlyWage-error"
+                className="mt-1 block text-sm text-destructive"
+              >
                 {errors.hourlyWage}
               </span>
             ) : null}
@@ -207,7 +219,10 @@ export function AnnualLeaveCalculator({
               </span>
             </span>
             {errors.dailyHours ? (
-              <span id="dailyHours-error" className="mt-1 block text-sm text-destructive">
+              <span
+                id="dailyHours-error"
+                className="mt-1 block text-sm text-destructive"
+              >
                 {errors.dailyHours}
               </span>
             ) : null}
