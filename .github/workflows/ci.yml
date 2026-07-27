@@ -26,15 +26,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run static checks
-        run: npm run check 2>&1 | tee check.log
+      - name: Lint
+        run: npm run lint
 
-      - name: Upload check diagnostics
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: check-diagnostics
-          path: check.log
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Format check
+        run: npm run format:check
+
+      - name: Test
+        run: npm run test
 
       - name: Build application
         run: npm run build
