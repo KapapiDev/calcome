@@ -26,13 +26,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Apply formatter for diagnostics
-        run: npx prettier --write src/features/ltv/components/ltv-calculator.tsx src/features/ltv/components/ltv-calculator.test.tsx
+      - name: Run static checks
+        run: npm run check
 
-      - name: Upload formatted LTV files
-        uses: actions/upload-artifact@v4
-        with:
-          name: formatted-ltv-files
-          path: |
-            src/features/ltv/components/ltv-calculator.tsx
-            src/features/ltv/components/ltv-calculator.test.tsx
+      - name: Build application
+        run: npm run build
