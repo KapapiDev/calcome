@@ -69,6 +69,41 @@ describe("UnemploymentBenefitsCalculator", () => {
       /계산하면/,
     );
   });
+  it("clears stale results and links invalid fields to the error summary", async () => {
+    const user = userEvent.setup();
+    render(<UnemploymentBenefitsCalculator />);
+    await fill(user);
+    await user.click(
+      screen.getByRole("button", { name: "예상 급여 계산하기" }),
+    );
+    expect(screen.getAllByTestId("animated-won")[0]).toHaveAccessibleName(
+      "₩12,258,000",
+    );
+
+    const wageInput = screen.getByLabelText("퇴직 전 1일 평균임금 *");
+    await user.clear(wageInput);
+    await user.click(
+      screen.getByRole("button", { name: "예상 급여 계산하기" }),
+    );
+
+    expect(screen.getByRole("alert")).toHaveAttribute(
+      "id",
+      "unemployment-error-summary",
+    );
+    expect(wageInput).toHaveAttribute(
+      "aria-describedby",
+      "averageDailyWage-error unemployment-error-summary",
+    );
+    expect(screen.getAllByTestId("animated-won")[0]).not.toHaveAccessibleName(
+      "₩12,258,000",
+    );
+    expect(screen.getByTestId("benefit-timeline")).toHaveTextContent(
+      /계산하면/,
+    );
+    expect(
+      screen.getByText("계산하면 상·하한 적용과 산식이 표시됩니다."),
+    ).toBeVisible();
+  });
   it("uses immediate results and scrolling for reduced motion", async () => {
     Object.defineProperty(window, "matchMedia", {
       configurable: true,
