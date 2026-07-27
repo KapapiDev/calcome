@@ -25,6 +25,7 @@ import { validateSocialInsurance } from "../validation";
 
 const inputClass =
   "mt-1.5 h-10 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none placeholder:text-muted-foreground/70 focus-visible:ring-3 focus-visible:ring-ring/30 aria-invalid:border-destructive sm:text-sm";
+const errorSummaryId = "social-insurance-error-summary";
 const rows = [
   "pension",
   "health",
@@ -65,6 +66,8 @@ export function SocialInsuranceCalculator({
     setErrors(checked.errors);
     setAnnouncement("");
     if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
       const first = Object.keys(checked.errors)[0];
       requestAnimationFrame(() =>
         formRef.current?.querySelector<HTMLElement>(`#${first}`)?.focus(),
@@ -110,6 +113,7 @@ export function SocialInsuranceCalculator({
           </p>
           {Object.keys(errors).length ? (
             <div
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 bg-destructive/5 p-3 text-sm"
             >
@@ -155,7 +159,9 @@ export function SocialInsuranceCalculator({
               }
               aria-invalid={Boolean(errors.workplaceSize)}
               aria-describedby={
-                errors.workplaceSize ? "workplaceSize-error" : undefined
+                errors.workplaceSize
+                  ? `workplaceSize-error ${errorSummaryId}`
+                  : undefined
               }
               className={inputClass}
             >
@@ -319,7 +325,7 @@ function MoneyField({
           placeholder={placeholder}
           onChange={onChange}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={error ? `${id}-error ${errorSummaryId}` : undefined}
           className={`${inputClass} pr-12`}
         />
         <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center pt-1.5 text-xs text-muted-foreground">
