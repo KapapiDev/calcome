@@ -61,6 +61,9 @@ export function UnemploymentBenefitsCalculator({
     setErrors(validation.errors);
     setAnnouncement("");
     if (!validation.data) {
+      cancelResultScroll();
+      setResult(null);
+      setDetailsOpen(true);
       const first = Object.keys(validation.errors)[0];
       requestAnimationFrame(() =>
         formRef.current?.querySelector<HTMLElement>(`#${first}`)?.focus(),
@@ -106,6 +109,7 @@ export function UnemploymentBenefitsCalculator({
           </p>
           {Object.keys(errors).length ? (
             <div
+              id="unemployment-error-summary"
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 bg-destructive/5 p-3 text-sm"
             >
@@ -335,7 +339,9 @@ function MoneyField({
           placeholder={placeholder}
           onChange={onChange}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={
+            error ? `${id}-error unemployment-error-summary` : undefined
+          }
           className={`${inputClass} pr-14`}
         />
         <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center pt-1.5 text-xs text-muted-foreground">
@@ -380,13 +386,20 @@ function NumberField({
           placeholder={placeholder}
           onChange={onChange}
           aria-invalid={Boolean(error)}
+          aria-describedby={
+            error ? `${id}-error unemployment-error-summary` : undefined
+          }
           className={`${inputClass} pr-12`}
         />
         <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center pt-1.5 text-xs text-muted-foreground">
           {unit}
         </span>
       </div>
-      {error ? <p className="mt-1 text-xs text-destructive">{error}</p> : null}
+      {error ? (
+        <p id={`${id}-error`} className="mt-1 text-xs text-destructive">
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 }
