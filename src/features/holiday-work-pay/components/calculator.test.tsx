@@ -69,4 +69,30 @@ describe("HolidayWorkPayCalculator", () => {
       screen.getByText(/야간 가산이 별도로 더해질 수 있으며/),
     ).toBeVisible();
   });
+
+  it("clears a valid result and associates invalid inputs with the error summary", () => {
+    render(<HolidayWorkPayCalculator locale="ko" />);
+    calculate("ko");
+    expect(
+      screen.getByText(/표시된 총 보상액보다 적을 수 있습니다/),
+    ).toBeVisible();
+
+    const hoursInput = screen.getByLabelText(
+      "급여 정산기간의 총 휴일근로시간",
+    );
+    fireEvent.change(hoursInput, { target: { value: "0" } });
+    fireEvent.click(
+      screen.getByRole("button", { name: "휴일근로수당 계산하기" }),
+    );
+
+    const alert = screen.getByRole("alert");
+    expect(hoursInput).toHaveAttribute("aria-invalid", "true");
+    expect(hoursInput).toHaveAttribute(
+      "aria-describedby",
+      expect.stringContaining(alert.id),
+    );
+    expect(
+      screen.queryByText(/표시된 총 보상액보다 적을 수 있습니다/),
+    ).toBeNull();
+  });
 });
