@@ -80,7 +80,7 @@ describe("HolidayWorkPayCalculator", () => {
     const hoursInput = screen.getByLabelText(
       "급여 정산기간의 총 휴일근로시간",
     );
-    fireEvent.change(hoursInput, { target: { value: "0" } });
+    fireEvent.change(hoursInput, { target: { value: "" } });
     fireEvent.click(
       screen.getByRole("button", { name: "휴일근로수당 계산하기" }),
     );
