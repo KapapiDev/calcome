@@ -46,6 +46,21 @@ describe("NetSalaryCalculator", () => {
     expect(screen.getByRole("img")).toHaveAccessibleName(/월 실수령액/);
     expect(screen.getByText("국민연금", { selector: "th" })).toBeVisible();
   });
+  it("clears stale results when a valid calculation becomes invalid", async () => {
+    const user = userEvent.setup();
+    render(<NetSalaryCalculator />);
+    const salary = screen.getByPlaceholderText("예: 50,000,000");
+    await user.type(salary, "60000000");
+    await user.click(screen.getByRole("button", { name: "실수령액 계산하기" }));
+    expect(screen.getByText("국민연금", { selector: "th" })).toBeVisible();
+    await user.clear(salary);
+    await user.click(screen.getByRole("button", { name: "실수령액 계산하기" }));
+    expect(screen.getByRole("alert")).toBeVisible();
+    expect(
+      screen.getByText("계산하면 공제 항목별 금액이 표시됩니다."),
+    ).toBeVisible();
+    expect(screen.queryByText("국민연금", { selector: "th" })).toBeNull();
+  });
   it("does not scroll on validation and reset restores empty values", async () => {
     const user = userEvent.setup();
     render(<NetSalaryCalculator />);
