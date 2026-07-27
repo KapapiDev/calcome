@@ -15,7 +15,7 @@ describe("LtvCalculator", () => {
     await user.type(loanAmount, "300000000");
     await user.click(screen.getByRole("button", { name: "LTV 계산하기" }));
 
-    expect(await screen.findByText("60.0%")).toBeInTheDocument();
+    expect(await screen.findByText("60%")).toBeInTheDocument();
     expect(
       screen.queryByText(
         "계산하면 예상 LTV와 목표 비율 기준 대출 여력이 표시됩니다.",
@@ -34,7 +34,7 @@ describe("LtvCalculator", () => {
       "aria-describedby",
       "propertyValue-error ltv-error-summary",
     );
-    expect(screen.queryByText("60.0%")).not.toBeInTheDocument();
+    expect(screen.queryByText("60%")).not.toBeInTheDocument();
     expect(
       screen.getByText(
         "계산하면 예상 LTV와 목표 비율 기준 대출 여력이 표시됩니다.",
