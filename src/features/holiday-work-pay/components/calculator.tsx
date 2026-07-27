@@ -42,7 +42,12 @@ export function HolidayWorkPayCalculator({ locale }: { locale: Locale }) {
   function submit(event: FormEvent) {
     event.preventDefault();
     const validation = validateHolidayWorkPay(
-      { hourlyWage, holidayHours, workplaceSize, contractualPremiumRate },
+      {
+        hourlyWage,
+        holidayHours,
+        workplaceSize,
+        contractualPremiumRate,
+      },
       locale,
     );
     setErrors(validation.errors);
