@@ -31,6 +31,7 @@ import { ServiceTimeline } from "./service-timeline";
 
 const controlClass =
   "mt-1.5 h-10 w-full rounded-lg border bg-background px-3 text-base tabular-nums shadow-sm outline-none transition placeholder:text-muted-foreground/70 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30 aria-invalid:border-destructive sm:text-sm";
+const errorSummaryId = "severance-error-summary";
 
 function Field({
   field,
@@ -69,7 +70,9 @@ function Field({
         onBlur={onBlur}
         autoComplete="off"
         aria-invalid={Boolean(error)}
-        aria-describedby={error ? `${field}-error` : undefined}
+        aria-describedby={
+          error ? `${field}-error ${errorSummaryId}` : undefined
+        }
         className={controlClass}
       />
       {error ? (
@@ -124,6 +127,11 @@ export function SeveranceCalculator({
     setErrors(validation.errors);
     setAnnouncement("");
     if (!validation.data) {
+      cancelResultScroll();
+      setResult(null);
+      setApplied(INITIAL_SEVERANCE_VALUES);
+      setDetailsOpen(true);
+      setAdditionalOpen(false);
       const first = Object.keys(validation.errors)[0];
       requestAnimationFrame(() =>
         formRef.current?.querySelector<HTMLElement>(`#${first}`)?.focus(),
@@ -178,6 +186,7 @@ export function SeveranceCalculator({
           </p>
           {Object.keys(errors).length ? (
             <div
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 bg-destructive/5 p-3 text-sm"
             >
@@ -204,7 +213,11 @@ export function SeveranceCalculator({
                 }}
                 onBlur={() => validateField("averageDailyWage")}
                 aria-invalid={Boolean(errors.averageDailyWage)}
-                aria-describedby={`averageDailyWage-help${errors.averageDailyWage ? " averageDailyWage-error" : ""}`}
+                aria-describedby={`averageDailyWage-help${
+                  errors.averageDailyWage
+                    ? ` averageDailyWage-error ${errorSummaryId}`
+                    : ""
+                }`}
                 className={`${controlClass} pr-14`}
               />
               <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center pt-1.5 text-sm text-muted-foreground">
