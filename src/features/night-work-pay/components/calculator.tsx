@@ -18,6 +18,7 @@ import { content, type Locale } from "../content";
 import { validateNightWorkPay, type Errors } from "../validation";
 const cls =
   "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none placeholder:text-muted-foreground/70 focus-visible:ring-3 focus-visible:ring-ring/30 aria-invalid:border-destructive sm:text-sm";
+const errorAlertId = "night-work-pay-error";
 export function NightWorkPayCalculator({ locale }: { locale: Locale }) {
   const c = content[locale];
   const [w, setW] = useState(""),
@@ -40,7 +41,11 @@ export function NightWorkPayCalculator({ locale }: { locale: Locale }) {
       locale,
     );
     setErrors(x.errors);
-    if (!x.data) return;
+    if (!x.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateNightWorkPay(x.data));
     setKey((v) => v + 1);
@@ -68,11 +73,16 @@ export function NightWorkPayCalculator({ locale }: { locale: Locale }) {
             {c.input}
           </h2>
           {Object.keys(errors).length ? (
-            <p role="alert" className="mt-3 text-sm text-destructive">
+            <p
+              id={errorAlertId}
+              role="alert"
+              className="mt-3 text-sm text-destructive"
+            >
               {c.error}
             </p>
           ) : null}
           <Field
+            id="night-work-hourly-wage"
             label={c.wage}
             value={w}
             placeholder={c.wagePh}
@@ -108,6 +118,7 @@ export function NightWorkPayCalculator({ locale }: { locale: Locale }) {
             ) : null}
           </fieldset>
           <Field
+            id="night-work-hours"
             label={c.hours}
             value={h}
             placeholder={c.hoursPh}
@@ -115,6 +126,7 @@ export function NightWorkPayCalculator({ locale }: { locale: Locale }) {
             change={setH}
           />
           <Field
+            id="night-work-premium-rate"
             label={c.rate}
             value={r}
             placeholder={c.ratePh}
@@ -198,31 +210,40 @@ export function NightWorkPayCalculator({ locale }: { locale: Locale }) {
   );
 }
 function Field({
+  id,
   label,
   value,
   placeholder,
   error,
   change,
 }: {
+  id: string;
   label: string;
   value: string;
   placeholder: string;
   error?: string;
   change: (v: string) => void;
 }) {
+  const fieldErrorId = `${id}-error`;
   return (
-    <label className="mt-4 block text-sm font-medium">
+    <label htmlFor={id} className="mt-4 block text-sm font-medium">
       {label}
       <input
+        id={id}
         inputMode="decimal"
         value={value}
         placeholder={placeholder}
         onChange={(e) => change(e.target.value)}
         aria-invalid={!!error}
+        aria-describedby={
+          error ? `${fieldErrorId} ${errorAlertId}` : undefined
+        }
         className={cls}
       />
       {error ? (
-        <span className="mt-1 block text-destructive">{error}</span>
+        <span id={fieldErrorId} className="mt-1 block text-destructive">
+          {error}
+        </span>
       ) : null}
     </label>
   );
