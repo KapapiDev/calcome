@@ -87,10 +87,7 @@ describe("HolidayWorkPayCalculator", () => {
 
     const alert = screen.getByRole("alert");
     expect(hoursInput).toHaveAttribute("aria-invalid", "true");
-    expect(hoursInput).toHaveAttribute(
-      "aria-describedby",
-      expect.stringContaining(alert.id),
-    );
+    expect(hoursInput.getAttribute("aria-describedby")).toContain(alert.id);
     expect(
       screen.queryByText(/표시된 총 보상액보다 적을 수 있습니다/),
     ).toBeNull();
