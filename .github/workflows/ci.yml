@@ -26,13 +26,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Capture formatter output
-        run: |
-          npm run format
-          git diff > format.patch
+      - name: Run static checks
+        run: npm run check
 
-      - name: Upload formatter output
-        uses: actions/upload-artifact@v4
-        with:
-          name: social-insurance-format-patch
-          path: format.patch
+      - name: Build application
+        run: npm run build
