@@ -41,6 +41,39 @@ describe("NightWorkPayCalculator", () => {
     ).toBeVisible();
   });
 
+  it("clears stale results and associates invalid inputs with the alert", () => {
+    render(<NightWorkPayCalculator locale="en" />);
+
+    const wage = screen.getByLabelText("Ordinary hourly wage");
+    const hours = screen.getByLabelText(/Total night-work hours/);
+
+    fireEvent.change(wage, { target: { value: "12000" } });
+    fireEvent.change(hours, { target: { value: "10" } });
+    fireEvent.click(
+      screen.getByRole("button", { name: "Calculate night-work pay" }),
+    );
+
+    expect(screen.getAllByTestId("animated-won")[0]).toHaveAccessibleName(
+      "₩180,000",
+    );
+
+    fireEvent.change(wage, { target: { value: "" } });
+    fireEvent.click(
+      screen.getByRole("button", { name: "Calculate night-work pay" }),
+    );
+
+    const alert = screen.getByRole("alert");
+    expect(alert).toHaveAttribute("id", "night-work-pay-error");
+    expect(wage).toHaveAttribute("aria-invalid", "true");
+    expect(wage).toHaveAttribute(
+      "aria-describedby",
+      "night-work-hourly-wage-error night-work-pay-error",
+    );
+    expect(screen.getAllByTestId("animated-won")[0]).not.toHaveAccessibleName(
+      "₩180,000",
+    );
+  });
+
   it("shows the Korean under-five legal notice", () => {
     render(<NightWorkPayCalculator locale="ko" />);
     fireEvent.click(screen.getByRole("radio", { name: "상시 5인 미만" }));
