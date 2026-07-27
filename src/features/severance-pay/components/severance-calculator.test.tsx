@@ -77,6 +77,35 @@ describe("SeveranceCalculator", () => {
     expect(screen.getByRole("alert")).toBeVisible();
     expect(scrollIntoView).not.toHaveBeenCalled();
   });
+  it("clears stale results and links invalid fields to the error summary", async () => {
+    const user = userEvent.setup();
+    render(<SeveranceCalculator />);
+    await fill(user);
+    await user.click(screen.getByRole("button", { name: "퇴직금 계산하기" }));
+    expect(screen.getAllByTestId("animated-won")[0]).toHaveAccessibleName(
+      "₩3,000,000",
+    );
+
+    const averageWage = screen.getByLabelText("1일 평균임금 *");
+    await user.clear(averageWage);
+    await user.click(screen.getByRole("button", { name: "퇴직금 계산하기" }));
+
+    expect(screen.getByRole("alert")).toHaveAttribute(
+      "id",
+      "severance-error-summary",
+    );
+    expect(averageWage).toHaveAttribute("aria-invalid", "true");
+    expect(averageWage).toHaveAttribute(
+      "aria-describedby",
+      expect.stringContaining("severance-error-summary"),
+    );
+    expect(screen.getAllByTestId("animated-won")[0]).not.toHaveAccessibleName(
+      "₩3,000,000",
+    );
+    expect(screen.getByTestId("service-timeline")).toHaveTextContent(
+      /계산하면/,
+    );
+  });
   it("renders final values immediately when reduced motion is preferred", async () => {
     Object.defineProperty(window, "matchMedia", {
       configurable: true,
