@@ -100,7 +100,9 @@ describe("UnemploymentBenefitsCalculator", () => {
     expect(screen.getByTestId("benefit-timeline")).toHaveTextContent(
       /계산하면/,
     );
-    expect(screen.getByText("입력하면 계산 근거를 확인할 수 있습니다.")).toBeVisible();
+    expect(
+      screen.getByText("계산하면 상·하한 적용과 산식이 표시됩니다."),
+    ).toBeVisible();
   });
   it("uses immediate results and scrolling for reduced motion", async () => {
     Object.defineProperty(window, "matchMedia", {
