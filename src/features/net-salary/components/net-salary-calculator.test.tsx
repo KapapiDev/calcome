@@ -57,8 +57,8 @@ describe("NetSalaryCalculator", () => {
     await user.click(screen.getByRole("button", { name: "실수령액 계산하기" }));
     expect(screen.getByRole("alert")).toBeVisible();
     expect(
-      screen.getByText("계산하면 공제 항목별 금액이 표시됩니다."),
-    ).toBeVisible();
+      screen.getAllByText("계산하면 공제 항목별 금액이 표시됩니다."),
+    ).toHaveLength(2);
     expect(screen.queryByText("국민연금", { selector: "th" })).toBeNull();
   });
   it("does not scroll on validation and reset restores empty values", async () => {
