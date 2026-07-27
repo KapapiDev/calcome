@@ -16,6 +16,7 @@ import { validateLtv, type LtvErrors, type LtvValues } from "../validation";
 
 const fieldClass =
   "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none placeholder:text-muted-foreground/70 focus-visible:ring-3 focus-visible:ring-ring/30 aria-invalid:border-destructive sm:text-sm";
+const errorSummaryId = "ltv-error-summary";
 const initialValues: LtvValues = {
   propertyValue: "",
   loanAmount: "",
@@ -34,12 +35,17 @@ export function LtvCalculator({ locale }: { locale: LtvLocale }) {
     requestResultScroll,
     cancelResultScroll,
   } = useStableResultScroll(result);
+  const hasErrors = Object.keys(errors).length > 0;
 
   function submit(event: FormEvent) {
     event.preventDefault();
     const checked = validateLtv(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateLtv(checked.data));
     setAnimationKey((value) => value + 1);
@@ -65,8 +71,9 @@ export function LtvCalculator({ locale }: { locale: LtvLocale }) {
           <h2 id="ltv-input-title" className="mt-1 text-xl font-semibold">
             {copy.input}
           </h2>
-          {Object.keys(errors).length ? (
+          {hasErrors ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -79,6 +86,7 @@ export function LtvCalculator({ locale }: { locale: LtvLocale }) {
             value={values.propertyValue}
             placeholder="500,000,000"
             error={errors.propertyValue}
+            errorSummaryId={hasErrors ? errorSummaryId : undefined}
             onChange={(value) =>
               setValues((current) => ({
                 ...current,
@@ -92,6 +100,7 @@ export function LtvCalculator({ locale }: { locale: LtvLocale }) {
             value={values.loanAmount}
             placeholder="300,000,000"
             error={errors.loanAmount}
+            errorSummaryId={hasErrors ? errorSummaryId : undefined}
             onChange={(value) =>
               setValues((current) => ({
                 ...current,
@@ -106,6 +115,7 @@ export function LtvCalculator({ locale }: { locale: LtvLocale }) {
             placeholder="70"
             suffix="%"
             error={errors.targetLtvRate}
+            errorSummaryId={hasErrors ? errorSummaryId : undefined}
             onChange={(value) =>
               setValues((current) => ({ ...current, targetLtvRate: value }))
             }
@@ -197,6 +207,7 @@ function Field({
   placeholder,
   suffix,
   error,
+  errorSummaryId,
   onChange,
 }: {
   id: string;
@@ -205,8 +216,13 @@ function Field({
   placeholder: string;
   suffix?: string;
   error?: string;
+  errorSummaryId?: string;
   onChange: (value: string) => void;
 }) {
+  const describedBy = [error ? `${id}-error` : undefined, errorSummaryId]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <div className="mt-4">
       <label htmlFor={id} className="block text-sm font-medium">
@@ -220,7 +236,7 @@ function Field({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={describedBy || undefined}
           className={`${fieldClass} ${suffix ? "pr-14" : ""}`}
         />
         {suffix ? (
