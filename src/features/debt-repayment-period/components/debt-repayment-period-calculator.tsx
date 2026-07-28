@@ -31,6 +31,7 @@ const initialValues: DebtRepaymentPeriodValues = {
   annualInterestRate: "",
   monthlyPayment: "",
 };
+const errorSummaryId = "debt-repayment-period-error-summary";
 
 export function DebtRepaymentPeriodCalculator({
   locale,
@@ -60,7 +61,11 @@ export function DebtRepaymentPeriodCalculator({
     event.preventDefault();
     const checked = validateDebtRepaymentPeriod(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(undefined);
+      return;
+    }
     requestResultScroll();
     setResult(calculateDebtRepaymentPeriod(checked.data));
     setAnimationKey((value) => value + 1);
@@ -90,6 +95,7 @@ export function DebtRepaymentPeriodCalculator({
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -102,6 +108,7 @@ export function DebtRepaymentPeriodCalculator({
             value={values.balance}
             placeholder="10,000,000"
             error={errors.balance}
+            errorSummaryId={errorSummaryId}
             onChange={(value) => setMoney("balance", value)}
           />
           <Field
@@ -111,6 +118,7 @@ export function DebtRepaymentPeriodCalculator({
             placeholder="6"
             suffix="%"
             error={errors.annualInterestRate}
+            errorSummaryId={errorSummaryId}
             onChange={(value) =>
               setValues((current) => ({
                 ...current,
@@ -124,6 +132,7 @@ export function DebtRepaymentPeriodCalculator({
             value={values.monthlyPayment}
             placeholder="500,000"
             error={errors.monthlyPayment}
+            errorSummaryId={errorSummaryId}
             onChange={(value) => setMoney("monthlyPayment", value)}
           />
           <div className="mt-4 grid grid-cols-[1fr_auto] gap-2">
@@ -222,6 +231,7 @@ function Field({
   placeholder,
   suffix,
   error,
+  errorSummaryId,
   onChange,
 }: {
   id: string;
@@ -230,6 +240,7 @@ function Field({
   placeholder: string;
   suffix?: string;
   error?: string;
+  errorSummaryId: string;
   onChange: (value: string) => void;
 }) {
   return (
@@ -245,7 +256,7 @@ function Field({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={error ? `${id}-error ${errorSummaryId}` : undefined}
           className={`${fieldClass} ${suffix ? "pr-14" : ""}`}
         />
         {suffix ? (
