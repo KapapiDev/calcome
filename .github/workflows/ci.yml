@@ -26,8 +26,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Capture Prettier output
-        run: |
-          npx prettier src/features/loan-refinancing-savings/components/loan-refinancing-calculator.tsx --write
-          git diff -- src/features/loan-refinancing-savings/components/loan-refinancing-calculator.tsx
-          exit 1
+      - name: Run static checks
+        run: npm run check
+
+      - name: Build application
+        run: npm run build
