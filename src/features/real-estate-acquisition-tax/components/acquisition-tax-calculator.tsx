@@ -30,6 +30,7 @@ const initialValues: AcquisitionTaxValues = {
   ruralSpecialTaxRate: "",
   otherCosts: "",
 };
+const errorSummaryId = "real-estate-acquisition-tax-error-summary";
 
 export function AcquisitionTaxCalculator({
   locale,
@@ -61,7 +62,11 @@ export function AcquisitionTaxCalculator({
     event.preventDefault();
     const checked = validateAcquisitionTax(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateAcquisitionTax(checked.data));
     setAnimationKey((value) => value + 1);
@@ -91,6 +96,7 @@ export function AcquisitionTaxCalculator({
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -103,6 +109,7 @@ export function AcquisitionTaxCalculator({
             value={values.acquisitionPrice}
             placeholder="500,000,000"
             error={errors.acquisitionPrice}
+            errorSummaryId={errorSummaryId}
             onChange={(value) => setMoney("acquisitionPrice", value)}
           />
           <Field
@@ -112,6 +119,7 @@ export function AcquisitionTaxCalculator({
             placeholder="1"
             suffix="%"
             error={errors.acquisitionTaxRate}
+            errorSummaryId={errorSummaryId}
             onChange={(value) => setRate("acquisitionTaxRate", value)}
           />
           <Field
@@ -121,6 +129,7 @@ export function AcquisitionTaxCalculator({
             placeholder="0.1"
             suffix="%"
             error={errors.localEducationTaxRate}
+            errorSummaryId={errorSummaryId}
             onChange={(value) => setRate("localEducationTaxRate", value)}
           />
           <Field
@@ -130,6 +139,7 @@ export function AcquisitionTaxCalculator({
             placeholder="0"
             suffix="%"
             error={errors.ruralSpecialTaxRate}
+            errorSummaryId={errorSummaryId}
             onChange={(value) => setRate("ruralSpecialTaxRate", value)}
           />
           <Field
@@ -138,6 +148,7 @@ export function AcquisitionTaxCalculator({
             value={values.otherCosts}
             placeholder="2,000,000"
             error={errors.otherCosts}
+            errorSummaryId={errorSummaryId}
             onChange={(value) => setMoney("otherCosts", value)}
           />
           <div className="mt-4 grid grid-cols-[1fr_auto] gap-2">
@@ -227,6 +238,7 @@ function Field({
   placeholder,
   suffix,
   error,
+  errorSummaryId,
   onChange,
 }: {
   id: string;
@@ -235,6 +247,7 @@ function Field({
   placeholder: string;
   suffix?: string;
   error?: string;
+  errorSummaryId: string;
   onChange: (value: string) => void;
 }) {
   return (
@@ -250,7 +263,9 @@ function Field({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={
+            error ? `${id}-error ${errorSummaryId}` : undefined
+          }
           className={`${fieldClass} ${suffix ? "pr-14" : ""}`}
         />
         {suffix ? (
