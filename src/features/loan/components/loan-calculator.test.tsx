@@ -138,11 +138,13 @@ describe("LoanCalculator", () => {
       "aria-describedby",
       expect.stringContaining("loan-error-summary"),
     );
-    expect(screen.queryByRole("table")).not.toBeInTheDocument();
-    expect(screen.queryAllByTestId("animated-won")).toHaveLength(0);
-    expect(
-      screen.getAllByText("계산하면 상세 결과가 표시됩니다."),
-    ).toHaveLength(3);
+    await waitFor(() => {
+      expect(screen.queryByRole("table")).not.toBeInTheDocument();
+      expect(screen.queryAllByTestId("animated-won")).toHaveLength(0);
+      expect(
+        screen.getAllByText("계산하면 상세 결과가 표시됩니다."),
+      ).toHaveLength(3);
+    });
   });
   it("dismisses numeric input focus after a successful keyboard submit", async () => {
     const user = userEvent.setup();
