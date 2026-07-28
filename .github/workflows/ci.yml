@@ -26,6 +26,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Format UX-003 files for diagnosis
+        run: >-
+          npx prettier --write
+          src/features/loan-affordability/components/loan-affordability-calculator.tsx
+          src/features/loan-affordability/components/loan-affordability-calculator.test.tsx
+
+      - name: Upload formatted UX-003 files
+        uses: actions/upload-artifact@v4
+        with:
+          name: formatted-loan-affordability
+          path: src/features/loan-affordability/components/
+
       - name: Run static checks
         run: npm run check
 
