@@ -53,7 +53,11 @@ export function CreditLoanInterestCalculator({
     event.preventDefault();
     const checked = validateCreditLoanInterest(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateCreditLoanInterest(checked.data));
     setAnimationKey((value) => value + 1);
@@ -87,6 +91,7 @@ export function CreditLoanInterestCalculator({
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id="credit-loan-interest-error-summary"
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -243,7 +248,11 @@ function Field({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={
+            error
+              ? `${id}-error credit-loan-interest-error-summary`
+              : undefined
+          }
           className={`${fieldClass} ${suffix ? "pr-16" : ""}`}
         />
         {suffix ? (
