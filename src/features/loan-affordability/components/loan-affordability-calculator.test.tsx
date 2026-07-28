@@ -26,10 +26,7 @@ describe("LoanAffordabilityCalculator", () => {
 
     const annualIncome = screen.getByLabelText("연소득");
     await user.type(annualIncome, "60000000");
-    await user.type(
-      screen.getByLabelText("기존 월 부채 상환액"),
-      "500000",
-    );
+    await user.type(screen.getByLabelText("기존 월 부채 상환액"), "500000");
     await user.type(screen.getByLabelText("목표 부채상환 비율"), "40");
     await user.type(screen.getByLabelText("예상 연이율"), "4.5");
     await user.type(screen.getByLabelText("상환 기간"), "30");
