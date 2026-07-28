@@ -26,19 +26,28 @@ describe("LoanAffordabilityCalculator", () => {
 
     const annualIncome = screen.getByLabelText("연소득");
     await user.type(annualIncome, "60000000");
-    await user.type(screen.getByLabelText("기존 월 부채 상환액"), "500000");
+    await user.type(
+      screen.getByLabelText("기존 월 부채 상환액"),
+      "500000",
+    );
     await user.type(screen.getByLabelText("목표 부채상환 비율"), "40");
     await user.type(screen.getByLabelText("예상 연이율"), "4.5");
     await user.type(screen.getByLabelText("상환 기간"), "30");
-    await user.click(screen.getByRole("button", { name: "대출 한도 계산하기" }));
+    await user.click(
+      screen.getByRole("button", { name: "대출 한도 계산하기" }),
+    );
 
     await waitFor(() => expect(scrollIntoView).toHaveBeenCalledOnce());
     expect(
-      screen.queryByText("계산하면 예상 대출 한도와 월 상환 가능액이 표시됩니다."),
+      screen.queryByText(
+        "계산하면 예상 대출 한도와 월 상환 가능액이 표시됩니다.",
+      ),
     ).not.toBeInTheDocument();
 
     await user.clear(annualIncome);
-    await user.click(screen.getByRole("button", { name: "대출 한도 계산하기" }));
+    await user.click(
+      screen.getByRole("button", { name: "대출 한도 계산하기" }),
+    );
 
     const alert = screen.getByRole("alert");
     expect(alert).toHaveAttribute("id", "loan-affordability-error-summary");
