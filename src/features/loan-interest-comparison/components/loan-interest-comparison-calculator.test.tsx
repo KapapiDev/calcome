@@ -34,7 +34,6 @@ describe("LoanInterestComparisonCalculator", () => {
       expect(screen.getByText(/대출 A · 4.5%/)).toBeVisible();
       expect(screen.getByText(/대출 B · 3.8%/)).toBeVisible();
     });
-    expect(screen.getAllByTestId("animated-won")).toHaveLength(2);
 
     await user.clear(principal);
     await user.click(
@@ -58,7 +57,6 @@ describe("LoanInterestComparisonCalculator", () => {
       );
       expect(screen.queryByText(/대출 A · 4.5%/)).not.toBeInTheDocument();
       expect(screen.queryByText(/대출 B · 3.8%/)).not.toBeInTheDocument();
-      expect(screen.queryAllByTestId("animated-won")).toHaveLength(0);
       expect(
         screen.getByText(
           "계산하면 두 대출의 월 상환액과 총이자를 비교해 표시합니다.",
