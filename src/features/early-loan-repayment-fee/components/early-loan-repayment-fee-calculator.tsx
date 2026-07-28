@@ -26,6 +26,7 @@ import {
 
 const fieldClass =
   "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none placeholder:text-muted-foreground/70 focus-visible:ring-3 focus-visible:ring-ring/30 aria-invalid:border-destructive sm:text-sm";
+const errorSummaryId = "early-loan-repayment-fee-error-summary";
 const initialValues: EarlyRepaymentFeeValues = {
   repaymentAmount: "",
   feeRate: "1.2",
@@ -53,7 +54,11 @@ export function EarlyLoanRepaymentFeeCalculator({
     event.preventDefault();
     const checked = validateEarlyRepaymentFee(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateEarlyRepaymentFee(checked.data));
     setAnimationKey((value) => value + 1);
@@ -84,6 +89,7 @@ export function EarlyLoanRepaymentFeeCalculator({
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -96,6 +102,7 @@ export function EarlyLoanRepaymentFeeCalculator({
             value={values.repaymentAmount}
             placeholder="100,000,000"
             error={errors.repaymentAmount}
+            errorSummaryId={errorSummaryId}
             onChange={(value) =>
               update(
                 "repaymentAmount",
@@ -110,6 +117,7 @@ export function EarlyLoanRepaymentFeeCalculator({
             placeholder="1.2"
             suffix="%"
             error={errors.feeRate}
+            errorSummaryId={errorSummaryId}
             onChange={(value) => update("feeRate", value)}
           />
           <Field
@@ -119,6 +127,7 @@ export function EarlyLoanRepaymentFeeCalculator({
             placeholder="36"
             suffix={copy.months}
             error={errors.originalTermMonths}
+            errorSummaryId={errorSummaryId}
             onChange={(value) => update("originalTermMonths", value)}
           />
           <Field
@@ -128,6 +137,7 @@ export function EarlyLoanRepaymentFeeCalculator({
             placeholder="12"
             suffix={copy.months}
             error={errors.elapsedMonths}
+            errorSummaryId={errorSummaryId}
             onChange={(value) => update("elapsedMonths", value)}
           />
           <div className="mt-4 grid grid-cols-[1fr_auto] gap-2">
@@ -209,6 +219,7 @@ function Field({
   placeholder,
   suffix,
   error,
+  errorSummaryId,
   onChange,
 }: {
   id: string;
@@ -217,6 +228,7 @@ function Field({
   placeholder: string;
   suffix?: string;
   error?: string;
+  errorSummaryId: string;
   onChange: (value: string) => void;
 }) {
   return (
@@ -232,7 +244,7 @@ function Field({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={error ? `${id}-error ${errorSummaryId}` : undefined}
           className={`${fieldClass} ${suffix ? "pr-16" : ""}`}
         />
         {suffix ? (
