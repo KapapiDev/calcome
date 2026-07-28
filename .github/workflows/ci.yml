@@ -26,12 +26,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run focused loan test
-        run: npm run test -- src/features/loan/components/loan-calculator.test.tsx --reporter=verbose 2>&1 | tee loan-test.log
+      - name: Run static checks
+        run: npm run check
 
-      - name: Upload focused test log
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: loan-test-log
-          path: loan-test.log
+      - name: Build application
+        run: npm run build
