@@ -33,6 +33,7 @@ const initialValues: LoanAffordabilityValues = {
   annualInterestRate: "",
   termYears: "",
 };
+const errorSummaryId = "loan-affordability-error-summary";
 
 export function LoanAffordabilityCalculator({
   locale,
@@ -64,7 +65,11 @@ export function LoanAffordabilityCalculator({
     event.preventDefault();
     const checked = validateLoanAffordability(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateLoanAffordability(checked.data));
     setAnimationKey((value) => value + 1);
@@ -94,6 +99,7 @@ export function LoanAffordabilityCalculator({
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -106,6 +112,7 @@ export function LoanAffordabilityCalculator({
             value={values.annualIncome}
             placeholder="60,000,000"
             error={errors.annualIncome}
+            errorSummaryId={errorSummaryId}
             onChange={(value) => setMoney("annualIncome", value)}
           />
           <Field
@@ -114,6 +121,7 @@ export function LoanAffordabilityCalculator({
             value={values.otherMonthlyDebt}
             placeholder="500,000"
             error={errors.otherMonthlyDebt}
+            errorSummaryId={errorSummaryId}
             onChange={(value) => setMoney("otherMonthlyDebt", value)}
           />
           <Field
@@ -123,6 +131,7 @@ export function LoanAffordabilityCalculator({
             placeholder="40"
             suffix="%"
             error={errors.debtServiceLimit}
+            errorSummaryId={errorSummaryId}
             onChange={(value) => setNumber("debtServiceLimit", value)}
           />
           <Field
@@ -132,6 +141,7 @@ export function LoanAffordabilityCalculator({
             placeholder="4.5"
             suffix="%"
             error={errors.annualInterestRate}
+            errorSummaryId={errorSummaryId}
             onChange={(value) => setNumber("annualInterestRate", value)}
           />
           <Field
@@ -141,6 +151,7 @@ export function LoanAffordabilityCalculator({
             placeholder="30"
             suffix={locale === "ko" ? "년" : "years"}
             error={errors.termYears}
+            errorSummaryId={errorSummaryId}
             onChange={(value) => setNumber("termYears", value)}
           />
           <div className="mt-4 grid grid-cols-[1fr_auto] gap-2">
@@ -236,6 +247,7 @@ function Field({
   placeholder,
   suffix,
   error,
+  errorSummaryId,
   onChange,
 }: {
   id: string;
@@ -244,8 +256,11 @@ function Field({
   placeholder: string;
   suffix?: string;
   error?: string;
+  errorSummaryId: string;
   onChange: (value: string) => void;
 }) {
+  const describedBy = error ? `${id}-error ${errorSummaryId}` : undefined;
+
   return (
     <div className="mt-4">
       <label htmlFor={id} className="block text-sm font-medium">
@@ -259,7 +274,7 @@ function Field({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={describedBy}
           className={`${fieldClass} ${suffix ? "pr-14" : ""}`}
         />
         {suffix ? (
