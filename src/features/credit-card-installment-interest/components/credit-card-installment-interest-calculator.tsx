@@ -31,6 +31,7 @@ const initialValues: CreditCardInstallmentInterestValues = {
   installmentMonths: "",
   annualFeeRate: "",
 };
+const errorSummaryId = "credit-card-installment-interest-error-summary";
 
 export function CreditCardInstallmentInterestCalculator({
   locale,
@@ -53,7 +54,11 @@ export function CreditCardInstallmentInterestCalculator({
     event.preventDefault();
     const checked = validateCreditCardInstallmentInterest(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(undefined);
+      return;
+    }
     requestResultScroll();
     setResult(calculateCreditCardInstallmentInterest(checked.data));
     setAnimationKey((value) => value + 1);
@@ -84,6 +89,7 @@ export function CreditCardInstallmentInterestCalculator({
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -96,6 +102,7 @@ export function CreditCardInstallmentInterestCalculator({
             value={values.purchaseAmount}
             placeholder="1,200,000"
             error={errors.purchaseAmount}
+            errorSummaryId={errorSummaryId}
             onChange={(value) =>
               setValues((current) => ({
                 ...current,
@@ -110,6 +117,7 @@ export function CreditCardInstallmentInterestCalculator({
             placeholder="12"
             suffix={locale === "ko" ? "개월" : "months"}
             error={errors.installmentMonths}
+            errorSummaryId={errorSummaryId}
             onChange={(value) =>
               setValues((current) => ({ ...current, installmentMonths: value }))
             }
@@ -121,6 +129,7 @@ export function CreditCardInstallmentInterestCalculator({
             placeholder="12"
             suffix="%"
             error={errors.annualFeeRate}
+            errorSummaryId={errorSummaryId}
             onChange={(value) =>
               setValues((current) => ({ ...current, annualFeeRate: value }))
             }
@@ -215,6 +224,7 @@ function Field({
   placeholder,
   suffix,
   error,
+  errorSummaryId,
   onChange,
 }: {
   id: string;
@@ -223,8 +233,11 @@ function Field({
   placeholder: string;
   suffix?: string;
   error?: string;
+  errorSummaryId: string;
   onChange: (value: string) => void;
 }) {
+  const describedBy = error ? `${id}-error ${errorSummaryId}` : undefined;
+
   return (
     <div className="mt-4">
       <label htmlFor={id} className="block text-sm font-medium">
@@ -238,7 +251,7 @@ function Field({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={describedBy}
           className={`${fieldClass} ${suffix ? "pr-16" : ""}`}
         />
         {suffix ? (
