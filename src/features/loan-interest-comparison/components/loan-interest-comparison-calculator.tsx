@@ -26,6 +26,7 @@ import {
 
 const fieldClass =
   "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none placeholder:text-muted-foreground/70 focus-visible:ring-3 focus-visible:ring-ring/30 aria-invalid:border-destructive sm:text-sm";
+const errorSummaryId = "loan-interest-comparison-error-summary";
 const initialValues: LoanInterestComparisonValues = {
   principal: "",
   annualRateA: "4.5",
@@ -56,7 +57,11 @@ export function LoanInterestComparisonCalculator({
     event.preventDefault();
     const checked = validateLoanInterestComparison(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateLoanInterestComparison(checked.data));
     setAnimationKey((value) => value + 1);
@@ -93,6 +98,7 @@ export function LoanInterestComparisonCalculator({
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -105,6 +111,7 @@ export function LoanInterestComparisonCalculator({
             value={values.principal}
             placeholder="300,000,000"
             error={errors.principal}
+            errorSummaryId={errorSummaryId}
             onChange={(value) =>
               setValues((current) => ({
                 ...current,
@@ -119,6 +126,7 @@ export function LoanInterestComparisonCalculator({
             placeholder="4.5"
             suffix="%"
             error={errors.annualRateA}
+            errorSummaryId={errorSummaryId}
             onChange={(value) =>
               setValues((current) => ({ ...current, annualRateA: value }))
             }
@@ -130,6 +138,7 @@ export function LoanInterestComparisonCalculator({
             placeholder="3.8"
             suffix="%"
             error={errors.annualRateB}
+            errorSummaryId={errorSummaryId}
             onChange={(value) =>
               setValues((current) => ({ ...current, annualRateB: value }))
             }
@@ -141,6 +150,7 @@ export function LoanInterestComparisonCalculator({
             placeholder="360"
             suffix={copy.months}
             error={errors.termMonths}
+            errorSummaryId={errorSummaryId}
             onChange={(value) =>
               setValues((current) => ({ ...current, termMonths: value }))
             }
@@ -225,6 +235,7 @@ function Field({
   placeholder,
   suffix,
   error,
+  errorSummaryId,
   onChange,
 }: {
   id: string;
@@ -233,8 +244,11 @@ function Field({
   placeholder: string;
   suffix?: string;
   error?: string;
+  errorSummaryId: string;
   onChange: (value: string) => void;
 }) {
+  const describedBy = error ? `${id}-error ${errorSummaryId}` : undefined;
+
   return (
     <div className="mt-4">
       <label htmlFor={id} className="block text-sm font-medium">
@@ -248,7 +262,7 @@ function Field({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={describedBy}
           className={`${fieldClass} ${suffix ? "pr-16" : ""}`}
         />
         {suffix ? (
