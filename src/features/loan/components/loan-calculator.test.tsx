@@ -115,6 +115,35 @@ describe("LoanCalculator", () => {
     expect(screen.getByRole("alert")).toBeVisible();
     expect(scrollIntoView).not.toHaveBeenCalled();
   });
+  it("clears stale results and links invalid input to the error summary", async () => {
+    const user = userEvent.setup();
+    render(<LoanCalculator />);
+    await fill(user);
+    await user.click(
+      screen.getByRole("button", { name: "상환 결과 계산하기" }),
+    );
+    expect(screen.getByRole("table")).toBeVisible();
+    expect(screen.getAllByTestId("animated-won")).toHaveLength(3);
+
+    const amount = screen.getByLabelText("대출 금액 *");
+    await user.clear(amount);
+    await user.click(
+      screen.getByRole("button", { name: "상환 결과 계산하기" }),
+    );
+
+    const errorSummary = screen.getByRole("alert");
+    expect(errorSummary).toHaveAttribute("id", "loan-error-summary");
+    expect(amount).toHaveAttribute("aria-invalid", "true");
+    expect(amount).toHaveAttribute(
+      "aria-describedby",
+      expect.stringContaining("loan-error-summary"),
+    );
+    expect(screen.queryByRole("table")).not.toBeInTheDocument();
+    expect(screen.queryAllByTestId("animated-won")).toHaveLength(0);
+    expect(screen.getAllByText("계산하면 상세 결과가 표시됩니다.")).toHaveLength(
+      3,
+    );
+  });
   it("dismisses numeric input focus after a successful keyboard submit", async () => {
     const user = userEvent.setup();
     render(<LoanCalculator />);
