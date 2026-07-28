@@ -313,5 +313,7 @@ function won(
     .toLocaleString(locale === "ko" ? "ko-KR" : "en-US")} ${locale === "ko" ? "원" : "KRW"}`;
 }
 function wonValue(value: string, locale: LoanRefinancingLocale) {
-  return `${Number(value.replaceAll(",", "")).toLocaleString(locale === "ko" ? "ko-KR" : "en-US")} ${locale === "ko" ? "원" : "KRW"}`;
+  return `${Number(value.replaceAll(",", "")).toLocaleString(
+    locale === "ko" ? "ko-KR" : "en-US",
+  )} ${locale === "ko" ? "원" : "KRW"}`;
 }
