@@ -32,9 +32,7 @@ describe("AcquisitionTaxCalculator", () => {
       await user.type(screen.getByLabelText("지방교육세율"), "0.1");
       await user.type(screen.getByLabelText("농어촌특별세율"), "0");
       await user.type(screen.getByLabelText("기타 취득 부대비용"), "2000000");
-      await user.click(
-        screen.getByRole("button", { name: "취득 비용 계산하기" }),
-      );
+      await user.click(screen.getByRole("button", { name: "취득 비용 계산하기" }));
 
       await waitFor(() => {
         expect(screen.getByText("취득세")).toBeVisible();
@@ -44,9 +42,7 @@ describe("AcquisitionTaxCalculator", () => {
       });
 
       await user.clear(acquisitionPrice);
-      await user.click(
-        screen.getByRole("button", { name: "취득 비용 계산하기" }),
-      );
+      await user.click(screen.getByRole("button", { name: "취득 비용 계산하기" }));
 
       await waitFor(() => {
         const errorSummary = screen.getByRole("alert");
