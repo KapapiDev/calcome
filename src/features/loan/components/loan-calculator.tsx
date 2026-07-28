@@ -34,6 +34,7 @@ const INITIAL_VALUES: LoanFormValues = {
 };
 const controlClass =
   "mt-1.5 h-10 w-full rounded-lg border bg-background px-3 text-base tabular-nums shadow-sm outline-none transition placeholder:text-muted-foreground/70 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30 aria-invalid:border-destructive sm:text-sm";
+const ERROR_SUMMARY_ID = "loan-error-summary";
 
 function NumberField({
   field,
@@ -78,7 +79,7 @@ function NumberField({
           inputMode="decimal"
           autoComplete="off"
           aria-invalid={Boolean(error)}
-          aria-describedby={`${field}-help${error ? ` ${field}-error` : ""}`}
+          aria-describedby={`${field}-help${error ? ` ${field}-error ${ERROR_SUMMARY_ID}` : ""}`}
           className={`${controlClass} pr-14`}
         />
         <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center pt-1.5 text-sm text-muted-foreground">
@@ -139,6 +140,14 @@ export function LoanCalculator({ locale = "ko" }: { locale?: LoanLocale }) {
     setErrors(validation.errors);
     setAnnouncement("");
     if (!validation.data) {
+      cancelResultScroll();
+      setResult(null);
+      setComparison(null);
+      setAppliedType(DEFAULT_LOAN_VALUES.repaymentType);
+      setAppliedMonths(0);
+      setAppliedAmount("0");
+      setDetailsOpen(true);
+      setAdditionalOpen(false);
       const first = Object.keys(validation.errors)[0];
       requestAnimationFrame(() =>
         formRef.current?.querySelector<HTMLElement>(`#${first}`)?.focus(),
@@ -219,6 +228,7 @@ export function LoanCalculator({ locale = "ko" }: { locale?: LoanLocale }) {
           </p>
           {Object.keys(errors).length ? (
             <div
+              id={ERROR_SUMMARY_ID}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 bg-destructive/5 p-3 text-sm"
             >
