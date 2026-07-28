@@ -1,0 +1,22 @@
+name: Format acquisition tax debug
+
+on:
+  push:
+    branches:
+      - agent/ux-004-real-estate-acquisition-tax-validation
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx prettier --write src/features/real-estate-acquisition-tax/components/acquisition-tax-calculator.test.tsx
+      - uses: actions/upload-artifact@v4
+        with:
+          name: acquisition-tax-formatted-test
+          path: src/features/real-estate-acquisition-tax/components/acquisition-tax-calculator.test.tsx
