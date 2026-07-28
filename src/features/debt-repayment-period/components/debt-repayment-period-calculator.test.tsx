@@ -43,10 +43,7 @@ describe("DebtRepaymentPeriodCalculator", () => {
     );
 
     const alert = screen.getByRole("alert");
-    expect(alert).toHaveAttribute(
-      "id",
-      "debt-repayment-period-error-summary",
-    );
+    expect(alert).toHaveAttribute("id", "debt-repayment-period-error-summary");
     expect(balance).toHaveAttribute("aria-invalid", "true");
     expect(balance).toHaveAttribute(
       "aria-describedby",
