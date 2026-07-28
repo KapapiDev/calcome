@@ -268,9 +268,7 @@ function Field({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={
-            error ? `${id}-error ${errorSummaryId}` : undefined
-          }
+          aria-describedby={error ? `${id}-error ${errorSummaryId}` : undefined}
           className={`${fieldClass} ${suffix ? "pr-16" : ""}`}
         />
         {suffix ? (
