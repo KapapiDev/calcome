@@ -26,11 +26,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Format focused test
-        run: npx prettier --write src/features/loan/components/loan-calculator.test.tsx
+      - name: Run static checks
+        run: npm run check
 
-      - name: Upload formatted test
-        uses: actions/upload-artifact@v4
-        with:
-          name: formatted-loan-test
-          path: src/features/loan/components/loan-calculator.test.tsx
+      - name: Build application
+        run: npm run build
