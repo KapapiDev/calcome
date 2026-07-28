@@ -92,11 +92,13 @@ UX-003
 
 Title: Loan and Credit Calculator UX Audit
 
-Status: OPEN
+Status: DONE
 
 Priority: CRITICAL
 
 Scope: Audit every loan, mortgage, DSR, DTI, LTV, repayment, refinancing, credit-card, and affordability calculator, including amortization tables, comparison states, impossible-payment errors, long schedules, and correct directory placement.
+
+Evidence: PRs #120 through #133 audited and hardened all 14 `대출·신용` calculators, including invalid-resubmission state clearing, validation accessibility, amortization and comparison-state regression coverage, bilingual route integrity, directory and search discovery, exact-head GitHub Actions, Vercel Preview evidence, and Production verification through merge SHA `089c9084ee1574a307215ae92a755cf0b21801de` on deployment `dpl_4jiQtFPhn6Ea65aGZAfMBAki9PqC` (`READY`).
 
 ---
 
@@ -104,7 +106,7 @@ UX-004
 
 Title: Tax and Payroll Filing Calculator UX Audit
 
-Status: BLOCKED
+Status: OPEN
 
 Priority: CRITICAL
 
