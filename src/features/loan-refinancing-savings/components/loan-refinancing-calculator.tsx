@@ -22,6 +22,7 @@ import {
 
 const fieldClass =
   "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none placeholder:text-muted-foreground/70 focus-visible:ring-3 focus-visible:ring-ring/30 aria-invalid:border-destructive sm:text-sm";
+const errorSummaryId = "loan-refinancing-error-summary";
 const initialValues: LoanRefinancingValues = {
   remainingBalance: "",
   currentAnnualRate: "4.8",
@@ -49,7 +50,11 @@ export function LoanRefinancingCalculator({
     event.preventDefault();
     const checked = validateLoanRefinancing(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateLoanRefinancingSavings(checked.data));
   }
@@ -86,6 +91,7 @@ export function LoanRefinancingCalculator({
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -247,7 +253,9 @@ function Field({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={
+            error ? `${id}-error ${errorSummaryId}` : undefined
+          }
           className={`${fieldClass} ${suffix ? "pr-16" : ""}`}
         />
         {suffix ? (
