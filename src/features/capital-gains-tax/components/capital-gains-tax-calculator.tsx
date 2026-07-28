@@ -38,6 +38,7 @@ const moneyKeys = [
   "basicDeduction",
 ] as const;
 const rateKeys = ["incomeTaxRate", "localIncomeTaxRate"] as const;
+const errorSummaryId = "capital-gains-tax-error-summary";
 
 export function CapitalGainsTaxCalculator({
   locale,
@@ -60,7 +61,11 @@ export function CapitalGainsTaxCalculator({
     event.preventDefault();
     const checked = validateCapitalGainsTax(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateCapitalGainsTax(checked.data));
     setAnimationKey((value) => value + 1);
@@ -84,6 +89,7 @@ export function CapitalGainsTaxCalculator({
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -106,6 +112,7 @@ export function CapitalGainsTaxCalculator({
                       : "2,500,000"
               }
               error={errors[key]}
+              errorSummaryId={errorSummaryId}
               onChange={(value) =>
                 setValues((current) => ({
                   ...current,
@@ -123,6 +130,7 @@ export function CapitalGainsTaxCalculator({
               placeholder={key === "incomeTaxRate" ? "20" : "10"}
               suffix="%"
               error={errors[key]}
+              errorSummaryId={errorSummaryId}
               onChange={(value) =>
                 setValues((current) => ({ ...current, [key]: value }))
               }
@@ -231,6 +239,7 @@ function Field({
   placeholder,
   suffix,
   error,
+  errorSummaryId,
   onChange,
 }: {
   id: string;
@@ -239,6 +248,7 @@ function Field({
   placeholder: string;
   suffix?: string;
   error?: string;
+  errorSummaryId: string;
   onChange: (value: string) => void;
 }) {
   return (
@@ -254,7 +264,7 @@ function Field({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={error ? `${id}-error ${errorSummaryId}` : undefined}
           className={`${fieldClass} ${suffix ? "pr-14" : ""}`}
         />
         {suffix ? (
