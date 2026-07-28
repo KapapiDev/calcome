@@ -26,13 +26,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Apply Prettier output
-        run: npx prettier --write src/features/jeonse-loan-interest/components/jeonse-loan-interest-calculator.tsx src/features/jeonse-loan-interest/components/jeonse-loan-interest-calculator.test.tsx
+      - name: Run static checks
+        run: npm run check
 
-      - name: Upload formatted files
-        uses: actions/upload-artifact@v4
-        with:
-          name: jeonse-loan-prettier-output
-          path: |
-            src/features/jeonse-loan-interest/components/jeonse-loan-interest-calculator.tsx
-            src/features/jeonse-loan-interest/components/jeonse-loan-interest-calculator.test.tsx
+      - name: Build application
+        run: npm run build
