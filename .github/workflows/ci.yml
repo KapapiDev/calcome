@@ -26,6 +26,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Format changed files
+        run: npx prettier --write src/features/debt-repayment-period/components/debt-repayment-period-calculator.tsx src/features/debt-repayment-period/components/debt-repayment-period-calculator.test.tsx
+
+      - name: Upload formatted files
+        uses: actions/upload-artifact@v4
+        with:
+          name: debt-repayment-period-prettier
+          path: |
+            src/features/debt-repayment-period/components/debt-repayment-period-calculator.tsx
+            src/features/debt-repayment-period/components/debt-repayment-period-calculator.test.tsx
+
       - name: Run static checks
         run: npm run check
 
