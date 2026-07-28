@@ -26,6 +26,7 @@ import {
 
 const fieldClass =
   "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none placeholder:text-muted-foreground/70 focus-visible:ring-3 focus-visible:ring-ring/30 aria-invalid:border-destructive sm:text-sm";
+const errorSummaryId = "jeonse-loan-interest-error-summary";
 const initialValues: JeonseLoanInterestValues = {
   deposit: "",
   ownFunds: "",
@@ -54,7 +55,11 @@ export function JeonseLoanInterestCalculator({
     event.preventDefault();
     const checked = validateJeonseLoanInterest(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateJeonseLoanInterest(checked.data));
     setAnimationKey((value) => value + 1);
@@ -91,6 +96,7 @@ export function JeonseLoanInterestCalculator({
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -103,6 +109,7 @@ export function JeonseLoanInterestCalculator({
             value={values.deposit}
             placeholder="500,000,000"
             error={errors.deposit}
+            errorSummaryId={errorSummaryId}
             onChange={(value) => moneyChange("deposit", value)}
           />
           <Field
@@ -111,6 +118,7 @@ export function JeonseLoanInterestCalculator({
             value={values.ownFunds}
             placeholder="200,000,000"
             error={errors.ownFunds}
+            errorSummaryId={errorSummaryId}
             onChange={(value) => moneyChange("ownFunds", value)}
           />
           <Field
@@ -120,6 +128,7 @@ export function JeonseLoanInterestCalculator({
             placeholder="4.2"
             suffix="%"
             error={errors.annualRate}
+            errorSummaryId={errorSummaryId}
             onChange={(value) =>
               setValues((current) => ({ ...current, annualRate: value }))
             }
@@ -131,6 +140,7 @@ export function JeonseLoanInterestCalculator({
             placeholder="2"
             suffix={copy.years}
             error={errors.termYears}
+            errorSummaryId={errorSummaryId}
             onChange={(value) =>
               setValues((current) => ({ ...current, termYears: value }))
             }
@@ -141,6 +151,7 @@ export function JeonseLoanInterestCalculator({
             value={values.monthlyFees}
             placeholder="50,000"
             error={errors.monthlyFees}
+            errorSummaryId={errorSummaryId}
             onChange={(value) => moneyChange("monthlyFees", value)}
           />
           <div className="mt-4 grid grid-cols-[1fr_auto] gap-2">
@@ -232,6 +243,7 @@ function Field({
   placeholder,
   suffix,
   error,
+  errorSummaryId,
   onChange,
 }: {
   id: string;
@@ -240,6 +252,7 @@ function Field({
   placeholder: string;
   suffix?: string;
   error?: string;
+  errorSummaryId: string;
   onChange: (value: string) => void;
 }) {
   return (
@@ -255,7 +268,7 @@ function Field({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={error ? `${id}-error ${errorSummaryId}` : undefined}
           className={`${fieldClass} ${suffix ? "pr-16" : ""}`}
         />
         {suffix ? (
