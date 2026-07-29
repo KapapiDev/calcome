@@ -1,4 +1,5 @@
 "use client";
+
 import { type FormEvent, useState } from "react";
 import {
   PrimaryResults,
@@ -39,6 +40,7 @@ const moneyKeys = [
   "progressiveDeduction",
 ] as const;
 const rateKeys = ["taxRate", "filingCreditRate"] as const;
+const errorSummaryId = "inheritance-tax-error-summary";
 
 export function InheritanceTaxCalculator({
   locale,
@@ -56,15 +58,21 @@ export function InheritanceTaxCalculator({
     requestResultScroll,
     cancelResultScroll,
   } = useStableResultScroll(result);
+
   function submit(event: FormEvent) {
     event.preventDefault();
     const checked = validateInheritanceTax(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateInheritanceTax(checked.data));
     setAnimationKey((value) => value + 1);
   }
+
   return (
     <section aria-labelledby="inheritance-tax-input-title">
       <div className={dashboardCalculatorWorkspaceClass}>
@@ -83,6 +91,7 @@ export function InheritanceTaxCalculator({
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -107,6 +116,7 @@ export function InheritanceTaxCalculator({
                         : "160,000,000"
               }
               error={errors[key]}
+              errorSummaryId={errorSummaryId}
               onChange={(value) =>
                 setValues((current) => ({
                   ...current,
@@ -124,6 +134,7 @@ export function InheritanceTaxCalculator({
               placeholder={key === "taxRate" ? "40" : "3"}
               suffix="%"
               error={errors[key]}
+              errorSummaryId={errorSummaryId}
               onChange={(value) =>
                 setValues((current) => ({ ...current, [key]: value }))
               }
@@ -220,6 +231,7 @@ export function InheritanceTaxCalculator({
     </section>
   );
 }
+
 function Field({
   id,
   label,
@@ -227,6 +239,7 @@ function Field({
   placeholder,
   suffix,
   error,
+  errorSummaryId,
   onChange,
 }: {
   id: string;
@@ -235,6 +248,7 @@ function Field({
   placeholder: string;
   suffix?: string;
   error?: string;
+  errorSummaryId: string;
   onChange: (value: string) => void;
 }) {
   return (
@@ -250,7 +264,7 @@ function Field({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={error ? `${id}-error ${errorSummaryId}` : undefined}
           className={`${fieldClass} ${suffix ? "pr-14" : ""}`}
         />
         {suffix ? (
@@ -267,6 +281,7 @@ function Field({
     </div>
   );
 }
+
 function won(
   value: { toDecimalPlaces: (places: number) => { toNumber: () => number } },
   locale: InheritanceTaxLocale,
@@ -278,6 +293,7 @@ function won(
       locale === "ko" ? "ko-KR" : "en-US",
     )} ${locale === "ko" ? "원" : "KRW"}`;
 }
+
 function Detail({ label, value }: { label: string; value: string }) {
   return (
     <div>
