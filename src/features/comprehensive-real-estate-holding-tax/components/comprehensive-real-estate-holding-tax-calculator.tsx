@@ -57,11 +57,18 @@ export function ComprehensiveRealEstateHoldingTaxCalculator({
 }) {
   const copy = comprehensiveRealEstateHoldingTaxContent[locale];
   const [values, setValues] = useState(initialValues);
-  const [errors, setErrors] = useState<ComprehensiveRealEstateHoldingTaxErrors>({});
-  const [result, setResult] = useState<ComprehensiveRealEstateHoldingTaxResult | null>(null);
+  const [errors, setErrors] = useState<ComprehensiveRealEstateHoldingTaxErrors>(
+    {},
+  );
+  const [result, setResult] =
+    useState<ComprehensiveRealEstateHoldingTaxResult | null>(null);
   const [animationKey, setAnimationKey] = useState(0);
-  const { resultRef, noteNumericInputFocus, requestResultScroll, cancelResultScroll } =
-    useStableResultScroll(result);
+  const {
+    resultRef,
+    noteNumericInputFocus,
+    requestResultScroll,
+    cancelResultScroll,
+  } = useStableResultScroll(result);
 
   function submit(event: FormEvent) {
     event.preventDefault();
@@ -122,11 +129,15 @@ export function ComprehensiveRealEstateHoldingTaxCalculator({
                 placeholder={placeholders[key]}
                 suffix={money ? undefined : "%"}
                 error={errors[key]}
-                errorSummaryId={Object.keys(errors).length ? errorSummaryId : undefined}
+                errorSummaryId={
+                  Object.keys(errors).length ? errorSummaryId : undefined
+                }
                 onChange={(value) =>
                   setValues((current) => ({
                     ...current,
-                    [key]: money ? formatMoneyInput(value, current[key]) : value,
+                    [key]: money
+                      ? formatMoneyInput(value, current[key])
+                      : value,
                   }))
                 }
               />
@@ -164,7 +175,12 @@ export function ComprehensiveRealEstateHoldingTaxCalculator({
               metrics={[
                 {
                   label: copy.totalTax,
-                  value: <AnimatedWon value={result?.totalTax ?? null} animationKey={animationKey} />,
+                  value: (
+                    <AnimatedWon
+                      value={result?.totalTax ?? null}
+                      animationKey={animationKey}
+                    />
+                  ),
                   featured: true,
                 },
                 {
@@ -178,7 +194,12 @@ export function ComprehensiveRealEstateHoldingTaxCalculator({
                 },
                 {
                   label: copy.taxBase,
-                  value: <AnimatedWon value={result?.taxBase ?? null} animationKey={animationKey} />,
+                  value: (
+                    <AnimatedWon
+                      value={result?.taxBase ?? null}
+                      animationKey={animationKey}
+                    />
+                  ),
                 },
               ]}
             />
@@ -198,7 +219,10 @@ export function ComprehensiveRealEstateHoldingTaxCalculator({
                   label={copy.taxBeforePropertyTaxCredit}
                   value={won(result.taxBeforePropertyTaxCredit, locale)}
                 />
-                <Detail label={copy.specialRuralTax} value={won(result.specialRuralTax, locale)} />
+                <Detail
+                  label={copy.specialRuralTax}
+                  value={won(result.specialRuralTax, locale)}
+                />
                 <Detail
                   label={copy.effectiveRate}
                   value={`${result.effectiveTaxRate.toDecimalPlaces(3).toString()}%`}
@@ -233,7 +257,10 @@ function Field({
   errorSummaryId?: string;
   onChange: (value: string) => void;
 }) {
-  const describedBy = [error ? `${id}-error` : undefined, error ? errorSummaryId : undefined]
+  const describedBy = [
+    error ? `${id}-error` : undefined,
+    error ? errorSummaryId : undefined,
+  ]
     .filter(Boolean)
     .join(" ");
   return (
@@ -274,7 +301,9 @@ function won(
   return `${value
     .toDecimalPlaces(0)
     .toNumber()
-    .toLocaleString(locale === "ko" ? "ko-KR" : "en-US")} ${locale === "ko" ? "원" : "KRW"}`;
+    .toLocaleString(
+      locale === "ko" ? "ko-KR" : "en-US",
+    )} ${locale === "ko" ? "원" : "KRW"}`;
 }
 
 function Detail({ label, value }: { label: string; value: string }) {
