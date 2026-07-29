@@ -68,7 +68,10 @@ export function ValueAddedTaxCalculator({
           className={`${compactCalculatorSettingsClass} min-w-0`}
         >
           <p className="text-sm font-semibold text-primary">{copy.category}</p>
-          <h2 id="value-added-tax-input-title" className="mt-1 text-xl font-semibold">
+          <h2
+            id="value-added-tax-input-title"
+            className="mt-1 text-xl font-semibold"
+          >
             {copy.input}
           </h2>
           {Object.keys(errors).length ? (
@@ -93,7 +96,9 @@ export function ValueAddedTaxCalculator({
                     name="mode"
                     value={mode}
                     checked={values.mode === mode}
-                    onChange={() => setValues((current) => ({ ...current, mode }))}
+                    onChange={() =>
+                      setValues((current) => ({ ...current, mode }))
+                    }
                   />
                   {copy[mode]}
                 </label>
@@ -226,7 +231,9 @@ function Field({
           value={value}
           placeholder={placeholder}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${errorId} ${errorSummaryId}` : undefined}
+          aria-describedby={
+            error ? `${errorId} ${errorSummaryId}` : undefined
+          }
           onChange={(event) => onChange(event.target.value)}
         />
         {suffix ? (
