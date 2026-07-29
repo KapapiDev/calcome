@@ -24,6 +24,7 @@ const initialValues: FreelancerTaxValues = {
   grossPayment: "",
   expenseAmount: "",
 };
+const errorSummaryId = "freelancer-tax-error-summary";
 
 export function FreelancerTaxCalculator({
   locale,
@@ -47,7 +48,11 @@ export function FreelancerTaxCalculator({
     event.preventDefault();
     const checked = validateFreelancerTax(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateFreelancerTax(checked.data));
     setAnimationKey((value) => value + 1);
@@ -70,6 +75,7 @@ export function FreelancerTaxCalculator({
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -90,7 +96,9 @@ export function FreelancerTaxCalculator({
                 value={values[key]}
                 placeholder={key === "grossPayment" ? "1,000,000" : "0"}
                 aria-invalid={Boolean(errors[key])}
-                aria-describedby={errors[key] ? `${key}-error` : undefined}
+                aria-describedby={
+                  errors[key] ? `${key}-error ${errorSummaryId}` : undefined
+                }
                 className={fieldClass}
                 onChange={(event) =>
                   setValues((current) => ({
