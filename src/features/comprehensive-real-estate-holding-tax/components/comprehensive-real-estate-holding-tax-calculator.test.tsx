@@ -59,13 +59,19 @@ describe("ComprehensiveRealEstateHoldingTaxCalculator", () => {
       );
       expect(assessedValue).toHaveAttribute(
         "aria-describedby",
-        expect.stringContaining("comprehensive-real-estate-holding-tax-error-summary"),
+        expect.stringContaining(
+          "comprehensive-real-estate-holding-tax-error-summary",
+        ),
       );
       expect(screen.queryByText("공제 적용 후 금액")).not.toBeInTheDocument();
-      expect(screen.queryByText("재산세액 공제 전 세액")).not.toBeInTheDocument();
+      expect(
+        screen.queryByText("재산세액 공제 전 세액"),
+      ).not.toBeInTheDocument();
       expect(screen.queryByText("농어촌특별세")).not.toBeInTheDocument();
       expect(
-        screen.getByText("계산하면 입력값에 따른 과세표준과 예상 세액을 표시합니다."),
+        screen.getByText(
+          "계산하면 입력값에 따른 과세표준과 예상 세액을 표시합니다.",
+        ),
       ).toBeVisible();
     });
   });
