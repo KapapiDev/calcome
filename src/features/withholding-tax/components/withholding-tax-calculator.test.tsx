@@ -27,10 +27,7 @@ describe("WithholdingTaxCalculator", () => {
     const grossPayment = screen.getByLabelText("총 지급액");
     await user.type(grossPayment, "5000000");
     await user.type(screen.getByLabelText("확인한 비과세 금액"), "500000");
-    await user.type(
-      screen.getByLabelText("확인한 소득세 원천징수세율"),
-      "8",
-    );
+    await user.type(screen.getByLabelText("확인한 소득세 원천징수세율"), "8");
     await user.type(screen.getByLabelText("지방소득세율(소득세 대비)"), "10");
     await user.click(
       screen.getByRole("button", { name: "예상 원천징수세 계산하기" }),
