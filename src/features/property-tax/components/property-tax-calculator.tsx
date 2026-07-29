@@ -1,5 +1,7 @@
 "use client";
+
 import { type FormEvent, useState } from "react";
+
 import {
   PrimaryResults,
   compactCalculatorSettingsClass,
@@ -9,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { AnimatedWon } from "@/features/compound-interest/components/animated-won";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
 import { formatMoneyInput } from "@/lib/input/money";
+
 import { calculatePropertyTax, type PropertyTaxResult } from "../calculate";
 import { propertyTaxContent, type PropertyTaxLocale } from "../content";
 import {
@@ -19,6 +22,7 @@ import {
 
 const fieldClass =
   "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none placeholder:text-muted-foreground/70 focus-visible:ring-3 focus-visible:ring-ring/30 aria-invalid:border-destructive sm:text-sm";
+const errorSummaryId = "property-tax-error-summary";
 const initialValues: PropertyTaxValues = {
   assessedValue: "",
   taxBaseRate: "",
@@ -50,15 +54,21 @@ export function PropertyTaxCalculator({
     requestResultScroll,
     cancelResultScroll,
   } = useStableResultScroll(result);
+
   function submit(event: FormEvent) {
     event.preventDefault();
     const checked = validatePropertyTax(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculatePropertyTax(checked.data));
     setAnimationKey((value) => value + 1);
   }
+
   return (
     <section aria-labelledby="property-tax-input-title">
       <div className={dashboardCalculatorWorkspaceClass}>
@@ -77,6 +87,7 @@ export function PropertyTaxCalculator({
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -102,6 +113,7 @@ export function PropertyTaxCalculator({
                 placeholder={placeholders[key]}
                 suffix={money ? undefined : "%"}
                 error={errors[key]}
+                errorSummaryId={errorSummaryId}
                 onChange={(value) =>
                   setValues((current) => ({
                     ...current,
@@ -208,6 +220,7 @@ function Field({
   placeholder,
   suffix,
   error,
+  errorSummaryId,
   onChange,
 }: {
   id: string;
@@ -216,6 +229,7 @@ function Field({
   placeholder: string;
   suffix?: string;
   error?: string;
+  errorSummaryId: string;
   onChange: (value: string) => void;
 }) {
   return (
@@ -231,7 +245,7 @@ function Field({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={error ? `${id}-error ${errorSummaryId}` : undefined}
           className={`${fieldClass} ${suffix ? "pr-14" : ""}`}
         />
         {suffix ? (
@@ -248,6 +262,7 @@ function Field({
     </div>
   );
 }
+
 function won(
   value: { toDecimalPlaces: (places: number) => { toNumber: () => number } },
   locale: PropertyTaxLocale,
@@ -259,6 +274,7 @@ function won(
       locale === "ko" ? "ko-KR" : "en-US",
     )} ${locale === "ko" ? "원" : "KRW"}`;
 }
+
 function Detail({ label, value }: { label: string; value: string }) {
   return (
     <div>
