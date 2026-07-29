@@ -42,6 +42,7 @@ const moneyKeys = [
   "taxCredit",
 ] as const;
 const rateKeys = ["taxRate", "localIncomeTaxRate"] as const;
+const errorSummaryId = "comprehensive-income-tax-error-summary";
 
 export function ComprehensiveIncomeTaxCalculator({
   locale,
@@ -65,7 +66,11 @@ export function ComprehensiveIncomeTaxCalculator({
     event.preventDefault();
     const checked = validateComprehensiveIncomeTax(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateComprehensiveIncomeTax(checked.data));
     setAnimationKey((value) => value + 1);
@@ -88,6 +93,7 @@ export function ComprehensiveIncomeTaxCalculator({
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -112,6 +118,7 @@ export function ComprehensiveIncomeTaxCalculator({
                         : "1,000,000"
               }
               error={errors[key]}
+              errorSummaryId={errorSummaryId}
               onChange={(value) =>
                 setValues((current) => ({
                   ...current,
@@ -129,6 +136,7 @@ export function ComprehensiveIncomeTaxCalculator({
               placeholder={key === "taxRate" ? "24" : "10"}
               suffix="%"
               error={errors[key]}
+              errorSummaryId={errorSummaryId}
               onChange={(value) =>
                 setValues((current) => ({ ...current, [key]: value }))
               }
@@ -239,6 +247,7 @@ function Field({
   placeholder,
   suffix,
   error,
+  errorSummaryId,
   onChange,
 }: {
   id: string;
@@ -247,8 +256,10 @@ function Field({
   placeholder: string;
   suffix?: string;
   error?: string;
+  errorSummaryId: string;
   onChange: (value: string) => void;
 }) {
+  const errorId = `${id}-error`;
   return (
     <div className="mt-4">
       <label htmlFor={id} className="block text-sm font-medium">
@@ -262,7 +273,7 @@ function Field({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={error ? `${errorId} ${errorSummaryId}` : undefined}
           className={`${fieldClass} ${suffix ? "pr-14" : ""}`}
         />
         {suffix ? (
@@ -272,7 +283,7 @@ function Field({
         ) : null}
       </div>
       {error ? (
-        <p id={`${id}-error`} className="mt-1 text-sm text-destructive">
+        <p id={errorId} className="mt-1 text-sm text-destructive">
           {error}
         </p>
       ) : null}
