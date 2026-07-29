@@ -10,6 +10,8 @@
 - Priority order: calculation correctness and critical UX, site-wide UI/UX consistency, calculator expansion, technical SEO, content quality, then AdSense readiness.
 - Never publish a policy-sensitive calculator without official sources and a visible verification date.
 - Never create a near-duplicate calculator merely to increase the count.
+- Product strategy: win search coverage through a large inventory of genuinely distinct calculators, then earn repeat use through fast, accurate calculations, clean bilingual UX, and predictable interaction patterns.
+- Search Console data may reorder unstarted work and trigger bounded technical fixes, but it must not replace the 100-calculator milestone with a narrow single-topic strategy.
 
 ## Product milestone
 
@@ -19,6 +21,8 @@
 - P-001 through P-044 are merged and effectively `DONE`.
 - SEO-001 XML sitemap and SEO-002 shared JSON-LD foundation are merged.
 - Demand ordering is qualitative and documented in `QUEUE_RESEARCH_2026-07-25.md`; exact search volumes must not be invented.
+- Search Console baseline exported 2026-07-29: 281 impressions, 1 click, 108 surfaced queries, 38 countries, and first recorded impressions on 2026-07-15. Treat this as an early directional signal, not proof that the broad-inventory strategy should be narrowed.
+- Early non-brand clusters are CAGR and compound growth, stock average cost, loan comparison and affordability, LTV, and employment/payroll. Use them to accelerate adjacent work while continuing broad inventory growth.
 
 ## Completed calculator program
 
@@ -134,7 +138,7 @@ Status: BLOCKED
 
 Priority: HIGH
 
-Scope: Audit compound interest, savings, fixed deposit, CAGR, stocks, dividends, and investment-related flows, including charts, tables, result comparison, large values, bilingual terminology, and category discovery.
+Scope: Audit compound interest, savings, fixed deposit, CAGR, stocks, dividends, and investment-related flows, including charts, tables, result comparison, large values, bilingual terminology, and category discovery. Search Console makes CAGR and stock-average-cost the first two audit targets: verify their canonical locale routes, metadata, related-calculator paths, result clarity, comparison depth, and repeat-use flow without delaying completion of the remaining category audit.
 
 ---
 
@@ -154,7 +158,55 @@ Scope:
 
 ---
 
+# Phase 1.5: Search index consolidation before expansion
+
+SEO-FIX-001
+
+Title: Canonical Host, Locale Route, Hreflang, and Sitemap Consolidation
+
+Status: BLOCKED
+
+Priority: CRITICAL
+
+Trigger evidence:
+
+- The 2026-07-29 Search Console export surfaced the same calculator families across `www/non-www`, locale-less `/finance/*`, Korean `/ko/*`, and English `/en/*` URLs.
+- This report contains historical search data, so reproduce the current production behavior before changing redirects or canonical tags. Do not claim a live defect from historical rows alone.
+
+Scope:
+
+- Establish `https://www.calcome.com/ko/*` and `https://www.calcome.com/en/*` as the only indexable calculator route families.
+- Verify and, where needed, fix one-hop permanent redirects from `calcome.com/*` to `www.calcome.com/*` and from locale-less calculator routes to the intended locale route.
+- Verify self-referencing canonicals for Korean and English pages and reciprocal `ko`, `en`, and appropriate `x-default` hreflang clusters.
+- Ensure the XML sitemap contains only canonical locale URLs and never lists redirecting, non-www, locale-less, filtered, or duplicate calculator URLs.
+- Ensure internal links, directory cards, related-calculator links, structured data, language switching, and shared metadata emit canonical locale URLs.
+- Add automated coverage for representative finance, employment, and directory routes, including query strings, trailing slash behavior, and Korean-English round trips.
+- Record a Search Console annotation and retain the 2026-07-29 export as the comparison baseline for later recrawl evaluation.
+
+Acceptance:
+
+- Every tested noncanonical route resolves in one permanent hop to exactly one intended canonical URL.
+- Korean and English equivalents remain separately indexable and mutually referenced; neither canonicalizes to the other language.
+- No canonical route redirects, no redirecting URL appears in the sitemap, and no internal link intentionally emits a noncanonical variant.
+- Existing 51 calculators remain discoverable in both languages and language switching preserves calculator identity.
+- `npm run check`, `npm run build`, redirect/canonical/hreflang tests, sitemap tests, and `git diff --check` pass.
+- Desktop and mobile production verification covers home, directory, CAGR, stock average cost, loan comparison, and one employment calculator.
+
+---
+
 # Phase 2: Expansion from 51 to 100 calculators
+
+## Data-informed execution order
+
+The 49-calculator inventory remains intact. Search Console changes the order of unstarted work, not the breadth target. When Phase 2 opens, use this initial acceleration order before returning to the remaining Tier A, Tier B, and Tier C sequence:
+
+1. P-089 Dollar-Cost Averaging Calculator — reinforces the surfaced stock-average-cost cluster and repeat-use behavior.
+2. P-062 Stress DSR Calculator — extends loan comparison and affordability demand.
+3. P-063 Mortgage Loan Limit Calculator — extends loan affordability and LTV demand.
+4. P-076 Savings Goal Calculator — connects CAGR and compound-growth discovery to a recurring planning use case.
+5. P-045 Investment Fee Impact Calculator — adds a comparison-led investment decision tool.
+
+After every four merged calculators, use fresh Search Console query/page/country/device data to reorder only tasks that are still unstarted. Record the evidence and keep one task OPEN; never remove committed calculators solely because early data is sparse.
 
 ## Tier A: Highest commercial and recurring Korean intent
 
@@ -214,7 +266,7 @@ Scope:
 | P-086 | Cryptocurrency Average Cost Calculator    | 투자                       | BLOCKED | MEDIUM   |
 | P-087 | Cryptocurrency Profit and Loss Calculator | 투자                       | BLOCKED | MEDIUM   |
 | P-088 | Staking Reward Calculator                 | 투자                       | BLOCKED | MEDIUM   |
-| P-089 | Dollar-Cost Averaging Calculator          | 투자                       | BLOCKED | MEDIUM   |
+| P-089 | Dollar-Cost Averaging Calculator          | 투자                       | BLOCKED | HIGH     |
 | P-090 | Foreign-Currency Average Cost Calculator  | 투자                       | BLOCKED | MEDIUM   |
 | P-091 | Break-Even Sales Calculator               | 사업·생활                  | BLOCKED | MEDIUM   |
 | P-092 | Gross Margin and Markup Calculator        | 사업·생활                  | BLOCKED | MEDIUM   |
@@ -225,6 +277,7 @@ Scope:
 - P-045 through P-093 add exactly 49 calculators to the current verified total of 51.
 - The milestone is complete only when production contains 100 distinct, usable calculators.
 - Every new calculator must provide Korean and English routes, canonical and hreflang behavior, one-hop locale-less redirect, sitemap discovery, home search discovery, exactly one primary directory category, documented aliases, contextual related links, unique explanatory content, tests, manual verification, and desktop/mobile production evidence.
+- Every new calculator must preserve the repeat-use promise: fast first calculation, clear reset and recalculation, stable result hierarchy, mobile-friendly input, and useful comparison/history/restoration behavior when the calculator's intent benefits from it. Do not add accounts or persistent sensitive-data storage merely to manufacture retention.
 - Adding a calculator without category metadata or placing it in an uncategorized catch-all is a failed integration.
 - After every four newly merged calculators, complete a production UX and directory regression before continuing expansion.
 - Search Console performance data may reorder unstarted expansion tasks but must not silently delete the 100-calculator milestone.
@@ -238,7 +291,7 @@ SEO-004 Calculator Content Depth and Trust Template — BLOCKED — HIGH
 SEO-005 Search Intent and Metadata Optimization — BLOCKED — HIGH
 SEO-006 Internal Linking and Topic Cluster Hubs — BLOCKED — HIGH
 SEO-007 Core Web Vitals and Crawl Performance Audit — BLOCKED — HIGH
-SEO-008 Search Console Query and Cannibalization Feedback Loop — BLOCKED — HIGH
+SEO-008 Search Console Query and Cannibalization Feedback Loop — BLOCKED — HIGH — compare against the 2026-07-29 baseline, evaluate canonical consolidation, identify query/page cannibalization, and reorder only unstarted expansion or optimization work.
 
 ADS-001 AdSense Policy and Site Trust Readiness Audit — BLOCKED — HIGH
 ADS-002 Original Guide and Decision-Support Content Program — BLOCKED — HIGH
@@ -249,7 +302,8 @@ ADS-005 AdSense Integration and ads.txt — BLOCKED — MEDIUM
 ## Final sequence
 
 1. Complete the full 51-calculator UI/UX audit and categorized directory architecture.
-2. Apply the verified shared UX and directory rules while adding P-045 through P-093 in demand order.
-3. Reach 100 distinct production calculators with recurring UX and directory regression gates.
-4. Run whole-site SEO optimization for top-ranking search goals.
-5. Strengthen AdSense policy readiness and advertisement architecture.
+2. Complete SEO-FIX-001 so new pages inherit one canonical host and locale architecture.
+3. Add P-045 through P-093 using the data-informed acceleration order, then the remaining demand order.
+4. Reach 100 distinct production calculators with recurring UX, directory, and four-calculator Search Console feedback gates.
+5. Run whole-site SEO optimization for top-ranking search goals.
+6. Strengthen AdSense policy readiness and advertisement architecture.
