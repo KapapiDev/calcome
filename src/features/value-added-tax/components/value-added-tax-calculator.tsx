@@ -25,6 +25,7 @@ const initialValues: ValueAddedTaxValues = {
   taxRate: "10",
   mode: "exclusive",
 };
+const errorSummaryId = "value-added-tax-error-summary";
 
 export function ValueAddedTaxCalculator({
   locale,
@@ -47,7 +48,11 @@ export function ValueAddedTaxCalculator({
     event.preventDefault();
     const checked = validateValueAddedTax(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateValueAddedTax(checked.data));
     setAnimationKey((value) => value + 1);
@@ -63,14 +68,12 @@ export function ValueAddedTaxCalculator({
           className={`${compactCalculatorSettingsClass} min-w-0`}
         >
           <p className="text-sm font-semibold text-primary">{copy.category}</p>
-          <h2
-            id="value-added-tax-input-title"
-            className="mt-1 text-xl font-semibold"
-          >
+          <h2 id="value-added-tax-input-title" className="mt-1 text-xl font-semibold">
             {copy.input}
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -90,9 +93,7 @@ export function ValueAddedTaxCalculator({
                     name="mode"
                     value={mode}
                     checked={values.mode === mode}
-                    onChange={() =>
-                      setValues((current) => ({ ...current, mode }))
-                    }
+                    onChange={() => setValues((current) => ({ ...current, mode }))}
                   />
                   {copy[mode]}
                 </label>
@@ -105,6 +106,7 @@ export function ValueAddedTaxCalculator({
             value={values.amount}
             placeholder="1,100,000"
             error={errors.amount}
+            errorSummaryId={errorSummaryId}
             onChange={(value) =>
               setValues((current) => ({
                 ...current,
@@ -119,6 +121,7 @@ export function ValueAddedTaxCalculator({
             placeholder="10"
             suffix="%"
             error={errors.taxRate}
+            errorSummaryId={errorSummaryId}
             onChange={(taxRate) =>
               setValues((current) => ({ ...current, taxRate }))
             }
@@ -199,6 +202,7 @@ function Field({
   placeholder,
   suffix,
   error,
+  errorSummaryId,
   onChange,
 }: {
   id: string;
@@ -207,6 +211,7 @@ function Field({
   placeholder: string;
   suffix?: string;
   error?: string;
+  errorSummaryId: string;
   onChange: (value: string) => void;
 }) {
   const errorId = `${id}-error`;
@@ -221,7 +226,7 @@ function Field({
           value={value}
           placeholder={placeholder}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? errorId : undefined}
+          aria-describedby={error ? `${errorId} ${errorSummaryId}` : undefined}
           onChange={(event) => onChange(event.target.value)}
         />
         {suffix ? (
