@@ -231,9 +231,7 @@ function Field({
           value={value}
           placeholder={placeholder}
           aria-invalid={Boolean(error)}
-          aria-describedby={
-            error ? `${errorId} ${errorSummaryId}` : undefined
-          }
+          aria-describedby={error ? `${errorId} ${errorSummaryId}` : undefined}
           onChange={(event) => onChange(event.target.value)}
         />
         {suffix ? (
