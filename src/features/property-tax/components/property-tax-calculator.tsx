@@ -1,5 +1,7 @@
 "use client";
+
 import { type FormEvent, useState } from "react";
+
 import {
   PrimaryResults,
   compactCalculatorSettingsClass,
@@ -9,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { AnimatedWon } from "@/features/compound-interest/components/animated-won";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
 import { formatMoneyInput } from "@/lib/input/money";
+
 import { calculatePropertyTax, type PropertyTaxResult } from "../calculate";
 import { propertyTaxContent, type PropertyTaxLocale } from "../content";
 import {
@@ -51,6 +54,7 @@ export function PropertyTaxCalculator({
     requestResultScroll,
     cancelResultScroll,
   } = useStableResultScroll(result);
+
   function submit(event: FormEvent) {
     event.preventDefault();
     const checked = validatePropertyTax(values, locale);
@@ -64,6 +68,7 @@ export function PropertyTaxCalculator({
     setResult(calculatePropertyTax(checked.data));
     setAnimationKey((value) => value + 1);
   }
+
   return (
     <section aria-labelledby="property-tax-input-title">
       <div className={dashboardCalculatorWorkspaceClass}>
@@ -259,6 +264,7 @@ function Field({
     </div>
   );
 }
+
 function won(
   value: { toDecimalPlaces: (places: number) => { toNumber: () => number } },
   locale: PropertyTaxLocale,
@@ -266,10 +272,9 @@ function won(
   return `${value
     .toDecimalPlaces(0)
     .toNumber()
-    .toLocaleString(
-      locale === "ko" ? "ko-KR" : "en-US",
-    )} ${locale === "ko" ? "원" : "KRW"}`;
+    .toLocaleString(locale === "ko" ? "ko-KR" : "en-US")} ${locale === "ko" ? "원" : "KRW"}`;
 }
+
 function Detail({ label, value }: { label: string; value: string }) {
   return (
     <div>
