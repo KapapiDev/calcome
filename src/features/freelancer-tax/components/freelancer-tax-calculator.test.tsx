@@ -26,7 +26,10 @@ describe("FreelancerTaxCalculator", () => {
 
     const grossPayment = screen.getByLabelText("총 지급액");
     await user.type(grossPayment, "1000000");
-    await user.type(screen.getByLabelText("확인한 원천징수 제외 금액"), "100000");
+    await user.type(
+      screen.getByLabelText("확인한 원천징수 제외 금액"),
+      "100000",
+    );
     await user.click(screen.getByRole("button", { name: "3.3% 세금 계산하기" }));
 
     await waitFor(() => {
