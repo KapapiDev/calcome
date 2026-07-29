@@ -245,9 +245,7 @@ function Field({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={
-            error ? `${id}-error ${errorSummaryId}` : undefined
-          }
+          aria-describedby={error ? `${id}-error ${errorSummaryId}` : undefined}
           className={`${fieldClass} ${suffix ? "pr-14" : ""}`}
         />
         {suffix ? (
@@ -272,7 +270,9 @@ function won(
   return `${value
     .toDecimalPlaces(0)
     .toNumber()
-    .toLocaleString(locale === "ko" ? "ko-KR" : "en-US")} ${locale === "ko" ? "원" : "KRW"}`;
+    .toLocaleString(
+      locale === "ko" ? "ko-KR" : "en-US",
+    )} ${locale === "ko" ? "원" : "KRW"}`;
 }
 
 function Detail({ label, value }: { label: string; value: string }) {
