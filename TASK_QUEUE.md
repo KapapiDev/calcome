@@ -12,6 +12,7 @@
 - Never create a near-duplicate calculator merely to increase the count.
 - Product strategy: win search coverage through a large inventory of genuinely distinct calculators, then earn repeat use through fast, accurate calculations, clean bilingual UX, and predictable interaction patterns.
 - Search Console data may reorder unstarted work and trigger bounded technical fixes, but it must not replace the 100-calculator milestone with a narrow single-topic strategy.
+- Currency semantics follow calculator intent, not language replacement alone: generic English financial calculators default to USD, generic Korean calculators default to KRW, currency-neutral calculators expose a sensible currency choice when amounts are displayed, and South Korea policy calculators remain KRW with explicit South Korea/KRW labeling in English.
 
 ## Product milestone
 
@@ -158,6 +159,38 @@ Scope:
 
 ---
 
+UX-008
+
+Title: Bilingual Currency Semantics and Money Formatting Audit
+
+Status: BLOCKED
+
+Priority: HIGH
+
+Goal: Ensure an English page never presents unexplained Korean-won inputs or results, while preserving KRW for calculations that are inherently governed by South Korean law, tax, payroll, housing, or benefit rules.
+
+Scope:
+
+- Classify every calculator as generic monetary, currency-neutral with displayed amounts, South Korea policy-specific, or non-monetary.
+- Make generic English financial and investment calculators default to USD and generic Korean equivalents default to KRW.
+- For currency-neutral formulas such as CAGR, compound growth, savings goals, stock average cost, and profit/loss, provide a currency selector when it improves reuse; changing currency changes symbols, labels, formatting, charts, tables, shared/restored state, and explanatory copy consistently without pretending to perform foreign-exchange conversion.
+- Keep South Korea policy-specific calculators in KRW on both language routes, but label the English title, description, inputs, results, assumptions, and disclosures clearly as South Korea and KRW.
+- Keep pure percentage, date, age, ratio, and other genuinely non-monetary calculators free of unnecessary currency controls.
+- Use locale-appropriate grouping, decimals, symbols, accessible names, validation messages, examples, metadata, and structured data.
+- Never perform silent exchange-rate conversion. Any actual conversion feature must identify the rate source, timestamp, base currency, quote currency, rounding, and unavailable/stale-rate behavior.
+- Add shared currency metadata and reusable formatting primitives so future calculators cannot accidentally hard-code KRW into a generic English route.
+
+Acceptance:
+
+- No generic English calculator defaults to or displays unexplained KRW.
+- No South Korea policy calculator is misleadingly converted to USD; English users can see before input that the calculation is South Korea-specific and KRW-based.
+- Currency selection, where present, survives recalculation and intended URL/state restoration and updates every visible and accessible monetary representation.
+- Currency changes do not alter dimensionless results such as CAGR or return percentage, except for their related amount displays.
+- Representative tests cover generic investment, savings, loan, stock, South Korea tax, employment, housing, and non-monetary calculators in both locales.
+- `npm run check`, `npm run build`, focused currency tests, and `git diff --check` pass with desktop and mobile production evidence.
+
+---
+
 # Phase 1.5: Search index consolidation before expansion
 
 SEO-FIX-001
@@ -278,6 +311,7 @@ After every four merged calculators, use fresh Search Console query/page/country
 - The milestone is complete only when production contains 100 distinct, usable calculators.
 - Every new calculator must provide Korean and English routes, canonical and hreflang behavior, one-hop locale-less redirect, sitemap discovery, home search discovery, exactly one primary directory category, documented aliases, contextual related links, unique explanatory content, tests, manual verification, and desktop/mobile production evidence.
 - Every new calculator must preserve the repeat-use promise: fast first calculation, clear reset and recalculation, stable result hierarchy, mobile-friendly input, and useful comparison/history/restoration behavior when the calculator's intent benefits from it. Do not add accounts or persistent sensitive-data storage merely to manufacture retention.
+- Every new calculator must declare its currency class and follow UX-008: generic English monetary pages default to USD, generic Korean monetary pages default to KRW, South Korea policy calculations remain explicitly KRW, and non-monetary pages do not add fake currency controls.
 - Adding a calculator without category metadata or placing it in an uncategorized catch-all is a failed integration.
 - After every four newly merged calculators, complete a production UX and directory regression before continuing expansion.
 - Search Console performance data may reorder unstarted expansion tasks but must not silently delete the 100-calculator milestone.
@@ -302,8 +336,9 @@ ADS-005 AdSense Integration and ads.txt — BLOCKED — MEDIUM
 ## Final sequence
 
 1. Complete the full 51-calculator UI/UX audit and categorized directory architecture.
-2. Complete SEO-FIX-001 so new pages inherit one canonical host and locale architecture.
-3. Add P-045 through P-093 using the data-informed acceleration order, then the remaining demand order.
-4. Reach 100 distinct production calculators with recurring UX, directory, and four-calculator Search Console feedback gates.
-5. Run whole-site SEO optimization for top-ranking search goals.
-6. Strengthen AdSense policy readiness and advertisement architecture.
+2. Complete UX-008 so existing and future English pages use correct USD/KRW semantics.
+3. Complete SEO-FIX-001 so new pages inherit one canonical host and locale architecture.
+4. Add P-045 through P-093 using the data-informed acceleration order, then the remaining demand order.
+5. Reach 100 distinct production calculators with recurring UX, directory, currency, and four-calculator Search Console feedback gates.
+6. Run whole-site SEO optimization for top-ranking search goals.
+7. Strengthen AdSense policy readiness and advertisement architecture.
