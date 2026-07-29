@@ -12,7 +12,7 @@
 - Never create a near-duplicate calculator merely to increase the count.
 - Product strategy: win search coverage through a large inventory of genuinely distinct calculators, then earn repeat use through fast, accurate calculations, clean bilingual UX, and predictable interaction patterns.
 - Search Console data may reorder unstarted work and trigger bounded technical fixes, but it must not replace the 100-calculator milestone with a narrow single-topic strategy.
-- Currency semantics follow calculator intent, not language replacement alone: generic English financial calculators default to USD, generic Korean calculators default to KRW, currency-neutral calculators expose a sensible currency choice when amounts are displayed, and South Korea policy calculators remain KRW with explicit South Korea/KRW labeling in English.
+- Currency semantics follow calculator intent, not language replacement alone: generic English financial calculators default to USD while offering major reusable currency choices, generic Korean calculators default to KRW, currency-neutral calculators expose a sensible currency choice when amounts are displayed, and South Korea policy calculators remain KRW with explicit South Korea/KRW labeling in English.
 
 ## Product milestone
 
@@ -173,6 +173,8 @@ Scope:
 
 - Classify every calculator as generic monetary, currency-neutral with displayed amounts, South Korea policy-specific, or non-monetary.
 - Make generic English financial and investment calculators default to USD and generic Korean equivalents default to KRW.
+- On eligible English calculators, offer at minimum USD, GBP, EUR, CAD, AUD, KRW, and JPY. Keep USD as the deterministic first-visit default on the shared `/en` route; browser locale may reorder or suggest a likely currency such as GBP for `en-GB`, but must never silently change entered values or override an explicit user choice.
+- Persist an explicit currency choice locally and restore it on later eligible calculator visits. Provide a visible way to change or reset the choice, and do not store sensitive financial inputs merely to remember currency.
 - For currency-neutral formulas such as CAGR, compound growth, savings goals, stock average cost, and profit/loss, provide a currency selector when it improves reuse; changing currency changes symbols, labels, formatting, charts, tables, shared/restored state, and explanatory copy consistently without pretending to perform foreign-exchange conversion.
 - Keep South Korea policy-specific calculators in KRW on both language routes, but label the English title, description, inputs, results, assumptions, and disclosures clearly as South Korea and KRW.
 - Keep pure percentage, date, age, ratio, and other genuinely non-monetary calculators free of unnecessary currency controls.
@@ -184,7 +186,9 @@ Acceptance:
 
 - No generic English calculator defaults to or displays unexplained KRW.
 - No South Korea policy calculator is misleadingly converted to USD; English users can see before input that the calculation is South Korea-specific and KRW-based.
-- Currency selection, where present, survives recalculation and intended URL/state restoration and updates every visible and accessible monetary representation.
+- Currency selection, where present, survives recalculation, navigation among eligible calculators, later visits, and intended URL/state restoration, and updates every visible and accessible monetary representation.
+- A first-time `/en` visitor receives USD unless they explicitly choose another currency; a returning visitor receives the last explicit supported choice. Browser-country or browser-locale inference may suggest or reorder options but cannot silently replace the default or saved choice.
+- GBP behavior is covered explicitly because the 2026-07-29 Search Console baseline recorded 58 United Kingdom impressions, compared with 76 United States impressions; this is directional evidence only and does not justify a separate UK formula or locale route.
 - Currency changes do not alter dimensionless results such as CAGR or return percentage, except for their related amount displays.
 - Representative tests cover generic investment, savings, loan, stock, South Korea tax, employment, housing, and non-monetary calculators in both locales.
 - `npm run check`, `npm run build`, focused currency tests, and `git diff --check` pass with desktop and mobile production evidence.
@@ -311,7 +315,7 @@ After every four merged calculators, use fresh Search Console query/page/country
 - The milestone is complete only when production contains 100 distinct, usable calculators.
 - Every new calculator must provide Korean and English routes, canonical and hreflang behavior, one-hop locale-less redirect, sitemap discovery, home search discovery, exactly one primary directory category, documented aliases, contextual related links, unique explanatory content, tests, manual verification, and desktop/mobile production evidence.
 - Every new calculator must preserve the repeat-use promise: fast first calculation, clear reset and recalculation, stable result hierarchy, mobile-friendly input, and useful comparison/history/restoration behavior when the calculator's intent benefits from it. Do not add accounts or persistent sensitive-data storage merely to manufacture retention.
-- Every new calculator must declare its currency class and follow UX-008: generic English monetary pages default to USD, generic Korean monetary pages default to KRW, South Korea policy calculations remain explicitly KRW, and non-monetary pages do not add fake currency controls.
+- Every new calculator must declare its currency class and follow UX-008: generic English monetary pages default to USD and support the shared eligible currency set, generic Korean monetary pages default to KRW, explicit supported choices persist locally, South Korea policy calculations remain explicitly KRW, and non-monetary pages do not add fake currency controls.
 - Adding a calculator without category metadata or placing it in an uncategorized catch-all is a failed integration.
 - After every four newly merged calculators, complete a production UX and directory regression before continuing expansion.
 - Search Console performance data may reorder unstarted expansion tasks but must not silently delete the 100-calculator milestone.
