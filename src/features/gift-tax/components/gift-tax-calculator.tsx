@@ -35,6 +35,7 @@ const moneyKeys = [
   "progressiveDeduction",
 ] as const;
 const rateKeys = ["taxRate", "filingCreditRate"] as const;
+const errorSummaryId = "gift-tax-error-summary";
 
 export function GiftTaxCalculator({ locale }: { locale: GiftTaxLocale }) {
   const copy = giftTaxContent[locale];
@@ -53,7 +54,11 @@ export function GiftTaxCalculator({ locale }: { locale: GiftTaxLocale }) {
     event.preventDefault();
     const checked = validateGiftTax(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateGiftTax(checked.data));
     setAnimationKey((value) => value + 1);
@@ -74,6 +79,7 @@ export function GiftTaxCalculator({ locale }: { locale: GiftTaxLocale }) {
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -96,6 +102,7 @@ export function GiftTaxCalculator({ locale }: { locale: GiftTaxLocale }) {
                       : "10,000,000"
               }
               error={errors[key]}
+              errorSummaryId={errorSummaryId}
               onChange={(value) =>
                 setValues((current) => ({
                   ...current,
@@ -113,6 +120,7 @@ export function GiftTaxCalculator({ locale }: { locale: GiftTaxLocale }) {
               placeholder={key === "taxRate" ? "20" : "3"}
               suffix="%"
               error={errors[key]}
+              errorSummaryId={errorSummaryId}
               onChange={(value) =>
                 setValues((current) => ({ ...current, [key]: value }))
               }
@@ -217,6 +225,7 @@ function Field({
   placeholder,
   suffix,
   error,
+  errorSummaryId,
   onChange,
 }: {
   id: string;
@@ -225,6 +234,7 @@ function Field({
   placeholder: string;
   suffix?: string;
   error?: string;
+  errorSummaryId: string;
   onChange: (value: string) => void;
 }) {
   return (
@@ -240,7 +250,7 @@ function Field({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={error ? `${id}-error ${errorSummaryId}` : undefined}
           className={`${fieldClass} ${suffix ? "pr-14" : ""}`}
         />
         {suffix ? (
