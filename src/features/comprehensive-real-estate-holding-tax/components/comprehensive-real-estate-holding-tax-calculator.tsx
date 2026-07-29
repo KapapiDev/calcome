@@ -26,6 +26,7 @@ import {
 
 const fieldClass =
   "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none placeholder:text-muted-foreground/70 focus-visible:ring-3 focus-visible:ring-ring/30 aria-invalid:border-destructive sm:text-sm";
+const errorSummaryId = "comprehensive-real-estate-holding-tax-error-summary";
 const initialValues: ComprehensiveRealEstateHoldingTaxValues = {
   aggregateAssessedValue: "",
   basicDeduction: "",
@@ -56,24 +57,21 @@ export function ComprehensiveRealEstateHoldingTaxCalculator({
 }) {
   const copy = comprehensiveRealEstateHoldingTaxContent[locale];
   const [values, setValues] = useState(initialValues);
-  const [errors, setErrors] = useState<ComprehensiveRealEstateHoldingTaxErrors>(
-    {},
-  );
-  const [result, setResult] =
-    useState<ComprehensiveRealEstateHoldingTaxResult | null>(null);
+  const [errors, setErrors] = useState<ComprehensiveRealEstateHoldingTaxErrors>({});
+  const [result, setResult] = useState<ComprehensiveRealEstateHoldingTaxResult | null>(null);
   const [animationKey, setAnimationKey] = useState(0);
-  const {
-    resultRef,
-    noteNumericInputFocus,
-    requestResultScroll,
-    cancelResultScroll,
-  } = useStableResultScroll(result);
+  const { resultRef, noteNumericInputFocus, requestResultScroll, cancelResultScroll } =
+    useStableResultScroll(result);
 
   function submit(event: FormEvent) {
     event.preventDefault();
     const checked = validateComprehensiveRealEstateHoldingTax(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateComprehensiveRealEstateHoldingTax(checked.data));
     setAnimationKey((value) => value + 1);
@@ -106,6 +104,7 @@ export function ComprehensiveRealEstateHoldingTaxCalculator({
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -123,12 +122,11 @@ export function ComprehensiveRealEstateHoldingTaxCalculator({
                 placeholder={placeholders[key]}
                 suffix={money ? undefined : "%"}
                 error={errors[key]}
+                errorSummaryId={Object.keys(errors).length ? errorSummaryId : undefined}
                 onChange={(value) =>
                   setValues((current) => ({
                     ...current,
-                    [key]: money
-                      ? formatMoneyInput(value, current[key])
-                      : value,
+                    [key]: money ? formatMoneyInput(value, current[key]) : value,
                   }))
                 }
               />
@@ -166,12 +164,7 @@ export function ComprehensiveRealEstateHoldingTaxCalculator({
               metrics={[
                 {
                   label: copy.totalTax,
-                  value: (
-                    <AnimatedWon
-                      value={result?.totalTax ?? null}
-                      animationKey={animationKey}
-                    />
-                  ),
+                  value: <AnimatedWon value={result?.totalTax ?? null} animationKey={animationKey} />,
                   featured: true,
                 },
                 {
@@ -185,12 +178,7 @@ export function ComprehensiveRealEstateHoldingTaxCalculator({
                 },
                 {
                   label: copy.taxBase,
-                  value: (
-                    <AnimatedWon
-                      value={result?.taxBase ?? null}
-                      animationKey={animationKey}
-                    />
-                  ),
+                  value: <AnimatedWon value={result?.taxBase ?? null} animationKey={animationKey} />,
                 },
               ]}
             />
@@ -210,10 +198,7 @@ export function ComprehensiveRealEstateHoldingTaxCalculator({
                   label={copy.taxBeforePropertyTaxCredit}
                   value={won(result.taxBeforePropertyTaxCredit, locale)}
                 />
-                <Detail
-                  label={copy.specialRuralTax}
-                  value={won(result.specialRuralTax, locale)}
-                />
+                <Detail label={copy.specialRuralTax} value={won(result.specialRuralTax, locale)} />
                 <Detail
                   label={copy.effectiveRate}
                   value={`${result.effectiveTaxRate.toDecimalPlaces(3).toString()}%`}
@@ -236,6 +221,7 @@ function Field({
   placeholder,
   suffix,
   error,
+  errorSummaryId,
   onChange,
 }: {
   id: string;
@@ -244,8 +230,12 @@ function Field({
   placeholder: string;
   suffix?: string;
   error?: string;
+  errorSummaryId?: string;
   onChange: (value: string) => void;
 }) {
+  const describedBy = [error ? `${id}-error` : undefined, error ? errorSummaryId : undefined]
+    .filter(Boolean)
+    .join(" ");
   return (
     <div className="mt-4">
       <label htmlFor={id} className="block text-sm font-medium">
@@ -259,7 +249,7 @@ function Field({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={describedBy || undefined}
           className={`${fieldClass} ${suffix ? "pr-14" : ""}`}
         />
         {suffix ? (
@@ -284,9 +274,7 @@ function won(
   return `${value
     .toDecimalPlaces(0)
     .toNumber()
-    .toLocaleString(
-      locale === "ko" ? "ko-KR" : "en-US",
-    )} ${locale === "ko" ? "원" : "KRW"}`;
+    .toLocaleString(locale === "ko" ? "ko-KR" : "en-US")} ${locale === "ko" ? "원" : "KRW"}`;
 }
 
 function Detail({ label, value }: { label: string; value: string }) {
