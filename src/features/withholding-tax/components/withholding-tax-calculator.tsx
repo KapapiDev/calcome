@@ -31,6 +31,7 @@ const initialValues: WithholdingTaxValues = {
 };
 const moneyKeys = ["grossPayment", "nonTaxableAmount"] as const;
 const rateKeys = ["nationalTaxRate", "localIncomeTaxRate"] as const;
+const errorSummaryId = "withholding-tax-error-summary";
 
 export function WithholdingTaxCalculator({
   locale,
@@ -53,7 +54,11 @@ export function WithholdingTaxCalculator({
     event.preventDefault();
     const checked = validateWithholdingTax(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(null);
+      return;
+    }
     requestResultScroll();
     setResult(calculateWithholdingTax(checked.data));
     setAnimationKey((value) => value + 1);
@@ -77,6 +82,7 @@ export function WithholdingTaxCalculator({
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -91,6 +97,7 @@ export function WithholdingTaxCalculator({
               value={values[key]}
               placeholder={key === "grossPayment" ? "5,000,000" : "500,000"}
               error={errors[key]}
+              errorSummaryId={errorSummaryId}
               onChange={(value) =>
                 setValues((current) => ({
                   ...current,
@@ -108,6 +115,7 @@ export function WithholdingTaxCalculator({
               placeholder={key === "nationalTaxRate" ? "8" : "10"}
               suffix="%"
               error={errors[key]}
+              errorSummaryId={errorSummaryId}
               onChange={(value) =>
                 setValues((current) => ({ ...current, [key]: value }))
               }
@@ -208,6 +216,7 @@ function Field({
   placeholder,
   suffix,
   error,
+  errorSummaryId,
   onChange,
 }: {
   id: string;
@@ -216,6 +225,7 @@ function Field({
   placeholder: string;
   suffix?: string;
   error?: string;
+  errorSummaryId: string;
   onChange: (value: string) => void;
 }) {
   return (
@@ -231,7 +241,7 @@ function Field({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={error ? `${id}-error ${errorSummaryId}` : undefined}
           className={`${fieldClass} ${suffix ? "pr-14" : ""}`}
         />
         {suffix ? (
