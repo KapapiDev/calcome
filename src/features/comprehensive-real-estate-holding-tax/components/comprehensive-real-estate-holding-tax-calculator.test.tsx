@@ -36,7 +36,7 @@ describe("ComprehensiveRealEstateHoldingTaxCalculator", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText("공제 적용 후 금액")).toBeVisible();
+      expect(screen.getByText("기본공제 후 금액")).toBeVisible();
       expect(screen.getByText("재산세액 공제 전 세액")).toBeVisible();
       expect(screen.getByText("농어촌특별세")).toBeVisible();
     });
@@ -63,7 +63,7 @@ describe("ComprehensiveRealEstateHoldingTaxCalculator", () => {
           "comprehensive-real-estate-holding-tax-error-summary",
         ),
       );
-      expect(screen.queryByText("공제 적용 후 금액")).not.toBeInTheDocument();
+      expect(screen.queryByText("기본공제 후 금액")).not.toBeInTheDocument();
       expect(
         screen.queryByText("재산세액 공제 전 세액"),
       ).not.toBeInTheDocument();
