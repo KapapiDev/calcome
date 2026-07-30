@@ -34,7 +34,7 @@ describe("JeonseMonthlyRentConversionCalculator", () => {
 
     await waitFor(() => {
       expect(
-        screen.queryByText("계산하면 예상 월세와 환산 내역이 표시됩니다."),
+        screen.queryByText("계산하면 예상 월세와 전환 금액이 표시됩니다."),
       ).not.toBeInTheDocument();
     });
 
@@ -59,7 +59,7 @@ describe("JeonseMonthlyRentConversionCalculator", () => {
         expect.stringContaining("jeonse-monthly-rent-conversion-error-summary"),
       );
       expect(
-        screen.getByText("계산하면 예상 월세와 환산 내역이 표시됩니다."),
+        screen.getByText("계산하면 예상 월세와 전환 금액이 표시됩니다."),
       ).toBeVisible();
     });
   });
