@@ -215,7 +215,6 @@ export function RentConversionRateCalculator({
     </section>
   );
 }
-
 function Rate({
   value,
 }: {
@@ -227,7 +226,6 @@ function Rate({
     </span>
   );
 }
-
 function Field({
   id,
   label,
@@ -275,11 +273,9 @@ function Field({
     </div>
   );
 }
-
 function localeWon(label: string) {
   return /[가-힣]/.test(label) ? "원" : "KRW";
 }
-
 function won(
   value: { toDecimalPlaces: (places: number) => { toNumber: () => number } },
   locale: RentConversionRateLocale,
@@ -291,7 +287,6 @@ function won(
       locale === "ko" ? "ko-KR" : "en-US",
     )} ${locale === "ko" ? "원" : "KRW"}`;
 }
-
 function Detail({ label, value }: { label: string; value: string }) {
   return (
     <div>
