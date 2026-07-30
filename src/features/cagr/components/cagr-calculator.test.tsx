@@ -137,6 +137,33 @@ describe("CagrCalculator", () => {
     expect(scrollIntoView).not.toHaveBeenCalled();
   });
 
+  it("clears stale results and links invalid fields to the error summary", async () => {
+    const user = userEvent.setup();
+    render(<CagrCalculator />);
+    await fillRequired(user);
+    await user.click(screen.getByRole("button", { name: "CAGR 계산하기" }));
+    expect(screen.getByRole("table")).toBeVisible();
+
+    const initial = screen.getByLabelText("시작값 *");
+    await user.clear(initial);
+    await user.click(screen.getByRole("button", { name: "CAGR 계산하기" }));
+
+    await waitFor(() => expect(initial).toHaveFocus());
+    expect(screen.queryByRole("table")).not.toBeInTheDocument();
+    expect(screen.getByTestId("cagr-growth-chart")).toHaveAttribute(
+      "data-animation-active",
+      "false",
+    );
+    expect(screen.getByRole("alert")).toHaveAttribute(
+      "id",
+      "cagr-error-summary",
+    );
+    expect(initial).toHaveAttribute(
+      "aria-describedby",
+      expect.stringContaining("cagr-error-summary"),
+    );
+  });
+
   it("dismisses focus, replays on recalculation, and resets cleanly", async () => {
     const user = userEvent.setup();
     render(<CagrCalculator />);
