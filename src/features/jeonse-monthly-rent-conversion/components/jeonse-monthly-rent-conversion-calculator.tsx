@@ -31,6 +31,7 @@ const initialValues: JeonseMonthlyRentConversionValues = {
   monthlyDeposit: "",
   annualRate: "",
 };
+const errorSummaryId = "jeonse-monthly-rent-conversion-error-summary";
 
 export function JeonseMonthlyRentConversionCalculator({
   locale,
@@ -53,7 +54,11 @@ export function JeonseMonthlyRentConversionCalculator({
     event.preventDefault();
     const checked = validateJeonseMonthlyRentConversion(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(undefined);
+      return;
+    }
     requestResultScroll();
     setResult(calculateJeonseMonthlyRentConversion(checked.data));
     setAnimationKey((value) => value + 1);
@@ -84,6 +89,7 @@ export function JeonseMonthlyRentConversionCalculator({
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -96,6 +102,7 @@ export function JeonseMonthlyRentConversionCalculator({
             value={values.jeonseDeposit}
             placeholder="300,000,000"
             error={errors.jeonseDeposit}
+            errorSummaryId={errorSummaryId}
             locale={locale}
             onChange={(value) =>
               setValues((current) => ({
@@ -110,6 +117,7 @@ export function JeonseMonthlyRentConversionCalculator({
             value={values.monthlyDeposit}
             placeholder="100,000,000"
             error={errors.monthlyDeposit}
+            errorSummaryId={errorSummaryId}
             locale={locale}
             onChange={(value) =>
               setValues((current) => ({
@@ -136,7 +144,9 @@ export function JeonseMonthlyRentConversionCalculator({
                 }
                 aria-invalid={Boolean(errors.annualRate)}
                 aria-describedby={
-                  errors.annualRate ? "annualRate-error" : undefined
+                  errors.annualRate
+                    ? `annualRate-error ${errorSummaryId}`
+                    : undefined
                 }
                 className={`${fieldClass} pr-10`}
               />
@@ -245,6 +255,7 @@ function MoneyField({
   value,
   placeholder,
   error,
+  errorSummaryId,
   locale,
   onChange,
 }: {
@@ -253,6 +264,7 @@ function MoneyField({
   value: string;
   placeholder: string;
   error?: string;
+  errorSummaryId: string;
   locale: JeonseMonthlyRentConversionLocale;
   onChange: (value: string) => void;
 }) {
@@ -269,7 +281,7 @@ function MoneyField({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={error ? `${id}-error ${errorSummaryId}` : undefined}
           className={`${fieldClass} pr-12`}
         />
         <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center pt-1.5 text-sm text-muted-foreground">
