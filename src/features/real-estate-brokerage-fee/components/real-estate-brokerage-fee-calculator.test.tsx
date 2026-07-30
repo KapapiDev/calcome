@@ -2,7 +2,9 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { RealEstateBrokerageFeeCalculator } from "./real-estate-brokerage-fee-calculator";
+import {
+  RealEstateBrokerageFeeCalculator,
+} from "./real-estate-brokerage-fee-calculator";
 
 const scrollIntoView = vi.fn();
 
@@ -24,7 +26,9 @@ describe("RealEstateBrokerageFeeCalculator", () => {
     const user = userEvent.setup();
     render(<RealEstateBrokerageFeeCalculator locale="ko" />);
 
-    const transactionAmount = screen.getByLabelText("거래금액 또는 환산 보증금");
+    const transactionAmount = screen.getByLabelText(
+      "거래금액 또는 환산 보증금",
+    );
     await user.type(transactionAmount, "500000000");
     await user.type(screen.getByLabelText("확인한 중개보수율"), "0.4");
     await user.click(
