@@ -228,9 +228,7 @@ function QuantityField({ id, label, value, error, onChange }: FieldProps) {
         onChange={(event) => onChange(event.target.value)}
         aria-invalid={Boolean(error)}
         aria-describedby={
-          error
-            ? `${id}-error ${ERROR_SUMMARY_ID}`
-            : undefined
+          error ? `${id}-error ${ERROR_SUMMARY_ID}` : undefined
         }
         className={fieldClass}
       />
@@ -264,9 +262,7 @@ function MoneyField({
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
           aria-describedby={
-            error
-              ? `${id}-error ${ERROR_SUMMARY_ID}`
-              : undefined
+            error ? `${id}-error ${ERROR_SUMMARY_ID}` : undefined
           }
           className={`${fieldClass} pr-12`}
         />
