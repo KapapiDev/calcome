@@ -31,6 +31,7 @@ const initialValues: RentConversionRateValues = {
   monthlyDeposit: "",
   monthlyRent: "",
 };
+const errorSummaryId = "rent-conversion-rate-error-summary";
 
 export function RentConversionRateCalculator({
   locale,
@@ -53,7 +54,11 @@ export function RentConversionRateCalculator({
     event.preventDefault();
     const checked = validateRentConversionRate(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(undefined);
+      return;
+    }
     requestResultScroll();
     setResult(calculateRentConversionRate(checked.data));
     setAnimationKey((value) => value + 1);
@@ -84,6 +89,7 @@ export function RentConversionRateCalculator({
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -96,6 +102,7 @@ export function RentConversionRateCalculator({
             value={values.jeonseDeposit}
             placeholder="300,000,000"
             error={errors.jeonseDeposit}
+            errorSummaryId={errorSummaryId}
             onChange={(value) =>
               setValues((current) => ({
                 ...current,
@@ -109,6 +116,7 @@ export function RentConversionRateCalculator({
             value={values.monthlyDeposit}
             placeholder="100,000,000"
             error={errors.monthlyDeposit}
+            errorSummaryId={errorSummaryId}
             onChange={(value) =>
               setValues((current) => ({
                 ...current,
@@ -122,6 +130,7 @@ export function RentConversionRateCalculator({
             value={values.monthlyRent}
             placeholder="1,000,000"
             error={errors.monthlyRent}
+            errorSummaryId={errorSummaryId}
             onChange={(value) =>
               setValues((current) => ({
                 ...current,
@@ -206,7 +215,6 @@ export function RentConversionRateCalculator({
     </section>
   );
 }
-
 function Rate({
   value,
 }: {
@@ -224,6 +232,7 @@ function Field({
   value,
   placeholder,
   error,
+  errorSummaryId,
   onChange,
 }: {
   id: string;
@@ -231,6 +240,7 @@ function Field({
   value: string;
   placeholder: string;
   error?: string;
+  errorSummaryId: string;
   onChange: (value: string) => void;
 }) {
   return (
@@ -246,7 +256,7 @@ function Field({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={error ? `${id}-error ${errorSummaryId}` : undefined}
           className={`${fieldClass} pr-12`}
         />
         <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center pt-1.5 text-sm text-muted-foreground">
