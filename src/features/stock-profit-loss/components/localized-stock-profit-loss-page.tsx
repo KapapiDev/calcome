@@ -4,7 +4,7 @@ import {
   createPageStructuredData,
 } from "@/lib/seo/structured-data";
 import { stockProfitLossContent, type StockProfitLossLocale } from "../content";
-import { StockProfitLossCalculator } from "./stock-profit-loss-calculator";
+import { HardenedStockProfitLossCalculator } from "./hardened-stock-profit-loss-calculator";
 
 export function LocalizedStockProfitLossPage({
   locale,
@@ -50,7 +50,7 @@ export function LocalizedStockProfitLossPage({
           <p className="mt-2 text-sm text-muted-foreground">{copy.intro}</p>
         </header>
         <div className="mt-6">
-          <StockProfitLossCalculator locale={locale} />
+          <HardenedStockProfitLossCalculator locale={locale} />
         </div>
         <div className="mt-12 grid gap-4 md:grid-cols-2">
           <Info title={copy.explanationTitle} items={copy.explanation} />
