@@ -41,8 +41,6 @@ describe("HardenedStockProfitLossCalculator", () => {
       "shares-error stock-profit-loss-error-summary",
     );
     expect(screen.queryByText("100,000 원")).not.toBeInTheDocument();
-    expect(
-      screen.getByText("계산하면 평가 손익과 수익률이 표시됩니다."),
-    ).toBeVisible();
+    expect(screen.getByText("계산하면 평가 손익과 수익률이 표시됩니다.")).toBeVisible();
   });
 });
