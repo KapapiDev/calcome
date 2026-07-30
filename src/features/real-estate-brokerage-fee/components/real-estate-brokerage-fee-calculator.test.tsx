@@ -27,18 +27,14 @@ describe("RealEstateBrokerageFeeCalculator", () => {
     const transactionAmount = screen.getByLabelText("거래금액 또는 환산 보증금");
     await user.type(transactionAmount, "500000000");
     await user.type(screen.getByLabelText("확인한 중개보수율"), "0.4");
-    await user.click(
-      screen.getByRole("button", { name: "예상 중개비 계산하기" }),
-    );
+    await user.click(screen.getByRole("button", { name: "예상 중개비 계산하기" }));
 
     await waitFor(() => {
       expect(screen.getByText("중개보수")).toBeVisible();
     });
 
     await user.clear(transactionAmount);
-    await user.click(
-      screen.getByRole("button", { name: "예상 중개비 계산하기" }),
-    );
+    await user.click(screen.getByRole("button", { name: "예상 중개비 계산하기" }));
 
     await waitFor(() => {
       const errorSummary = screen.getByRole("alert");
