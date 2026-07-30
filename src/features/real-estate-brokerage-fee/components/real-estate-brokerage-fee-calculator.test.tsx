@@ -34,7 +34,7 @@ describe("RealEstateBrokerageFeeCalculator", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText("예상 총 중개비")).toBeVisible();
+      expect(screen.getByText("2,200,000원")).toBeVisible();
     });
 
     await user.clear(transactionAmount);
