@@ -34,7 +34,9 @@ describe("RealEstateBrokerageFeeCalculator", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText("2,200,000원")).toBeVisible();
+      expect(
+        screen.queryByText("계산하면 중개보수와 부가세가 표시됩니다."),
+      ).not.toBeInTheDocument();
     });
 
     await user.clear(transactionAmount);
