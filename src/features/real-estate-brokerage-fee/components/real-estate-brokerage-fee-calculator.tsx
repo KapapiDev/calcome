@@ -31,6 +31,7 @@ const initialValues: RealEstateBrokerageFeeValues = {
   feeRate: "",
   vatRate: "10",
 };
+const errorSummaryId = "brokerage-fee-error-summary";
 
 export function RealEstateBrokerageFeeCalculator({
   locale,
@@ -52,7 +53,11 @@ export function RealEstateBrokerageFeeCalculator({
     event.preventDefault();
     const checked = validateRealEstateBrokerageFee(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      cancelResultScroll();
+      setResult(undefined);
+      return;
+    }
     requestResultScroll();
     setResult(calculateRealEstateBrokerageFee(checked.data));
     setAnimationKey((value) => value + 1);
@@ -81,6 +86,7 @@ export function RealEstateBrokerageFeeCalculator({
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id={errorSummaryId}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -112,7 +118,7 @@ export function RealEstateBrokerageFeeCalculator({
                 aria-invalid={Boolean(errors.transactionAmount)}
                 aria-describedby={
                   errors.transactionAmount
-                    ? "transactionAmount-error"
+                    ? `transactionAmount-error ${errorSummaryId}`
                     : undefined
                 }
                 className={`${fieldClass} pr-12`}
@@ -136,6 +142,7 @@ export function RealEstateBrokerageFeeCalculator({
             value={values.feeRate}
             placeholder="0.4"
             error={errors.feeRate}
+            errorSummaryId={errorSummaryId}
             onChange={(value) =>
               setValues((current) => ({ ...current, feeRate: value }))
             }
@@ -146,6 +153,7 @@ export function RealEstateBrokerageFeeCalculator({
             value={values.vatRate}
             placeholder="10"
             error={errors.vatRate}
+            errorSummaryId={errorSummaryId}
             onChange={(value) =>
               setValues((current) => ({ ...current, vatRate: value }))
             }
@@ -236,6 +244,7 @@ function RateField({
   value,
   placeholder,
   error,
+  errorSummaryId,
   onChange,
 }: {
   id: string;
@@ -243,6 +252,7 @@ function RateField({
   value: string;
   placeholder: string;
   error?: string;
+  errorSummaryId: string;
   onChange: (value: string) => void;
 }) {
   return (
@@ -258,7 +268,9 @@ function RateField({
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={
+            error ? `${id}-error ${errorSummaryId}` : undefined
+          }
           className={`${fieldClass} pr-10`}
         />
         <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center pt-1.5 text-sm text-muted-foreground">
