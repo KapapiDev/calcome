@@ -28,7 +28,9 @@ describe("JeonseMonthlyRentConversionCalculator", () => {
     await user.type(jeonseDeposit, "300000000");
     await user.type(screen.getByLabelText("월세 보증금"), "100000000");
     await user.type(screen.getByLabelText("연 전환율"), "6");
-    await user.click(screen.getByRole("button", { name: "월세 계산하기" }));
+    await user.click(
+      screen.getByRole("button", { name: "예상 월세 계산하기" }),
+    );
 
     await waitFor(() => {
       expect(
@@ -37,7 +39,9 @@ describe("JeonseMonthlyRentConversionCalculator", () => {
     });
 
     await user.clear(jeonseDeposit);
-    await user.click(screen.getByRole("button", { name: "월세 계산하기" }));
+    await user.click(
+      screen.getByRole("button", { name: "예상 월세 계산하기" }),
+    );
 
     await waitFor(() => {
       const errorSummary = screen.getByRole("alert");
