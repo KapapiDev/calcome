@@ -23,6 +23,7 @@ import {
   type StockAverageCostValues,
 } from "../validation";
 
+const ERROR_SUMMARY_ID = "stock-average-cost-error-summary";
 const fieldClass =
   "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none placeholder:text-muted-foreground/70 focus-visible:ring-3 focus-visible:ring-ring/30 aria-invalid:border-destructive sm:text-sm";
 const initialValues: StockAverageCostValues = {
@@ -47,19 +48,25 @@ export function StockAverageCostCalculator({
     requestResultScroll,
     cancelResultScroll,
   } = useStableResultScroll(result ?? null);
+  function clearResult() {
+    cancelResultScroll();
+    setResult(undefined);
+  }
   function submit(event: FormEvent) {
     event.preventDefault();
     const checked = validateStockAverageCost(values, locale);
     setErrors(checked.errors);
-    if (!checked.data) return;
+    if (!checked.data) {
+      clearResult();
+      return;
+    }
     requestResultScroll();
     setResult(calculateStockAverageCost(checked.data));
   }
   function reset() {
-    cancelResultScroll();
+    clearResult();
     setValues(initialValues);
     setErrors({});
-    setResult(undefined);
   }
   return (
     <section aria-labelledby="stock-average-cost-input-title">
@@ -79,6 +86,7 @@ export function StockAverageCostCalculator({
           </h2>
           {Object.keys(errors).length ? (
             <p
+              id={ERROR_SUMMARY_ID}
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
             >
@@ -219,7 +227,9 @@ function QuantityField({ id, label, value, error, onChange }: FieldProps) {
         placeholder="10"
         onChange={(event) => onChange(event.target.value)}
         aria-invalid={Boolean(error)}
-        aria-describedby={error ? `${id}-error` : undefined}
+        aria-describedby={
+          error ? `${id}-error ${ERROR_SUMMARY_ID}` : undefined
+        }
         className={fieldClass}
       />
       {error ? (
@@ -251,7 +261,9 @@ function MoneyField({
           placeholder="50,000"
           onChange={(event) => onChange(event.target.value)}
           aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={
+            error ? `${id}-error ${ERROR_SUMMARY_ID}` : undefined
+          }
           className={`${fieldClass} pr-12`}
         />
         <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center pt-1.5 text-sm text-muted-foreground">
