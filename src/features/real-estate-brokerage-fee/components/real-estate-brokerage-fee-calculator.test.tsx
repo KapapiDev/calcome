@@ -2,12 +2,12 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import {
-  RealEstateBrokerageFeeCalculator,
-} from "./real-estate-brokerage-fee-calculator";
+// prettier-ignore
+import { RealEstateBrokerageFeeCalculator } from "./real-estate-brokerage-fee-calculator";
 
 const scrollIntoView = vi.fn();
 
+// prettier-ignore
 describe("RealEstateBrokerageFeeCalculator", () => {
   beforeEach(() => {
     scrollIntoView.mockReset();
