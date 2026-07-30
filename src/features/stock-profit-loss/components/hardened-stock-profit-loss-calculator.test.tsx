@@ -1,8 +1,14 @@
-import { render, screen, within } from "@testing-library/react";
+import {
+  render,
+  screen,
+  within,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
-import { HardenedStockProfitLossCalculator } from "./hardened-stock-profit-loss-calculator";
+import {
+  HardenedStockProfitLossCalculator,
+} from "./hardened-stock-profit-loss-calculator";
 
 describe("HardenedStockProfitLossCalculator", () => {
   it("calculates representative profit and return values", async () => {
@@ -41,6 +47,8 @@ describe("HardenedStockProfitLossCalculator", () => {
       "shares-error stock-profit-loss-error-summary",
     );
     expect(screen.queryByText("100,000 원")).not.toBeInTheDocument();
-    expect(screen.getByText("계산하면 평가 손익과 수익률이 표시됩니다.")).toBeVisible();
+    expect(
+      screen.getByText("계산하면 평가 손익과 수익률이 표시됩니다."),
+    ).toBeVisible();
   });
 });
