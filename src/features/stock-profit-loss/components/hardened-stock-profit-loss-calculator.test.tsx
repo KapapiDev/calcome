@@ -2,9 +2,7 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
-import {
-  HardenedStockProfitLossCalculator,
-} from "./hardened-stock-profit-loss-calculator";
+import { HardenedStockProfitLossCalculator } from "./hardened-stock-profit-loss-calculator";
 
 describe("HardenedStockProfitLossCalculator", () => {
   it("calculates representative profit and return values", async () => {
