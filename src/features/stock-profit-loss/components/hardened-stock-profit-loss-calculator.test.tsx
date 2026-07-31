@@ -34,7 +34,11 @@ describe("stock profit and loss validation", () => {
     await user.type(screen.getByLabelText("평균 매수가격"), "50000");
     await user.type(screen.getByLabelText("현재 가격"), "60000");
     await user.click(screen.getByRole("button", calculateButton));
-    expect(screen.getByText("100,000 원")).toBeVisible();
+
+    const result = screen.getByRole("region", {
+      name: "계산된 투자 손익",
+    });
+    expect(within(result).getByText("100,000 원")).toBeVisible();
 
     await user.clear(shares);
     await user.click(screen.getByRole("button", calculateButton));
@@ -46,7 +50,7 @@ describe("stock profit and loss validation", () => {
       "aria-describedby",
       "shares-error stock-profit-loss-error-summary",
     );
-    expect(screen.queryByText("100,000 원")).not.toBeInTheDocument();
+    expect(screen.queryAllByText("100,000 원")).toHaveLength(0);
     const emptyText = "계산하면 평가 손익과 수익률이 표시됩니다.";
     expect(screen.getByText(emptyText)).toBeVisible();
   });
