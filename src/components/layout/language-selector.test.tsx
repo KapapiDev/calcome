@@ -41,6 +41,7 @@ describe("LanguageSelector", () => {
 
     const selector = screen.getByLabelText("언어 선택");
     expect(selector).toHaveTextContent("한국어");
+    expect(selector).toHaveClass("min-h-11", "min-w-11");
     selector.focus();
     expect(selector).toHaveFocus();
 
@@ -68,6 +69,7 @@ describe("LanguageSelector", () => {
 
     const selector = screen.getByLabelText("Select language");
     expect(selector).toHaveTextContent("English");
+    expect(selector).toHaveClass("min-h-11", "min-w-11");
 
     await user.click(selector);
     expect(screen.getByRole("link", { name: "한국어" })).toHaveAttribute(

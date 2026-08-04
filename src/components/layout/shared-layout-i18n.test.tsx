@@ -45,6 +45,14 @@ describe("shared localized layout UI", () => {
     expect(
       await screen.findByRole("button", { name: "Switch to dark mode" }),
     ).toBeVisible();
+    expect(screen.getByRole("link", { name: "CalCome•" })).toHaveClass(
+      "min-h-11",
+    );
+    expect(
+      screen
+        .getByRole("navigation", { name: "Primary navigation" })
+        .querySelector('a[href="/calculators"]'),
+    ).toHaveClass("min-h-11");
 
     const allowedKoreanOption = "한국어";
     expect(container.textContent?.replace(allowedKoreanOption, "")).not.toMatch(
@@ -73,5 +81,8 @@ describe("shared localized layout UI", () => {
     expect(
       await screen.findByRole("button", { name: "다크 모드로 전환" }),
     ).toBeVisible();
+    expect(screen.getByRole("link", { name: "CalCome•" })).toHaveClass(
+      "min-h-11",
+    );
   });
 });

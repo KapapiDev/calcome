@@ -21,7 +21,7 @@ export function SiteHeader({
         <div className="flex shrink-0 items-center gap-3">
           <Link
             href="/"
-            className="rounded-sm text-xl font-bold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="inline-flex min-h-11 items-center rounded-sm text-xl font-bold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             {siteConfig.name}
             <span className="text-primary">•</span>
@@ -37,7 +37,7 @@ export function SiteHeader({
           <div className="flex items-center text-sm font-medium">
             <Link
               href="/calculators"
-              className="flex items-center gap-1 hover:text-primary"
+              className="flex min-h-11 items-center gap-1 rounded-md px-2 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               {copy.calculators}{" "}
               <ChevronDown className="size-3.5" aria-hidden="true" />

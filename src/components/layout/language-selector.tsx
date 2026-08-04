@@ -31,7 +31,7 @@ export function LanguageSelector({
     >
       <summary
         aria-label={copy.selectLanguage}
-        className="flex min-h-10 cursor-pointer list-none items-center gap-1 rounded-lg px-2 text-sm font-medium hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:px-3"
+        className="flex min-h-11 min-w-11 cursor-pointer list-none items-center gap-1 rounded-lg px-2 text-sm font-medium hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:px-3"
       >
         {currentLabel}
         <ChevronDown className="size-4" aria-hidden="true" />

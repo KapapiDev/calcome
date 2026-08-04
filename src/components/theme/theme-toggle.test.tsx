@@ -66,6 +66,9 @@ describe("ThemeToggle", () => {
     expect(
       screen.getByRole("button", { name: "다크 모드로 전환" }),
     ).toBeEnabled();
+    expect(
+      screen.getByRole("button", { name: "다크 모드로 전환" }),
+    ).toHaveClass("size-11");
     expect(screen.getByTestId("theme-moon")).toBeInTheDocument();
   });
 
