@@ -125,11 +125,13 @@ UX-005
 
 Title: Housing and Real-Estate Calculator UX Audit
 
-Status: OPEN
+Status: DONE
 
 Priority: HIGH
 
 Scope: Audit brokerage, rent conversion, jeonse-to-rent, housing payment, property-tax, and transaction-cost journeys across desktop and mobile, including category discovery.
+
+Evidence: PRs #147 through #150 completed the housing and real-estate audit, including validation-state hardening, representative calculation checks, and final completion reconciliation.
 
 ---
 
@@ -137,7 +139,7 @@ UX-006
 
 Title: Savings and Investment Calculator UX Audit
 
-Status: BLOCKED
+Status: OPEN
 
 Priority: HIGH
 
