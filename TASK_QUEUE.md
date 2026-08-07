@@ -139,11 +139,13 @@ UX-006
 
 Title: Savings and Investment Calculator UX Audit
 
-Status: OPEN
+Status: DONE
 
 Priority: HIGH
 
 Scope: Audit compound interest, savings, fixed deposit, CAGR, stocks, dividends, and investment-related flows, including charts, tables, result comparison, large values, bilingual terminology, and category discovery. Search Console makes CAGR and stock-average-cost the first two audit targets: verify their canonical locale routes, metadata, related-calculator paths, result clarity, comparison depth, and repeat-use flow without delaying completion of the remaining category audit.
+
+Evidence: PRs #151–#153 and #161, #166–#168 completed the savings and investment audit across CAGR, stocks, compound interest, fixed deposit, dividends, and savings, including stale-result handling and accessibility hardening.
 
 ---
 
@@ -151,7 +153,7 @@ UX-007
 
 Title: Full-Site Accessibility and Visual Consistency Regression
 
-Status: BLOCKED
+Status: OPEN
 
 Priority: HIGH
 
