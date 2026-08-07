@@ -4,6 +4,9 @@ import { siteConfig } from "@/config/site";
 import type { CompoundLocale } from "@/features/compound-interest/i18n";
 import { sharedLayoutCopy } from "./layout-i18n";
 
+const footerLinkClass =
+  "inline-flex min-h-11 items-center rounded-md hover:text-foreground hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+
 export function SiteFooter({ locale = "ko" }: { locale?: CompoundLocale }) {
   const copy = sharedLayoutCopy[locale];
   return (
@@ -15,42 +18,27 @@ export function SiteFooter({ locale = "ko" }: { locale?: CompoundLocale }) {
         <nav aria-label={copy.footerNavigation}>
           <ul className="flex flex-wrap gap-x-5 gap-y-2">
             <li>
-              <Link
-                href="/calculators"
-                className="hover:text-foreground hover:underline"
-              >
+              <Link href="/calculators" className={footerLinkClass}>
                 {copy.calculators}
               </Link>
             </li>
             <li>
-              <Link
-                href="/about"
-                className="hover:text-foreground hover:underline"
-              >
+              <Link href="/about" className={footerLinkClass}>
                 {copy.about}
               </Link>
             </li>
             <li>
-              <Link
-                href="/privacy"
-                className="hover:text-foreground hover:underline"
-              >
+              <Link href="/privacy" className={footerLinkClass}>
                 {copy.privacy}
               </Link>
             </li>
             <li>
-              <Link
-                href="/terms"
-                className="hover:text-foreground hover:underline"
-              >
+              <Link href="/terms" className={footerLinkClass}>
                 {copy.terms}
               </Link>
             </li>
             <li>
-              <Link
-                href="/contact"
-                className="hover:text-foreground hover:underline"
-              >
+              <Link href="/contact" className={footerLinkClass}>
                 {copy.contact}
               </Link>
             </li>

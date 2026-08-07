@@ -53,6 +53,15 @@ describe("shared localized layout UI", () => {
         .getByRole("navigation", { name: "Primary navigation" })
         .querySelector('a[href="/calculators"]'),
     ).toHaveClass("min-h-11");
+    for (const link of screen
+      .getByRole("navigation", { name: "Footer navigation" })
+      .querySelectorAll("a")) {
+      expect(link).toHaveClass(
+        "min-h-11",
+        "focus-visible:ring-2",
+        "focus-visible:ring-ring",
+      );
+    }
 
     const allowedKoreanOption = "한국어";
     expect(container.textContent?.replace(allowedKoreanOption, "")).not.toMatch(
