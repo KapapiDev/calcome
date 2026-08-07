@@ -114,6 +114,16 @@ Never fabricate search volume, legal rules, tax rates, policy values, `lastmod`,
 
 ## Validation gate
 
+Use layered verification without depending on one provider:
+
+1. Run repository-defined local formatter, lint, typecheck, tests, build, and diff checks.
+2. Apply relevant verification, Next.js, React, UI/UX, accessibility, security, and Korean-language skills after reading their instructions.
+3. Use agent-browser, computer-use, or another available browser tool when reachable.
+4. Use GitHub repository and merge-state evidence as the external source of record.
+5. If any tool is missing, blocked, protected, or unavailable, record its function, input, error, and the next successful fallback; never wait or repeat the same failure.
+
+Browser unavailability may be covered by focused component tests, accessibility attributes, responsive and overflow assertions, route and metadata integration tests, redirect tests, and a production build. Vercel-specific access is never required.
+
 Before validation:
 
 1. Confirm latest `origin/main` is included without conflict.
