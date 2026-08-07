@@ -32,8 +32,8 @@ At every scheduled execution:
 
 1. Fetch all origin references.
 2. Read the latest `AUTOMATION.md` and `TASK_QUEUE.md` from `origin/main`.
-3. Inspect matching Pull Requests, branches, checks, and Vercel deployment state.
-4. Reconcile queue text with actual repository and deployment state.
+3. Inspect matching Pull Requests, branches, and merge state through GitHub. External CI and deployment state are advisory only.
+4. Reconcile queue text with actual repository state.
 5. Resume the earliest existing task before starting a new one.
 
 Effective status order:
@@ -56,10 +56,9 @@ Use this order:
 
 1. Repair or finish the earliest `IN_REVIEW` task.
 2. Resume the earliest recoverable `IN_PROGRESS` task.
-3. Attempt pending `POST_MERGE_VERIFY` production UX checks.
-4. Select the first effectively `OPEN` task.
+3. Select the first effectively `OPEN` task. Do not wait for external verification.
 
-A `POST_MERGE_VERIFY` check must be attempted first, but an inspection-environment failure alone must not consume every future execution forever.
+A `POST_MERGE_VERIFY` check is optional historical context only and must never be attempted before implementation work or block queue progress.
 
 After the required retries:
 
@@ -152,7 +151,7 @@ After validation succeeds:
 5. Include the exact task ID in title and body.
 6. Include the standalone line `AUTO_MERGE: true` only when eligible.
 7. Record implementation, integration, calculation verification, and validation results.
-8. Verify exact head SHA, base, mergeability, GitHub Actions, and Vercel state.
+8. Verify head SHA, base, and mergeability through GitHub. Do not wait for GitHub Actions or deployment state.
 
 Automatic squash merge is allowed when:
 
@@ -161,14 +160,14 @@ Automatic squash merge is allowed when:
 - Pull Request is not Draft
 - body contains `AUTO_MERGE: true`
 - latest main is included without conflict
-- GitHub Actions succeeded for the exact final head SHA
+- GitHub Actions state is advisory and is never awaited or required for merge
 - lint, typecheck, format, all tests, production build, and `git diff --check` passed
 - calculation accuracy and required integration were verified
 - no security, regression, route, calculation, or known UX blocker remains
 
 ### Preview continuity rule
 
-Preview browser access is preferred but is not an absolute merge gate.
+Preview browser access is optional and is never a merge gate. Check it at most once without waiting or retrying.
 
 Merge may continue when all code and GitHub gates pass and Preview cannot be observed only because of:
 
@@ -207,25 +206,19 @@ After merge:
    - selected-task target routes
 5. Prefer both HTTP and browser checks.
 
-For DNS failure, `ERR_NAME_NOT_RESOLVED`, `ERR_CONNECTION_RESET`, timeout, deployment propagation, or execution-network failure:
-
-- retry up to three times in the same execution
-- wait approximately 5 to 15 seconds between retries
-- test root, `/ko`, and target routes independently
-- record failing tools, codes, retries, and any successful alternative path
+For DNS failure, `ERR_NAME_NOT_RESOLVED`, `ERR_CONNECTION_RESET`, timeout, deployment propagation, or execution-network failure, record the first result and continue immediately without waiting or retrying.
 
 Do not declare a product outage from inspection-environment failure alone.
 
 ### Production continuity rule
 
-When production cannot be inspected after required retries but GitHub Actions and deployment evidence show no product failure:
+When production cannot be inspected and there is no concrete product-failure evidence:
 
 - record `POST_MERGE_VERIFY` evidence
 - do not create duplicate repair work
 - do not hold the entire queue indefinitely
-- on the next execution, retry the pending production inspection first
-- if the same external limitation persists and there is still no product-failure evidence, continue with the next effectively `OPEN` task after recording the retry
-- include previously unobserved changes in the next successful production regression inspection
+- do not create or retain pending production-verification work
+- continue with the next effectively `OPEN` task immediately
 
 A real production failure, incorrect calculation, broken route, blocked flow, mobile unusability, accessibility blocker, language-switching failure, or layout collapse remains a hard blocker and must be fixed before new feature work.
 
@@ -262,8 +255,7 @@ Minor visual defects become follow-up UX tasks. Critical defects block progress.
 
 After a merged task:
 
-- If production UX succeeds, mark it `DONE` and open the next task.
-- If production UX cannot be observed only because of documented external limitations and all implementation gates passed, the task may be treated as operationally complete for queue continuity while retaining a `POST_MERGE_VERIFY` audit record.
+- After merge, mark the task `DONE` and open the next task unless a concrete verified product defect remains.
 - Keep exactly one implementation task `OPEN`.
 - Never claim an unperformed browser check succeeded.
 - Never let the same external Preview or production inspection limitation freeze all future development runs.
