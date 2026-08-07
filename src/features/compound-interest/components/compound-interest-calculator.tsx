@@ -369,7 +369,7 @@ export function CompoundInterestCalculator({
               ].map(([value, label]) => (
                 <label
                   key={value}
-                  className="flex min-h-10 cursor-pointer items-center gap-2 rounded-lg border px-3 text-sm has-checked:border-primary has-checked:bg-primary/5"
+                  className="flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border px-3 text-sm has-checked:border-primary has-checked:bg-primary/5"
                 >
                   <input
                     type="radio"
@@ -402,7 +402,7 @@ export function CompoundInterestCalculator({
           </div>
 
           <details className="mt-3 rounded-xl border bg-muted/30 px-3 py-2">
-            <summary className="min-h-9 cursor-pointer content-center text-sm font-medium">
+            <summary className="min-h-11 cursor-pointer content-center text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
               {copy.advanced}
               {values.inflationRate.trim() || values.taxRate.trim()
                 ? copy.entered

@@ -60,6 +60,17 @@ describe("CompoundInterestCalculator", () => {
       expect(input).toHaveClass("text-base", "sm:text-sm");
     }
 
+    for (const timing of ["기간 말", "기간 초"]) {
+      expect(screen.getByLabelText(timing).closest("label")).toHaveClass(
+        "min-h-11",
+      );
+    }
+    expect(screen.getByText("고급 설정(선택): 물가·간이 세금")).toHaveClass(
+      "min-h-11",
+      "focus-visible:ring-2",
+      "focus-visible:ring-ring",
+    );
+
     const principal = screen.getByLabelText("초기 투자금 *");
     await user.click(principal);
     expect(principal).toHaveValue("");
@@ -218,7 +229,7 @@ describe("CompoundInterestCalculator", () => {
   it("keeps inflation and tax disabled with empty visible presets", async () => {
     const user = userEvent.setup();
     render(<CompoundInterestCalculator />);
-    await user.click(screen.getByText(/선택 고급 설정: 물가·간이 세금/));
+    await user.click(screen.getByText(/고급 설정\(선택\): 물가·간이 세금/));
     expect(screen.getByLabelText("연 물가상승률")).toHaveValue("");
     expect(screen.getByLabelText("수익 간이 세율")).toHaveValue("");
   });
@@ -227,7 +238,7 @@ describe("CompoundInterestCalculator", () => {
     const user = userEvent.setup();
     render(<CompoundInterestCalculator />);
     await fillRequired(user);
-    await user.click(screen.getByText(/선택 고급 설정: 물가·간이 세금/));
+    await user.click(screen.getByText(/고급 설정\(선택\): 물가·간이 세금/));
     await user.type(screen.getByLabelText("수익 간이 세율"), "20");
     await calculate(user);
 
