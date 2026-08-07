@@ -111,11 +111,13 @@ UX-004
 
 Title: Tax and Payroll Filing Calculator UX Audit
 
-Status: OPEN
+Status: DONE
 
 Priority: CRITICAL
 
 Scope: Audit VAT, withholding, comprehensive income, freelancer, property, acquisition, capital-gains, gift, inheritance, and holding-tax flows for source dates, assumptions, error prevention, result caveats, user comprehension, and correct directory placement.
+
+Evidence: PRs #135 through #146 audited and hardened all 10 tax and filing calculators, including invalid-resubmission state clearing, validation accessibility, representative calculation checks, exact-head GitHub Actions, and Vercel Preview evidence.
 
 ---
 
@@ -123,7 +125,7 @@ UX-005
 
 Title: Housing and Real-Estate Calculator UX Audit
 
-Status: BLOCKED
+Status: OPEN
 
 Priority: HIGH
 
