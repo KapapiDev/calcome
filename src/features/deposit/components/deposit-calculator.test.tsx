@@ -117,6 +117,36 @@ describe("DepositCalculator", () => {
     expect(screen.getByRole("alert")).toBeVisible();
     expect(scrollIntoView).not.toHaveBeenCalled();
   });
+  it("clears stale results and links invalid inputs to the error summary", async () => {
+    const user = userEvent.setup();
+    render(<DepositCalculator />);
+    await fillRequired(user);
+    await user.click(
+      screen.getByRole("button", { name: "만기 결과 계산하기" }),
+    );
+    expect(screen.getAllByTestId("animated-won")).toHaveLength(3);
+
+    const amount = screen.getByLabelText("예치 원금 *");
+    await user.clear(amount);
+    await user.click(
+      screen.getByRole("button", { name: "만기 결과 계산하기" }),
+    );
+
+    expect(screen.queryAllByTestId("animated-won")).toHaveLength(0);
+    expect(screen.getByTestId("deposit-growth-chart")).toHaveAttribute(
+      "data-animation-active",
+      "false",
+    );
+    expect(screen.getByRole("alert")).toHaveAttribute(
+      "id",
+      "deposit-form-error-summary",
+    );
+    expect(amount).toHaveAttribute(
+      "aria-describedby",
+      expect.stringContaining("deposit-form-error-summary"),
+    );
+  });
+
   it("dismisses numeric input focus after a successful keyboard submit", async () => {
     const user = userEvent.setup();
     render(<DepositCalculator />);
