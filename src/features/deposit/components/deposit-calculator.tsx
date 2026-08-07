@@ -316,15 +316,8 @@ export function DepositCalculator({
             </div>
           ) : null}
           <div className="mt-3 grid grid-cols-[minmax(0,1fr)_auto] gap-2">
-            <Button type="submit" className="h-10">
-              {copy.calculate}
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              className="h-10"
-              onClick={reset}
-            >
+            <Button type="submit">{copy.calculate}</Button>
+            <Button type="button" variant="outline" onClick={reset}>
               {copy.reset}
             </Button>
           </div>
