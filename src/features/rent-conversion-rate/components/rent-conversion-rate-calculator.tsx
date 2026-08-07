@@ -184,7 +184,7 @@ export function RentConversionRateCalculator({
             <p className="mt-3 text-sm text-muted-foreground">{copy.note}</p>
           </section>
           <details open className="rounded-xl border bg-card p-4 shadow-sm">
-            <summary className="min-h-10 cursor-pointer content-center font-semibold">
+            <summary className="min-h-11 cursor-pointer content-center font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
               {copy.details}
             </summary>
             {result ? (
