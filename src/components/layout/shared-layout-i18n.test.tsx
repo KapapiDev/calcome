@@ -32,7 +32,7 @@ describe("shared localized layout UI", () => {
 
     expect(
       screen.getByRole("link", { name: "Skip to main content" }),
-    ).toBeVisible();
+    ).toHaveClass("min-h-11", "focus:inline-flex");
     expect(
       screen.getByRole("navigation", { name: "Primary navigation" }),
     ).toHaveTextContent("Calculators");
@@ -77,9 +77,10 @@ describe("shared localized layout UI", () => {
         <SiteFooter locale="ko" />
       </>,
     );
-    expect(
-      screen.getByRole("link", { name: "본문으로 건너뛰기" }),
-    ).toBeVisible();
+    expect(screen.getByRole("link", { name: "본문으로 건너뛰기" })).toHaveClass(
+      "min-h-11",
+      "focus:inline-flex",
+    );
     expect(
       screen.getByRole("navigation", { name: "주요 탐색" }),
     ).toHaveTextContent("계산기");
