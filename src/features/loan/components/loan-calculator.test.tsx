@@ -38,6 +38,10 @@ describe("LoanCalculator", () => {
       expect(input).toHaveClass("text-base", "sm:text-sm");
     }
     expect(
+      screen.getByRole("button", { name: "상환 결과 계산하기" }),
+    ).toHaveClass("h-11");
+    expect(screen.getByRole("button", { name: "초기화" })).toHaveClass("h-11");
+    expect(
       within(screen.getByTestId("primary-results")).getAllByText("-"),
     ).toHaveLength(3);
     expect(
