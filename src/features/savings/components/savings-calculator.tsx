@@ -79,7 +79,7 @@ function NumberField({
           inputMode="decimal"
           autoComplete="off"
           aria-invalid={Boolean(error)}
-          aria-describedby={`${field}-help${error ? ` ${field}-error` : ""}`}
+          aria-describedby={`${field}-help${error ? ` ${field}-error savings-form-error-summary` : ""}`}
           className={`${controlClass} pr-14`}
         />
         <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center pt-1.5 text-sm text-muted-foreground">
@@ -140,6 +140,11 @@ export function SavingsCalculator({
     setErrors(validation.errors);
     setAnnouncement("");
     if (!validation.data) {
+      cancelResultScroll();
+      setResult(null);
+      setAppliedValues(DEFAULT_SAVINGS_VALUES);
+      setDetailsOpen(true);
+      setAdditionalOpen(false);
       const first = Object.keys(validation.errors)[0];
       requestAnimationFrame(() =>
         formRef.current?.querySelector<HTMLElement>(`#${first}`)?.focus(),
@@ -200,6 +205,7 @@ export function SavingsCalculator({
           </p>
           {Object.keys(errors).length ? (
             <div
+              id="savings-form-error-summary"
               role="alert"
               className="mt-3 rounded-lg border border-destructive/30 bg-destructive/5 p-3 text-sm"
             >
@@ -298,7 +304,7 @@ export function SavingsCalculator({
               ].map(([value, label]) => (
                 <label
                   key={value}
-                  className="flex min-h-10 items-center gap-2 rounded-lg border px-3 text-sm has-checked:border-primary has-checked:bg-primary/5"
+                  className="flex min-h-11 items-center gap-2 rounded-lg border px-3 text-sm has-checked:border-primary has-checked:bg-primary/5"
                 >
                   <input
                     type="radio"
@@ -324,7 +330,7 @@ export function SavingsCalculator({
               ].map(([value, label]) => (
                 <label
                   key={value}
-                  className="flex min-h-10 items-center gap-2 rounded-lg border px-3 text-sm has-checked:border-primary has-checked:bg-primary/5"
+                  className="flex min-h-11 items-center gap-2 rounded-lg border px-3 text-sm has-checked:border-primary has-checked:bg-primary/5"
                 >
                   <input
                     type="radio"
