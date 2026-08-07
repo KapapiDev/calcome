@@ -89,7 +89,7 @@ const ko = {
     beginning: "기간 초",
     calculate: "예상 결과 계산하기",
     reset: "초기화",
-    advanced: "선택 고급 설정: 물가·간이 세금",
+    advanced: "고급 설정(선택): 물가·간이 세금",
     entered: " (입력됨)",
     advancedHelp:
       "기본값은 적용 안 함입니다. 실제 물가와 세법을 예측하지 않습니다.",
