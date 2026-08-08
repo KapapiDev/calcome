@@ -8,7 +8,7 @@ describe("canonical redirects", () => {
 
     const redirects = await nextConfig.redirects!();
 
-    expect(redirects).toEqual([
+    expect(redirects.filter((redirect) => !redirect.has)).toEqual([
       {
         source: "/ko",
         destination: "/",
@@ -275,5 +275,22 @@ describe("canonical redirects", () => {
         permanent: true,
       },
     ]);
+  });
+
+  it("redirects the apex host directly to the final canonical host and locale", async () => {
+    const redirects = await nextConfig.redirects!();
+
+    expect(redirects).toContainEqual({
+      source: "/finance/cagr",
+      destination: "https://www.calcome.com/ko/finance/cagr",
+      permanent: true,
+      has: [{ type: "host", value: "calcome.com" }],
+    });
+    expect(redirects).toContainEqual({
+      source: "/:path*",
+      destination: "https://www.calcome.com/:path*",
+      permanent: true,
+      has: [{ type: "host", value: "calcome.com" }],
+    });
   });
 });
