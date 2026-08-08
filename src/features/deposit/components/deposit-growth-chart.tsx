@@ -16,8 +16,9 @@ import {
   COMPOUND_ANIMATION_EASING,
   usePrefersReducedMotion,
 } from "@/features/compound-interest/components/compound-animation";
+import type { DisplayCurrency } from "@/components/calculators/currency-selector";
 
-import { formatDepositWon } from "../format";
+import { formatDepositCurrency } from "../format";
 import { getDepositDictionary, type DepositLocale } from "../i18n";
 import type { DepositScheduleRow } from "../types";
 
@@ -47,19 +48,16 @@ export function getDepositMonthTicks(points: readonly DepositGrowthPoint[]) {
     .filter((month) => month === 1 || month === last || month % step === 0);
 }
 
-const compactWon = new Intl.NumberFormat("ko-KR", {
-  notation: "compact",
-  maximumFractionDigits: 1,
-});
-
 function DepositTooltip({
   active,
   point,
   locale,
+  currency,
 }: {
   active?: boolean;
   point?: DepositGrowthPoint;
   locale: DepositLocale;
+  currency: DisplayCurrency;
 }) {
   if (!active || !point) return null;
   const copy = getDepositDictionary(locale);
@@ -76,7 +74,7 @@ function DepositTooltip({
         ].map(([label, value]) => (
           <div key={label} className="flex justify-between gap-5">
             <dt className="text-muted-foreground">{label}</dt>
-            <dd>{formatDepositWon(value)}</dd>
+            <dd>{formatDepositCurrency(value, locale, currency)}</dd>
           </div>
         ))}
       </dl>
@@ -88,10 +86,12 @@ export function DepositGrowthChart({
   schedule,
   animationKey = 0,
   locale = "ko",
+  currency = "KRW",
 }: {
   schedule?: readonly DepositScheduleRow[];
   animationKey?: number;
   locale?: DepositLocale;
+  currency?: DisplayCurrency;
 }) {
   const copy = getDepositDictionary(locale).chart;
   const data = createDepositGrowthData(schedule ?? []);
@@ -161,7 +161,12 @@ export function DepositGrowthChart({
                 width={58}
                 tickCount={5}
                 tickFormatter={(value) =>
-                  `₩${compactWon.format(Number(value))}`
+                  new Intl.NumberFormat(locale === "ko" ? "ko-KR" : "en-US", {
+                    style: "currency",
+                    currency,
+                    notation: "compact",
+                    maximumFractionDigits: 1,
+                  }).format(Number(value))
                 }
                 tick={{ fill: "var(--muted-foreground)", fontSize: 11 }}
                 axisLine={false}
@@ -173,6 +178,7 @@ export function DepositGrowthChart({
                   <DepositTooltip
                     active={active}
                     locale={locale}
+                    currency={currency}
                     point={
                       payload?.[0]?.payload as DepositGrowthPoint | undefined
                     }
