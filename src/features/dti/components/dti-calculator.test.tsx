@@ -1,9 +1,37 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { DtiCalculator } from "./dti-calculator";
 
 describe("DtiCalculator", () => {
+  beforeEach(() => window.localStorage.clear());
+
+  it("defaults English to USD and keeps DTI results across currency changes", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<DtiCalculator locale="en" />);
+
+    expect(screen.getByLabelText("Display currency")).toHaveValue("USD");
+    await user.type(screen.getByLabelText("Annual income"), "60000");
+    await user.type(screen.getByLabelText("Mortgage amount"), "300000");
+    await user.type(
+      screen.getByLabelText("Mortgage annual interest rate"),
+      "4.5",
+    );
+    await user.type(screen.getByLabelText("Repayment term"), "30");
+    await user.type(
+      screen.getByLabelText("Other monthly debt payments"),
+      "500",
+    );
+    await user.click(screen.getByRole("button", { name: "Calculate DTI" }));
+    expect(screen.getByText("Total annual debt payments")).toBeVisible();
+    expect(container.textContent).toMatch(/\$/);
+
+    await user.selectOptions(screen.getByLabelText("Display currency"), "GBP");
+    expect(window.localStorage.getItem("calcome.currency")).toBe("GBP");
+    expect(container.textContent).toMatch(/£/);
+    expect(container.textContent).not.toMatch(/₩/);
+    expect(screen.getByText("Total annual debt payments")).toBeVisible();
+  });
   it("clears a previous result and links validation errors after invalid resubmission", async () => {
     const user = userEvent.setup();
     render(<DtiCalculator locale="ko" />);

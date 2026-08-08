@@ -6,6 +6,12 @@ import {
   compactCalculatorSettingsClass,
   dashboardCalculatorWorkspaceClass,
 } from "@/components/calculators/calculator-workspace";
+import {
+  CurrencySelector,
+  formatDisplayCurrency,
+  type DisplayCurrency,
+  useDisplayCurrency,
+} from "@/components/calculators/currency-selector";
 import { Button } from "@/components/ui/button";
 import { AnimatedWon } from "@/features/compound-interest/components/animated-won";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
@@ -26,6 +32,7 @@ const initialValues: DtiValues = {
 const errorSummaryId = "dti-error-summary";
 
 export function DtiCalculator({ locale }: { locale: DtiLocale }) {
+  const { currency } = useDisplayCurrency(locale);
   const copy = dtiContent[locale];
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<DtiErrors>({});
@@ -80,6 +87,7 @@ export function DtiCalculator({ locale }: { locale: DtiLocale }) {
           <h2 id="dti-input-title" className="mt-1 text-xl font-semibold">
             {copy.input}
           </h2>
+          <CurrencySelector locale={locale} />
           {Object.keys(errors).length ? (
             <p
               id={errorSummaryId}
@@ -94,6 +102,7 @@ export function DtiCalculator({ locale }: { locale: DtiLocale }) {
             label={copy.annualIncome}
             value={values.annualIncome}
             placeholder="60,000,000"
+            suffix={currency}
             error={errors.annualIncome}
             errorSummaryId={errorSummaryId}
             onChange={(value) => setMoney("annualIncome", value)}
@@ -103,6 +112,7 @@ export function DtiCalculator({ locale }: { locale: DtiLocale }) {
             label={copy.mortgagePrincipal}
             value={values.mortgagePrincipal}
             placeholder="300,000,000"
+            suffix={currency}
             error={errors.mortgagePrincipal}
             errorSummaryId={errorSummaryId}
             onChange={(value) => setMoney("mortgagePrincipal", value)}
@@ -139,6 +149,7 @@ export function DtiCalculator({ locale }: { locale: DtiLocale }) {
             label={copy.otherMonthlyDebt}
             value={values.otherMonthlyDebt}
             placeholder="500,000"
+            suffix={currency}
             error={errors.otherMonthlyDebt}
             errorSummaryId={errorSummaryId}
             onChange={(value) => setMoney("otherMonthlyDebt", value)}
@@ -173,6 +184,8 @@ export function DtiCalculator({ locale }: { locale: DtiLocale }) {
                   value: (
                     <AnimatedWon
                       value={result?.mortgageMonthlyPayment ?? null}
+                      locale={locale}
+                      currency={currency}
                       animationKey={animationKey}
                     />
                   ),
@@ -182,6 +195,8 @@ export function DtiCalculator({ locale }: { locale: DtiLocale }) {
                   value: (
                     <AnimatedWon
                       value={result?.totalMonthlyDebt ?? null}
+                      locale={locale}
+                      currency={currency}
                       animationKey={animationKey}
                     />
                   ),
@@ -198,15 +213,15 @@ export function DtiCalculator({ locale }: { locale: DtiLocale }) {
               <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
                 <Detail
                   label={copy.annualDebt}
-                  value={won(result.annualDebtService, locale)}
+                  value={money(result.annualDebtService, locale, currency)}
                 />
                 <Detail
                   label={copy.otherDebt}
-                  value={won(result.otherMonthlyDebt, locale)}
+                  value={money(result.otherMonthlyDebt, locale, currency)}
                 />
                 <Detail
                   label={copy.income}
-                  value={won(result.annualIncome, locale)}
+                  value={money(result.annualIncome, locale, currency)}
                 />
                 <Detail
                   label={copy.dti}
@@ -275,16 +290,16 @@ function Field({
   );
 }
 
-function won(
+function money(
   value: { toDecimalPlaces: (places: number) => { toNumber: () => number } },
   locale: DtiLocale,
+  currency: DisplayCurrency,
 ) {
-  return `${value
-    .toDecimalPlaces(0)
-    .toNumber()
-    .toLocaleString(
-      locale === "ko" ? "ko-KR" : "en-US",
-    )} ${locale === "ko" ? "원" : "KRW"}`;
+  return formatDisplayCurrency(
+    value.toDecimalPlaces(0).toNumber(),
+    locale,
+    currency,
+  );
 }
 function Detail({ label, value }: { label: string; value: string }) {
   return (

@@ -32,7 +32,7 @@ export function validateDti(
   if (!annualIncome || annualIncome.lte(0) || annualIncome.gt(100_000_000_000))
     errors.annualIncome = message(
       "0보다 크고 1,000억 원 이하인 연소득을 입력해 주세요.",
-      "Enter annual income greater than zero and no more than KRW 100 billion.",
+      "Enter annual income greater than zero and no more than 100 billion in the selected display currency.",
     );
   if (
     !mortgagePrincipal ||
@@ -41,7 +41,7 @@ export function validateDti(
   )
     errors.mortgagePrincipal = message(
       "0보다 크고 1,000억 원 이하인 주택담보대출금을 입력해 주세요.",
-      "Enter a mortgage amount greater than zero and no more than KRW 100 billion.",
+      "Enter a mortgage amount greater than zero and no more than 100 billion in the selected display currency.",
     );
   if (
     !annualInterestRate ||
@@ -69,7 +69,7 @@ export function validateDti(
   )
     errors.otherMonthlyDebt = message(
       "0원 이상 100억 원 이하인 기타 월 부채 상환액을 입력해 주세요.",
-      "Enter other monthly debt payments from zero to KRW 10 billion.",
+      "Enter other monthly debt payments from zero to 10 billion in the selected display currency.",
     );
 
   return Object.keys(errors).length ||
