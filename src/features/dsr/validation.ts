@@ -32,7 +32,7 @@ export function validateDsr(
   if (!annualIncome || annualIncome.lte(0) || annualIncome.gt(100_000_000_000))
     errors.annualIncome = message(
       "0보다 크고 1,000억 원 이하인 연소득을 입력해 주세요.",
-      "Enter annual income greater than zero and no more than KRW 100 billion.",
+      "Enter annual income greater than zero and no more than 100 billion in the selected display currency.",
     );
   if (
     !existingAnnualDebtService ||
@@ -41,7 +41,7 @@ export function validateDsr(
   )
     errors.existingAnnualDebtService = message(
       "0원 이상 1,000억 원 이하인 기존 연간 원리금 상환액을 입력해 주세요.",
-      "Enter existing annual debt service from zero to KRW 100 billion.",
+      "Enter existing annual debt service from zero to 100 billion in the selected display currency.",
     );
   if (
     !newLoanPrincipal ||
@@ -50,7 +50,7 @@ export function validateDsr(
   )
     errors.newLoanPrincipal = message(
       "0보다 크고 1,000억 원 이하인 신규 대출금을 입력해 주세요.",
-      "Enter a new loan amount greater than zero and no more than KRW 100 billion.",
+      "Enter a new loan amount greater than zero and no more than 100 billion in the selected display currency.",
     );
   if (
     !annualInterestRate ||
