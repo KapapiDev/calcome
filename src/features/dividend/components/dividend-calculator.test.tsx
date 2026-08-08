@@ -18,7 +18,13 @@ describe("DividendCalculator", () => {
     await user.click(screen.getByRole("button", { name: "배당금 계산하기" }));
 
     expect(screen.queryByText("20,000 원")).not.toBeInTheDocument();
-    expect(screen.getByRole("alert")).toHaveAttribute("id", "dividend-form-error-summary");
-    expect(shares).toHaveAttribute("aria-describedby", expect.stringContaining("dividend-form-error-summary"));
+    expect(screen.getByRole("alert")).toHaveAttribute(
+      "id",
+      "dividend-form-error-summary",
+    );
+    expect(shares).toHaveAttribute(
+      "aria-describedby",
+      expect.stringContaining("dividend-form-error-summary"),
+    );
   });
 });
