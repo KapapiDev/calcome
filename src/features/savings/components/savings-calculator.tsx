@@ -8,6 +8,10 @@ import {
   compactCalculatorSettingsClass,
   dashboardCalculatorWorkspaceClass,
 } from "@/components/calculators/calculator-workspace";
+import {
+  CurrencySelector,
+  useDisplayCurrency,
+} from "@/components/calculators/currency-selector";
 import { Button } from "@/components/ui/button";
 import { AnimatedWon } from "@/features/compound-interest/components/animated-won";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
@@ -15,7 +19,7 @@ import { formatMoneyInput } from "@/lib/input/money";
 
 import { calculateSavings } from "../calculate";
 import { DEFAULT_SAVINGS_VALUES, GENERAL_SAVINGS_TAX_RATE } from "../constants";
-import { formatSavingsPercent, formatSavingsWon } from "../format";
+import { formatSavingsCurrency, formatSavingsPercent } from "../format";
 import { getSavingsDictionary, type SavingsLocale } from "../i18n";
 import type {
   SavingsField,
@@ -103,6 +107,7 @@ export function SavingsCalculator({
 }: {
   locale?: SavingsLocale;
 }) {
+  const { currency } = useDisplayCurrency(locale);
   const copy = getSavingsDictionary(locale).calculator;
   const [values, setValues] = useState<SavingsFormValues>(INITIAL_VALUES);
   const [errors, setErrors] = useState<SavingsValidationErrors>({});
@@ -158,7 +163,11 @@ export function SavingsCalculator({
     setAnimationKey((current) => current + 1);
     setDetailsOpen(true);
     setAdditionalOpen(true);
-    setAnnouncement(copy.complete(formatSavingsWon(next.maturityAfterTax)));
+    setAnnouncement(
+      copy.complete(
+        formatSavingsCurrency(next.maturityAfterTax, locale, currency),
+      ),
+    );
   }
 
   function reset() {
@@ -203,6 +212,7 @@ export function SavingsCalculator({
           <p className="mt-2 text-xs leading-5 text-muted-foreground">
             {copy.inputDescription}
           </p>
+          <CurrencySelector locale={locale} />
           {Object.keys(errors).length ? (
             <div
               id="savings-form-error-summary"
@@ -217,7 +227,7 @@ export function SavingsCalculator({
               field="regularDeposit"
               label={copy.regularDeposit}
               value={values.regularDeposit}
-              unit={copy.won}
+              unit={currency}
               help={copy.regularDepositHelp}
               error={errors.regularDeposit}
               placeholder={copy.regularDepositPlaceholder}
@@ -393,6 +403,8 @@ export function SavingsCalculator({
                     <AnimatedWon
                       value={result.maturityAfterTax}
                       animationKey={animationKey}
+                      locale={locale}
+                      currency={currency}
                     />
                   ) : (
                     "-"
@@ -405,6 +417,8 @@ export function SavingsCalculator({
                     <AnimatedWon
                       value={result.totalPrincipal}
                       animationKey={animationKey}
+                      locale={locale}
+                      currency={currency}
                     />
                   ) : (
                     "-"
@@ -416,6 +430,8 @@ export function SavingsCalculator({
                     <AnimatedWon
                       value={result.afterTaxInterest}
                       animationKey={animationKey}
+                      locale={locale}
+                      currency={currency}
                     />
                   ) : (
                     "-"
@@ -431,6 +447,7 @@ export function SavingsCalculator({
             schedule={result?.schedule}
             animationKey={animationKey}
             locale={locale}
+            currency={currency}
           />
           <details
             open={detailsOpen}
@@ -472,24 +489,42 @@ export function SavingsCalculator({
                             {row.month} {copy.monthSuffix}
                           </th>
                           <td className="px-3 py-2">
-                            {formatSavingsWon(row.deposit)}
+                            {formatSavingsCurrency(
+                              row.deposit,
+                              locale,
+                              currency,
+                            )}
                           </td>
                           <td className="px-3 py-2">
-                            {formatSavingsWon(row.cumulativePrincipal)}
+                            {formatSavingsCurrency(
+                              row.cumulativePrincipal,
+                              locale,
+                              currency,
+                            )}
                           </td>
                           <td className="px-3 py-2">
-                            {formatSavingsWon(row.interest)}
+                            {formatSavingsCurrency(
+                              row.interest,
+                              locale,
+                              currency,
+                            )}
                           </td>
                           <td className="px-3 py-2">
-                            {formatSavingsWon(
+                            {formatSavingsCurrency(
                               cumulativeInterest(
                                 row.grossBalance,
                                 row.cumulativePrincipal,
                               ),
+                              locale,
+                              currency,
                             )}
                           </td>
                           <td className="px-3 py-2">
-                            {formatSavingsWon(row.grossBalance)}
+                            {formatSavingsCurrency(
+                              row.grossBalance,
+                              locale,
+                              currency,
+                            )}
                           </td>
                         </tr>
                       ))}
@@ -518,15 +553,27 @@ export function SavingsCalculator({
                     {[
                       [
                         copy.additionalLabels[0],
-                        formatSavingsWon(result.maturityBeforeTax),
+                        formatSavingsCurrency(
+                          result.maturityBeforeTax,
+                          locale,
+                          currency,
+                        ),
                       ],
                       [
                         copy.additionalLabels[1],
-                        formatSavingsWon(result.grossInterest),
+                        formatSavingsCurrency(
+                          result.grossInterest,
+                          locale,
+                          currency,
+                        ),
                       ],
                       [
                         copy.additionalLabels[2],
-                        formatSavingsWon(result.estimatedTax),
+                        formatSavingsCurrency(
+                          result.estimatedTax,
+                          locale,
+                          currency,
+                        ),
                       ],
                       [
                         copy.additionalLabels[3],

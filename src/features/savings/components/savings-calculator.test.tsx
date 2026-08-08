@@ -10,6 +10,7 @@ const scrollIntoView = vi.fn();
 
 describe("SavingsCalculator", () => {
   beforeEach(() => {
+    window.localStorage.clear();
     scrollIntoView.mockReset();
     Element.prototype.scrollIntoView = scrollIntoView;
     Object.defineProperty(window, "matchMedia", {
@@ -102,6 +103,7 @@ describe("SavingsCalculator", () => {
   it("supports English UI and identical numeric result labels", async () => {
     const user = userEvent.setup();
     const { container } = render(<SavingsCalculator locale="en" />);
+    expect(screen.getByLabelText("Display currency")).toHaveValue("USD");
     await user.type(screen.getByLabelText("Recurring deposit *"), "100000");
     await user.type(screen.getByLabelText("Savings period *"), "1");
     await user.type(screen.getByLabelText("Annual interest rate *"), "3.5");
@@ -110,8 +112,14 @@ describe("SavingsCalculator", () => {
     );
     expect(screen.getByText("Estimated maturity amount")).toBeVisible();
     expect(screen.getAllByTestId("animated-won")[1]).toHaveAccessibleName(
-      "₩1,200,000",
+      "$1,200,000",
     );
+    await user.selectOptions(screen.getByLabelText("Display currency"), "GBP");
+    expect(window.localStorage.getItem("calcome.currency")).toBe("GBP");
+    expect(screen.getAllByTestId("animated-won")[1]).toHaveAccessibleName(
+      "£1,200,000",
+    );
+    expect(container).not.toHaveTextContent("₩1,200,000");
     expect(container.textContent).not.toMatch(/[가-힣]/);
   });
 

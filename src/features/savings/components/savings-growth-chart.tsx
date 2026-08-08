@@ -17,8 +17,9 @@ import {
   COMPOUND_ANIMATION_EASING,
   usePrefersReducedMotion,
 } from "@/features/compound-interest/components/compound-animation";
+import type { DisplayCurrency } from "@/components/calculators/currency-selector";
 
-import { formatSavingsWon } from "../format";
+import { formatSavingsCurrency } from "../format";
 import { getSavingsDictionary, type SavingsLocale } from "../i18n";
 import type { SavingsScheduleRow } from "../types";
 
@@ -60,19 +61,16 @@ export function getMonthTicks(points: readonly SavingsGrowthPoint[]) {
     .filter((month) => month === 1 || month === last || month % step === 0);
 }
 
-const compactWon = new Intl.NumberFormat("ko-KR", {
-  notation: "compact",
-  maximumFractionDigits: 1,
-});
-
 function SavingsTooltip({
   active,
   point,
   locale,
+  currency,
 }: {
   active?: boolean;
   point?: SavingsGrowthPoint;
   locale: SavingsLocale;
+  currency: DisplayCurrency;
 }) {
   if (!active || !point) return null;
   const copy = getSavingsDictionary(locale);
@@ -89,7 +87,7 @@ function SavingsTooltip({
         ].map(([label, value]) => (
           <div key={label} className="flex justify-between gap-5">
             <dt className="text-muted-foreground">{label}</dt>
-            <dd>{formatSavingsWon(value)}</dd>
+            <dd>{formatSavingsCurrency(value, locale, currency)}</dd>
           </div>
         ))}
       </dl>
@@ -101,10 +99,12 @@ export function SavingsGrowthChart({
   schedule,
   animationKey = 0,
   locale = "ko",
+  currency = "KRW",
 }: {
   schedule?: readonly SavingsScheduleRow[];
   animationKey?: number;
   locale?: SavingsLocale;
+  currency?: DisplayCurrency;
 }) {
   const copy = getSavingsDictionary(locale).chart;
   const data = createSavingsGrowthData(schedule ?? []);
@@ -174,7 +174,12 @@ export function SavingsGrowthChart({
                 width={58}
                 tickCount={5}
                 tickFormatter={(value) =>
-                  `₩${compactWon.format(Number(value))}`
+                  new Intl.NumberFormat(locale === "ko" ? "ko-KR" : "en-US", {
+                    style: "currency",
+                    currency,
+                    notation: "compact",
+                    maximumFractionDigits: 1,
+                  }).format(Number(value))
                 }
                 tick={{ fill: "var(--muted-foreground)", fontSize: 11 }}
                 axisLine={false}
@@ -186,6 +191,7 @@ export function SavingsGrowthChart({
                   <SavingsTooltip
                     active={active}
                     locale={locale}
+                    currency={currency}
                     point={
                       payload?.[0]?.payload as SavingsGrowthPoint | undefined
                     }
