@@ -20,6 +20,21 @@ describe("WithholdingTaxCalculator", () => {
     });
   });
 
+  it("labels South Korea policy amounts as KRW before input", () => {
+    render(<WithholdingTaxCalculator locale="en" />);
+
+    expect(
+      screen.getByRole("heading", {
+        name: "South Korea payment (KRW) and applicable rates",
+      }),
+    ).toBeVisible();
+    expect(screen.getByLabelText("Gross payment (KRW)")).toBeVisible();
+    expect(
+      screen.getByLabelText("Confirmed non-taxable amount (KRW)"),
+    ).toBeVisible();
+    expect(screen.queryByLabelText("Display currency")).not.toBeInTheDocument();
+  });
+
   it("clears stale results and links invalid input to the error summary", async () => {
     const user = userEvent.setup();
     render(<WithholdingTaxCalculator locale="ko" />);
