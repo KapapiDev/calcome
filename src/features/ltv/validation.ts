@@ -31,12 +31,12 @@ export function validateLtv(
   )
     errors.propertyValue = message(
       "0보다 크고 1조 원 이하인 담보가치를 입력해 주세요.",
-      "Enter a property value greater than zero and no more than KRW 1 trillion.",
+      "Enter a property value greater than zero and no more than 1 trillion in the selected display currency.",
     );
   if (!loanAmount || loanAmount.lt(0) || loanAmount.gt(1_000_000_000_000))
     errors.loanAmount = message(
       "0원 이상 1조 원 이하인 대출금액을 입력해 주세요.",
-      "Enter a loan amount from zero to KRW 1 trillion.",
+      "Enter a loan amount from zero to 1 trillion in the selected display currency.",
     );
   if (!targetLtvRate || targetLtvRate.lte(0) || targetLtvRate.gt(100))
     errors.targetLtvRate = message(

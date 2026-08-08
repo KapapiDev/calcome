@@ -6,6 +6,12 @@ import {
   compactCalculatorSettingsClass,
   dashboardCalculatorWorkspaceClass,
 } from "@/components/calculators/calculator-workspace";
+import {
+  CurrencySelector,
+  formatDisplayCurrency,
+  type DisplayCurrency,
+  useDisplayCurrency,
+} from "@/components/calculators/currency-selector";
 import { Button } from "@/components/ui/button";
 import { AnimatedWon } from "@/features/compound-interest/components/animated-won";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
@@ -24,6 +30,7 @@ const initialValues: LtvValues = {
 };
 
 export function LtvCalculator({ locale }: { locale: LtvLocale }) {
+  const { currency } = useDisplayCurrency(locale);
   const copy = ltvContent[locale];
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<LtvErrors>({});
@@ -71,6 +78,7 @@ export function LtvCalculator({ locale }: { locale: LtvLocale }) {
           <h2 id="ltv-input-title" className="mt-1 text-xl font-semibold">
             {copy.input}
           </h2>
+          <CurrencySelector locale={locale} />
           {hasErrors ? (
             <p
               id={errorSummaryId}
@@ -85,6 +93,7 @@ export function LtvCalculator({ locale }: { locale: LtvLocale }) {
             label={copy.propertyValue}
             value={values.propertyValue}
             placeholder="500,000,000"
+            suffix={currency}
             error={errors.propertyValue}
             errorSummaryId={hasErrors ? errorSummaryId : undefined}
             onChange={(value) =>
@@ -99,6 +108,7 @@ export function LtvCalculator({ locale }: { locale: LtvLocale }) {
             label={copy.loanAmount}
             value={values.loanAmount}
             placeholder="300,000,000"
+            suffix={currency}
             error={errors.loanAmount}
             errorSummaryId={hasErrors ? errorSummaryId : undefined}
             onChange={(value) =>
@@ -150,6 +160,8 @@ export function LtvCalculator({ locale }: { locale: LtvLocale }) {
                   value: (
                     <AnimatedWon
                       value={result?.maximumLoanAtTarget ?? null}
+                      locale={locale}
+                      currency={currency}
                       animationKey={animationKey}
                     />
                   ),
@@ -159,6 +171,8 @@ export function LtvCalculator({ locale }: { locale: LtvLocale }) {
                   value: (
                     <AnimatedWon
                       value={result?.remainingLoanCapacity ?? null}
+                      locale={locale}
+                      currency={currency}
                       animationKey={animationKey}
                     />
                   ),
@@ -175,15 +189,15 @@ export function LtvCalculator({ locale }: { locale: LtvLocale }) {
               <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
                 <Detail
                   label={copy.equity}
-                  value={won(result.ownerEquity, locale)}
+                  value={money(result.ownerEquity, locale, currency)}
                 />
                 <Detail
                   label={copy.enteredProperty}
-                  value={won(result.propertyValue, locale)}
+                  value={money(result.propertyValue, locale, currency)}
                 />
                 <Detail
                   label={copy.enteredLoan}
-                  value={won(result.loanAmount, locale)}
+                  value={money(result.loanAmount, locale, currency)}
                 />
                 <Detail
                   label={copy.ltvRate}
@@ -254,16 +268,16 @@ function Field({
   );
 }
 
-function won(
+function money(
   value: { toDecimalPlaces: (places: number) => { toNumber: () => number } },
   locale: LtvLocale,
+  currency: DisplayCurrency,
 ) {
-  return `${value
-    .toDecimalPlaces(0)
-    .toNumber()
-    .toLocaleString(
-      locale === "ko" ? "ko-KR" : "en-US",
-    )} ${locale === "ko" ? "원" : "KRW"}`;
+  return formatDisplayCurrency(
+    value.toDecimalPlaces(0).toNumber(),
+    locale,
+    currency,
+  );
 }
 
 function Detail({ label, value }: { label: string; value: string }) {
