@@ -32,7 +32,7 @@ export function validateCreditLoanInterest(
   if (!loanAmount || loanAmount.lte(0) || loanAmount.gt(10_000_000_000_000))
     errors.loanAmount = message(
       "0원보다 크고 10조 원 이하인 대출금을 입력해 주세요.",
-      "Enter a loan amount greater than zero and no more than KRW 10 trillion.",
+      "Enter a loan amount greater than zero and no more than 10 trillion in the selected display currency.",
     );
   if (!annualRate || annualRate.lt(0) || annualRate.gt(100))
     errors.annualRate = message(
@@ -47,7 +47,7 @@ export function validateCreditLoanInterest(
   if (!monthlyFees || monthlyFees.lt(0) || monthlyFees.gt(100_000_000))
     errors.monthlyFees = message(
       "0원 이상 1억 원 이하의 월 부대비용을 입력해 주세요.",
-      "Enter monthly fees from zero to KRW 100 million.",
+      "Enter monthly fees from zero to 100 million in the selected display currency.",
     );
 
   return Object.keys(errors).length ||
