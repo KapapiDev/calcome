@@ -20,6 +20,22 @@ describe("JeonseLoanInterestCalculator", () => {
     });
   });
 
+  it("labels South Korea policy amounts as KRW before input", () => {
+    render(<JeonseLoanInterestCalculator locale="en" />);
+
+    expect(
+      screen.getByRole("heading", {
+        name: "South Korea jeonse loan inputs (KRW)",
+      }),
+    ).toBeVisible();
+    expect(screen.getByLabelText("Jeonse deposit (KRW)")).toBeVisible();
+    expect(screen.getByLabelText("Own funds (KRW)")).toBeVisible();
+    expect(
+      screen.getByLabelText("Monthly guarantee and other fees (KRW)"),
+    ).toBeVisible();
+    expect(screen.queryByLabelText("Display currency")).not.toBeInTheDocument();
+  });
+
   it("clears stale jeonse loan results and links invalid input to the error summary", async () => {
     const user = userEvent.setup();
     render(<JeonseLoanInterestCalculator locale="ko" />);
