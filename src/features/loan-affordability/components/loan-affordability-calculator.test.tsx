@@ -8,6 +8,7 @@ const scrollIntoView = vi.fn();
 
 describe("LoanAffordabilityCalculator", () => {
   beforeEach(() => {
+    window.localStorage.clear();
     scrollIntoView.mockReset();
     Element.prototype.scrollIntoView = scrollIntoView;
     Object.defineProperty(window, "matchMedia", {
@@ -18,6 +19,35 @@ describe("LoanAffordabilityCalculator", () => {
         removeEventListener: vi.fn(),
       }),
     });
+  });
+
+  it("defaults English to USD and keeps affordability results across currency changes", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<LoanAffordabilityCalculator locale="en" />);
+
+    expect(screen.getByLabelText("Display currency")).toHaveValue("USD");
+    await user.type(screen.getByLabelText("Annual income"), "60000");
+    await user.type(
+      screen.getByLabelText("Existing monthly debt payments"),
+      "500",
+    );
+    await user.type(screen.getByLabelText("Target debt-service ratio"), "40");
+    await user.type(
+      screen.getByLabelText("Estimated annual interest rate"),
+      "4.5",
+    );
+    await user.type(screen.getByLabelText("Repayment term"), "30");
+    await user.click(
+      screen.getByRole("button", { name: "Calculate affordability" }),
+    );
+    expect(screen.getByText("Total new-loan repayment")).toBeVisible();
+    expect(container.textContent).toMatch(/\$/);
+
+    await user.selectOptions(screen.getByLabelText("Display currency"), "GBP");
+    expect(window.localStorage.getItem("calcome.currency")).toBe("GBP");
+    expect(container.textContent).toMatch(/£/);
+    expect(container.textContent).not.toMatch(/₩/);
+    expect(screen.getByText("Total new-loan repayment")).toBeVisible();
   });
 
   it("clears stale results and links invalid input to the error summary", async () => {

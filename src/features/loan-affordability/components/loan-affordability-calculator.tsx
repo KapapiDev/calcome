@@ -6,6 +6,12 @@ import {
   compactCalculatorSettingsClass,
   dashboardCalculatorWorkspaceClass,
 } from "@/components/calculators/calculator-workspace";
+import {
+  CurrencySelector,
+  formatDisplayCurrency,
+  type DisplayCurrency,
+  useDisplayCurrency,
+} from "@/components/calculators/currency-selector";
 import { Button } from "@/components/ui/button";
 import { AnimatedWon } from "@/features/compound-interest/components/animated-won";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
@@ -40,6 +46,7 @@ export function LoanAffordabilityCalculator({
 }: {
   locale: LoanAffordabilityLocale;
 }) {
+  const { currency } = useDisplayCurrency(locale);
   const copy = loanAffordabilityContent[locale];
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<LoanAffordabilityErrors>({});
@@ -97,6 +104,7 @@ export function LoanAffordabilityCalculator({
           >
             {copy.input}
           </h2>
+          <CurrencySelector locale={locale} />
           {Object.keys(errors).length ? (
             <p
               id={errorSummaryId}
@@ -111,6 +119,7 @@ export function LoanAffordabilityCalculator({
             label={copy.annualIncome}
             value={values.annualIncome}
             placeholder="60,000,000"
+            suffix={currency}
             error={errors.annualIncome}
             errorSummaryId={errorSummaryId}
             onChange={(value) => setMoney("annualIncome", value)}
@@ -120,6 +129,7 @@ export function LoanAffordabilityCalculator({
             label={copy.otherMonthlyDebt}
             value={values.otherMonthlyDebt}
             placeholder="500,000"
+            suffix={currency}
             error={errors.otherMonthlyDebt}
             errorSummaryId={errorSummaryId}
             onChange={(value) => setMoney("otherMonthlyDebt", value)}
@@ -180,6 +190,8 @@ export function LoanAffordabilityCalculator({
                   value: (
                     <AnimatedWon
                       value={result?.maximumLoan ?? null}
+                      locale={locale}
+                      currency={currency}
                       animationKey={animationKey}
                     />
                   ),
@@ -190,6 +202,8 @@ export function LoanAffordabilityCalculator({
                   value: (
                     <AnimatedWon
                       value={result?.availableMonthlyPayment ?? null}
+                      locale={locale}
+                      currency={currency}
                       animationKey={animationKey}
                     />
                   ),
@@ -199,6 +213,8 @@ export function LoanAffordabilityCalculator({
                   value: (
                     <AnimatedWon
                       value={result?.maximumMonthlyDebt ?? null}
+                      locale={locale}
+                      currency={currency}
                       animationKey={animationKey}
                     />
                   ),
@@ -215,15 +231,15 @@ export function LoanAffordabilityCalculator({
               <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
                 <Detail
                   label={copy.totalRepayment}
-                  value={won(result.totalRepayment, locale)}
+                  value={money(result.totalRepayment, locale, currency)}
                 />
                 <Detail
                   label={copy.totalInterest}
-                  value={won(result.totalInterest, locale)}
+                  value={money(result.totalInterest, locale, currency)}
                 />
                 <Detail
                   label={copy.maximumMonthlyDebt}
-                  value={won(result.maximumMonthlyDebt, locale)}
+                  value={money(result.maximumMonthlyDebt, locale, currency)}
                 />
                 <Detail
                   label={copy.limitUsed}
@@ -291,16 +307,16 @@ function Field({
     </div>
   );
 }
-function won(
+function money(
   value: { toDecimalPlaces: (places: number) => { toNumber: () => number } },
   locale: LoanAffordabilityLocale,
+  currency: DisplayCurrency,
 ) {
-  return `${value
-    .toDecimalPlaces(0)
-    .toNumber()
-    .toLocaleString(
-      locale === "ko" ? "ko-KR" : "en-US",
-    )} ${locale === "ko" ? "원" : "KRW"}`;
+  return formatDisplayCurrency(
+    value.toDecimalPlaces(0).toNumber(),
+    locale,
+    currency,
+  );
 }
 function Detail({ label, value }: { label: string; value: string }) {
   return (

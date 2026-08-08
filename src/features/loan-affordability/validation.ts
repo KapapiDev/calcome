@@ -34,7 +34,7 @@ export function validateLoanAffordability(
   if (!annualIncome || annualIncome.lte(0) || annualIncome.gt(100_000_000_000))
     errors.annualIncome = message(
       "0원 초과 1,000억원 이하의 연소득을 입력하세요.",
-      "Enter annual income greater than zero and no more than KRW 100 billion.",
+      "Enter annual income greater than zero and no more than 100 billion in the selected display currency.",
     );
   if (
     !otherMonthlyDebt ||
@@ -43,7 +43,7 @@ export function validateLoanAffordability(
   )
     errors.otherMonthlyDebt = message(
       "0원 이상 100억원 이하의 기존 월 부채 상환액을 입력하세요.",
-      "Enter existing monthly debt payments from zero to KRW 10 billion.",
+      "Enter existing monthly debt payments from zero to 10 billion in the selected display currency.",
     );
   if (!debtServiceLimit || debtServiceLimit.lte(0) || debtServiceLimit.gt(100))
     errors.debtServiceLimit = message(
