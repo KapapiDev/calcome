@@ -6,6 +6,10 @@ import {
   compactCalculatorSettingsClass,
   dashboardCalculatorWorkspaceClass,
 } from "@/components/calculators/calculator-workspace";
+import {
+  CurrencySelector,
+  useDisplayCurrency,
+} from "@/components/calculators/currency-selector";
 import { Button } from "@/components/ui/button";
 import { AnimatedWon } from "@/features/compound-interest/components/animated-won";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
@@ -39,6 +43,7 @@ export function EarlyLoanRepaymentFeeCalculator({
 }: {
   locale: EarlyRepaymentFeeLocale;
 }) {
+  const { currency } = useDisplayCurrency(locale);
   const copy = earlyRepaymentFeeContent[locale];
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<EarlyRepaymentFeeErrors>({});
@@ -87,6 +92,7 @@ export function EarlyLoanRepaymentFeeCalculator({
           >
             {copy.input}
           </h2>
+          <CurrencySelector locale={locale} />
           {Object.keys(errors).length ? (
             <p
               id={errorSummaryId}
@@ -101,6 +107,7 @@ export function EarlyLoanRepaymentFeeCalculator({
             label={copy.repaymentAmount}
             value={values.repaymentAmount}
             placeholder="100,000,000"
+            suffix={currency}
             error={errors.repaymentAmount}
             errorSummaryId={errorSummaryId}
             onChange={(value) =>
@@ -163,6 +170,8 @@ export function EarlyLoanRepaymentFeeCalculator({
                   value: (
                     <AnimatedWon
                       value={result?.estimatedFee ?? null}
+                      locale={locale}
+                      currency={currency}
                       animationKey={animationKey}
                     />
                   ),
@@ -173,6 +182,8 @@ export function EarlyLoanRepaymentFeeCalculator({
                   value: (
                     <AnimatedWon
                       value={result?.netRepaymentAmount ?? null}
+                      locale={locale}
+                      currency={currency}
                       animationKey={animationKey}
                     />
                   ),
