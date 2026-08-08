@@ -1,16 +1,23 @@
 import Decimal from "decimal.js";
 
-const wonFormatter = new Intl.NumberFormat("ko-KR", {
-  style: "currency",
-  currency: "KRW",
-  maximumFractionDigits: 0,
-});
+import type { DisplayCurrency } from "@/components/calculators/currency-selector";
+import type { CagrLocale } from "./i18n";
+
+export function formatCagrCurrency(
+  value: Decimal.Value,
+  locale: CagrLocale,
+  currency: DisplayCurrency,
+): string {
+  const rounded = new Decimal(value).toDecimalPlaces(0, Decimal.ROUND_HALF_UP);
+  return new Intl.NumberFormat(locale === "ko" ? "ko-KR" : "en-US", {
+    style: "currency",
+    currency,
+    maximumFractionDigits: 0,
+  }).format(BigInt(rounded.toFixed(0)));
+}
 
 export function formatCagrWon(value: Decimal.Value, locale = "ko-KR"): string {
-  const rounded = new Decimal(value).toDecimalPlaces(0, Decimal.ROUND_HALF_UP);
-  return locale === "en-US"
-    ? `₩${new Intl.NumberFormat("en-US").format(BigInt(rounded.toFixed(0)))}`
-    : wonFormatter.format(BigInt(rounded.toFixed(0)));
+  return formatCagrCurrency(value, locale === "en-US" ? "en" : "ko", "KRW");
 }
 
 export function formatCagrPercent(value: Decimal.Value): string {
