@@ -7,6 +7,10 @@ import {
   compactCalculatorSettingsClass,
   dashboardCalculatorWorkspaceClass,
 } from "@/components/calculators/calculator-workspace";
+import {
+  CurrencySelector,
+  useDisplayCurrency,
+} from "@/components/calculators/currency-selector";
 import { Button } from "@/components/ui/button";
 import { AnimatedWon } from "@/features/compound-interest/components/animated-won";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
@@ -17,7 +21,7 @@ import {
   DEFAULT_DEPOSIT_VALUES,
   GENERAL_INTEREST_TAX_RATE,
 } from "../constants";
-import { formatDepositPercent, formatDepositWon } from "../format";
+import { formatDepositCurrency, formatDepositPercent } from "../format";
 import { getDepositDictionary, type DepositLocale } from "../i18n";
 import type {
   DepositField,
@@ -104,6 +108,7 @@ export function DepositCalculator({
 }: {
   locale?: DepositLocale;
 }) {
+  const { currency } = useDisplayCurrency(locale);
   const copy = getDepositDictionary(locale).calculator;
   const [values, setValues] = useState<DepositFormValues>(INITIAL_VALUES);
   const [errors, setErrors] = useState<DepositValidationErrors>({});
@@ -157,7 +162,11 @@ export function DepositCalculator({
     setAnimationKey((current) => current + 1);
     setDetailsOpen(true);
     setAdditionalOpen(true);
-    setAnnouncement(copy.complete(formatDepositWon(next.maturityAfterTax)));
+    setAnnouncement(
+      copy.complete(
+        formatDepositCurrency(next.maturityAfterTax, locale, currency),
+      ),
+    );
   }
   function reset() {
     cancelResultScroll();
@@ -198,6 +207,7 @@ export function DepositCalculator({
           <p className="mt-2 text-xs leading-5 text-muted-foreground">
             {copy.inputDescription}
           </p>
+          <CurrencySelector locale={locale} />
           {Object.keys(errors).length ? (
             <div
               id="deposit-form-error-summary"
@@ -212,7 +222,7 @@ export function DepositCalculator({
               field="depositAmount"
               label={copy.amount}
               value={values.depositAmount}
-              unit={copy.won}
+              unit={currency}
               help={copy.amountHelp}
               error={errors.depositAmount}
               placeholder={copy.amountPlaceholder}
@@ -351,6 +361,8 @@ export function DepositCalculator({
                     <AnimatedWon
                       value={result.maturityAfterTax}
                       animationKey={animationKey}
+                      locale={locale}
+                      currency={currency}
                     />
                   ) : (
                     "-"
@@ -363,6 +375,8 @@ export function DepositCalculator({
                     <AnimatedWon
                       value={result.principal}
                       animationKey={animationKey}
+                      locale={locale}
+                      currency={currency}
                     />
                   ) : (
                     "-"
@@ -374,6 +388,8 @@ export function DepositCalculator({
                     <AnimatedWon
                       value={result.afterTaxInterest}
                       animationKey={animationKey}
+                      locale={locale}
+                      currency={currency}
                     />
                   ) : (
                     "-"
@@ -389,6 +405,7 @@ export function DepositCalculator({
             schedule={result?.schedule}
             animationKey={animationKey}
             locale={locale}
+            currency={currency}
           />
           <details
             open={detailsOpen}
@@ -430,13 +447,25 @@ export function DepositCalculator({
                             {row.month} {copy.monthSuffix}
                           </th>
                           <td className="px-3 py-2">
-                            {formatDepositWon(row.principal)}
+                            {formatDepositCurrency(
+                              row.principal,
+                              locale,
+                              currency,
+                            )}
                           </td>
                           <td className="px-3 py-2">
-                            {formatDepositWon(row.accumulatedInterest)}
+                            {formatDepositCurrency(
+                              row.accumulatedInterest,
+                              locale,
+                              currency,
+                            )}
                           </td>
                           <td className="px-3 py-2">
-                            {formatDepositWon(row.balance)}
+                            {formatDepositCurrency(
+                              row.balance,
+                              locale,
+                              currency,
+                            )}
                           </td>
                         </tr>
                       ))}
@@ -465,15 +494,27 @@ export function DepositCalculator({
                     {[
                       [
                         copy.additionalLabels[0],
-                        formatDepositWon(result.maturityBeforeTax),
+                        formatDepositCurrency(
+                          result.maturityBeforeTax,
+                          locale,
+                          currency,
+                        ),
                       ],
                       [
                         copy.additionalLabels[1],
-                        formatDepositWon(result.grossInterest),
+                        formatDepositCurrency(
+                          result.grossInterest,
+                          locale,
+                          currency,
+                        ),
                       ],
                       [
                         copy.additionalLabels[2],
-                        formatDepositWon(result.estimatedTax),
+                        formatDepositCurrency(
+                          result.estimatedTax,
+                          locale,
+                          currency,
+                        ),
                       ],
                       [
                         copy.additionalLabels[3],

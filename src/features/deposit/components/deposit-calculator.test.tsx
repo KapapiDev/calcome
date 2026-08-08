@@ -10,6 +10,7 @@ const scrollIntoView = vi.fn();
 
 describe("DepositCalculator", () => {
   beforeEach(() => {
+    window.localStorage.clear();
     scrollIntoView.mockReset();
     Element.prototype.scrollIntoView = scrollIntoView;
     Object.defineProperty(window, "matchMedia", {
@@ -94,6 +95,7 @@ describe("DepositCalculator", () => {
   it("renders fully localized English UI", async () => {
     const user = userEvent.setup();
     const { container } = render(<DepositCalculator locale="en" />);
+    expect(screen.getByLabelText("Display currency")).toHaveValue("USD");
     await user.type(screen.getByLabelText("Initial deposit *"), "10000000");
     await user.type(screen.getByLabelText("Deposit period *"), "1");
     await user.type(screen.getByLabelText("Annual interest rate *"), "3.5");
@@ -101,8 +103,14 @@ describe("DepositCalculator", () => {
       screen.getByRole("button", { name: "Calculate maturity estimate" }),
     );
     expect(screen.getAllByTestId("animated-won")[1]).toHaveAccessibleName(
-      "₩10,000,000",
+      "$10,000,000",
     );
+    await user.selectOptions(screen.getByLabelText("Display currency"), "GBP");
+    expect(window.localStorage.getItem("calcome.currency")).toBe("GBP");
+    expect(screen.getAllByTestId("animated-won")[1]).toHaveAccessibleName(
+      "£10,000,000",
+    );
+    expect(container).not.toHaveTextContent("₩10,000,000");
     expect(container.textContent).not.toMatch(/[가-힣]/);
   });
   it("focuses the first invalid field without scrolling", async () => {

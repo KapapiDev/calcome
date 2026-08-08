@@ -24,7 +24,7 @@ const ko = {
     ],
     cautionsTitle: "계산 전 확인하세요",
     cautions: [
-      "금액은 대한민국 원(KRW) 기준이며 원금과 금리는 전체 기간 동안 일정하다고 가정합니다.",
+      "통화 선택은 표시 형식만 바꾸며 환율을 변환하지 않습니다. 원금과 금리는 전체 기간 동안 일정하다고 가정합니다.",
       "일반과세 15.4%는 이자소득세 14%와 지방소득세 1.4%를 합친 간이 추정입니다.",
       "중도해지이율, 우대금리, 수수료, 재예치와 상품별 실제 일수 계산은 포함하지 않습니다.",
       "결과는 법률·세무·금융 조언이나 특정 금융상품의 지급액 보장이 아닙니다.",
@@ -158,7 +158,7 @@ const en = {
     title: "Fixed Deposit Calculator",
     metaTitle: "Fixed Deposit Calculator - After-Tax Maturity Estimate",
     metaDescription:
-      "Estimate simple or monthly compound interest, simplified tax, and maturity value for a fixed deposit in South Korean won.",
+      "Estimate simple or monthly compound interest, simplified tax, and maturity value for a fixed deposit in your selected display currency.",
     description:
       "See how interest accumulates on a lump-sum deposit and estimate its after-tax maturity value.",
     home: "Home",
@@ -175,7 +175,7 @@ const en = {
     ],
     cautionsTitle: "Before you calculate",
     cautions: [
-      "Amounts are calculated in South Korean won (KRW), with principal and rate assumed constant.",
+      "Currency selection changes formatting only and does not convert exchange rates. Principal and rate are assumed constant.",
       "The 15.4% general tax option is a simplified estimate combining 14% income tax and 1.4% local income tax.",
       "Early-termination rates, preferential rates, fees, reinvestment, and product-specific day counts are not included.",
       "Results are estimates, not legal, tax, or financial advice or a guarantee from any financial institution.",
@@ -290,7 +290,7 @@ const en = {
   },
   validation: {
     amount:
-      "Enter a whole-won initial deposit from ₩10,000 to ₩1,000,000,000,000.",
+      "Enter a whole-number initial deposit from 10,000 to 1,000,000,000,000 in the selected display currency.",
     period: "Enter a deposit period as a whole number of at least 1.",
     periodUnit: "Select a deposit period unit.",
     rate: "Enter an annual interest rate from 0% to 100%.",
