@@ -33,7 +33,7 @@ export function validateMortgagePayment(
   if (!homePrice || homePrice.lte(0) || homePrice.gt(10_000_000_000_000))
     errors.homePrice = message(
       "0보다 크고 10조 원 이하인 주택가격을 입력해 주세요.",
-      "Enter a home price greater than zero and no more than KRW 10 trillion.",
+      "Enter a home price greater than zero and no more than 10 trillion in the selected display currency.",
     );
   if (
     !downPayment ||
@@ -57,7 +57,7 @@ export function validateMortgagePayment(
   if (!monthlyCosts || monthlyCosts.lt(0) || monthlyCosts.gt(100_000_000))
     errors.monthlyCosts = message(
       "0원 이상 1억 원 이하인 월 부대비용을 입력해 주세요.",
-      "Enter monthly costs from zero to KRW 100 million.",
+      "Enter monthly costs from zero to 100 million in the selected display currency.",
     );
 
   return Object.keys(errors).length ||
