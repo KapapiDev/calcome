@@ -64,21 +64,22 @@ export const comprehensiveRealEstateHoldingTaxContent = {
     ] as const,
   },
   en: {
-    title: "Korean Comprehensive Real Estate Holding Tax Calculator",
-    metaTitle: "Korean Comprehensive Real Estate Holding Tax Calculator",
+    title: "South Korea Comprehensive Real Estate Holding Tax Calculator",
+    metaTitle:
+      "South Korea Comprehensive Real Estate Holding Tax Calculator | KRW Estimate",
     category: "Tax calculator",
     description:
-      "Estimate Korea's comprehensive real estate holding tax using aggregate official values and confirmed deductions, ratio, and rate.",
+      "Estimate South Korea's comprehensive real estate holding tax in KRW using aggregate official values and confirmed deductions, ratio, and rate.",
     intro:
-      "Confirm the values for the property class, taxpayer, holdings, and tax year from official guidance before entering them.",
-    input: "Aggregate value and confirmed inputs",
+      "This calculator applies to South Korea. Enter every monetary amount in KRW after confirming the values for the property class, taxpayer, holdings, and tax year.",
+    input: "South Korea aggregate value (KRW) and confirmed inputs",
     fields: {
-      aggregateAssessedValue: "Aggregate officially assessed value",
-      basicDeduction: "Confirmed basic deduction",
+      aggregateAssessedValue: "Aggregate officially assessed value (KRW)",
+      basicDeduction: "Confirmed basic deduction (KRW)",
       fairMarketValueRate: "Confirmed fair-market-value ratio",
       taxRate: "Confirmed holding tax rate",
-      progressiveDeduction: "Confirmed progressive deduction",
-      deductiblePropertyTax: "Deductible property tax",
+      progressiveDeduction: "Confirmed progressive deduction (KRW)",
+      deductiblePropertyTax: "Deductible property tax (KRW)",
     },
     calculate: "Calculate estimated holding tax",
     reset: "Reset",

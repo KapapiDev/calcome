@@ -20,6 +20,29 @@ describe("ComprehensiveRealEstateHoldingTaxCalculator", () => {
     });
   });
 
+  it("labels South Korea policy amounts as KRW before input", () => {
+    render(<ComprehensiveRealEstateHoldingTaxCalculator locale="en" />);
+
+    expect(
+      screen.getByRole("heading", {
+        name: "South Korea aggregate value (KRW) and confirmed inputs",
+      }),
+    ).toBeVisible();
+    expect(
+      screen.getByLabelText("Aggregate officially assessed value (KRW)"),
+    ).toBeVisible();
+    expect(
+      screen.getByLabelText("Confirmed basic deduction (KRW)"),
+    ).toBeVisible();
+    expect(
+      screen.getByLabelText("Confirmed progressive deduction (KRW)"),
+    ).toBeVisible();
+    expect(
+      screen.getByLabelText("Deductible property tax (KRW)"),
+    ).toBeVisible();
+    expect(screen.queryByLabelText("Display currency")).not.toBeInTheDocument();
+  });
+
   it("clears stale holding tax results and links invalid input to the error summary", async () => {
     const user = userEvent.setup();
     render(<ComprehensiveRealEstateHoldingTaxCalculator locale="ko" />);
