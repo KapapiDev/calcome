@@ -20,6 +20,25 @@ describe("CapitalGainsTaxCalculator", () => {
     });
   });
 
+  it("labels South Korea policy amounts as KRW before input", () => {
+    render(<CapitalGainsTaxCalculator locale="en" />);
+
+    expect(
+      screen.getByRole("heading", {
+        name: "South Korea transaction amounts (KRW) and rates",
+      }),
+    ).toBeVisible();
+    expect(screen.getByLabelText("Sale price (KRW)")).toBeVisible();
+    expect(
+      screen.getByLabelText("Acquisition price / cost basis (KRW)"),
+    ).toBeVisible();
+    expect(
+      screen.getByLabelText("Deductible transaction expenses (KRW)"),
+    ).toBeVisible();
+    expect(screen.getByLabelText("Applicable deduction (KRW)")).toBeVisible();
+    expect(screen.queryByLabelText("Display currency")).not.toBeInTheDocument();
+  });
+
   it("clears stale capital gains tax results and links invalid input to the error summary", async () => {
     const user = userEvent.setup();
     render(<CapitalGainsTaxCalculator locale="ko" />);

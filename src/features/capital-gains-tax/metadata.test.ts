@@ -4,6 +4,11 @@ import { createCapitalGainsTaxMetadata } from "./metadata";
 describe("createCapitalGainsTaxMetadata", () => {
   it("creates localized canonical and alternate metadata", () => {
     const metadata = createCapitalGainsTaxMetadata("en");
+    expect(metadata.title).toBe(
+      "South Korea Capital Gains Tax Calculator | KRW Estimate",
+    );
+    expect(metadata.description).toContain("South Korean");
+    expect(metadata.description).toContain("KRW");
     expect(metadata.alternates?.canonical).toBe(
       "/en/finance/capital-gains-tax",
     );
