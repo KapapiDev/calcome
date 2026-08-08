@@ -22,6 +22,20 @@ describe("RealEstateBrokerageFeeCalculator", () => {
     });
   });
 
+  it("labels South Korea policy amounts as KRW before input", () => {
+    render(<RealEstateBrokerageFeeCalculator locale="en" />);
+
+    expect(
+      screen.getByRole("heading", {
+        name: "South Korea brokerage assumptions (KRW)",
+      }),
+    ).toBeVisible();
+    expect(
+      screen.getByLabelText("Transaction amount or converted deposit (KRW)"),
+    ).toBeVisible();
+    expect(screen.queryByLabelText("Display currency")).not.toBeInTheDocument();
+  });
+
   it("clears stale results and links invalid input to the error summary", async () => {
     const user = userEvent.setup();
     render(<RealEstateBrokerageFeeCalculator locale="ko" />);
