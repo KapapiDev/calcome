@@ -1,6 +1,15 @@
 import { describe, expect, it } from "vitest";
 import { createInheritanceTaxMetadata } from "./metadata";
 describe("createInheritanceTaxMetadata", () => {
+  it("identifies the English calculator as South Korea and KRW specific", () => {
+    const metadata = createInheritanceTaxMetadata("en");
+    expect(metadata.title).toBe(
+      "South Korea Inheritance Tax Calculator | KRW Estimate",
+    );
+    expect(metadata.description).toContain("South Korean");
+    expect(metadata.description).toContain("KRW");
+  });
+
   it("creates localized canonical and alternate metadata", () => {
     const metadata = createInheritanceTaxMetadata("en");
     expect(metadata.alternates?.canonical).toBe("/en/finance/inheritance-tax");
