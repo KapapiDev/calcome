@@ -39,7 +39,7 @@ export function validateCreditCardInstallmentInterest(
   )
     errors.purchaseAmount = ko
       ? "결제 금액은 0원 초과 100억원 이하로 입력해 주세요."
-      : "Enter an amount above 0 and no more than KRW 10 billion.";
+      : "Enter an amount above 0 and no more than 10 billion in the selected display currency.";
   if (
     !monthsValue ||
     !monthsValue.isInteger() ||

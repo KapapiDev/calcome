@@ -6,6 +6,12 @@ import {
   compactCalculatorSettingsClass,
   dashboardCalculatorWorkspaceClass,
 } from "@/components/calculators/calculator-workspace";
+import {
+  CurrencySelector,
+  formatDisplayCurrency,
+  type DisplayCurrency,
+  useDisplayCurrency,
+} from "@/components/calculators/currency-selector";
 import { Button } from "@/components/ui/button";
 import { AnimatedWon } from "@/features/compound-interest/components/animated-won";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
@@ -38,6 +44,7 @@ export function CreditCardInstallmentInterestCalculator({
 }: {
   locale: CreditCardInstallmentInterestLocale;
 }) {
+  const { currency } = useDisplayCurrency(locale);
   const copy = creditCardInstallmentInterestContent[locale];
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<CreditCardInstallmentInterestErrors>({});
@@ -87,6 +94,7 @@ export function CreditCardInstallmentInterestCalculator({
           >
             {copy.input}
           </h2>
+          <CurrencySelector locale={locale} />
           {Object.keys(errors).length ? (
             <p
               id={errorSummaryId}
@@ -101,6 +109,7 @@ export function CreditCardInstallmentInterestCalculator({
             label={copy.purchaseAmount}
             value={values.purchaseAmount}
             placeholder="1,200,000"
+            suffix={currency}
             error={errors.purchaseAmount}
             errorSummaryId={errorSummaryId}
             onChange={(value) =>
@@ -157,6 +166,8 @@ export function CreditCardInstallmentInterestCalculator({
                   value: (
                     <AnimatedWon
                       value={result?.totalFee ?? null}
+                      locale={locale}
+                      currency={currency}
                       animationKey={animationKey}
                     />
                   ),
@@ -167,6 +178,8 @@ export function CreditCardInstallmentInterestCalculator({
                   value: (
                     <AnimatedWon
                       value={result?.totalPayment ?? null}
+                      locale={locale}
+                      currency={currency}
                       animationKey={animationKey}
                     />
                   ),
@@ -176,6 +189,8 @@ export function CreditCardInstallmentInterestCalculator({
                   value: (
                     <AnimatedWon
                       value={result?.averageMonthlyPayment ?? null}
+                      locale={locale}
+                      currency={currency}
                       animationKey={animationKey}
                     />
                   ),
@@ -192,19 +207,19 @@ export function CreditCardInstallmentInterestCalculator({
               <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
                 <Detail
                   label={copy.firstPayment}
-                  value={won(result.firstPayment, locale)}
+                  value={money(result.firstPayment, locale, currency)}
                 />
                 <Detail
                   label={copy.lastPayment}
-                  value={won(result.lastPayment, locale)}
+                  value={money(result.lastPayment, locale, currency)}
                 />
                 <Detail
                   label={copy.totalFee}
-                  value={won(result.totalFee, locale)}
+                  value={money(result.totalFee, locale, currency)}
                 />
                 <Detail
                   label={copy.totalPayment}
-                  value={won(result.totalPayment, locale)}
+                  value={money(result.totalPayment, locale, currency)}
                 />
               </dl>
             ) : (
@@ -269,16 +284,16 @@ function Field({
   );
 }
 
-function won(
+function money(
   value: { toDecimalPlaces: (places: number) => { toNumber: () => number } },
   locale: CreditCardInstallmentInterestLocale,
+  currency: DisplayCurrency,
 ) {
-  return `${value
-    .toDecimalPlaces(0)
-    .toNumber()
-    .toLocaleString(
-      locale === "ko" ? "ko-KR" : "en-US",
-    )} ${locale === "ko" ? "원" : "KRW"}`;
+  return formatDisplayCurrency(
+    value.toDecimalPlaces(0).toNumber(),
+    locale,
+    currency,
+  );
 }
 function Detail({ label, value }: { label: string; value: string }) {
   return (
