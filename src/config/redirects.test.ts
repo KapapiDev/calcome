@@ -2,13 +2,23 @@ import { describe, expect, it } from "vitest";
 
 import nextConfig from "../../next.config";
 
-describe("legacy calculator redirects", () => {
-  it("permanently redirects every locale-less alias to one Korean URL", async () => {
+describe("canonical redirects", () => {
+  it("permanently redirects locale aliases to one canonical URL", async () => {
     expect(nextConfig.redirects).toBeTypeOf("function");
 
     const redirects = await nextConfig.redirects!();
 
     expect(redirects).toEqual([
+      {
+        source: "/ko",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/en",
+        destination: "/",
+        permanent: true,
+      },
       {
         source: "/finance/compound-interest",
         destination: "/ko/finance/compound-interest",
