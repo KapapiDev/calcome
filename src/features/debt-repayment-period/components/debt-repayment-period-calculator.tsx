@@ -6,6 +6,12 @@ import {
   compactCalculatorSettingsClass,
   dashboardCalculatorWorkspaceClass,
 } from "@/components/calculators/calculator-workspace";
+import {
+  CurrencySelector,
+  formatDisplayCurrency,
+  type DisplayCurrency,
+  useDisplayCurrency,
+} from "@/components/calculators/currency-selector";
 import { Button } from "@/components/ui/button";
 import { AnimatedWon } from "@/features/compound-interest/components/animated-won";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
@@ -38,6 +44,7 @@ export function DebtRepaymentPeriodCalculator({
 }: {
   locale: DebtRepaymentPeriodLocale;
 }) {
+  const { currency } = useDisplayCurrency(locale);
   const copy = debtRepaymentPeriodContent[locale];
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<DebtRepaymentPeriodErrors>({});
@@ -93,6 +100,7 @@ export function DebtRepaymentPeriodCalculator({
           >
             {copy.input}
           </h2>
+          <CurrencySelector locale={locale} />
           {Object.keys(errors).length ? (
             <p
               id={errorSummaryId}
@@ -107,6 +115,7 @@ export function DebtRepaymentPeriodCalculator({
             label={copy.balance}
             value={values.balance}
             placeholder="10,000,000"
+            suffix={currency}
             error={errors.balance}
             errorSummaryId={errorSummaryId}
             onChange={(value) => setMoney("balance", value)}
@@ -131,6 +140,7 @@ export function DebtRepaymentPeriodCalculator({
             label={copy.monthlyPayment}
             value={values.monthlyPayment}
             placeholder="500,000"
+            suffix={currency}
             error={errors.monthlyPayment}
             errorSummaryId={errorSummaryId}
             onChange={(value) => setMoney("monthlyPayment", value)}
@@ -171,6 +181,8 @@ export function DebtRepaymentPeriodCalculator({
                     value: (
                       <AnimatedWon
                         value={result?.totalRepayment ?? null}
+                        locale={locale}
+                        currency={currency}
                         animationKey={animationKey}
                       />
                     ),
@@ -180,6 +192,8 @@ export function DebtRepaymentPeriodCalculator({
                     value: (
                       <AnimatedWon
                         value={result?.totalInterest ?? null}
+                        locale={locale}
+                        currency={currency}
                         animationKey={animationKey}
                       />
                     ),
@@ -201,15 +215,15 @@ export function DebtRepaymentPeriodCalculator({
                 />
                 <Detail
                   label={copy.finalPayment}
-                  value={won(result.finalPayment, locale)}
+                  value={money(result.finalPayment, locale, currency)}
                 />
                 <Detail
                   label={copy.totalRepayment}
-                  value={won(result.totalRepayment, locale)}
+                  value={money(result.totalRepayment, locale, currency)}
                 />
                 <Detail
                   label={copy.totalInterest}
-                  value={won(result.totalInterest, locale)}
+                  value={money(result.totalInterest, locale, currency)}
                 />
               </dl>
             ) : (
@@ -273,16 +287,16 @@ function Field({
     </div>
   );
 }
-function won(
+function money(
   value: { toDecimalPlaces: (places: number) => { toNumber: () => number } },
   locale: DebtRepaymentPeriodLocale,
+  currency: DisplayCurrency,
 ) {
-  return `${value
-    .toDecimalPlaces(0)
-    .toNumber()
-    .toLocaleString(
-      locale === "ko" ? "ko-KR" : "en-US",
-    )} ${locale === "ko" ? "원" : "KRW"}`;
+  return formatDisplayCurrency(
+    value.toDecimalPlaces(0).toNumber(),
+    locale,
+    currency,
+  );
 }
 function Detail({ label, value }: { label: string; value: string }) {
   return (
