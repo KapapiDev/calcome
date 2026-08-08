@@ -45,6 +45,20 @@ describe("XML sitemap", () => {
     }
   });
 
+  it("emits reciprocal locale alternates with Korean as x-default", () => {
+    const [korean, english] = calculatorSitemapEntries([
+      { href: "/ko/finance/example" },
+    ]);
+    const expectedLanguages = {
+      ko: "https://www.calcome.com/ko/finance/example",
+      en: "https://www.calcome.com/en/finance/example",
+      "x-default": "https://www.calcome.com/ko/finance/example",
+    };
+
+    expect(korean.alternates?.languages).toEqual(expectedLanguages);
+    expect(english.alternates?.languages).toEqual(expectedLanguages);
+  });
+
   it("automatically includes a newly registered public calculator route", () => {
     expect(
       calculatorSitemapEntries([{ href: "/ko/finance/example" }]).map(
