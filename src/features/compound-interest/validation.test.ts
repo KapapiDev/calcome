@@ -53,8 +53,8 @@ describe("validateCompoundInterestForm", () => {
     });
 
     expect(result.data).toBeUndefined();
-    expect(result.errors.initialPrincipal).toMatch(/하나는 0원보다 커야/);
-    expect(result.errors.recurringContribution).toMatch(/하나는 0원보다 커야/);
+    expect(result.errors.initialPrincipal).toMatch(/하나는 0보다 커야/);
+    expect(result.errors.recurringContribution).toMatch(/하나는 0보다 커야/);
   });
 
   it("rejects malformed numeric input", () => {

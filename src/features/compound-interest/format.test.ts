@@ -1,11 +1,15 @@
 import { describe, expect, it } from "vitest";
 
-import { formatMultiplier, formatPercent, formatWon } from "./format";
+import {
+  formatCompoundCurrency,
+  formatMultiplier,
+  formatPercent,
+} from "./format";
 
 describe("compound interest formatting", () => {
   it("rounds won half-up only for presentation", () => {
-    expect(formatWon("1000.5")).toContain("1,001");
-    expect(formatWon("1000.49")).toContain("1,000");
+    expect(formatCompoundCurrency("1000.5", "ko", "KRW")).toContain("1,001");
+    expect(formatCompoundCurrency("1000.49", "ko", "KRW")).toContain("1,000");
   });
 
   it("labels unavailable and available multipliers", () => {
@@ -14,10 +18,12 @@ describe("compound interest formatting", () => {
   });
 
   it("formats Korean grouping without scientific notation", () => {
-    expect(formatWon("12345678901234567890")).toContain(
-      "12,345,678,901,234,567,890",
-    );
-    expect(formatWon("12345678901234567890")).not.toMatch(/[eE][+-]?\d/);
+    expect(
+      formatCompoundCurrency("12345678901234567890", "en", "USD"),
+    ).toContain("12,345,678,901,234,567,890");
+    expect(
+      formatCompoundCurrency("12345678901234567890", "en", "USD"),
+    ).not.toMatch(/[eE][+-]?\d/);
   });
 
   it("formats optional percentages explicitly", () => {

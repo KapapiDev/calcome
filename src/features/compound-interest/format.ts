@@ -1,16 +1,25 @@
 import Decimal from "decimal.js";
 
-const wonFormatter = new Intl.NumberFormat("ko-KR", {
-  style: "currency",
-  currency: "KRW",
-  maximumFractionDigits: 0,
-});
+import type { DisplayCurrency } from "@/components/calculators/currency-selector";
+import type { CompoundLocale } from "./i18n";
 
-export function formatWon(value: Decimal.Value): string {
+export function formatCompoundCurrency(
+  value: Decimal.Value,
+  locale: CompoundLocale,
+  currency: DisplayCurrency,
+): string {
   const rounded = new Decimal(value)
     .toDecimalPlaces(0, Decimal.ROUND_HALF_UP)
     .toFixed(0);
-  return wonFormatter.format(BigInt(rounded));
+  return new Intl.NumberFormat(locale === "ko" ? "ko-KR" : "en-US", {
+    style: "currency",
+    currency,
+    maximumFractionDigits: 0,
+  }).format(BigInt(rounded));
+}
+
+export function formatWon(value: Decimal.Value): string {
+  return formatCompoundCurrency(value, "ko", "KRW");
 }
 
 export function formatPercent(value: string | null): string {

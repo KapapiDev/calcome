@@ -54,9 +54,6 @@ export function LocalizedCompoundInterestPage({
           <p className="mt-2 text-sm leading-6 text-muted-foreground">
             {copy.description}
           </p>
-          <p className="mt-1 text-xs text-muted-foreground">
-            {copy.currencyNotice}
-          </p>
         </header>
         <div className="mt-4">
           <CompoundInterestCalculator locale={locale} />
