@@ -8,6 +8,7 @@ const scrollIntoView = vi.fn();
 
 describe("CreditCardInstallmentInterestCalculator", () => {
   beforeEach(() => {
+    window.localStorage.clear();
     scrollIntoView.mockReset();
     Element.prototype.scrollIntoView = scrollIntoView;
     Object.defineProperty(window, "matchMedia", {
@@ -18,6 +19,29 @@ describe("CreditCardInstallmentInterestCalculator", () => {
         removeEventListener: vi.fn(),
       }),
     });
+  });
+
+  it("defaults English to USD and updates all installment amounts", async () => {
+    const user = userEvent.setup();
+    const { container } = render(
+      <CreditCardInstallmentInterestCalculator locale="en" />,
+    );
+
+    expect(screen.getByLabelText("Display currency")).toHaveValue("USD");
+    await user.type(screen.getByLabelText("Card purchase amount"), "1200");
+    await user.type(screen.getByLabelText("Installment term"), "12");
+    await user.type(screen.getByLabelText("Annual installment fee rate"), "12");
+    await user.click(
+      screen.getByRole("button", { name: "Calculate installment fees" }),
+    );
+    expect(screen.getByText("Estimated first payment")).toBeVisible();
+    expect(container.textContent).toMatch(/\$/);
+
+    await user.selectOptions(screen.getByLabelText("Display currency"), "GBP");
+    expect(window.localStorage.getItem("calcome.currency")).toBe("GBP");
+    expect(container.textContent).toMatch(/£/);
+    expect(container.textContent).not.toMatch(/₩/);
+    expect(screen.getByText("Estimated first payment")).toBeVisible();
   });
 
   it("clears stale results and links invalid input to the error summary", async () => {
