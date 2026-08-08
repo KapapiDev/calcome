@@ -1,9 +1,7 @@
 import type { MetadataRoute } from "next";
 
-import {
-  publishedCalculators,
-  type PublishedCalculator,
-} from "@/config/calculators";
+import { allPublishedCalculators } from "@/config/calculator-directory";
+import type { PublishedCalculator } from "@/config/calculators";
 import { absoluteUrl } from "@/config/site";
 
 const publicStaticPaths = [
@@ -14,19 +12,11 @@ const publicStaticPaths = [
   "/terms",
   "/contact",
 ] as const;
-const dividendYieldCalculator = {
-  href: "/ko/finance/dividend-yield",
-} as const satisfies Pick<PublishedCalculator, "href">;
-const sitemapCalculators = [
-  ...publishedCalculators,
-  dividendYieldCalculator,
-] as const;
-
 export function calculatorSitemapEntries(
   calculators: readonly Pick<
     PublishedCalculator,
     "href"
-  >[] = sitemapCalculators,
+  >[] = allPublishedCalculators,
 ): MetadataRoute.Sitemap {
   return calculators.flatMap(({ href }) => {
     const englishHref = href.replace(/^\/ko\//, "/en/");
