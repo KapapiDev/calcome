@@ -20,6 +20,26 @@ describe("InheritanceTaxCalculator", () => {
     });
   });
 
+  it("labels South Korea policy amounts as KRW before input", () => {
+    render(<InheritanceTaxCalculator locale="en" />);
+
+    expect(
+      screen.getByRole("heading", {
+        name: "South Korea estate amounts (KRW) and rates",
+      }),
+    ).toBeVisible();
+    expect(screen.getByLabelText("Gross estate value (KRW)")).toBeVisible();
+    expect(screen.getByLabelText("Decedent's debts (KRW)")).toBeVisible();
+    expect(screen.getByLabelText("Funeral expenses (KRW)")).toBeVisible();
+    expect(
+      screen.getByLabelText("Confirmed inheritance deductions (KRW)"),
+    ).toBeVisible();
+    expect(
+      screen.getByLabelText("Confirmed progressive deduction (KRW)"),
+    ).toBeVisible();
+    expect(screen.queryByLabelText("Display currency")).not.toBeInTheDocument();
+  });
+
   it("clears stale inheritance tax results and links invalid input to the error summary", async () => {
     const user = userEvent.setup();
     render(<InheritanceTaxCalculator locale="ko" />);
