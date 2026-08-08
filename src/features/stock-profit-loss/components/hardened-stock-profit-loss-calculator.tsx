@@ -6,6 +6,12 @@ import {
   compactCalculatorSettingsClass,
   dashboardCalculatorWorkspaceClass,
 } from "@/components/calculators/calculator-workspace";
+import {
+  CurrencySelector,
+  formatDisplayCurrency,
+  type DisplayCurrency,
+  useDisplayCurrency,
+} from "@/components/calculators/currency-selector";
 import { Button } from "@/components/ui/button";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
 import { formatMoneyInput } from "@/lib/input/money";
@@ -38,6 +44,7 @@ export function HardenedStockProfitLossCalculator({
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<StockProfitLossErrors>({});
   const [result, setResult] = useState<StockProfitLossResult>();
+  const { currency } = useDisplayCurrency(locale);
   const {
     resultRef,
     noteNumericInputFocus,
@@ -93,6 +100,7 @@ export function HardenedStockProfitLossCalculator({
               {copy.error}
             </p>
           ) : null}
+          <CurrencySelector locale={locale} />
           <QuantityField
             id="shares"
             label={copy.shares}
@@ -107,7 +115,7 @@ export function HardenedStockProfitLossCalculator({
             label={copy.averagePurchasePrice}
             value={values.averagePurchasePrice}
             error={errors.averagePurchasePrice}
-            locale={locale}
+            currency={currency}
             onChange={(value) =>
               setValues((current) => ({
                 ...current,
@@ -123,7 +131,7 @@ export function HardenedStockProfitLossCalculator({
             label={copy.currentPrice}
             value={values.currentPrice}
             error={errors.currentPrice}
-            locale={locale}
+            currency={currency}
             onChange={(value) =>
               setValues((current) => ({
                 ...current,
@@ -151,7 +159,7 @@ export function HardenedStockProfitLossCalculator({
               metrics={[
                 {
                   label: copy.profitLoss,
-                  value: money(result?.profitLoss, locale),
+                  value: money(result?.profitLoss, locale, currency),
                   featured: true,
                 },
                 {
@@ -160,7 +168,7 @@ export function HardenedStockProfitLossCalculator({
                 },
                 {
                   label: copy.currentValue,
-                  value: money(result?.currentValue, locale),
+                  value: money(result?.currentValue, locale, currency),
                 },
               ]}
             />
@@ -174,15 +182,15 @@ export function HardenedStockProfitLossCalculator({
               <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
                 <Detail
                   label={copy.costBasis}
-                  value={money(result.costBasis, locale)}
+                  value={money(result.costBasis, locale, currency)}
                 />
                 <Detail
                   label={copy.currentValue}
-                  value={money(result.currentValue, locale)}
+                  value={money(result.currentValue, locale, currency)}
                 />
                 <Detail
                   label={copy.profitLoss}
-                  value={money(result.profitLoss, locale)}
+                  value={money(result.profitLoss, locale, currency)}
                 />
                 <Detail
                   label={copy.returnRate}
@@ -242,8 +250,8 @@ function MoneyField({
   value,
   error,
   onChange,
-  locale,
-}: FieldProps & { locale: StockProfitLossLocale }) {
+  currency,
+}: FieldProps & { currency: DisplayCurrency }) {
   return (
     <div className="mt-4">
       <label htmlFor={id} className="block text-sm font-medium">
@@ -261,7 +269,7 @@ function MoneyField({
           className={`${fieldClass} pr-12`}
         />
         <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center pt-1.5 text-sm text-muted-foreground">
-          {locale === "ko" ? "원" : "KRW"}
+          {currency}
         </span>
       </div>
       {error ? (
@@ -277,14 +285,17 @@ type DisplayValue =
   | { toDecimalPlaces: (places: number) => { toNumber: () => number } }
   | undefined;
 
-function money(value: DisplayValue, locale: StockProfitLossLocale) {
+function money(
+  value: DisplayValue,
+  locale: StockProfitLossLocale,
+  currency: DisplayCurrency,
+) {
   return value
-    ? `${value
-        .toDecimalPlaces(2)
-        .toNumber()
-        .toLocaleString(locale === "ko" ? "ko-KR" : "en-US", {
-          maximumFractionDigits: 2,
-        })} ${locale === "ko" ? "원" : "KRW"}`
+    ? formatDisplayCurrency(
+        value.toDecimalPlaces(2).toNumber(),
+        locale,
+        currency,
+      )
     : "—";
 }
 

@@ -6,6 +6,12 @@ import {
   compactCalculatorSettingsClass,
   dashboardCalculatorWorkspaceClass,
 } from "@/components/calculators/calculator-workspace";
+import {
+  CurrencySelector,
+  formatDisplayCurrency,
+  type DisplayCurrency,
+  useDisplayCurrency,
+} from "@/components/calculators/currency-selector";
 import { Button } from "@/components/ui/button";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
 import { formatMoneyInput } from "@/lib/input/money";
@@ -42,6 +48,7 @@ export function StockAverageCostCalculator({
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<StockAverageCostErrors>({});
   const [result, setResult] = useState<StockAverageCostResult>();
+  const { currency } = useDisplayCurrency(locale);
   const {
     resultRef,
     noteNumericInputFocus,
@@ -93,6 +100,7 @@ export function StockAverageCostCalculator({
               {copy.error}
             </p>
           ) : null}
+          <CurrencySelector locale={locale} />
           <QuantityField
             id="currentShares"
             label={copy.currentShares}
@@ -107,7 +115,7 @@ export function StockAverageCostCalculator({
             label={copy.currentAveragePrice}
             value={values.currentAveragePrice}
             error={errors.currentAveragePrice}
-            locale={locale}
+            currency={currency}
             onChange={(value) =>
               setValues((current) => ({
                 ...current,
@@ -132,7 +140,7 @@ export function StockAverageCostCalculator({
             label={copy.additionalPrice}
             value={values.additionalPrice}
             error={errors.additionalPrice}
-            locale={locale}
+            currency={currency}
             onChange={(value) =>
               setValues((current) => ({
                 ...current,
@@ -166,7 +174,7 @@ export function StockAverageCostCalculator({
               metrics={[
                 {
                   label: copy.averagePrice,
-                  value: money(result?.averagePrice, locale),
+                  value: money(result?.averagePrice, locale, currency),
                   featured: true,
                 },
                 {
@@ -175,7 +183,7 @@ export function StockAverageCostCalculator({
                 },
                 {
                   label: copy.totalCost,
-                  value: money(result?.totalCost, locale),
+                  value: money(result?.totalCost, locale, currency),
                 },
               ]}
             />
@@ -189,19 +197,19 @@ export function StockAverageCostCalculator({
               <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
                 <Detail
                   label={copy.currentCost}
-                  value={money(result.currentCost, locale)}
+                  value={money(result.currentCost, locale, currency)}
                 />
                 <Detail
                   label={copy.additionalCost}
-                  value={money(result.additionalCost, locale)}
+                  value={money(result.additionalCost, locale, currency)}
                 />
                 <Detail
                   label={copy.totalCost}
-                  value={money(result.totalCost, locale)}
+                  value={money(result.totalCost, locale, currency)}
                 />
                 <Detail
                   label={copy.averagePrice}
-                  value={money(result.averagePrice, locale)}
+                  value={money(result.averagePrice, locale, currency)}
                 />
               </dl>
             ) : (
@@ -244,8 +252,8 @@ function MoneyField({
   value,
   error,
   onChange,
-  locale,
-}: FieldProps & { locale: StockAverageCostLocale }) {
+  currency,
+}: FieldProps & { currency: DisplayCurrency }) {
   return (
     <div className="mt-4">
       <label htmlFor={id} className="block text-sm font-medium">
@@ -263,7 +271,7 @@ function MoneyField({
           className={`${fieldClass} pr-12`}
         />
         <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center pt-1.5 text-sm text-muted-foreground">
-          {locale === "ko" ? "원" : "KRW"}
+          {currency}
         </span>
       </div>
       {error ? (
@@ -289,14 +297,14 @@ function money(
     | { toDecimalPlaces: (places: number) => { toNumber: () => number } }
     | undefined,
   locale: StockAverageCostLocale,
+  currency: DisplayCurrency,
 ) {
   return value
-    ? `${value
-        .toDecimalPlaces(2)
-        .toNumber()
-        .toLocaleString(locale === "ko" ? "ko-KR" : "en-US", {
-          maximumFractionDigits: 2,
-        })} ${locale === "ko" ? "원" : "KRW"}`
+    ? formatDisplayCurrency(
+        value.toDecimalPlaces(2).toNumber(),
+        locale,
+        currency,
+      )
     : "—";
 }
 function quantity(
