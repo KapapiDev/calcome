@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useState, useSyncExternalStore } from "react";
 import {
   PrimaryResults,
   compactCalculatorSettingsClass,
@@ -30,6 +30,41 @@ const initialValues: DividendYieldRateValues = {
   investmentAmount: "1,000,000",
 };
 
+const currencyStorageKey = "calcome.currency";
+const currencyChangeEvent = "calcome-currency-change";
+const supportedCurrencies = [
+  "USD",
+  "GBP",
+  "EUR",
+  "CAD",
+  "AUD",
+  "KRW",
+  "JPY",
+] as const;
+type Currency = (typeof supportedCurrencies)[number];
+
+function isCurrency(value: string): value is Currency {
+  return supportedCurrencies.includes(value as Currency);
+}
+
+function defaultCurrency(locale: DividendYieldRateLocale): Currency {
+  return locale === "ko" ? "KRW" : "USD";
+}
+
+function subscribeToCurrency(onStoreChange: () => void) {
+  window.addEventListener("storage", onStoreChange);
+  window.addEventListener(currencyChangeEvent, onStoreChange);
+  return () => {
+    window.removeEventListener("storage", onStoreChange);
+    window.removeEventListener(currencyChangeEvent, onStoreChange);
+  };
+}
+
+function storedCurrency(locale: DividendYieldRateLocale): Currency {
+  const value = window.localStorage.getItem(currencyStorageKey);
+  return value && isCurrency(value) ? value : defaultCurrency(locale);
+}
+
 export function DividendYieldRateCalculator({
   locale,
 }: {
@@ -39,13 +74,22 @@ export function DividendYieldRateCalculator({
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<DividendYieldRateErrors>({});
   const [result, setResult] = useState<DividendYieldRateResult>();
+  const currency = useSyncExternalStore(
+    subscribeToCurrency,
+    () => storedCurrency(locale),
+    () => defaultCurrency(locale),
+  );
   const {
     resultRef,
     noteNumericInputFocus,
     requestResultScroll,
     cancelResultScroll,
   } = useStableResultScroll(result ?? null);
-  const currencySuffix = locale === "ko" ? "원" : "KRW";
+
+  function updateCurrency(nextCurrency: Currency) {
+    window.localStorage.setItem(currencyStorageKey, nextCurrency);
+    window.dispatchEvent(new Event(currencyChangeEvent));
+  }
 
   function submit(event: FormEvent) {
     event.preventDefault();
@@ -94,12 +138,36 @@ export function DividendYieldRateCalculator({
               {copy.error}
             </p>
           ) : null}
+          <div className="mt-4">
+            <label htmlFor="currency" className="block text-sm font-medium">
+              {locale === "ko" ? "표시 통화" : "Display currency"}
+            </label>
+            <select
+              id="currency"
+              value={currency}
+              onChange={(event) =>
+                updateCurrency(event.target.value as Currency)
+              }
+              className="mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base outline-none focus-visible:ring-3 focus-visible:ring-ring/30 sm:text-sm"
+            >
+              {supportedCurrencies.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+            <p className="mt-1 text-xs leading-5 text-muted-foreground">
+              {locale === "ko"
+                ? "통화 선택은 기호와 표시 형식만 바꾸며 환율을 변환하지 않습니다."
+                : "Currency selection changes symbols and formatting only; it does not convert exchange rates."}
+            </p>
+          </div>
           <MoneyField
             id="sharePrice"
             label={copy.sharePrice}
             value={values.sharePrice}
             error={errors.sharePrice}
-            suffix={currencySuffix}
+            suffix={currency}
             onChange={(value) => update("sharePrice", value)}
           />
           <MoneyField
@@ -107,7 +175,7 @@ export function DividendYieldRateCalculator({
             label={copy.annualDividendPerShare}
             value={values.annualDividendPerShare}
             error={errors.annualDividendPerShare}
-            suffix={currencySuffix}
+            suffix={currency}
             onChange={(value) => update("annualDividendPerShare", value)}
           />
           <MoneyField
@@ -115,7 +183,7 @@ export function DividendYieldRateCalculator({
             label={copy.investmentAmount}
             value={values.investmentAmount}
             error={errors.investmentAmount}
-            suffix={currencySuffix}
+            suffix={currency}
             onChange={(value) => update("investmentAmount", value)}
           />
           <div className="mt-4 grid grid-cols-[1fr_auto] gap-2">
@@ -147,11 +215,19 @@ export function DividendYieldRateCalculator({
                 },
                 {
                   label: copy.estimatedAnnualDividend,
-                  value: money(result?.estimatedAnnualDividend, locale),
+                  value: money(
+                    result?.estimatedAnnualDividend,
+                    locale,
+                    currency,
+                  ),
                 },
                 {
                   label: copy.estimatedMonthlyAverage,
-                  value: money(result?.estimatedMonthlyAverage, locale),
+                  value: money(
+                    result?.estimatedMonthlyAverage,
+                    locale,
+                    currency,
+                  ),
                 },
               ]}
             />
@@ -218,14 +294,20 @@ type DisplayValue =
   | { toDecimalPlaces: (places: number) => { toNumber: () => number } }
   | undefined;
 
-function money(value: DisplayValue, locale: DividendYieldRateLocale) {
+function money(
+  value: DisplayValue,
+  locale: DividendYieldRateLocale,
+  currency: Currency,
+) {
   return value
-    ? `${value
+    ? value
         .toDecimalPlaces(2)
         .toNumber()
         .toLocaleString(locale === "ko" ? "ko-KR" : "en-US", {
+          style: "currency",
+          currency,
           maximumFractionDigits: 2,
-        })} ${locale === "ko" ? "원" : "KRW"}`
+        })
     : "—";
 }
 
