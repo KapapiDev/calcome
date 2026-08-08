@@ -8,6 +8,7 @@ const scrollIntoView = vi.fn();
 
 describe("EarlyLoanRepaymentFeeCalculator", () => {
   beforeEach(() => {
+    window.localStorage.clear();
     scrollIntoView.mockReset();
     Element.prototype.scrollIntoView = scrollIntoView;
     Object.defineProperty(window, "matchMedia", {
@@ -18,6 +19,27 @@ describe("EarlyLoanRepaymentFeeCalculator", () => {
         removeEventListener: vi.fn(),
       }),
     });
+  });
+
+  it("defaults English to USD and preserves fee results across currency changes", async () => {
+    const user = userEvent.setup();
+    const { container } = render(
+      <EarlyLoanRepaymentFeeCalculator locale="en" />,
+    );
+
+    expect(screen.getByLabelText("Display currency")).toHaveValue("USD");
+    await user.type(screen.getByLabelText("Early repayment amount"), "100000");
+    await user.click(
+      screen.getByRole("button", { name: "Calculate prepayment fee" }),
+    );
+    expect(screen.getByText("Prorated fee rate")).toBeVisible();
+    expect(container.textContent).toMatch(/\$/);
+
+    await user.selectOptions(screen.getByLabelText("Display currency"), "GBP");
+    expect(window.localStorage.getItem("calcome.currency")).toBe("GBP");
+    expect(container.textContent).toMatch(/£/);
+    expect(container.textContent).not.toMatch(/₩/);
+    expect(screen.getByText("Prorated fee rate")).toBeVisible();
   });
 
   it("clears stale early repayment fee results and links invalid input to the error summary", async () => {

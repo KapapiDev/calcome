@@ -38,7 +38,7 @@ export function validateEarlyRepaymentFee(
   )
     errors.repaymentAmount = message(
       "0원보다 크고 10조 원 이하인 상환금액을 입력해 주세요.",
-      "Enter a repayment amount greater than zero and no more than KRW 10 trillion.",
+      "Enter a repayment amount greater than zero and no more than 10 trillion in the selected display currency.",
     );
   if (!feeRate || feeRate.lt(0) || feeRate.gt(10))
     errors.feeRate = message(
