@@ -24,7 +24,7 @@ const ko = {
     ],
     cautionsTitle: "계산 전 확인하세요",
     cautions: [
-      "금액은 대한민국 원(KRW) 기준이며 금리와 납입액은 전체 기간 동안 일정하다고 가정합니다.",
+      "통화 선택은 표시 형식만 바꾸며 환율을 변환하지 않습니다. 금리와 납입액은 전체 기간 동안 일정하다고 가정합니다.",
       "일반과세 15.4%는 이자소득세 14%와 지방소득세 1.4%를 합친 간이 추정입니다.",
       "중도해지이율, 우대금리 조건, 수수료, 자유 납입과 상품별 일수 계산은 포함하지 않습니다.",
       "결과는 법률·세무·투자 조언이나 특정 금융상품의 수령액 보장이 아닙니다.",
@@ -193,7 +193,7 @@ const en = {
     ],
     cautionsTitle: "Before you calculate",
     cautions: [
-      "Amounts are calculated in South Korean won (KRW), with the rate and deposit amount assumed constant.",
+      "Currency selection changes formatting only and does not convert exchange rates. The rate and deposit amount are assumed constant.",
       "The 15.4% general tax option is a simplified estimate combining 14% income tax and 1.4% local income tax.",
       "Early-termination rates, preferential-rate conditions, fees, flexible deposits, and product-specific day counts are not included.",
       "Results are estimates, not legal, tax, or financial advice or a guarantee from any financial institution.",
@@ -315,7 +315,7 @@ const en = {
   },
   validation: {
     deposit:
-      "Enter a whole-won recurring deposit from ₩1,000 to ₩1,000,000,000.",
+      "Enter a whole-number recurring deposit from 1,000 to 1,000,000,000 in the selected display currency.",
     period: "Enter a savings period as a whole number of at least 1.",
     periodUnit: "Select a savings period unit.",
     rate: "Enter an annual interest rate from 0% to 100%.",
