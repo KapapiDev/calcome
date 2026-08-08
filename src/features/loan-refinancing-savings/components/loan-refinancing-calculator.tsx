@@ -6,6 +6,12 @@ import {
   compactCalculatorSettingsClass,
   dashboardCalculatorWorkspaceClass,
 } from "@/components/calculators/calculator-workspace";
+import {
+  CurrencySelector,
+  formatDisplayCurrency,
+  type DisplayCurrency,
+  useDisplayCurrency,
+} from "@/components/calculators/currency-selector";
 import { Button } from "@/components/ui/button";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
 import { formatMoneyInput } from "@/lib/input/money";
@@ -36,6 +42,7 @@ export function LoanRefinancingCalculator({
 }: {
   locale: LoanRefinancingLocale;
 }) {
+  const { currency } = useDisplayCurrency(locale);
   const copy = loanRefinancingContent[locale];
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<LoanRefinancingErrors>({});
@@ -89,6 +96,7 @@ export function LoanRefinancingCalculator({
           >
             {copy.input}
           </h2>
+          <CurrencySelector locale={locale} />
           {Object.keys(errors).length ? (
             <p
               id={errorSummaryId}
@@ -103,6 +111,7 @@ export function LoanRefinancingCalculator({
             label={copy.remainingBalance}
             value={values.remainingBalance}
             placeholder="300,000,000"
+            suffix={currency}
             error={errors.remainingBalance}
             onChange={(value) => update("remainingBalance", value, true)}
           />
@@ -138,6 +147,7 @@ export function LoanRefinancingCalculator({
             label={copy.refinancingCosts}
             value={values.refinancingCosts}
             placeholder="2,000,000"
+            suffix={currency}
             error={errors.refinancingCosts}
             onChange={(value) => update("refinancingCosts", value, true)}
           />
@@ -161,12 +171,16 @@ export function LoanRefinancingCalculator({
               metrics={[
                 {
                   label: copy.netSavings,
-                  value: result ? won(result.netSavings, locale) : "—",
+                  value: result
+                    ? money(result.netSavings, locale, currency)
+                    : "—",
                   featured: true,
                 },
                 {
                   label: copy.monthlySavings,
-                  value: result ? won(result.monthlySavings, locale) : "—",
+                  value: result
+                    ? money(result.monthlySavings, locale, currency)
+                    : "—",
                 },
                 {
                   label: copy.breakEven,
@@ -189,11 +203,15 @@ export function LoanRefinancingCalculator({
                 <dl className="grid gap-3 rounded-lg border p-4 text-sm sm:grid-cols-2">
                   <Detail
                     label={copy.grossSavings}
-                    value={won(result.grossInterestSavings, locale)}
+                    value={money(result.grossInterestSavings, locale, currency)}
                   />
                   <Detail
                     label={copy.refinancingCosts}
-                    value={wonValue(values.refinancingCosts, locale)}
+                    value={moneyValue(
+                      values.refinancingCosts,
+                      locale,
+                      currency,
+                    )}
                   />
                 </dl>
                 <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -202,6 +220,7 @@ export function LoanRefinancingCalculator({
                     payment={result.currentMonthlyPayment}
                     interest={result.currentTotalInterest}
                     locale={locale}
+                    currency={currency}
                     labels={copy}
                   />
                   <LoanDetails
@@ -209,6 +228,7 @@ export function LoanRefinancingCalculator({
                     payment={result.newMonthlyPayment}
                     interest={result.newTotalInterest}
                     locale={locale}
+                    currency={currency}
                     labels={copy}
                   />
                 </div>
@@ -275,20 +295,28 @@ function LoanDetails({
   payment,
   interest,
   locale,
+  currency,
   labels,
 }: {
   name: string;
   payment: LoanRefinancingResult["currentMonthlyPayment"];
   interest: LoanRefinancingResult["currentTotalInterest"];
   locale: LoanRefinancingLocale;
+  currency: DisplayCurrency;
   labels: (typeof loanRefinancingContent)[LoanRefinancingLocale];
 }) {
   return (
     <section className="rounded-lg border p-4">
       <h3 className="font-semibold">{name}</h3>
       <dl className="mt-3 space-y-3 text-sm">
-        <Detail label={labels.monthlyPayment} value={won(payment, locale)} />
-        <Detail label={labels.totalInterest} value={won(interest, locale)} />
+        <Detail
+          label={labels.monthlyPayment}
+          value={money(payment, locale, currency)}
+        />
+        <Detail
+          label={labels.totalInterest}
+          value={money(interest, locale, currency)}
+        />
       </dl>
     </section>
   );
@@ -301,17 +329,25 @@ function Detail({ label, value }: { label: string; value: string }) {
     </div>
   );
 }
-function won(
+function money(
   value: { toDecimalPlaces: (places: number) => { toNumber: () => number } },
   locale: LoanRefinancingLocale,
+  currency: DisplayCurrency,
 ) {
-  return `${value
-    .toDecimalPlaces(0)
-    .toNumber()
-    .toLocaleString(
-      locale === "ko" ? "ko-KR" : "en-US",
-    )} ${locale === "ko" ? "원" : "KRW"}`;
+  return formatDisplayCurrency(
+    value.toDecimalPlaces(0).toNumber(),
+    locale,
+    currency,
+  );
 }
-function wonValue(value: string, locale: LoanRefinancingLocale) {
-  return `${Number(value.replaceAll(",", "")).toLocaleString(locale === "ko" ? "ko-KR" : "en-US")} ${locale === "ko" ? "원" : "KRW"}`;
+function moneyValue(
+  value: string,
+  locale: LoanRefinancingLocale,
+  currency: DisplayCurrency,
+) {
+  return formatDisplayCurrency(
+    Number(value.replaceAll(",", "")),
+    locale,
+    currency,
+  );
 }

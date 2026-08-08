@@ -37,7 +37,7 @@ export function validateLoanRefinancing(
   if (!remainingBalance || remainingBalance.lte(0) || remainingBalance.gt(1e12))
     errors.remainingBalance = message(
       "0보다 크고 1조 원 이하인 대출잔액을 입력해 주세요.",
-      "Enter a balance greater than zero and no more than KRW 1 trillion.",
+      "Enter a balance greater than zero and no more than 1 trillion in the selected display currency.",
     );
   if (
     !currentAnnualRate ||
@@ -61,7 +61,7 @@ export function validateLoanRefinancing(
   if (!refinancingCosts || refinancingCosts.lt(0) || refinancingCosts.gt(1e11))
     errors.refinancingCosts = message(
       "0원 이상 1,000억 원 이하인 대환비용을 입력해 주세요.",
-      "Enter costs from zero to KRW 100 billion.",
+      "Enter costs from zero to 100 billion in the selected display currency.",
     );
 
   return Object.keys(errors).length ||
