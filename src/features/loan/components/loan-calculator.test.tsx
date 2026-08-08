@@ -7,6 +7,7 @@ import { LoanCalculator } from "./loan-calculator";
 const scrollIntoView = vi.fn();
 describe("LoanCalculator", () => {
   beforeEach(() => {
+    window.localStorage.clear();
     scrollIntoView.mockReset();
     Element.prototype.scrollIntoView = scrollIntoView;
     Object.defineProperty(window, "matchMedia", {
@@ -96,6 +97,7 @@ describe("LoanCalculator", () => {
   it("renders English without unintended Korean", async () => {
     const user = userEvent.setup();
     const { container } = render(<LoanCalculator locale="en" />);
+    expect(screen.getByLabelText("Display currency")).toHaveValue("USD");
     await user.type(screen.getByLabelText("Loan amount *"), "12000000");
     await user.type(screen.getByLabelText("Annual interest rate *"), "6");
     await user.type(screen.getByLabelText("Loan term *"), "1");
@@ -105,6 +107,14 @@ describe("LoanCalculator", () => {
     expect(
       screen.getByRole("heading", { name: "Repayment comparison" }),
     ).toBeVisible();
+    expect(screen.getAllByTestId("animated-won")[0]).toHaveAccessibleName(
+      "$1,032,797",
+    );
+    await user.selectOptions(screen.getByLabelText("Display currency"), "GBP");
+    expect(window.localStorage.getItem("calcome.currency")).toBe("GBP");
+    expect(screen.getAllByTestId("animated-won")[0]).toHaveAccessibleName(
+      "£1,032,797",
+    );
     expect(container.textContent).not.toMatch(/[가-힣]/);
   });
   it("focuses validation without scrolling", async () => {

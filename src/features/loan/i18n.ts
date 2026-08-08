@@ -179,7 +179,7 @@ const en = {
       ],
       [
         "Why can displayed rows differ slightly from totals?",
-        "Internal values are not rounded, while displayed amounts are rounded to whole won.",
+        "Internal values are not rounded, while displayed amounts are rounded to whole currency units.",
       ],
     ],
     relatedTitle: "Related calculators",
@@ -222,7 +222,7 @@ const en = {
     totalRepayment: "Total repayment",
     totalInterest: "Total interest",
     notice:
-      "Whole-won estimates assume the rate and repayment terms do not change.",
+      "Whole-unit estimates assume the rate and repayment terms do not change.",
     comparisonTitle: "Repayment comparison",
     comparisonDescription:
       "Compare payment burden and total interest for equal-payment and equal-principal repayment under identical terms.",
@@ -262,7 +262,8 @@ const en = {
     },
   },
   validation: {
-    amount: "Enter a whole-won loan amount from ₩10,000 to ₩1,000,000,000,000.",
+    amount:
+      "Enter a whole-number loan amount from 10,000 to 1,000,000,000,000 in the selected display currency.",
     rate: "Enter an annual interest rate from 0% to 100%.",
     period: "Enter a loan term as a whole number of at least 1.",
     periodUnit: "Select a loan term unit.",

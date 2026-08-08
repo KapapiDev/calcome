@@ -8,6 +8,10 @@ import {
   compactCalculatorSettingsClass,
   dashboardCalculatorWorkspaceClass,
 } from "@/components/calculators/calculator-workspace";
+import {
+  CurrencySelector,
+  useDisplayCurrency,
+} from "@/components/calculators/currency-selector";
 import { Button } from "@/components/ui/button";
 import { AnimatedWon } from "@/features/compound-interest/components/animated-won";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
@@ -15,7 +19,7 @@ import { formatMoneyInput } from "@/lib/input/money";
 
 import { calculateLoan } from "../calculate";
 import { DEFAULT_LOAN_VALUES } from "../constants";
-import { formatLoanWon } from "../format";
+import { formatLoanCurrency } from "../format";
 import { getLoanDictionary, type LoanLocale } from "../i18n";
 import type {
   LoanField,
@@ -101,6 +105,7 @@ function NumberField({
 type Comparison = { equalPayment: LoanResult; equalPrincipal: LoanResult };
 
 export function LoanCalculator({ locale = "ko" }: { locale?: LoanLocale }) {
+  const { currency } = useDisplayCurrency(locale);
   const copy = getLoanDictionary(locale).calculator;
   const [values, setValues] = useState<LoanFormValues>(INITIAL_VALUES);
   const [errors, setErrors] = useState<LoanValidationErrors>({});
@@ -172,7 +177,9 @@ export function LoanCalculator({ locale = "ko" }: { locale?: LoanLocale }) {
     setAnimationKey((current) => current + 1);
     setDetailsOpen(true);
     setAdditionalOpen(true);
-    setAnnouncement(copy.complete(formatLoanWon(next.monthlyPayment)));
+    setAnnouncement(
+      copy.complete(formatLoanCurrency(next.monthlyPayment, locale, currency)),
+    );
   }
   function reset() {
     cancelResultScroll();
@@ -226,6 +233,7 @@ export function LoanCalculator({ locale = "ko" }: { locale?: LoanLocale }) {
           <p className="mt-2 text-xs leading-5 text-muted-foreground">
             {copy.inputDescription}
           </p>
+          <CurrencySelector locale={locale} />
           {Object.keys(errors).length ? (
             <div
               id={ERROR_SUMMARY_ID}
@@ -240,7 +248,7 @@ export function LoanCalculator({ locale = "ko" }: { locale?: LoanLocale }) {
               field="loanAmount"
               label={copy.amount}
               value={values.loanAmount}
-              unit={copy.won}
+              unit={currency}
               help={copy.amountHelp}
               error={errors.loanAmount}
               placeholder={copy.amountPlaceholder}
@@ -331,6 +339,8 @@ export function LoanCalculator({ locale = "ko" }: { locale?: LoanLocale }) {
                     <AnimatedWon
                       value={result.monthlyPayment}
                       animationKey={animationKey}
+                      locale={locale}
+                      currency={currency}
                     />
                   ) : (
                     "-"
@@ -343,6 +353,8 @@ export function LoanCalculator({ locale = "ko" }: { locale?: LoanLocale }) {
                     <AnimatedWon
                       value={result.totalRepayment}
                       animationKey={animationKey}
+                      locale={locale}
+                      currency={currency}
                     />
                   ) : (
                     "-"
@@ -354,6 +366,8 @@ export function LoanCalculator({ locale = "ko" }: { locale?: LoanLocale }) {
                     <AnimatedWon
                       value={result.totalInterest}
                       animationKey={animationKey}
+                      locale={locale}
+                      currency={currency}
                     />
                   ) : (
                     "-"
@@ -412,7 +426,7 @@ export function LoanCalculator({ locale = "ko" }: { locale?: LoanLocale }) {
                           >
                             <dt className="text-muted-foreground">{metric}</dt>
                             <dd className="font-medium tabular-nums">
-                              {formatLoanWon(value)}
+                              {formatLoanCurrency(value, locale, currency)}
                             </dd>
                           </div>
                         ))}
@@ -470,16 +484,24 @@ export function LoanCalculator({ locale = "ko" }: { locale?: LoanLocale }) {
                             {copy.paymentIndex(row.month)}
                           </td>
                           <td className="px-3 py-2">
-                            {formatLoanWon(row.principal)}
+                            {formatLoanCurrency(
+                              row.principal,
+                              locale,
+                              currency,
+                            )}
                           </td>
                           <td className="px-3 py-2">
-                            {formatLoanWon(row.interest)}
+                            {formatLoanCurrency(row.interest, locale, currency)}
                           </td>
                           <td className="px-3 py-2">
-                            {formatLoanWon(row.payment)}
+                            {formatLoanCurrency(row.payment, locale, currency)}
                           </td>
                           <td className="px-3 py-2">
-                            {formatLoanWon(row.remainingBalance)}
+                            {formatLoanCurrency(
+                              row.remainingBalance,
+                              locale,
+                              currency,
+                            )}
                           </td>
                         </tr>
                       ))}
@@ -505,10 +527,17 @@ export function LoanCalculator({ locale = "ko" }: { locale?: LoanLocale }) {
               {result ? (
                 <dl className="grid gap-3 sm:grid-cols-2">
                   {[
-                    [copy.additionalLabels[0], formatLoanWon(appliedAmount)],
+                    [
+                      copy.additionalLabels[0],
+                      formatLoanCurrency(appliedAmount, locale, currency),
+                    ],
                     [
                       copy.additionalLabels[1],
-                      formatLoanWon(result.totalInterest),
+                      formatLoanCurrency(
+                        result.totalInterest,
+                        locale,
+                        currency,
+                      ),
                     ],
                     [
                       copy.additionalLabels[2],
