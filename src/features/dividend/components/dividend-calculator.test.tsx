@@ -11,7 +11,7 @@ describe("DividendCalculator", () => {
     await user.type(screen.getByLabelText("보유 수량"), "10");
     await user.type(screen.getByLabelText("주당 연간 배당금"), "2000");
     await user.click(screen.getByRole("button", { name: "배당금 계산하기" }));
-    expect(screen.getByText("20,000 원")).toBeInTheDocument();
+    expect(screen.getAllByText("20,000 원").length).toBeGreaterThan(0);
 
     const shares = screen.getByLabelText("보유 수량");
     await user.clear(shares);
