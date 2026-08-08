@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   async redirects() {
-    return [
+    const localeRedirects = [
       {
         source: "/ko",
         destination: "/",
@@ -268,6 +268,22 @@ const nextConfig: NextConfig = {
         destination: "/ko/employment/retirement-pension",
         permanent: true,
       },
+    ] as const;
+
+    return [
+      ...localeRedirects.map(({ source, destination, permanent }) => ({
+        source,
+        destination: `https://www.calcome.com${destination}`,
+        permanent,
+        has: [{ type: "host" as const, value: "calcome.com" }],
+      })),
+      {
+        source: "/:path*",
+        destination: "https://www.calcome.com/:path*",
+        permanent: true,
+        has: [{ type: "host", value: "calcome.com" }],
+      },
+      ...localeRedirects,
     ];
   },
 };
