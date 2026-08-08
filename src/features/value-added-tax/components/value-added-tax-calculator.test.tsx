@@ -20,6 +20,18 @@ describe("ValueAddedTaxCalculator", () => {
     });
   });
 
+  it("labels South Korea policy amounts as KRW before input", () => {
+    render(<ValueAddedTaxCalculator locale="en" />);
+
+    expect(
+      screen.getByRole("heading", {
+        name: "South Korea amount (KRW) and VAT rate",
+      }),
+    ).toBeVisible();
+    expect(screen.getByLabelText("Amount to calculate (KRW)")).toBeVisible();
+    expect(screen.queryByLabelText("Display currency")).not.toBeInTheDocument();
+  });
+
   it("clears stale VAT results and links invalid input to the error summary", async () => {
     const user = userEvent.setup();
     render(<ValueAddedTaxCalculator locale="ko" />);
