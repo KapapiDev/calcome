@@ -87,6 +87,14 @@ Implementation must:
 
 Before editing shared files, inspect their latest `origin/main` version and preserve every unrelated newer entry.
 
+Task scope must be meaningful and root-cause complete:
+
+- Do not split one proven shared regression into one-file Pull Requests merely to satisfy the one-task rule.
+- When the same defect and safe fix repeat across multiple components, treat the complete affected set as one implementation task and fix it in one bounded Pull Request.
+- Search the repository for the full pattern before editing, update all confirmed affected files together, and add a small representative regression test rather than duplicating tests for every file.
+- Keep unrelated behavior out, but prefer a complete shared-pattern correction over serial micro-fixes that waste scheduled executions.
+- A one-file task is acceptable only when the defect is genuinely isolated or the broader pattern cannot be safely proven.
+
 ---
 
 ## Calculator and SEO integration invariants
