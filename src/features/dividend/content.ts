@@ -105,8 +105,8 @@ export const dividendContent = {
         "Use 4 for a typical quarterly schedule, after confirming the company's actual timetable.",
       ],
       [
-        "Is a 15.4% withholding rate always correct?",
-        "No. It is only a common simplified assumption for some Korean dividends; confirm the rate that applies to you.",
+        "Why is the withholding rate not prefilled?",
+        "The applicable rate varies by country, account type, income classification, and tax treaty, so confirm the rate that applies to you.",
       ],
       [
         "Does this calculate dividend yield?",

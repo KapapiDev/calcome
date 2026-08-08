@@ -6,6 +6,11 @@ import {
   compactCalculatorSettingsClass,
   dashboardCalculatorWorkspaceClass,
 } from "@/components/calculators/calculator-workspace";
+import {
+  CurrencySelector,
+  formatDisplayCurrency,
+  useDisplayCurrency,
+} from "@/components/calculators/currency-selector";
 import { Button } from "@/components/ui/button";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
 import { formatMoneyInput } from "@/lib/input/money";
@@ -19,16 +24,19 @@ import {
 
 const fieldClass =
   "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none placeholder:text-muted-foreground/70 focus-visible:ring-3 focus-visible:ring-ring/30 aria-invalid:border-destructive sm:text-sm";
-const initialValues: DividendValues = {
-  shares: "",
-  annualDividendPerShare: "",
-  paymentsPerYear: "4",
-  withholdingTaxRate: "15.4",
-};
+function initialValues(locale: DividendLocale): DividendValues {
+  return {
+    shares: "",
+    annualDividendPerShare: "",
+    paymentsPerYear: "4",
+    withholdingTaxRate: locale === "ko" ? "15.4" : "",
+  };
+}
 
 export function DividendCalculator({ locale }: { locale: DividendLocale }) {
+  const { currency } = useDisplayCurrency(locale);
   const copy = dividendContent[locale];
-  const [values, setValues] = useState(initialValues);
+  const [values, setValues] = useState(() => initialValues(locale));
   const [errors, setErrors] = useState<DividendErrors>({});
   const [result, setResult] = useState<DividendResult>();
   const {
@@ -53,7 +61,7 @@ export function DividendCalculator({ locale }: { locale: DividendLocale }) {
 
   function reset() {
     cancelResultScroll();
-    setValues(initialValues);
+    setValues(initialValues(locale));
     setErrors({});
     setResult(undefined);
   }
@@ -75,6 +83,7 @@ export function DividendCalculator({ locale }: { locale: DividendLocale }) {
           <h2 id="dividend-input-title" className="mt-1 text-xl font-semibold">
             {copy.input}
           </h2>
+          <CurrencySelector locale={locale} />
           {Object.keys(errors).length ? (
             <p
               id="dividend-form-error-summary"
@@ -98,7 +107,7 @@ export function DividendCalculator({ locale }: { locale: DividendLocale }) {
             value={values.annualDividendPerShare}
             error={errors.annualDividendPerShare}
             placeholder="2,000"
-            suffix={locale === "ko" ? "원" : "KRW"}
+            suffix={currency}
             onChange={(value) =>
               update(
                 "annualDividendPerShare",
@@ -119,7 +128,7 @@ export function DividendCalculator({ locale }: { locale: DividendLocale }) {
             label={copy.withholdingTaxRate}
             value={values.withholdingTaxRate}
             error={errors.withholdingTaxRate}
-            placeholder="15.4"
+            placeholder={locale === "ko" ? "15.4" : "e.g. 10"}
             suffix="%"
             onChange={(value) => update("withholdingTaxRate", value)}
           />
@@ -143,16 +152,20 @@ export function DividendCalculator({ locale }: { locale: DividendLocale }) {
               metrics={[
                 {
                   label: copy.netAnnualDividend,
-                  value: money(result?.netAnnualDividend, locale),
+                  value: money(result?.netAnnualDividend, locale, currency),
                   featured: true,
                 },
                 {
                   label: copy.grossAnnualDividend,
-                  value: money(result?.grossAnnualDividend, locale),
+                  value: money(result?.grossAnnualDividend, locale, currency),
                 },
                 {
                   label: copy.grossDividendPerPayment,
-                  value: money(result?.grossDividendPerPayment, locale),
+                  value: money(
+                    result?.grossDividendPerPayment,
+                    locale,
+                    currency,
+                  ),
                 },
               ]}
             />
@@ -166,19 +179,19 @@ export function DividendCalculator({ locale }: { locale: DividendLocale }) {
               <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
                 <Detail
                   label={copy.grossAnnualDividend}
-                  value={money(result.grossAnnualDividend, locale)}
+                  value={money(result.grossAnnualDividend, locale, currency)}
                 />
                 <Detail
                   label={copy.estimatedTax}
-                  value={money(result.estimatedTax, locale)}
+                  value={money(result.estimatedTax, locale, currency)}
                 />
                 <Detail
                   label={copy.netAnnualDividend}
-                  value={money(result.netAnnualDividend, locale)}
+                  value={money(result.netAnnualDividend, locale, currency)}
                 />
                 <Detail
                   label={copy.netMonthlyAverage}
-                  value={money(result.netMonthlyAverage, locale)}
+                  value={money(result.netMonthlyAverage, locale, currency)}
                 />
               </dl>
             ) : (
@@ -244,14 +257,17 @@ function Field({
 type DisplayValue =
   | { toDecimalPlaces: (places: number) => { toNumber: () => number } }
   | undefined;
-function money(value: DisplayValue, locale: DividendLocale) {
+function money(
+  value: DisplayValue,
+  locale: DividendLocale,
+  currency: Parameters<typeof formatDisplayCurrency>[2],
+) {
   return value
-    ? `${value
-        .toDecimalPlaces(2)
-        .toNumber()
-        .toLocaleString(locale === "ko" ? "ko-KR" : "en-US", {
-          maximumFractionDigits: 2,
-        })} ${locale === "ko" ? "원" : "KRW"}`
+    ? formatDisplayCurrency(
+        value.toDecimalPlaces(2).toNumber(),
+        locale,
+        currency,
+      )
     : "—";
 }
 function Detail({ label, value }: { label: string; value: string }) {
