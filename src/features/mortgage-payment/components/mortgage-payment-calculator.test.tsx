@@ -8,6 +8,7 @@ const scrollIntoView = vi.fn();
 
 describe("MortgagePaymentCalculator", () => {
   beforeEach(() => {
+    window.localStorage.clear();
     scrollIntoView.mockReset();
     Element.prototype.scrollIntoView = scrollIntoView;
     Object.defineProperty(window, "matchMedia", {
@@ -18,6 +19,24 @@ describe("MortgagePaymentCalculator", () => {
         removeEventListener: vi.fn(),
       }),
     });
+  });
+
+  it("defaults English to USD and keeps mortgage results across currency changes", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<MortgagePaymentCalculator locale="en" />);
+
+    expect(screen.getByLabelText("Display currency")).toHaveValue("USD");
+    await user.type(screen.getByLabelText("Home price"), "500000");
+    await user.type(screen.getByLabelText("Down payment"), "100000");
+    await user.click(screen.getByRole("button", { name: "Calculate payment" }));
+    expect(screen.getByText("Loan amount")).toBeVisible();
+    expect(container.textContent).toMatch(/\$/);
+
+    await user.selectOptions(screen.getByLabelText("Display currency"), "GBP");
+    expect(window.localStorage.getItem("calcome.currency")).toBe("GBP");
+    expect(container.textContent).toMatch(/£/);
+    expect(container.textContent).not.toMatch(/₩/);
+    expect(screen.getByText("Loan amount")).toBeVisible();
   });
 
   it("clears stale mortgage results and links invalid input to the error summary", async () => {
