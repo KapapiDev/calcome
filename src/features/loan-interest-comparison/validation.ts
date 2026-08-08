@@ -35,7 +35,7 @@ export function validateLoanInterestComparison(
   if (!principal || principal.lte(0) || principal.gt(1_000_000_000_000))
     errors.principal = message(
       "0보다 크고 1조 원 이하인 대출원금을 입력해 주세요.",
-      "Enter a principal greater than zero and no more than KRW 1 trillion.",
+      "Enter a principal greater than zero and no more than 1 trillion in the selected display currency.",
     );
   if (!annualRateA || annualRateA.lt(0) || annualRateA.gt(100))
     errors.annualRateA = message(
