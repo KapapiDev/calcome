@@ -180,6 +180,11 @@ describe("legacy calculator redirects", () => {
         permanent: true,
       },
       {
+        source: "/finance/dividend-yield",
+        destination: "/ko/finance/dividend-yield",
+        permanent: true,
+      },
+      {
         source: "/employment/net-salary",
         destination: "/ko/employment/net-salary",
         permanent: true,
