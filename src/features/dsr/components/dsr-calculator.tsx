@@ -6,6 +6,12 @@ import {
   compactCalculatorSettingsClass,
   dashboardCalculatorWorkspaceClass,
 } from "@/components/calculators/calculator-workspace";
+import {
+  CurrencySelector,
+  formatDisplayCurrency,
+  type DisplayCurrency,
+  useDisplayCurrency,
+} from "@/components/calculators/currency-selector";
 import { Button } from "@/components/ui/button";
 import { AnimatedWon } from "@/features/compound-interest/components/animated-won";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
@@ -26,6 +32,7 @@ const initialValues: DsrValues = {
 };
 
 export function DsrCalculator({ locale }: { locale: DsrLocale }) {
+  const { currency } = useDisplayCurrency(locale);
   const copy = dsrContent[locale];
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<DsrErrors>({});
@@ -89,6 +96,7 @@ export function DsrCalculator({ locale }: { locale: DsrLocale }) {
           <h2 id="dsr-input-title" className="mt-1 text-xl font-semibold">
             {copy.input}
           </h2>
+          <CurrencySelector locale={locale} />
           {hasErrors ? (
             <p
               id={errorSummaryId}
@@ -105,6 +113,7 @@ export function DsrCalculator({ locale }: { locale: DsrLocale }) {
               label={label}
               value={values[key]}
               placeholder={placeholder}
+              suffix={currency}
               error={errors[key]}
               errorSummaryId={hasErrors ? errorSummaryId : undefined}
               onChange={(value) => setMoney(key, value)}
@@ -167,6 +176,8 @@ export function DsrCalculator({ locale }: { locale: DsrLocale }) {
                   value: (
                     <AnimatedWon
                       value={result?.monthlyPayment ?? null}
+                      locale={locale}
+                      currency={currency}
                       animationKey={animationKey}
                     />
                   ),
@@ -176,6 +187,8 @@ export function DsrCalculator({ locale }: { locale: DsrLocale }) {
                   value: (
                     <AnimatedWon
                       value={result?.totalAnnualDebtService ?? null}
+                      locale={locale}
+                      currency={currency}
                       animationKey={animationKey}
                     />
                   ),
@@ -192,15 +205,19 @@ export function DsrCalculator({ locale }: { locale: DsrLocale }) {
               <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
                 <Detail
                   label={copy.newAnnualDebt}
-                  value={won(result.newAnnualDebtService, locale)}
+                  value={money(result.newAnnualDebtService, locale, currency)}
                 />
                 <Detail
                   label={copy.existingAnnualDebt}
-                  value={won(result.existingAnnualDebtService, locale)}
+                  value={money(
+                    result.existingAnnualDebtService,
+                    locale,
+                    currency,
+                  )}
                 />
                 <Detail
                   label={copy.income}
-                  value={won(result.annualIncome, locale)}
+                  value={money(result.annualIncome, locale, currency)}
                 />
                 <Detail
                   label={copy.dsr}
@@ -271,16 +288,16 @@ function Field({
   );
 }
 
-function won(
+function money(
   value: { toDecimalPlaces: (places: number) => { toNumber: () => number } },
   locale: DsrLocale,
+  currency: DisplayCurrency,
 ) {
-  return `${value
-    .toDecimalPlaces(0)
-    .toNumber()
-    .toLocaleString(
-      locale === "ko" ? "ko-KR" : "en-US",
-    )} ${locale === "ko" ? "원" : "KRW"}`;
+  return formatDisplayCurrency(
+    value.toDecimalPlaces(0).toNumber(),
+    locale,
+    currency,
+  );
 }
 
 function Detail({ label, value }: { label: string; value: string }) {
