@@ -3,6 +3,19 @@ import { describe, expect, it, vi } from "vitest";
 import { AverageWageCalculator } from "./average-wage-calculator";
 Element.prototype.scrollIntoView = vi.fn();
 describe("AverageWageCalculator", () => {
+  it("labels South Korea policy amounts as KRW before input", () => {
+    render(<AverageWageCalculator locale="en" />);
+
+    expect(
+      screen.getByRole("heading", {
+        name: "South Korea average wage inputs (KRW)",
+      }),
+    ).toBeVisible();
+    expect(screen.getByLabelText("Total wages in period (KRW)")).toBeVisible();
+    expect(screen.getByLabelText(/Ordinary daily wage \(KRW\)/)).toBeVisible();
+    expect(screen.queryByLabelText("Display currency")).not.toBeInTheDocument();
+  });
+
   it("starts empty, calculates, and resets", () => {
     render(<AverageWageCalculator locale="ko" />);
     const wage = screen.getByLabelText("산정기간 임금총액");
@@ -24,7 +37,7 @@ describe("AverageWageCalculator", () => {
   });
   it("shows localized errors without producing a result", () => {
     render(<AverageWageCalculator locale="en" />);
-    fireEvent.change(screen.getByLabelText("Total wages in period"), {
+    fireEvent.change(screen.getByLabelText("Total wages in period (KRW)"), {
       target: { value: "." },
     });
     fireEvent.click(
@@ -58,7 +71,7 @@ describe("AverageWageCalculator", () => {
   });
   it("shows the English ordinary-wage comparison guidance", () => {
     render(<AverageWageCalculator locale="en" />);
-    fireEvent.change(screen.getByLabelText("Total wages in period"), {
+    fireEvent.change(screen.getByLabelText("Total wages in period (KRW)"), {
       target: { value: "9000000" },
     });
     fireEvent.change(screen.getByLabelText("Calendar days in period"), {
