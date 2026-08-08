@@ -24,9 +24,9 @@ describe("StockAverageCostCalculator", () => {
       screen.getByRole("button", { name: "새 평균단가 계산하기" }),
     );
 
-    expect(screen.getAllByText("45,000 원").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("₩45,000").length).toBeGreaterThan(0);
     expect(screen.getByText("20주")).toBeVisible();
-    expect(screen.getAllByText("900,000 원").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("₩900,000").length).toBeGreaterThan(0);
   });
 
   it("clears stale results and links invalid fields to the error summary", async () => {

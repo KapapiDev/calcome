@@ -20,9 +20,9 @@ describe("stock profit and loss validation", () => {
     const result = screen.getByRole("region", {
       name: "계산된 투자 손익",
     });
-    expect(within(result).getByText("100,000 원")).toBeVisible();
+    expect(within(result).getByText("₩100,000")).toBeVisible();
     expect(within(result).getByText("20.00%")).toBeVisible();
-    expect(within(result).getByText("600,000 원")).toBeVisible();
+    expect(within(result).getByText("₩600,000")).toBeVisible();
   });
 
   it("clears stale results and links errors", async () => {
@@ -38,7 +38,7 @@ describe("stock profit and loss validation", () => {
     const result = screen.getByRole("region", {
       name: "계산된 투자 손익",
     });
-    expect(within(result).getByText("100,000 원")).toBeVisible();
+    expect(within(result).getByText("₩100,000")).toBeVisible();
 
     await user.clear(shares);
     await user.click(screen.getByRole("button", calculateButton));
