@@ -3,6 +3,18 @@ import { describe, expect, it, vi } from "vitest";
 import { OvertimePayCalculator } from "./overtime-pay-calculator";
 Element.prototype.scrollIntoView = vi.fn();
 describe("OvertimePayCalculator", () => {
+  it("labels South Korea policy amounts as KRW before input", () => {
+    render(<OvertimePayCalculator locale="en" />);
+
+    expect(
+      screen.getByRole("heading", {
+        name: "South Korea overtime inputs (KRW)",
+      }),
+    ).toBeVisible();
+    expect(screen.getByLabelText("Ordinary hourly wage (KRW)")).toBeVisible();
+    expect(screen.queryByLabelText("Display currency")).not.toBeInTheDocument();
+  });
+
   it("calculates and resets", () => {
     render(<OvertimePayCalculator locale="ko" />);
     const wage = screen.getByLabelText("통상시급");
@@ -54,7 +66,7 @@ describe("OvertimePayCalculator", () => {
     render(<OvertimePayCalculator locale="en" />);
     fireEvent.click(screen.getByRole("radio", { name: /Fewer than five/ }));
     expect(screen.getByLabelText("Premium rate")).toHaveValue("0");
-    fireEvent.change(screen.getByLabelText("Ordinary hourly wage"), {
+    fireEvent.change(screen.getByLabelText("Ordinary hourly wage (KRW)"), {
       target: { value: "12000" },
     });
     fireEvent.change(screen.getByLabelText(/Total overtime hours/), {
