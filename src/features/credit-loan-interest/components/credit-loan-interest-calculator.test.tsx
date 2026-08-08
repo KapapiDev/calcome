@@ -8,6 +8,7 @@ const scrollIntoView = vi.fn();
 
 describe("CreditLoanInterestCalculator", () => {
   beforeEach(() => {
+    window.localStorage.clear();
     scrollIntoView.mockReset();
     Element.prototype.scrollIntoView = scrollIntoView;
     Object.defineProperty(window, "matchMedia", {
@@ -18,6 +19,25 @@ describe("CreditLoanInterestCalculator", () => {
         removeEventListener: vi.fn(),
       }),
     });
+  });
+
+  it("defaults English to USD and updates every credit-loan amount", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<CreditLoanInterestCalculator locale="en" />);
+
+    expect(screen.getByLabelText("Display currency")).toHaveValue("USD");
+    await user.type(screen.getByLabelText("Loan amount"), "50000");
+    await user.click(
+      screen.getByRole("button", { name: "Calculate interest" }),
+    );
+    expect(screen.getByText("Annual interest")).toBeVisible();
+    expect(container.textContent).toMatch(/\$/);
+
+    await user.selectOptions(screen.getByLabelText("Display currency"), "GBP");
+    expect(window.localStorage.getItem("calcome.currency")).toBe("GBP");
+    expect(container.textContent).toMatch(/£/);
+    expect(container.textContent).not.toMatch(/₩/);
+    expect(screen.getByText("Annual interest")).toBeVisible();
   });
 
   it("clears stale credit loan results and links invalid input to the error summary", async () => {
