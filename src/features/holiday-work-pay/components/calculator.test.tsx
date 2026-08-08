@@ -16,7 +16,7 @@ function calculate(locale: "ko" | "en") {
       screen.getByRole("button", { name: "휴일근로수당 계산하기" }),
     );
   } else {
-    fireEvent.change(screen.getByLabelText("Ordinary hourly wage"), {
+    fireEvent.change(screen.getByLabelText("Ordinary hourly wage (KRW)"), {
       target: { value: "10000" },
     });
     fireEvent.change(
@@ -30,6 +30,18 @@ function calculate(locale: "ko" | "en") {
 }
 
 describe("HolidayWorkPayCalculator", () => {
+  it("labels South Korea policy amounts as KRW before input", () => {
+    render(<HolidayWorkPayCalculator locale="en" />);
+
+    expect(
+      screen.getByRole("heading", {
+        name: "South Korea holiday-work inputs (KRW)",
+      }),
+    ).toBeVisible();
+    expect(screen.getByLabelText("Ordinary hourly wage (KRW)")).toBeVisible();
+    expect(screen.queryByLabelText("Display currency")).not.toBeInTheDocument();
+  });
+
   it("switches workplace size to the under-five contractual input and resets", () => {
     render(<HolidayWorkPayCalculator locale="en" />);
     expect(screen.getByRole("radio", { name: /five or more/i })).toBeChecked();
@@ -46,8 +58,8 @@ describe("HolidayWorkPayCalculator", () => {
       screen.queryByText(/actual additional payment may be lower/),
     ).toBeNull();
     calculate("en");
-    expect(screen.getByText("Within-8-hours 50% premium")).toBeVisible();
-    expect(screen.getByText("Over-8-hours 100% premium")).toBeVisible();
+    expect(screen.getByText("Within-8-hours 50% premium (KRW)")).toBeVisible();
+    expect(screen.getByText("Over-8-hours 100% premium (KRW)")).toBeVisible();
     expect(
       screen.getByText(/actual additional payment may be lower/),
     ).toBeVisible();
