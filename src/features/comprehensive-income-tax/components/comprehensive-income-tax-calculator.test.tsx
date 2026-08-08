@@ -20,6 +20,26 @@ describe("ComprehensiveIncomeTaxCalculator", () => {
     });
   });
 
+  it("labels South Korea policy amounts as KRW before input", () => {
+    render(<ComprehensiveIncomeTaxCalculator locale="en" />);
+
+    expect(
+      screen.getByRole("heading", {
+        name: "South Korea income amounts (KRW) and applicable rates",
+      }),
+    ).toBeVisible();
+    expect(screen.getByLabelText("Gross income (KRW)")).toBeVisible();
+    expect(screen.getByLabelText("Necessary expenses (KRW)")).toBeVisible();
+    expect(
+      screen.getByLabelText("Confirmed income deductions (KRW)"),
+    ).toBeVisible();
+    expect(
+      screen.getByLabelText("Confirmed progressive deduction (KRW)"),
+    ).toBeVisible();
+    expect(screen.getByLabelText("Confirmed tax credits (KRW)")).toBeVisible();
+    expect(screen.queryByLabelText("Display currency")).not.toBeInTheDocument();
+  });
+
   it("clears stale results and links invalid input to the error summary", async () => {
     const user = userEvent.setup();
     render(<ComprehensiveIncomeTaxCalculator locale="ko" />);
