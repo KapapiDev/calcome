@@ -8,6 +8,7 @@ const scrollIntoView = vi.fn();
 
 describe("LoanInterestComparisonCalculator", () => {
   beforeEach(() => {
+    window.localStorage.clear();
     scrollIntoView.mockReset();
     Element.prototype.scrollIntoView = scrollIntoView;
     Object.defineProperty(window, "matchMedia", {
@@ -18,6 +19,29 @@ describe("LoanInterestComparisonCalculator", () => {
         removeEventListener: vi.fn(),
       }),
     });
+  });
+
+  it("defaults English to USD and updates both options without changing the comparison", async () => {
+    const user = userEvent.setup();
+    const { container } = render(
+      <LoanInterestComparisonCalculator locale="en" />,
+    );
+
+    expect(screen.getByLabelText("Display currency")).toHaveValue("USD");
+    await user.type(screen.getByLabelText("Loan principal"), "120000");
+    await user.clear(screen.getByLabelText("Repayment term"));
+    await user.type(screen.getByLabelText("Repayment term"), "12");
+    await user.click(
+      screen.getByRole("button", { name: "Compare loan interest" }),
+    );
+    expect(screen.getByText("Lower total-interest loan")).toBeVisible();
+    expect(container.textContent).toMatch(/\$/);
+
+    await user.selectOptions(screen.getByLabelText("Display currency"), "GBP");
+    expect(window.localStorage.getItem("calcome.currency")).toBe("GBP");
+    expect(container.textContent).toMatch(/£/);
+    expect(container.textContent).not.toMatch(/₩/);
+    expect(screen.getByText("Lower total-interest loan")).toBeVisible();
   });
 
   it("clears stale comparison results and links invalid input to the error summary", async () => {
