@@ -20,6 +20,23 @@ describe("PropertyTaxCalculator", () => {
     });
   });
 
+  it("labels South Korea policy amounts as KRW before input", () => {
+    render(<PropertyTaxCalculator locale="en" />);
+
+    expect(
+      screen.getByRole("heading", {
+        name: "South Korea property value (KRW) and rates",
+      }),
+    ).toBeVisible();
+    expect(
+      screen.getByLabelText("Officially assessed value (KRW)"),
+    ).toBeVisible();
+    expect(
+      screen.getByLabelText("Confirmed progressive deduction (KRW)"),
+    ).toBeVisible();
+    expect(screen.queryByLabelText("Display currency")).not.toBeInTheDocument();
+  });
+
   it("clears stale property tax results and links invalid input to the error summary", async () => {
     const user = userEvent.setup();
     render(<PropertyTaxCalculator locale="ko" />);
