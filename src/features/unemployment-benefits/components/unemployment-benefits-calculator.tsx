@@ -263,7 +263,7 @@ export function UnemploymentBenefitsCalculator({
               onClick={(event) => {
                 if (!result) event.preventDefault();
               }}
-              className="min-h-10 cursor-pointer content-center font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="min-h-11 cursor-pointer content-center font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               {copy.details}
             </summary>

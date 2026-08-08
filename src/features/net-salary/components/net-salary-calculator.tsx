@@ -291,7 +291,7 @@ export function NetSalaryCalculator({
               onClick={(e) => {
                 if (!result) e.preventDefault();
               }}
-              className="min-h-10 cursor-pointer content-center font-semibold"
+              className="min-h-11 cursor-pointer content-center font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               {copy.breakdown}
             </summary>
