@@ -20,6 +20,21 @@ describe("FreelancerTaxCalculator", () => {
     });
   });
 
+  it("labels South Korea policy amounts as KRW before input", () => {
+    render(<FreelancerTaxCalculator locale="en" />);
+
+    expect(
+      screen.getByRole("heading", {
+        name: "South Korea payment amounts (KRW)",
+      }),
+    ).toBeVisible();
+    expect(screen.getByLabelText("Gross payment (KRW)")).toBeVisible();
+    expect(
+      screen.getByLabelText("Confirmed amount excluded from withholding (KRW)"),
+    ).toBeVisible();
+    expect(screen.queryByLabelText("Display currency")).not.toBeInTheDocument();
+  });
+
   it("clears stale results and links invalid input to the error summary", async () => {
     const user = userEvent.setup();
     render(<FreelancerTaxCalculator locale="ko" />);
