@@ -20,6 +20,23 @@ describe("AcquisitionTaxCalculator", () => {
     });
   });
 
+  it("labels South Korea policy amounts as KRW before input", () => {
+    render(<AcquisitionTaxCalculator locale="en" />);
+
+    expect(
+      screen.getByRole("heading", {
+        name: "South Korea acquisition price (KRW) and rates",
+      }),
+    ).toBeVisible();
+    expect(
+      screen.getByLabelText("Real estate acquisition price (KRW)"),
+    ).toBeVisible();
+    expect(
+      screen.getByLabelText("Other acquisition costs (KRW)"),
+    ).toBeVisible();
+    expect(screen.queryByLabelText("Display currency")).not.toBeInTheDocument();
+  });
+
   it("clears stale acquisition tax results and links invalid input to the error summary", async () => {
     const user = userEvent.setup();
     render(<AcquisitionTaxCalculator locale="ko" />);
