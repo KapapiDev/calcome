@@ -6,6 +6,12 @@ import {
   compactCalculatorSettingsClass,
   dashboardCalculatorWorkspaceClass,
 } from "@/components/calculators/calculator-workspace";
+import {
+  CurrencySelector,
+  formatDisplayCurrency,
+  type DisplayCurrency,
+  useDisplayCurrency,
+} from "@/components/calculators/currency-selector";
 import { Button } from "@/components/ui/button";
 import { AnimatedWon } from "@/features/compound-interest/components/animated-won";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
@@ -36,6 +42,7 @@ export function BalloonPaymentCalculator({
 }: {
   locale: BalloonPaymentLocale;
 }) {
+  const { currency } = useDisplayCurrency(locale);
   const copy = balloonPaymentContent[locale];
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<BalloonPaymentErrors>({});
@@ -84,6 +91,7 @@ export function BalloonPaymentCalculator({
           >
             {copy.input}
           </h2>
+          <CurrencySelector locale={locale} />
           {Object.keys(errors).length ? (
             <p
               id={errorSummaryId}
@@ -98,6 +106,7 @@ export function BalloonPaymentCalculator({
             label={copy.principal}
             value={values.principal}
             placeholder="100,000,000"
+            suffix={currency}
             error={errors.principal}
             onChange={(value) =>
               setValues((current) => ({
@@ -133,6 +142,7 @@ export function BalloonPaymentCalculator({
             label={copy.balloonAmount}
             value={values.balloonAmount}
             placeholder="40,000,000"
+            suffix={currency}
             error={errors.balloonAmount}
             onChange={(value) =>
               setValues((current) => ({
@@ -164,6 +174,8 @@ export function BalloonPaymentCalculator({
                   value: (
                     <AnimatedWon
                       value={result?.monthlyPayment ?? null}
+                      locale={locale}
+                      currency={currency}
                       animationKey={animationKey}
                     />
                   ),
@@ -174,6 +186,8 @@ export function BalloonPaymentCalculator({
                   value: (
                     <AnimatedWon
                       value={result?.balloonAmount ?? null}
+                      locale={locale}
+                      currency={currency}
                       animationKey={animationKey}
                     />
                   ),
@@ -183,6 +197,8 @@ export function BalloonPaymentCalculator({
                   value: (
                     <AnimatedWon
                       value={result?.totalInterest ?? null}
+                      locale={locale}
+                      currency={currency}
                       animationKey={animationKey}
                     />
                   ),
@@ -199,11 +215,11 @@ export function BalloonPaymentCalculator({
               <dl className="mt-4 grid gap-4 sm:grid-cols-3">
                 <Detail
                   label={copy.regularPayments}
-                  value={won(result.totalRegularPayments, locale)}
+                  value={money(result.totalRegularPayments, locale, currency)}
                 />
                 <Detail
                   label={copy.totalRepayment}
-                  value={won(result.totalRepayment, locale)}
+                  value={money(result.totalRepayment, locale, currency)}
                 />
                 <Detail
                   label={copy.balloonRatio}
@@ -268,16 +284,16 @@ function Field({
   );
 }
 
-function won(
+function money(
   value: { toDecimalPlaces: (places: number) => { toNumber: () => number } },
   locale: BalloonPaymentLocale,
+  currency: DisplayCurrency,
 ) {
-  return `${value
-    .toDecimalPlaces(0)
-    .toNumber()
-    .toLocaleString(
-      locale === "ko" ? "ko-KR" : "en-US",
-    )} ${locale === "ko" ? "원" : "KRW"}`;
+  return formatDisplayCurrency(
+    value.toDecimalPlaces(0).toNumber(),
+    locale,
+    currency,
+  );
 }
 function Detail({ label, value }: { label: string; value: string }) {
   return (
