@@ -412,7 +412,7 @@ export function SeveranceCalculator({
               onClick={(event) => {
                 if (!result) event.preventDefault();
               }}
-              className="min-h-10 cursor-pointer content-center font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="min-h-11 cursor-pointer content-center font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               {copy.details}
             </summary>
@@ -450,7 +450,7 @@ export function SeveranceCalculator({
             onToggle={(event) => setAdditionalOpen(event.currentTarget.open)}
             className="rounded-xl border bg-card p-4 shadow-sm"
           >
-            <summary className="min-h-10 cursor-pointer content-center font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+            <summary className="min-h-11 cursor-pointer content-center font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
               {copy.additional}
             </summary>
             {result ? (
