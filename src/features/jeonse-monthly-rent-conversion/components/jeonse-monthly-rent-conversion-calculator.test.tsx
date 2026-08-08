@@ -20,6 +20,19 @@ describe("JeonseMonthlyRentConversionCalculator", () => {
     });
   });
 
+  it("labels South Korea policy amounts as KRW before input", () => {
+    render(<JeonseMonthlyRentConversionCalculator locale="en" />);
+
+    expect(
+      screen.getByRole("heading", {
+        name: "South Korea conversion assumptions (KRW)",
+      }),
+    ).toBeVisible();
+    expect(screen.getByLabelText("Jeonse deposit (KRW)")).toBeVisible();
+    expect(screen.getByLabelText("Monthly-rent deposit (KRW)")).toBeVisible();
+    expect(screen.queryByLabelText("Display currency")).not.toBeInTheDocument();
+  });
+
   it("clears stale results and links invalid input to the error summary", async () => {
     const user = userEvent.setup();
     render(<JeonseMonthlyRentConversionCalculator locale="ko" />);
