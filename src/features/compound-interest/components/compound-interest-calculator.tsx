@@ -14,13 +14,21 @@ import {
   compactCalculatorSettingsClass,
   dashboardCalculatorWorkspaceClass,
 } from "@/components/calculators/calculator-workspace";
+import {
+  CurrencySelector,
+  useDisplayCurrency,
+} from "@/components/calculators/currency-selector";
 import { Button } from "@/components/ui/button";
 import { afterViewportSettles } from "@/lib/browser/stable-viewport";
 import { formatMoneyInput } from "@/lib/input/money";
 
 import { calculateCompoundInterest } from "../calculate";
 import { DEFAULT_COMPOUND_INTEREST_VALUES } from "../constants";
-import { formatMultiplier, formatPercent, formatWon } from "../format";
+import {
+  formatCompoundCurrency,
+  formatMultiplier,
+  formatPercent,
+} from "../format";
 import { getCompoundDictionary, type CompoundLocale } from "../i18n";
 import type {
   CompoundInterestField,
@@ -125,6 +133,7 @@ export function CompoundInterestCalculator({
 }: {
   locale?: CompoundLocale;
 }) {
+  const { currency } = useDisplayCurrency(locale);
   const copy = getCompoundDictionary(locale).calculator;
   const [values, setValues] = useState<CompoundInterestFormValues>(
     INITIAL_COMPOUND_INTEREST_VALUES,
@@ -199,7 +208,15 @@ export function CompoundInterestCalculator({
     setChartAnimationKey((current) => current + 1);
     setYearlyDetailsOpen(true);
     setAdditionalDetailsOpen(true);
-    setAnnouncement(copy.complete(formatWon(nextResult.estimatedFinalBalance)));
+    setAnnouncement(
+      copy.complete(
+        formatCompoundCurrency(
+          nextResult.estimatedFinalBalance,
+          locale,
+          currency,
+        ),
+      ),
+    );
   }
 
   function reset() {
@@ -241,6 +258,7 @@ export function CompoundInterestCalculator({
             <p className="mt-3 text-xs leading-5 text-muted-foreground">
               {copy.inputDescription}
             </p>
+            <CurrencySelector locale={locale} />
           </div>
 
           {Object.keys(errors).length > 0 ? (
@@ -257,7 +275,7 @@ export function CompoundInterestCalculator({
               field="initialPrincipal"
               label={copy.initialPrincipal}
               value={values.initialPrincipal}
-              unit={copy.won}
+              unit={currency}
               required
               help={copy.initialHelp}
               error={errors.initialPrincipal}
@@ -273,7 +291,7 @@ export function CompoundInterestCalculator({
               field="recurringContribution"
               label={copy.contribution}
               value={values.recurringContribution}
-              unit={copy.won}
+              unit={currency}
               required
               help={copy.contributionHelp}
               error={errors.recurringContribution}
@@ -464,6 +482,8 @@ export function CompoundInterestCalculator({
                       key={`assets-${result ? chartAnimationKey : "empty"}`}
                       animationKey={chartAnimationKey}
                       value={result?.estimatedFinalBalance ?? null}
+                      locale={locale}
+                      currency={currency}
                     />
                   ),
                   featured: true,
@@ -475,6 +495,8 @@ export function CompoundInterestCalculator({
                       key={`principal-${result ? chartAnimationKey : "empty"}`}
                       animationKey={chartAnimationKey}
                       value={result?.totalContributedPrincipal ?? null}
+                      locale={locale}
+                      currency={currency}
                     />
                   ),
                 },
@@ -485,6 +507,8 @@ export function CompoundInterestCalculator({
                       key={`gain-${result ? chartAnimationKey : "empty"}`}
                       animationKey={chartAnimationKey}
                       value={result?.estimatedNetGain ?? null}
+                      locale={locale}
+                      currency={currency}
                     />
                   ),
                 },
@@ -498,6 +522,7 @@ export function CompoundInterestCalculator({
             records={result?.yearlyData}
             animationKey={chartAnimationKey}
             locale={locale}
+            currency={currency}
           />
           <details
             open={result ? yearlyDetailsOpen : true}
@@ -544,16 +569,32 @@ export function CompoundInterestCalculator({
                             {copy.yearSuffix}
                           </th>
                           <td className="px-3 py-3">
-                            {formatWon(record.netBalance)}
+                            {formatCompoundCurrency(
+                              record.netBalance,
+                              locale,
+                              currency,
+                            )}
                           </td>
                           <td className="px-3 py-3">
-                            {formatWon(record.contributions)}
+                            {formatCompoundCurrency(
+                              record.contributions,
+                              locale,
+                              currency,
+                            )}
                           </td>
                           <td className="px-3 py-3">
-                            {formatWon(record.interest)}
+                            {formatCompoundCurrency(
+                              record.interest,
+                              locale,
+                              currency,
+                            )}
                           </td>
                           <td className="px-3 py-3">
-                            {formatWon(record.cumulativePrincipal)}
+                            {formatCompoundCurrency(
+                              record.cumulativePrincipal,
+                              locale,
+                              currency,
+                            )}
                           </td>
                         </tr>
                       ))}
@@ -588,13 +629,15 @@ export function CompoundInterestCalculator({
                     >
                       <dt className="text-xs text-muted-foreground">{label}</dt>
                       <dd className="mt-1 font-semibold tabular-nums">
-                        {formatWon(
+                        {formatCompoundCurrency(
                           [
                             result.grossFinalBalance,
                             result.grossInterest,
                             result.estimatedTax,
                             result.inflationAdjustedValue,
                           ][index],
+                          locale,
+                          currency,
                         )}
                       </dd>
                     </div>

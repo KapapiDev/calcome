@@ -11,7 +11,9 @@ import {
   YAxis,
 } from "recharts";
 
-import { formatWon } from "../format";
+import type { DisplayCurrency } from "@/components/calculators/currency-selector";
+
+import { formatCompoundCurrency } from "../format";
 import { getCompoundDictionary, type CompoundLocale } from "../i18n";
 import type { YearlyCompoundInterestRecord } from "../types";
 import {
@@ -65,10 +67,12 @@ export function CompoundGrowthTooltip({
   active,
   point,
   locale = "ko",
+  currency = "KRW",
 }: {
   active?: boolean;
   point?: CompoundGrowthPoint;
   locale?: CompoundLocale;
+  currency?: DisplayCurrency;
 }) {
   if (!active || !point) return null;
   const copy = getCompoundDictionary(locale).chart;
@@ -81,34 +85,35 @@ export function CompoundGrowthTooltip({
       <dl className="mt-2 grid gap-1.5 tabular-nums">
         <div className="flex justify-between gap-5">
           <dt className="text-muted-foreground">{copy.tooltipPrincipal}</dt>
-          <dd>{formatWon(point.principalValue)}</dd>
+          <dd>
+            {formatCompoundCurrency(point.principalValue, locale, currency)}
+          </dd>
         </div>
         <div className="flex justify-between gap-5">
           <dt className="text-muted-foreground">{copy.tooltipAssets}</dt>
-          <dd>{formatWon(point.assetsValue)}</dd>
+          <dd>{formatCompoundCurrency(point.assetsValue, locale, currency)}</dd>
         </div>
         <div className="flex justify-between gap-5">
           <dt className="text-muted-foreground">{copy.tooltipInterest}</dt>
-          <dd>{formatWon(point.interestValue)}</dd>
+          <dd>
+            {formatCompoundCurrency(point.interestValue, locale, currency)}
+          </dd>
         </div>
       </dl>
     </div>
   );
 }
 
-const compactWon = new Intl.NumberFormat("ko-KR", {
-  notation: "compact",
-  maximumFractionDigits: 1,
-});
-
 export function CompoundGrowthChart({
   records,
   animationKey = 0,
   locale = "ko",
+  currency = "KRW",
 }: {
   records?: readonly YearlyCompoundInterestRecord[];
   animationKey?: number;
   locale?: CompoundLocale;
+  currency?: DisplayCurrency;
 }) {
   const copy = getCompoundDictionary(locale).chart;
   const growthSeries = [
@@ -212,7 +217,12 @@ export function CompoundGrowthChart({
                 width={58}
                 tickCount={5}
                 tickFormatter={(value) =>
-                  `₩${compactWon.format(Number(value))}`
+                  new Intl.NumberFormat(locale === "ko" ? "ko-KR" : "en-US", {
+                    style: "currency",
+                    currency,
+                    notation: "compact",
+                    maximumFractionDigits: 1,
+                  }).format(Number(value))
                 }
                 tick={{ fill: "var(--muted-foreground)", fontSize: 11 }}
                 axisLine={false}
@@ -228,6 +238,7 @@ export function CompoundGrowthChart({
                   <CompoundGrowthTooltip
                     active={active}
                     locale={locale}
+                    currency={currency}
                     point={
                       payload?.[0]?.payload as CompoundGrowthPoint | undefined
                     }

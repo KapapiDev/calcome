@@ -29,6 +29,7 @@ describe("localized compound interest pages", () => {
   });
 
   beforeEach(() => {
+    window.localStorage.clear();
     Object.defineProperty(window, "matchMedia", {
       configurable: true,
       value: vi.fn().mockReturnValue({
@@ -68,7 +69,8 @@ describe("localized compound interest pages", () => {
       }),
     ).toBeVisible();
     expect(screen.getByLabelText("Initial investment *")).toBeVisible();
-    expect(screen.getByText(/South Korean won \(KRW\)/)).toBeVisible();
+    expect(screen.getByLabelText("Display currency")).toHaveValue("USD");
+    expect(screen.getByText(/does not convert exchange rates/)).toBeVisible();
     expect(container).not.toHaveTextContent("초기 투자금");
     expect(container).not.toHaveTextContent("예상 결과 계산하기");
     expect(container).not.toHaveTextContent("자주 묻는 질문");

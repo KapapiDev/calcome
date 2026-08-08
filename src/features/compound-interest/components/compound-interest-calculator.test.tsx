@@ -11,6 +11,7 @@ const matchMediaMock = vi.fn();
 
 describe("CompoundInterestCalculator", () => {
   beforeEach(() => {
+    window.localStorage.clear();
     scrollIntoViewMock.mockReset();
     matchMediaMock.mockReset();
     matchMediaMock.mockReturnValue({ matches: false });
@@ -22,6 +23,26 @@ describe("CompoundInterestCalculator", () => {
       configurable: true,
       value: matchMediaMock,
     });
+  });
+
+  it("defaults English to USD and updates every amount format without changing the calculation", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<CompoundInterestCalculator locale="en" />);
+
+    expect(screen.getByLabelText("Display currency")).toHaveValue("USD");
+    await user.type(screen.getByLabelText("Initial investment *"), "1000");
+    await user.type(screen.getByLabelText("Recurring contribution *"), "0");
+    await user.type(screen.getByLabelText("Investment period *"), "1");
+    await user.type(screen.getByLabelText("Annual interest rate *"), "10");
+    await user.click(
+      screen.getByRole("button", { name: "Calculate estimated results" }),
+    );
+    expect(container).toHaveTextContent("$1,105");
+
+    await user.selectOptions(screen.getByLabelText("Display currency"), "GBP");
+    expect(window.localStorage.getItem("calcome.currency")).toBe("GBP");
+    expect(container).toHaveTextContent("£1,105");
+    expect(container).not.toHaveTextContent("₩1,105");
   });
 
   function getDetails(label: string) {

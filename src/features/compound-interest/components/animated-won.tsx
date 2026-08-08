@@ -3,7 +3,10 @@
 import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
 
-import { formatWon } from "../format";
+import type { DisplayCurrency } from "@/components/calculators/currency-selector";
+
+import { formatCompoundCurrency } from "../format";
+import type { CompoundLocale } from "../i18n";
 import {
   COMPOUND_ANIMATION_DELAY,
   COMPOUND_ANIMATION_DURATION,
@@ -13,9 +16,13 @@ import {
 
 export function AnimatedWon({
   value,
+  locale = "ko",
+  currency = "KRW",
   animationKey = 0,
 }: {
   value: Decimal.Value | null;
+  locale?: CompoundLocale;
+  currency?: DisplayCurrency;
   animationKey?: number;
 }) {
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -55,14 +62,14 @@ export function AnimatedWon({
     return () => cancelAnimationFrame(frameId);
   }, [animationKey, prefersReducedMotion, target, value]);
 
-  const finalValue = formatWon(target);
+  const finalValue = formatCompoundCurrency(target, locale, currency);
   return (
     <span
       aria-label={finalValue}
       data-animation-run={animationKey}
       data-testid="animated-won"
     >
-      {formatWon(displayedValue)}
+      {formatCompoundCurrency(displayedValue, locale, currency)}
     </span>
   );
 }

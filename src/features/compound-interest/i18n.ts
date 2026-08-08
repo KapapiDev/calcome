@@ -58,7 +58,7 @@ const ko = {
     related: "관련 계산기",
     relatedDescription:
       "관련 금융 계산기는 검증을 마친 뒤 순차적으로 제공할 예정입니다.",
-    currencyNotice: "금액은 대한민국 원(KRW) 기준으로 계산합니다.",
+    currencyNotice: "통화 선택은 표시 형식만 바꾸며 환율을 변환하지 않습니다.",
   },
   calculator: {
     inputTitle: "입력 정보",
@@ -146,9 +146,9 @@ const ko = {
   },
   validation: {
     moneyInvalid: (label: string) =>
-      `${label}을(를) 원 단위의 숫자로 입력해 주세요.`,
+      `${label}을(를) 정수 금액으로 입력해 주세요.`,
     moneyRange: (label: string) =>
-      `${label}은(는) 0원 이상 허용 범위 이하여야 합니다.`,
+      `${label}은(는) 0 이상 허용 범위 이하여야 합니다.`,
     percentInvalid: (label: string) =>
       `${label}을(를) 0%에서 100% 사이의 숫자로 입력해 주세요.`,
     percentRange: (label: string) =>
@@ -157,7 +157,7 @@ const ko = {
     contributionFrequency: "지원하는 납입 주기를 선택해 주세요.",
     compoundingFrequency: "지원하는 복리 주기를 선택해 주세요.",
     timing: "납입 시점을 선택해 주세요.",
-    positiveMoney: "초기 원금과 정기 납입액 중 하나는 0원보다 커야 합니다.",
+    positiveMoney: "초기 원금과 정기 납입액 중 하나는 0보다 커야 합니다.",
     requiredPrincipal: "초기 원금을 입력해 주세요.",
     requiredContribution: "정기 납입액을 입력해 주세요.",
     requiredDuration: "투자 기간을 입력해 주세요.",
@@ -183,7 +183,7 @@ const en = {
     title: "Compound Interest Calculator",
     metaTitle: "Compound Interest Calculator - Recurring Investment Growth",
     metaDescription:
-      "Estimate compound growth from an initial investment, recurring contributions, investment period, and annual interest rate in South Korean won.",
+      "Estimate compound growth from an initial investment, recurring contributions, investment period, and annual interest rate in your selected display currency.",
     description:
       "See how an initial investment and recurring contributions may grow through compounding over time.",
     home: "Home",
@@ -232,7 +232,7 @@ const en = {
     relatedDescription:
       "Other financial calculators are available in Korean while their localized versions are prepared.",
     currencyNotice:
-      "All amounts are calculated and displayed in South Korean won (KRW).",
+      "Currency selection changes formatting only; it does not convert exchange rates.",
   },
   calculator: {
     inputTitle: "Investment settings",
@@ -325,7 +325,7 @@ const en = {
     empty: "Enter values and calculate to display the asset growth chart.",
   },
   validation: {
-    moneyInvalid: (label: string) => `Enter ${label} as a whole-won number.`,
+    moneyInvalid: (label: string) => `Enter ${label} as a whole-number amount.`,
     moneyRange: (label: string) =>
       `${label} must be zero or more and within the allowed range.`,
     percentInvalid: (label: string) =>
@@ -336,7 +336,7 @@ const en = {
     compoundingFrequency: "Select a supported compounding frequency.",
     timing: "Select a contribution timing.",
     positiveMoney:
-      "Either the initial investment or recurring contribution must be greater than ₩0.",
+      "Either the initial investment or recurring contribution must be greater than zero.",
     requiredPrincipal: "Enter the initial investment.",
     requiredContribution: "Enter the recurring contribution.",
     requiredDuration: "Enter the investment period.",
