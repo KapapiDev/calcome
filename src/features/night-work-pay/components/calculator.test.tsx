@@ -5,6 +5,18 @@ import { NightWorkPayCalculator } from "./calculator";
 Element.prototype.scrollIntoView = vi.fn();
 
 describe("NightWorkPayCalculator", () => {
+  it("labels South Korea policy amounts as KRW before input", () => {
+    render(<NightWorkPayCalculator locale="en" />);
+
+    expect(
+      screen.getByRole("heading", {
+        name: "South Korea night-work inputs (KRW)",
+      }),
+    ).toBeVisible();
+    expect(screen.getByLabelText("Ordinary hourly wage (KRW)")).toBeVisible();
+    expect(screen.queryByLabelText("Display currency")).not.toBeInTheDocument();
+  });
+
   it("uses a 50% default for five or more employees and resets to it", () => {
     render(<NightWorkPayCalculator locale="en" />);
 
@@ -26,7 +38,7 @@ describe("NightWorkPayCalculator", () => {
       screen.getByLabelText(/Total night-work hours in the payroll period/),
     ).toBeVisible();
 
-    fireEvent.change(screen.getByLabelText("Ordinary hourly wage"), {
+    fireEvent.change(screen.getByLabelText("Ordinary hourly wage (KRW)"), {
       target: { value: "12000" },
     });
     fireEvent.change(screen.getByLabelText(/Total night-work hours/), {
@@ -44,7 +56,7 @@ describe("NightWorkPayCalculator", () => {
   it("clears stale results and associates invalid inputs with the alert", () => {
     render(<NightWorkPayCalculator locale="en" />);
 
-    const wage = screen.getByLabelText("Ordinary hourly wage");
+    const wage = screen.getByLabelText("Ordinary hourly wage (KRW)");
     const hours = screen.getByLabelText(/Total night-work hours/);
 
     fireEvent.change(wage, { target: { value: "12000" } });

@@ -63,14 +63,15 @@ export const content = {
     reference: "국가법령정보센터 근로기준법 제56조",
   },
   en: {
-    title: "Korean Night Work Pay Calculator",
-    metaTitle: "Korean Night Work Pay Calculator",
+    title: "South Korea Night Work Pay Calculator",
+    metaTitle: "South Korea Night Work Pay Calculator | KRW Estimate",
     description:
-      "Estimate Korean night-work pay for actual work performed between 10 p.m. and 6 a.m.",
+      "Estimate South Korean night-work pay in KRW for actual work performed between 10 p.m. and 6 a.m.",
     category: "Employment calculator",
-    intro: "Separate ordinary wages and the night-work premium.",
-    input: "Night-work inputs",
-    wage: "Ordinary hourly wage",
+    intro:
+      "This calculator applies to South Korea. Enter every monetary amount in KRW to separate ordinary wages and the night-work premium.",
+    input: "South Korea night-work inputs (KRW)",
+    wage: "Ordinary hourly wage (KRW)",
     wagePh: "e.g. 12,000",
     hours:
       "Total night-work hours in the payroll period (only actual work between 10 p.m. and 6 a.m.)",
@@ -84,16 +85,16 @@ export const content = {
     reset: "Reset",
     error: "Check the highlighted values.",
     result: "Estimated result",
-    total: "Total night-work pay",
-    base: "Base wage portion",
-    premium: "Night-work premium portion",
-    note: "A gross estimate; confirm actual coverage and payment with your contract and payroll records.",
+    total: "Total night-work pay (KRW)",
+    base: "Base wage portion (KRW)",
+    premium: "Night-work premium portion (KRW)",
+    note: "A South Korea gross estimate in KRW; confirm actual coverage and payment with your contract and payroll records.",
     underFiveNotice:
       "At workplaces with fewer than five regular employees, the Article 56 statutory premium rule may not apply. The entered rate is calculated as a contractual premium.",
     overlapNotice:
       "This calculator models the night-work premium only. Overtime or holiday premiums may be added separately for overlapping hours and are not automatically included in this result.",
     details: "Calculation details",
-    adjusted: "Premium-adjusted hourly pay",
+    adjusted: "Premium-adjusted hourly pay (KRW)",
     appliedHours: "Applied night-work hours",
     appliedRate: "Applied night-work premium",
     empty: "Calculate to see the applied conditions.",
