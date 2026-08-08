@@ -1,7 +1,7 @@
 import { resolveSitemap } from "next/dist/build/webpack/loaders/metadata/resolve-route-data";
 import { describe, expect, it } from "vitest";
 
-import { publishedCalculators } from "@/config/calculators";
+import { allPublishedCalculators } from "@/config/calculator-directory";
 
 import sitemap, { calculatorSitemapEntries } from "./sitemap";
 
@@ -37,12 +37,14 @@ describe("XML sitemap", () => {
   it("includes both localized routes for every published calculator", () => {
     const urls = sitemap().map(({ url }) => url);
 
-    for (const calculator of publishedCalculators) {
+    for (const calculator of allPublishedCalculators) {
       expect(urls).toContain(`https://www.calcome.com${calculator.href}`);
       expect(urls).toContain(
         `https://www.calcome.com${calculator.href.replace(/^\/ko\//, "/en/")}`,
       );
     }
+
+    expect(urls).toContain("https://www.calcome.com/ko/finance/dividend-yield");
   });
 
   it("emits reciprocal locale alternates with Korean as x-default", () => {
