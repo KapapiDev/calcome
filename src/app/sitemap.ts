@@ -33,6 +33,7 @@ export function calculatorSitemapEntries(
     const languages = {
       ko: absoluteUrl(href),
       en: absoluteUrl(englishHref),
+      "x-default": absoluteUrl(href),
     };
 
     return [
