@@ -20,6 +20,27 @@ describe("GiftTaxCalculator", () => {
     });
   });
 
+  it("labels South Korea policy amounts as KRW before input", () => {
+    render(<GiftTaxCalculator locale="en" />);
+
+    expect(
+      screen.getByRole("heading", {
+        name: "South Korea gift amounts (KRW) and rates",
+      }),
+    ).toBeVisible();
+    expect(screen.getByLabelText("Gifted asset value (KRW)")).toBeVisible();
+    expect(
+      screen.getByLabelText("Debt assumed by recipient (KRW)"),
+    ).toBeVisible();
+    expect(
+      screen.getByLabelText("Confirmed gift deduction (KRW)"),
+    ).toBeVisible();
+    expect(
+      screen.getByLabelText("Confirmed progressive deduction (KRW)"),
+    ).toBeVisible();
+    expect(screen.queryByLabelText("Display currency")).not.toBeInTheDocument();
+  });
+
   it("clears stale gift tax results and links invalid input to the error summary", async () => {
     const user = userEvent.setup();
     render(<GiftTaxCalculator locale="ko" />);
