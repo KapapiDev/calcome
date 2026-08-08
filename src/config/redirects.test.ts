@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 
+import { allPublishedCalculators } from "@/config/calculator-directory";
+
 import nextConfig from "../../next.config";
 
 describe("canonical redirects", () => {
@@ -292,5 +294,28 @@ describe("canonical redirects", () => {
       permanent: true,
       has: [{ type: "host", value: "calcome.com" }],
     });
+  });
+
+  it("covers every public calculator with locale-less and apex one-hop redirects", async () => {
+    const redirects = await nextConfig.redirects!();
+
+    for (const calculator of allPublishedCalculators) {
+      const source =
+        calculator.id === "deposit"
+          ? "/finance/deposit"
+          : calculator.href.replace(/^\/ko/, "");
+
+      expect(redirects).toContainEqual({
+        source,
+        destination: calculator.href,
+        permanent: true,
+      });
+      expect(redirects).toContainEqual({
+        source,
+        destination: `https://www.calcome.com${calculator.href}`,
+        permanent: true,
+        has: [{ type: "host", value: "calcome.com" }],
+      });
+    }
   });
 });
