@@ -169,7 +169,7 @@ UX-008
 
 Title: Bilingual Currency Semantics and Money Formatting Audit
 
-Status: BLOCKED
+Status: OPEN
 
 Priority: HIGH
 
@@ -207,7 +207,7 @@ SEO-FIX-001
 
 Title: Canonical Host, Locale Route, Hreflang, and Sitemap Consolidation
 
-Status: OPEN
+Status: DONE
 
 Priority: CRITICAL
 
@@ -235,6 +235,8 @@ Acceptance:
 - Existing 51 calculators remain discoverable in both languages and language switching preserves calculator identity.
 - `npm run check`, `npm run build`, redirect/canonical/hreflang tests, sitemap tests, and `git diff --check` pass.
 - Desktop and mobile production verification covers home, directory, CAGR, stock average cost, loan comparison, and one employment calculator.
+
+Evidence: PRs #203–#209 consolidated temporary and missing redirects, canonical root aliases, the `www` host, static-page language links, sitemap `x-default`, and the shared public sitemap source. Repository integration tests now cross-check every public calculator against locale-less and apex one-hop redirects; lint, typecheck, format, all tests, production builds, and diff checks passed. External production inspection was not used as a completion gate under the current automation rules.
 
 ---
 
