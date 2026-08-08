@@ -65,19 +65,19 @@ export const capitalGainsTaxContent = {
     ] as const,
   },
   en: {
-    title: "Korean Capital Gains Tax Calculator",
-    metaTitle: "Korean Capital Gains Tax Calculator",
+    title: "South Korea Capital Gains Tax Calculator",
+    metaTitle: "South Korea Capital Gains Tax Calculator | KRW Estimate",
     description:
-      "Estimate Korean capital gains tax from sale price, cost basis, expenses, deduction, and confirmed rates.",
+      "Estimate South Korean capital gains tax in KRW from sale price, cost basis, expenses, deduction, and confirmed rates.",
     category: "Tax calculator",
     intro:
-      "Confirm the deduction and rates for the asset, holding period, and transaction before entering them.",
-    input: "Transaction amounts and rates",
+      "This calculator applies to South Korea. Enter every monetary amount in KRW after confirming the deduction and rates for the transaction.",
+    input: "South Korea transaction amounts (KRW) and rates",
     fields: {
-      salePrice: "Sale price",
-      acquisitionPrice: "Acquisition price / cost basis",
-      deductibleExpenses: "Deductible transaction expenses",
-      basicDeduction: "Applicable deduction",
+      salePrice: "Sale price (KRW)",
+      acquisitionPrice: "Acquisition price / cost basis (KRW)",
+      deductibleExpenses: "Deductible transaction expenses (KRW)",
+      basicDeduction: "Applicable deduction (KRW)",
       incomeTaxRate: "Confirmed capital gains tax rate",
       localIncomeTaxRate: "Local income tax percentage of national tax",
     },
