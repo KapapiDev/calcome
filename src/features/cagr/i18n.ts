@@ -176,8 +176,9 @@ const dictionaries = {
     },
     validation: {
       initialInvalid:
-        "Enter a beginning value greater than zero and no more than KRW 1 trillion.",
-      finalInvalid: "Enter an ending value from zero to KRW 1 trillion.",
+        "Enter a beginning value greater than zero and no more than 1 trillion in the selected display currency.",
+      finalInvalid:
+        "Enter an ending value from zero to 1 trillion in the selected display currency.",
       periodInvalid: "Enter an investment period as an integer of at least 1.",
       unitInvalid: "Select a period unit.",
       periodMax: "The investment period can be up to 1,200 months (100 years).",

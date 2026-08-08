@@ -8,6 +8,10 @@ import {
   compactCalculatorSettingsClass,
   dashboardCalculatorWorkspaceClass,
 } from "@/components/calculators/calculator-workspace";
+import {
+  CurrencySelector,
+  useDisplayCurrency,
+} from "@/components/calculators/currency-selector";
 import { Button } from "@/components/ui/button";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
 import { formatMoneyInput } from "@/lib/input/money";
@@ -17,7 +21,7 @@ import { DEFAULT_CAGR_VALUES } from "../constants";
 import {
   formatCagrMultiple,
   formatCagrPercent,
-  formatCagrWon,
+  formatCagrCurrency,
 } from "../format";
 import { createCagrGrowthRecords } from "../growth";
 import { getCagrDictionary, type CagrLocale } from "../i18n";
@@ -107,8 +111,8 @@ function NumberField({
 }
 
 export function CagrCalculator({ locale = "ko" }: { locale?: CagrLocale }) {
+  const { currency } = useDisplayCurrency(locale);
   const copy = getCagrDictionary(locale).calculator;
-  const localeCode = locale === "ko" ? "ko-KR" : "en-US";
   const [values, setValues] = useState<CagrFormValues>(INITIAL_VALUES);
   const [errors, setErrors] = useState<CagrValidationErrors>({});
   const [result, setResult] = useState<CagrResult | null>(null);
@@ -211,6 +215,7 @@ export function CagrCalculator({ locale = "ko" }: { locale?: CagrLocale }) {
           <p className="mt-2 text-xs leading-5 text-muted-foreground">
             {copy.inputDescription}
           </p>
+          <CurrencySelector locale={locale} />
           {Object.keys(errors).length ? (
             <div
               id={ERROR_SUMMARY_ID}
@@ -225,7 +230,7 @@ export function CagrCalculator({ locale = "ko" }: { locale?: CagrLocale }) {
               field="initialValue"
               label={copy.initialValue}
               value={values.initialValue}
-              unit={copy.won}
+              unit={currency}
               help={copy.initialHelp}
               error={errors.initialValue}
               placeholder={copy.initialPlaceholder}
@@ -239,7 +244,7 @@ export function CagrCalculator({ locale = "ko" }: { locale?: CagrLocale }) {
               field="finalValue"
               label={copy.finalValue}
               value={values.finalValue}
-              unit={copy.won}
+              unit={currency}
               help={copy.finalHelp}
               error={errors.finalValue}
               placeholder={copy.finalPlaceholder}
@@ -338,7 +343,9 @@ export function CagrCalculator({ locale = "ko" }: { locale?: CagrLocale }) {
                     <AnimatedCagrValue
                       key={`profit-${result ? animationKey : "empty"}`}
                       value={result?.absoluteProfit ?? null}
-                      format={(value) => formatCagrWon(value, localeCode)}
+                      format={(value) =>
+                        formatCagrCurrency(value, locale, currency)
+                      }
                       animationKey={animationKey}
                     />
                   ),
@@ -358,6 +365,7 @@ export function CagrCalculator({ locale = "ko" }: { locale?: CagrLocale }) {
             periodUnit={appliedValues.periodUnit}
             animationKey={animationKey}
             locale={locale}
+            currency={currency}
           />
 
           <details
@@ -406,7 +414,7 @@ export function CagrCalculator({ locale = "ko" }: { locale?: CagrLocale }) {
                             : copy.months}
                         </th>
                         <td className="px-3 py-3">
-                          {formatCagrWon(record.value, localeCode)}
+                          {formatCagrCurrency(record.value, locale, currency)}
                         </td>
                         <td className="px-3 py-3">
                           {formatCagrPercent(record.growthPercent)}
@@ -439,7 +447,9 @@ export function CagrCalculator({ locale = "ko" }: { locale?: CagrLocale }) {
                     <AnimatedCagrValue
                       key={`initial-${animationKey}`}
                       value={initial}
-                      format={(value) => formatCagrWon(value, localeCode)}
+                      format={(value) =>
+                        formatCagrCurrency(value, locale, currency)
+                      }
                       animationKey={animationKey}
                     />,
                   ],
@@ -448,7 +458,9 @@ export function CagrCalculator({ locale = "ko" }: { locale?: CagrLocale }) {
                     <AnimatedCagrValue
                       key={`ending-${animationKey}`}
                       value={ending}
-                      format={(value) => formatCagrWon(value, localeCode)}
+                      format={(value) =>
+                        formatCagrCurrency(value, locale, currency)
+                      }
                       animationKey={animationKey}
                     />,
                   ],

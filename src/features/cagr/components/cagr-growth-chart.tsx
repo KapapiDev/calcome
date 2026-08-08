@@ -16,8 +16,9 @@ import {
   COMPOUND_ANIMATION_EASING,
   usePrefersReducedMotion,
 } from "@/features/compound-interest/components/compound-animation";
+import type { DisplayCurrency } from "@/components/calculators/currency-selector";
 
-import { formatCagrPercent, formatCagrWon } from "../format";
+import { formatCagrCurrency, formatCagrPercent } from "../format";
 import { getCagrDictionary, type CagrLocale } from "../i18n";
 import type { CagrGrowthRecord, CagrPeriodUnit } from "../types";
 
@@ -33,21 +34,18 @@ function chartData(records: readonly CagrGrowthRecord[]) {
     .map((record) => ({ ...record, numericValue: Number(record.value) }));
 }
 
-const compactWon = new Intl.NumberFormat("ko-KR", {
-  notation: "compact",
-  maximumFractionDigits: 1,
-});
-
 function GrowthTooltip({
   active,
   point,
   locale,
   unit,
+  currency,
 }: {
   active?: boolean;
   point?: ChartPoint;
   locale: CagrLocale;
   unit: CagrPeriodUnit;
+  currency: DisplayCurrency;
 }) {
   if (!active || !point) return null;
   const copy = getCagrDictionary(locale);
@@ -59,7 +57,7 @@ function GrowthTooltip({
         {point.index} {suffix}
       </p>
       <p className="mt-2 tabular-nums">
-        {formatCagrWon(point.value, locale === "ko" ? "ko-KR" : "en-US")}
+        {formatCagrCurrency(point.value, locale, currency)}
       </p>
       <p className="mt-1 text-muted-foreground">
         {formatCagrPercent(point.growthPercent)}
@@ -73,11 +71,13 @@ export function CagrGrowthChart({
   periodUnit,
   animationKey,
   locale,
+  currency = "KRW",
 }: {
   records?: readonly CagrGrowthRecord[];
   periodUnit: CagrPeriodUnit;
   animationKey: number;
   locale: CagrLocale;
+  currency?: DisplayCurrency;
 }) {
   const copy = getCagrDictionary(locale).chart;
   const data = chartData(records ?? []);
@@ -152,7 +152,12 @@ export function CagrGrowthChart({
                 width={58}
                 tickCount={5}
                 tickFormatter={(value) =>
-                  `₩${compactWon.format(Number(value))}`
+                  new Intl.NumberFormat(locale === "ko" ? "ko-KR" : "en-US", {
+                    style: "currency",
+                    currency,
+                    notation: "compact",
+                    maximumFractionDigits: 1,
+                  }).format(Number(value))
                 }
                 tick={{ fill: "var(--muted-foreground)", fontSize: 11 }}
                 axisLine={false}
@@ -166,6 +171,7 @@ export function CagrGrowthChart({
                     point={payload?.[0]?.payload as ChartPoint | undefined}
                     locale={locale}
                     unit={periodUnit}
+                    currency={currency}
                   />
                 )}
               />

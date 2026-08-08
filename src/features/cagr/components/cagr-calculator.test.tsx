@@ -10,6 +10,7 @@ const scrollIntoView = vi.fn();
 
 describe("CagrCalculator", () => {
   beforeEach(() => {
+    window.localStorage.clear();
     scrollIntoView.mockReset();
     Element.prototype.scrollIntoView = scrollIntoView;
     Object.defineProperty(window, "matchMedia", {
@@ -219,6 +220,7 @@ describe("CagrCalculator", () => {
   it("renders fully localized English UI", async () => {
     const user = userEvent.setup();
     const { container } = render(<CagrCalculator locale="en" />);
+    expect(screen.getByLabelText("Display currency")).toHaveValue("USD");
     await user.type(screen.getByLabelText("Beginning value *"), "10000000");
     await user.type(screen.getByLabelText("Ending value *"), "15000000");
     await user.type(screen.getByLabelText("Investment period *"), "5");
@@ -226,6 +228,19 @@ describe("CagrCalculator", () => {
     expect(
       screen.getByRole("heading", { name: "CAGR analysis" }),
     ).toBeVisible();
+    expect(
+      screen.getAllByTestId("animated-cagr-value")[2],
+    ).toHaveAccessibleName("$5,000,000");
+    expect(
+      screen.getAllByTestId("animated-cagr-value")[0],
+    ).toHaveAccessibleName("8.45%");
+    await user.selectOptions(screen.getByLabelText("Display currency"), "GBP");
+    expect(
+      screen.getAllByTestId("animated-cagr-value")[2],
+    ).toHaveAccessibleName("£5,000,000");
+    expect(
+      screen.getAllByTestId("animated-cagr-value")[0],
+    ).toHaveAccessibleName("8.45%");
     expect(container.textContent).not.toMatch(/[가-힣]/);
   });
 });
