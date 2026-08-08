@@ -7,14 +7,17 @@ export function localizedDestination(
   const normalizedPathname = pathname.startsWith("/")
     ? pathname
     : `/${pathname}`;
-  const localizedPathname = normalizedPathname.replace(
-    /^\/(?:ko|en)(?=\/|$)/,
-    `/${locale}`,
-  );
+  const localizedMatch = normalizedPathname.match(/^\/(?:ko|en)(\/.*)?$/);
 
-  if (localizedPathname !== normalizedPathname) {
-    return localizedPathname;
+  if (localizedMatch) {
+    const pathWithoutLocale = localizedMatch[1] ?? "/";
+
+    return /^\/(?:finance|employment)(?:\/|$)/.test(pathWithoutLocale)
+      ? `/${locale}${pathWithoutLocale}`
+      : pathWithoutLocale;
   }
 
-  return `/${locale}${normalizedPathname === "/" ? "" : normalizedPathname}`;
+  return /^\/(?:finance|employment)(?:\/|$)/.test(normalizedPathname)
+    ? `/${locale}${normalizedPathname}`
+    : normalizedPathname;
 }

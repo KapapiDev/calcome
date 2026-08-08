@@ -19,13 +19,20 @@ describe("localizedDestination", () => {
     }
   });
 
-  it("preserves localized non-calculator routes instead of falling back to a calculator", () => {
-    expect(localizedDestination("/ko/calculators", "en")).toBe(
-      "/en/calculators",
+  it("keeps shared pages on their canonical locale-less routes", () => {
+    expect(localizedDestination("/ko/calculators", "en")).toBe("/calculators");
+    expect(localizedDestination("/en/about", "ko")).toBe("/about");
+    expect(localizedDestination("/", "en")).toBe("/");
+    expect(localizedDestination("calculators", "ko")).toBe("/calculators");
+  });
+
+  it("localizes legacy calculator routes without creating a second redirect", () => {
+    expect(localizedDestination("/finance/cagr", "en")).toBe(
+      "/en/finance/cagr",
     );
-    expect(localizedDestination("/en/about", "ko")).toBe("/ko/about");
-    expect(localizedDestination("/", "en")).toBe("/en");
-    expect(localizedDestination("calculators", "ko")).toBe("/ko/calculators");
+    expect(localizedDestination("employment/net-salary", "ko")).toBe(
+      "/ko/employment/net-salary",
+    );
   });
 });
 
