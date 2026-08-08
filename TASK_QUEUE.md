@@ -153,7 +153,7 @@ UX-007
 
 Title: Full-Site Accessibility and Visual Consistency Regression
 
-Status: OPEN
+Status: BLOCKED
 
 Priority: HIGH
 
@@ -207,12 +207,13 @@ SEO-FIX-001
 
 Title: Canonical Host, Locale Route, Hreflang, and Sitemap Consolidation
 
-Status: BLOCKED
+Status: OPEN
 
 Priority: CRITICAL
 
 Trigger evidence:
 
+- The 2026-08-08 Search Console Page Indexing screenshot reports 48 indexed pages and 85 unindexed pages, including 5 `Not found (404)`, 25 `Discovered - currently not indexed`, 17 redirect pages, and 1 `Crawled - currently not indexed`. The screenshot provides counts rather than example URLs, so reproduce and classify repository URLs before changing behavior.
 - The 2026-07-29 Search Console export surfaced the same calculator families across `www/non-www`, locale-less `/finance/*`, Korean `/ko/*`, and English `/en/*` URLs.
 - This report contains historical search data, so reproduce the current production behavior before changing redirects or canonical tags. Do not claim a live defect from historical rows alone.
 
