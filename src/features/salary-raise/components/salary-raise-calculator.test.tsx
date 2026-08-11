@@ -1,8 +1,34 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import userEvent from "@testing-library/user-event";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { SalaryRaiseCalculator } from "./salary-raise-calculator";
+
 Element.prototype.scrollIntoView = vi.fn();
+
 describe("SalaryRaiseCalculator", () => {
+  beforeEach(() => {
+    window.localStorage.clear();
+  });
+
+  it("defaults English monetary results to USD and persists eligible choices", async () => {
+    const user = userEvent.setup();
+    render(<SalaryRaiseCalculator locale="en" />);
+
+    const currency = screen.getByLabelText("Display currency");
+    expect(currency).toHaveValue("USD");
+
+    await user.type(screen.getByLabelText("Current salary"), "120000");
+    await user.type(screen.getByLabelText("Raise rate"), "5");
+    await user.click(
+      screen.getByRole("button", { name: "Calculate raised salary" }),
+    );
+    expect(screen.getByText("$126,000.00")).toBeVisible();
+
+    await user.selectOptions(currency, "GBP");
+    expect(window.localStorage.getItem("calcome.currency")).toBe("GBP");
+    expect(screen.getByText("£126,000.00")).toBeVisible();
+  });
+
   it("starts empty, calculates, and resets", () => {
     render(<SalaryRaiseCalculator locale="ko" />);
     const salary = screen.getByLabelText("현재 급여");
@@ -18,6 +44,7 @@ describe("SalaryRaiseCalculator", () => {
     expect(salary).toHaveValue("");
     expect(screen.getByRole("radio", { name: /연봉/ })).toBeChecked();
   });
+
   it("clears a stale result when localized validation fails", () => {
     render(<SalaryRaiseCalculator locale="en" />);
     const salary = screen.getByLabelText("Current salary");
