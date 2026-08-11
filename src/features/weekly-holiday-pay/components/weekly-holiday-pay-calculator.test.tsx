@@ -50,7 +50,7 @@ describe("WeeklyHolidayPayCalculator input safety", () => {
     const user = userEvent.setup();
     render(<WeeklyHolidayPayCalculator locale="en" />);
 
-    await user.type(screen.getByLabelText("Hourly wage"), "12000");
+    await user.type(screen.getByLabelText("Hourly wage (KRW)"), "12000");
     await user.type(screen.getByLabelText("Scheduled weekly hours"), "15.5");
     await user.click(
       screen.getByRole("button", { name: "Calculate holiday pay" }),
@@ -65,11 +65,28 @@ describe("WeeklyHolidayPayCalculator input safety", () => {
     );
   });
 
+  it("makes the South Korea and KRW scope visible before English input", () => {
+    render(<WeeklyHolidayPayCalculator locale="en" />);
+
+    expect(
+      screen.getByRole("heading", {
+        name: "South Korea work conditions (KRW)",
+      }),
+    ).toBeVisible();
+    expect(screen.getByLabelText("Hourly wage (KRW)")).toBeVisible();
+    expect(
+      screen.getByRole("heading", {
+        name: "Estimated South Korea results (KRW)",
+      }),
+    ).toBeVisible();
+    expect(screen.getByText("Weekly holiday pay (KRW)")).toBeVisible();
+  });
+
   it("clears a previously calculated result when a later submission is invalid", async () => {
     const user = userEvent.setup();
     render(<WeeklyHolidayPayCalculator locale="en" />);
 
-    const wageInput = screen.getByLabelText("Hourly wage");
+    const wageInput = screen.getByLabelText("Hourly wage (KRW)");
     const hoursInput = screen.getByLabelText("Scheduled weekly hours");
 
     await user.type(wageInput, "12000");
@@ -98,7 +115,7 @@ describe("WeeklyHolidayPayCalculator input safety", () => {
     const user = userEvent.setup();
     render(<WeeklyHolidayPayCalculator locale="en" />);
 
-    await user.type(screen.getByLabelText("Hourly wage"), "invalid");
+    await user.type(screen.getByLabelText("Hourly wage (KRW)"), "invalid");
     await user.type(screen.getByLabelText("Scheduled weekly hours"), "15.5");
     await user.click(
       screen.getByRole("button", { name: "Calculate holiday pay" }),
