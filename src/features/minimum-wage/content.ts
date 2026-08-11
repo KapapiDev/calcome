@@ -57,42 +57,43 @@ export const minimumWageContent = {
     ] as const,
   },
   en: {
-    title: "Minimum Wage Calculator",
-    metaTitle: "2026 Korean Minimum Wage Calculator",
+    title: "South Korea Minimum Wage Calculator",
+    metaTitle: "2026 South Korea Minimum Wage Calculator | KRW",
     description:
-      "Estimate minimum pay by scheduled weekly hours using Korea's 2026 minimum hourly wage of KRW 10,320.",
+      "Estimate South Korea minimum pay in KRW by scheduled weekly hours using the 2026 statutory minimum hourly wage of KRW 10,320.",
     category: "Employment calculator",
     intro:
-      "Distinguish the estimate for your entered hours from the official 209-hour monthly minimum for 40 weekly hours plus eight paid weekly-holiday hours.",
-    input: "Working hours",
+      "This South Korea calculator keeps all wage amounts in KRW and distinguishes your entered-hours estimate from the official 209-hour monthly minimum for 40 weekly hours plus eight paid weekly-holiday hours.",
+    input: "South Korea working hours (KRW pay basis)",
     weeklyHours: "Scheduled weekly hours",
     holiday:
       "Include paid weekly-holiday hours (only for at least 15 weekly hours)",
     calculate: "Calculate minimum pay",
     reset: "Reset",
-    result: "2026 minimum-wage basis",
-    hourly: "2026 minimum hourly wage",
-    weekly: "Estimated weekly pay for entered hours",
-    monthly: "Monthly-equivalent estimate for entered hours",
-    officialMonthly: "Official 209-hour monthly minimum",
+    result: "2026 South Korea minimum-wage basis (KRW)",
+    hourly: "2026 minimum hourly wage (KRW)",
+    weekly: "Estimated weekly pay for entered hours (KRW)",
+    monthly: "Monthly-equivalent estimate for entered hours (KRW)",
+    officialMonthly: "Official 209-hour monthly minimum (KRW)",
     paidHolidayHours: "Applied paid weekly-holiday hours",
     totalPaidHours: "Total weekly paid hours",
     weeklyHoursResult: "Entered scheduled weekly hours",
     error: "Enter scheduled weekly hours greater than 0 and no more than 40.",
     resultNote:
-      "The monthly-equivalent estimate uses the precise annual average of 365÷7÷12 weeks and is not an official published monthly wage.",
+      "This South Korea KRW estimate uses the precise annual average of 365÷7÷12 weeks and is not an official published monthly wage.",
     underFifteenNotice:
       "Below 15 weekly hours, paid weekly-holiday hours do not apply. They are calculated as 0 regardless of the checkbox.",
     holidayAppliedNotice:
       "Paid weekly-holiday hours require actual eligibility conditions in addition to at least 15 weekly hours, including completed scheduled workdays.",
     explanationTitle: "Calculation basis",
     explanation: [
-      "Uses the 2026 statutory minimum hourly wage of KRW 10,320.",
+      "Uses South Korea's 2026 statutory minimum hourly wage of KRW 10,320.",
       "Paid weekly-holiday hours apply only when selected at 15 or more weekly hours: weekly hours divided by five, capped at eight.",
       "The official monthly minimum is KRW 2,156,880: KRW 10,320 × 209 hours for 40 weekly hours plus eight paid weekly-holiday hours.",
     ],
     cautionsTitle: "Important cautions",
     cautions: [
+      "This calculator applies South Korea minimum-wage rules and reports monetary amounts only in KRW.",
       "Coverage and includable wages can differ by contract, industry, probation status, and statutory exceptions.",
       "Paid weekly-holiday hours require actual eligibility conditions, including at least 15 weekly hours and completed scheduled workdays.",
       "This is a pre-tax estimate and does not replace a wage statement or legal determination.",
@@ -100,7 +101,7 @@ export const minimumWageContent = {
     faq: [
       [
         "What is the 2026 minimum hourly wage?",
-        "KRW 10,320; the eight-hour daily reference is KRW 82,560.",
+        "South Korea's 2026 statutory minimum hourly wage is KRW 10,320; the eight-hour daily reference is KRW 82,560.",
       ],
       [
         "What is the official monthly minimum?",
@@ -108,7 +109,7 @@ export const minimumWageContent = {
       ],
       [
         "Do paid weekly-holiday hours apply below 15 hours?",
-        "No. This calculator always applies zero hours below 15 weekly hours.",
+        "No. This South Korea calculator always applies zero hours below 15 weekly hours.",
       ],
     ] as const,
   },
