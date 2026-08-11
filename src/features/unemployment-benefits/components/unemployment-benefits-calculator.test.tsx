@@ -115,7 +115,10 @@ describe("UnemploymentBenefitsCalculator", () => {
     });
     const user = userEvent.setup();
     render(<UnemploymentBenefitsCalculator locale="en" />);
-    await user.type(screen.getByLabelText("Average daily wage *"), "200000");
+    await user.type(
+      screen.getByLabelText("Average daily wage (KRW) *"),
+      "200000",
+    );
     await user.type(
       screen.getByLabelText("Employment-insurance period *"),
       "48",
