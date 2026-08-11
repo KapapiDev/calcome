@@ -79,7 +79,8 @@ export const annualLeaveContent = {
     granted: "Granted days",
     seniority: "Seniority addition",
     remaining: "Remaining days",
-    empty: "Enter your South Korea employment conditions to estimate annual leave.",
+    empty:
+      "Enter your South Korea employment conditions to estimate annual leave.",
     note: "This South Korea result is a simple KRW estimate: ordinary hourly wage × daily hours × remaining days. Actual pay can differ if average wage applies or due to company rules, protected absences, and leave-use promotion.",
     explanationTitle: "Calculation basis",
     explanation: [
