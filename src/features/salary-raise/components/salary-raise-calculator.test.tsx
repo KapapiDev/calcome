@@ -38,9 +38,7 @@ describe("SalaryRaiseCalculator", () => {
     fireEvent.change(screen.getByLabelText("인상률"), {
       target: { value: "5" },
     });
-    fireEvent.click(
-      screen.getByRole("button", { name: "인상 급여 계산하기" }),
-    );
+    fireEvent.click(screen.getByRole("button", { name: "인상 급여 계산하기" }));
     expect(screen.getByText("현재 연봉")).toBeVisible();
     fireEvent.click(screen.getByRole("button", { name: "초기화" }));
     expect(salary).toHaveValue("");
