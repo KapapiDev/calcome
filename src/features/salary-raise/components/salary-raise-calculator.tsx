@@ -66,14 +66,18 @@ export function SalaryRaiseCalculator({
     setResult(null);
   }
 
-  const money = (value: SalaryRaiseResult[keyof SalaryRaiseResult] | undefined) => {
-    if (value === undefined || typeof value === "string") return "-";
-    return formatDisplayCurrency(
-      value.toDecimalPlaces(2).toNumber(),
-      locale,
-      currency,
-    );
-  };
+  const money = (
+    value:
+      | { toDecimalPlaces: (places: number) => { toNumber: () => number } }
+      | undefined,
+  ) =>
+    value === undefined
+      ? "-"
+      : formatDisplayCurrency(
+          value.toDecimalPlaces(2).toNumber(),
+          locale,
+          currency,
+        );
 
   return (
     <section aria-labelledby="salary-raise-title">
