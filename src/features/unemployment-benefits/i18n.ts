@@ -98,21 +98,21 @@ const en = {
       "Estimate 2026 Korean job-seeking benefit amounts and duration from average daily wage, insured period, age, and working hours.",
     category: "Employment calculator",
     description:
-      "Estimate the daily job-seeking benefit, prescribed benefit days, and total from wage and employment-insurance history.",
+      "Estimate South Korean job-seeking benefits in KRW from wage and employment-insurance history.",
     intro:
-      "Actual eligibility depends on separation reason, insured qualifying days, job-seeking activity, and an employment-center review.",
+      "Actual eligibility depends on separation reason, insured qualifying days, job-seeking activity, and a South Korean employment-center review.",
     home: "Home",
     calculators: "Calculators",
     breadcrumb: "Breadcrumb",
     explanationTitle: "How it is calculated",
     explanation: [
       "First calculate 60% of average daily wage.",
-      "Apply the 2026 minimum-wage floor and statutory daily cap.",
+      "Apply the 2026 South Korean minimum-wage floor and statutory daily cap.",
       "Use insured months and age or disability to select 120–270 prescribed days.",
     ],
     assumptionsTitle: "Assumptions and cautions",
     assumptions: [
-      "This is a simplified estimate for regular employees; other insured-worker categories use different rules.",
+      "This is a simplified South Korea estimate for regular employees; other insured-worker categories use different rules.",
       "Average daily wage generally means the prior three months' wage total divided by calendar days in that period.",
       "Waiting periods, repeat-claim reductions, extensions, and recognized unemployment days are excluded.",
       "This estimate does not guarantee eligibility or payment.",
@@ -142,8 +142,8 @@ const en = {
     inputEyebrow: "Inputs",
     inputTitle: "Benefit details",
     inputDescription:
-      "Enter details for a simplified regular-employee estimate.",
-    averageDailyWage: "Average daily wage",
+      "Enter South Korean regular-employee details. All wage and benefit amounts are in KRW.",
+    averageDailyWage: "Average daily wage (KRW)",
     wagePlaceholder: "e.g. 100,000",
     insuredMonths: "Employment-insurance period",
     monthsPlaceholder: "e.g. 48",
@@ -158,12 +158,12 @@ const en = {
     reset: "Reset",
     errorSummary: "Check the highlighted values.",
     resultEyebrow: "Estimate",
-    resultTitle: "Job-seeking benefits",
+    resultTitle: "Job-seeking benefits (KRW)",
     dailyBenefit: "Daily benefit",
     benefitDays: "Prescribed days",
     totalBenefit: "Estimated total",
     resultNote:
-      "A 2026 simulation; the employment center determines actual eligibility and payment.",
+      "A 2026 South Korea simulation; all monetary amounts are KRW and the employment center determines actual eligibility and payment.",
     timelineTitle: "Estimated benefit period",
     timelineDescription:
       "Prescribed days based on insured period and age or disability",
