@@ -2,12 +2,16 @@
 
 import { type FormEvent, useState } from "react";
 import {
+  CurrencySelector,
+  formatDisplayCurrency,
+  useDisplayCurrency,
+} from "@/components/calculators/currency-selector";
+import {
   PrimaryResults,
   compactCalculatorSettingsClass,
   dashboardCalculatorWorkspaceClass,
 } from "@/components/calculators/calculator-workspace";
 import { Button } from "@/components/ui/button";
-import { AnimatedWon } from "@/features/compound-interest/components/animated-won";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
 import { formatMoneyInput } from "@/lib/input/money";
 import {
@@ -20,16 +24,6 @@ import { validateSalaryRaise, type SalaryRaiseErrors } from "../validation";
 
 const fieldClass =
   "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none placeholder:text-muted-foreground/70 focus-visible:ring-3 focus-visible:ring-ring/30 aria-invalid:border-destructive sm:text-sm";
-const won = (
-  value: { toDecimalPlaces: (places: number) => { toNumber: () => number } },
-  locale: SalaryRaiseLocale,
-) =>
-  `${value
-    .toDecimalPlaces(0)
-    .toNumber()
-    .toLocaleString(
-      locale === "ko" ? "ko-KR" : "en-US",
-    )} ${locale === "ko" ? "원" : "KRW"}`;
 
 export function SalaryRaiseCalculator({
   locale,
@@ -37,18 +31,19 @@ export function SalaryRaiseCalculator({
   locale: SalaryRaiseLocale;
 }) {
   const copy = salaryRaiseContent[locale];
+  const { currency } = useDisplayCurrency(locale);
   const [period, setPeriod] = useState<SalaryPeriod>("annual");
   const [salary, setSalary] = useState("");
   const [raiseRate, setRaiseRate] = useState("");
   const [errors, setErrors] = useState<SalaryRaiseErrors>({});
   const [result, setResult] = useState<SalaryRaiseResult | null>(null);
-  const [animationKey, setAnimationKey] = useState(0);
   const {
     resultRef,
     noteNumericInputFocus,
     requestResultScroll,
     cancelResultScroll,
   } = useStableResultScroll(result);
+
   function submit(event: FormEvent) {
     event.preventDefault();
     const checked = validateSalaryRaise({ salary, raiseRate, period }, locale);
@@ -60,8 +55,8 @@ export function SalaryRaiseCalculator({
     }
     requestResultScroll();
     setResult(calculateSalaryRaise(checked.data));
-    setAnimationKey((value) => value + 1);
   }
+
   function reset() {
     cancelResultScroll();
     setPeriod("annual");
@@ -70,6 +65,16 @@ export function SalaryRaiseCalculator({
     setErrors({});
     setResult(null);
   }
+
+  const money = (value: SalaryRaiseResult[keyof SalaryRaiseResult] | undefined) => {
+    if (value === undefined || typeof value === "string") return "-";
+    return formatDisplayCurrency(
+      value.toDecimalPlaces(2).toNumber(),
+      locale,
+      currency,
+    );
+  };
+
   return (
     <section aria-labelledby="salary-raise-title">
       <div className={dashboardCalculatorWorkspaceClass}>
@@ -110,6 +115,7 @@ export function SalaryRaiseCalculator({
               ))}
             </div>
           </fieldset>
+          <CurrencySelector locale={locale} />
           <label className="mt-4 block text-sm font-medium">
             {copy.salary}
             <input
@@ -176,31 +182,16 @@ export function SalaryRaiseCalculator({
               metrics={[
                 {
                   label: copy.newAnnual,
-                  value: (
-                    <AnimatedWon
-                      value={result?.newAnnualSalary ?? null}
-                      animationKey={animationKey}
-                    />
-                  ),
+                  value: money(result?.newAnnualSalary),
                   featured: true,
                 },
                 {
                   label: copy.annualIncrease,
-                  value: (
-                    <AnimatedWon
-                      value={result?.annualIncrease ?? null}
-                      animationKey={animationKey}
-                    />
-                  ),
+                  value: money(result?.annualIncrease),
                 },
                 {
                   label: copy.monthlyIncrease,
-                  value: (
-                    <AnimatedWon
-                      value={result?.monthlyIncrease ?? null}
-                      animationKey={animationKey}
-                    />
-                  ),
+                  value: money(result?.monthlyIncrease),
                 },
               ]}
             />
@@ -214,15 +205,15 @@ export function SalaryRaiseCalculator({
               <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
                 <Detail
                   label={copy.currentAnnual}
-                  value={won(result.currentAnnualSalary, locale)}
+                  value={money(result.currentAnnualSalary)}
                 />
                 <Detail
                   label={copy.currentMonthly}
-                  value={won(result.currentMonthlySalary, locale)}
+                  value={money(result.currentMonthlySalary)}
                 />
                 <Detail
                   label={copy.newMonthly}
-                  value={won(result.newMonthlySalary, locale)}
+                  value={money(result.newMonthlySalary)}
                 />
                 <Detail
                   label={copy.appliedRate}
@@ -238,6 +229,7 @@ export function SalaryRaiseCalculator({
     </section>
   );
 }
+
 function Detail({ label, value }: { label: string; value: string }) {
   return (
     <div>
