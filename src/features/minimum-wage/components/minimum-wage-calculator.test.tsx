@@ -22,7 +22,9 @@ describe("MinimumWageCalculator", () => {
     await user.click(
       screen.getByRole("button", { name: "Calculate minimum pay" }),
     );
-    expect(screen.getByText("Official 209-hour monthly minimum")).toBeVisible();
+    expect(
+      screen.getByText("Official 209-hour monthly minimum (KRW)"),
+    ).toBeVisible();
     expect(screen.getByText("₩2156880")).toBeVisible();
     await user.click(screen.getByRole("button", { name: "Reset" }));
     expect(screen.getByLabelText("Scheduled weekly hours")).toHaveValue("");
@@ -46,7 +48,9 @@ describe("MinimumWageCalculator", () => {
     await user.click(
       screen.getByRole("button", { name: "Calculate minimum pay" }),
     );
-    expect(screen.getByText("Official 209-hour monthly minimum")).toBeVisible();
+    expect(
+      screen.getByText("Official 209-hour monthly minimum (KRW)"),
+    ).toBeVisible();
 
     await user.clear(hours);
     await user.type(hours, "invalid");
@@ -58,7 +62,7 @@ describe("MinimumWageCalculator", () => {
     expect(hours).toHaveAttribute("aria-invalid", "true");
     expect(hours).toHaveAttribute("aria-describedby", alert.id);
     expect(
-      screen.queryByText("Official 209-hour monthly minimum"),
+      screen.queryByText("Official 209-hour monthly minimum (KRW)"),
     ).not.toBeInTheDocument();
   });
 });
