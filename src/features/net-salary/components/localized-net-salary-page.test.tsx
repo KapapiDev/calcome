@@ -12,10 +12,18 @@ describe("LocalizedNetSalaryPage", () => {
       container.querySelector('script[type="application/ld+json"]'),
     ).toHaveTextContent("BreadcrumbList");
   });
-  it("renders English without Korean shared calculator copy", () => {
+  it("renders English with South Korea and KRW scope", () => {
     const { container } = render(<LocalizedNetSalaryPage locale="en" />);
     expect(
-      screen.getByRole("heading", { name: "Korean Net Salary Calculator" }),
+      screen.getByRole("heading", {
+        name: "South Korea Net Salary Calculator",
+        level: 1,
+      }),
+    ).toBeVisible();
+    expect(
+      screen.getByRole("heading", {
+        name: "South Korea salary details (KRW)",
+      }),
     ).toBeVisible();
     expect(container.textContent).not.toMatch(/[가-힣]/);
   });
