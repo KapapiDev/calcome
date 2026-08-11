@@ -37,7 +37,7 @@ describe("AnnualLeaveCalculator", () => {
 
   it("resets validation state and inputs", () => {
     render(<AnnualLeaveCalculator locale="en" />);
-    const hourlyWage = screen.getByLabelText("Ordinary hourly wage");
+    const hourlyWage = screen.getByLabelText("Ordinary hourly wage (KRW)");
 
     fireEvent.click(screen.getByRole("button", { name: "Calculate leave" }));
     expect(screen.getByRole("alert")).toBeInTheDocument();
@@ -47,5 +47,24 @@ describe("AnnualLeaveCalculator", () => {
 
     expect(hourlyWage).toHaveValue("");
     expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+  });
+
+  it("makes the South Korea and KRW scope explicit in English", () => {
+    render(<AnnualLeaveCalculator locale="en" />);
+
+    expect(
+      screen.getByRole("heading", {
+        name: "South Korea service and attendance inputs (KRW)",
+      }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", {
+        name: "Estimated South Korea allowance (KRW)",
+      }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByLabelText("Ordinary hourly wage (KRW)"),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole("combobox")).not.toBeInTheDocument();
   });
 });
