@@ -62,7 +62,9 @@ describe("AnnualLeaveCalculator", () => {
         name: "Estimated South Korea allowance (KRW)",
       }),
     ).toBeInTheDocument();
-    expect(screen.getByLabelText("Ordinary hourly wage (KRW)")).toBeInTheDocument();
+    expect(
+      screen.getByLabelText("Ordinary hourly wage (KRW)"),
+    ).toBeInTheDocument();
     expect(screen.queryByRole("combobox")).not.toBeInTheDocument();
   });
 });
