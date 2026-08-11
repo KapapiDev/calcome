@@ -27,9 +27,23 @@ describe("SocialInsuranceCalculator", () => {
       screen.getByText(/실업급여 0.9%와 선택한 고용안정/),
     ).toBeInTheDocument();
   });
+  it("makes the English South Korea and KRW scope explicit", () => {
+    render(<SocialInsuranceCalculator locale="en" />);
+    expect(screen.getByLabelText("Monthly pay (KRW)")).toBeInTheDocument();
+    expect(screen.getByLabelText("Monthly tax-free pay (KRW)")).toBeInTheDocument();
+    expect(
+      screen.getByText(/Enter South Korean monthly pay in KRW/),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Monthly contributions (KRW)" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/all amounts are KRW/),
+    ).toBeInTheDocument();
+  });
   it("shows English validation instead of creating a result", () => {
     render(<SocialInsuranceCalculator locale="en" />);
-    fireEvent.change(screen.getByLabelText("Monthly pay"), {
+    fireEvent.change(screen.getByLabelText("Monthly pay (KRW)"), {
       target: { value: "." },
     });
     fireEvent.click(
