@@ -2,12 +2,16 @@
 
 import { type FormEvent, useState } from "react";
 import {
+  CurrencySelector,
+  formatDisplayCurrency,
+  useDisplayCurrency,
+} from "@/components/calculators/currency-selector";
+import {
   PrimaryResults,
   compactCalculatorSettingsClass,
   dashboardCalculatorWorkspaceClass,
 } from "@/components/calculators/calculator-workspace";
 import { Button } from "@/components/ui/button";
-import { AnimatedWon } from "@/features/compound-interest/components/animated-won";
 import { formatMoneyInput } from "@/lib/input/money";
 import { calculateSalaryConversion, type SalaryPeriod } from "../calculate";
 import {
@@ -22,13 +26,14 @@ export function SalaryConversionCalculator({
   locale: SalaryConversionLocale;
 }) {
   const copy = salaryConversionContent[locale];
+  const { currency } = useDisplayCurrency(locale);
   const [period, setPeriod] = useState<SalaryPeriod>("annual");
   const [salary, setSalary] = useState("");
   const [error, setError] = useState("");
   const [result, setResult] = useState<ReturnType<
     typeof calculateSalaryConversion
   > | null>(null);
-  const [animationKey, setAnimationKey] = useState(0);
+
   function submit(event: FormEvent) {
     event.preventDefault();
     const checked = validateSalaryConversion({ salary, period }, locale);
@@ -39,14 +44,18 @@ export function SalaryConversionCalculator({
     }
     setError("");
     setResult(calculateSalaryConversion(checked.data));
-    setAnimationKey((key) => key + 1);
   }
+
   function reset() {
     setPeriod("annual");
     setSalary("");
     setError("");
     setResult(null);
   }
+
+  const money = (value: number | undefined) =>
+    value === undefined ? "-" : formatDisplayCurrency(value, locale, currency);
+
   return (
     <section aria-labelledby="salary-conversion-title">
       <div className={dashboardCalculatorWorkspaceClass}>
@@ -90,6 +99,7 @@ export function SalaryConversionCalculator({
               ))}
             </div>
           </fieldset>
+          <CurrencySelector locale={locale} />
           <label className="mt-4 block text-sm font-medium">
             {copy.salary}
             <input
@@ -122,31 +132,16 @@ export function SalaryConversionCalculator({
             metrics={[
               {
                 label: copy.annualSalary,
-                value: (
-                  <AnimatedWon
-                    value={result?.annualSalary ?? null}
-                    animationKey={animationKey}
-                  />
-                ),
+                value: money(result?.annualSalary.toNumber()),
                 featured: true,
               },
               {
                 label: copy.monthlySalary,
-                value: (
-                  <AnimatedWon
-                    value={result?.monthlySalary ?? null}
-                    animationKey={animationKey}
-                  />
-                ),
+                value: money(result?.monthlySalary.toNumber()),
               },
               {
                 label: copy.weeklySalary,
-                value: (
-                  <AnimatedWon
-                    value={result?.weeklySalary ?? null}
-                    animationKey={animationKey}
-                  />
-                ),
+                value: money(result?.weeklySalary.toNumber()),
               },
             ]}
           />
