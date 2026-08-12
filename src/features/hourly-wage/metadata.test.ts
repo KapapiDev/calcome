@@ -22,6 +22,9 @@ describe("hourly wage metadata", () => {
     expect(en.alternates).toMatchObject({
       canonical: "/en/employment/hourly-wage",
     });
+    expect(en.title).toContain("South Korea Hourly Wage Calculator");
+    expect(en.description).toContain("KRW");
+    expect(en.description).toContain("South Korea minimum wage");
     expect(en.twitter).toMatchObject({ card: "summary_large_image" });
   });
 });
