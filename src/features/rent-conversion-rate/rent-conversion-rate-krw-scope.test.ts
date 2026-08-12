@@ -13,13 +13,15 @@ describe("Rent Conversion Rate Calculator English KRW scope", () => {
     expect(copy.monthlyDeposit).toMatch(/KRW/);
     expect(copy.monthlyRent).toMatch(/KRW/);
     expect(copy.result).toMatch(/KRW/);
-    expect(copy.cautions.join(" ")).toMatch(/does not perform foreign-exchange conversion/);
+    expect(copy.cautions.join(" ")).toMatch(
+      /does not perform foreign-exchange conversion/,
+    );
   });
 
   it("carries the South Korea scope into English metadata", () => {
     const metadata = createRentConversionRateMetadata("en");
 
-    expect(metadata.title).toMatch(/South Korea/);
-    expect(metadata.description).toMatch(/South Korea.*KRW/);
+    expect(String(metadata.title)).toMatch(/South Korea/);
+    expect(String(metadata.description)).toMatch(/South Korea.*KRW/);
   });
 });
