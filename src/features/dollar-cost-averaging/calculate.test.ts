@@ -48,10 +48,30 @@ describe("calculateDollarCostAveraging", () => {
   });
 
   it.each([
-    { initialInvestment: -1, monthlyContribution: 0, annualReturnPercent: 0, years: 1 },
-    { initialInvestment: 0, monthlyContribution: -1, annualReturnPercent: 0, years: 1 },
-    { initialInvestment: 0, monthlyContribution: 0, annualReturnPercent: -100, years: 1 },
-    { initialInvestment: 0, monthlyContribution: 0, annualReturnPercent: 0, years: 0 },
+    {
+      initialInvestment: -1,
+      monthlyContribution: 0,
+      annualReturnPercent: 0,
+      years: 1,
+    },
+    {
+      initialInvestment: 0,
+      monthlyContribution: -1,
+      annualReturnPercent: 0,
+      years: 1,
+    },
+    {
+      initialInvestment: 0,
+      monthlyContribution: 0,
+      annualReturnPercent: -100,
+      years: 1,
+    },
+    {
+      initialInvestment: 0,
+      monthlyContribution: 0,
+      annualReturnPercent: 0,
+      years: 0,
+    },
   ])("rejects invalid inputs: %o", (input) => {
     expect(() => calculateDollarCostAveraging(input)).toThrow(RangeError);
   });
