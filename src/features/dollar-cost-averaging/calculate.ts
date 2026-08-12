@@ -34,7 +34,8 @@ export function calculateDollarCostAveraging(
   }
 
   const months = Math.round(years * 12);
-  if (months < 1) throw new RangeError("Investment period must be at least one month");
+  if (months < 1)
+    throw new RangeError("Investment period must be at least one month");
 
   const monthlyRate = annualReturnPercent / 100 / 12;
   const growthFactor = (1 + monthlyRate) ** months;
