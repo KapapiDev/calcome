@@ -38,7 +38,7 @@ describe("HourlyWageCalculator", () => {
     const user = userEvent.setup();
     render(<HourlyWageCalculator locale="en" />);
 
-    await user.type(screen.getByLabelText("Pay amount"), "12000");
+    await user.type(screen.getByLabelText("Pay amount (KRW)"), "12000");
     await user.selectOptions(screen.getByLabelText("Pay period"), "hourly");
     await user.type(screen.getByLabelText("Scheduled daily hours"), "7.5");
     await user.type(screen.getByLabelText("Scheduled weekly hours"), "15.5");
@@ -51,7 +51,7 @@ describe("HourlyWageCalculator", () => {
       "₩12,000",
     );
     expect(
-      screen.getByRole("table", { name: "Pay equivalents" }),
+      screen.getByRole("table", { name: "South Korea pay equivalents (KRW)" }),
     ).toBeVisible();
     expect(screen.getByRole("img")).toHaveAccessibleName(/₩12,000/);
   });
