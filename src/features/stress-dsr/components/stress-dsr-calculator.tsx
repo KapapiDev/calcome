@@ -41,7 +41,9 @@ export function StressDsrCalculator({ locale }: { locale: StressDsrLocale }) {
         existingAnnualDebtService: new Decimal(
           values.existingAnnualDebtService.replaceAll(",", ""),
         ),
-        newLoanPrincipal: new Decimal(values.newLoanPrincipal.replaceAll(",", "")),
+        newLoanPrincipal: new Decimal(
+          values.newLoanPrincipal.replaceAll(",", ""),
+        ),
         annualInterestRate: new Decimal(values.annualInterestRate),
         stressRateAddOn: new Decimal(values.stressRateAddOn),
         termYears: new Decimal(values.termYears),
@@ -71,36 +73,110 @@ export function StressDsrCalculator({ locale }: { locale: StressDsrLocale }) {
   const setValue = (key: keyof Values, value: string) =>
     setValues((current) => ({ ...current, [key]: value }));
 
+  function reset() {
+    setValues(initialValues);
+    setResult(null);
+    setError(null);
+  }
+
   return (
     <section className="grid gap-4 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
-      <form onSubmit={submit} noValidate className="rounded-xl border bg-card p-5 shadow-sm">
+      <form
+        onSubmit={submit}
+        noValidate
+        className="rounded-xl border bg-card p-5 shadow-sm"
+      >
         <h2 className="text-xl font-semibold">
           {locale === "ko" ? "소득과 대출 조건" : "Income and loan inputs"}
         </h2>
-        {error ? <p role="alert" className="mt-3 text-sm text-destructive">{error}</p> : null}
-        <Field label={copy.annualIncome} value={values.annualIncome} suffix="KRW" onChange={(v) => setValue("annualIncome", v)} />
-        <Field label={copy.existingDebt} value={values.existingAnnualDebtService} suffix="KRW" onChange={(v) => setValue("existingAnnualDebtService", v)} />
-        <Field label={copy.newLoan} value={values.newLoanPrincipal} suffix="KRW" onChange={(v) => setValue("newLoanPrincipal", v)} />
-        <Field label={copy.interestRate} value={values.annualInterestRate} suffix="%" onChange={(v) => setValue("annualInterestRate", v)} />
-        <Field label={copy.stressRate} value={values.stressRateAddOn} suffix="%p" onChange={(v) => setValue("stressRateAddOn", v)} />
-        <Field label={copy.termYears} value={values.termYears} suffix={locale === "ko" ? "년" : "years"} onChange={(v) => setValue("termYears", v)} />
+        {error ? (
+          <p role="alert" className="mt-3 text-sm text-destructive">
+            {error}
+          </p>
+        ) : null}
+        <Field
+          label={copy.annualIncome}
+          value={values.annualIncome}
+          suffix="KRW"
+          onChange={(value) => setValue("annualIncome", value)}
+        />
+        <Field
+          label={copy.existingDebt}
+          value={values.existingAnnualDebtService}
+          suffix="KRW"
+          onChange={(value) => setValue("existingAnnualDebtService", value)}
+        />
+        <Field
+          label={copy.newLoan}
+          value={values.newLoanPrincipal}
+          suffix="KRW"
+          onChange={(value) => setValue("newLoanPrincipal", value)}
+        />
+        <Field
+          label={copy.interestRate}
+          value={values.annualInterestRate}
+          suffix="%"
+          onChange={(value) => setValue("annualInterestRate", value)}
+        />
+        <Field
+          label={copy.stressRate}
+          value={values.stressRateAddOn}
+          suffix="%p"
+          onChange={(value) => setValue("stressRateAddOn", value)}
+        />
+        <Field
+          label={copy.termYears}
+          value={values.termYears}
+          suffix={locale === "ko" ? "년" : "years"}
+          onChange={(value) => setValue("termYears", value)}
+        />
         <div className="mt-5 grid grid-cols-[1fr_auto] gap-2">
           <Button type="submit">{copy.calculate}</Button>
-          <Button type="button" variant="outline" onClick={() => { setValues(initialValues); setResult(null); setError(null); }}>{copy.reset}</Button>
+          <Button type="button" variant="outline" onClick={reset}>
+            {copy.reset}
+          </Button>
         </div>
       </form>
 
       <div className="space-y-4">
         <section className="rounded-xl border bg-card p-5 shadow-sm">
-          <h2 className="text-xl font-semibold">{locale === "ko" ? "비교 결과" : "Comparison results"}</h2>
+          <h2 className="text-xl font-semibold">
+            {locale === "ko" ? "비교 결과" : "Comparison results"}
+          </h2>
           <div className="mt-4 grid gap-3 sm:grid-cols-3">
-            <Metric label={copy.baseDsr} value={result ? `${result.base.dsrRate.toDecimalPlaces(1)}%` : "—"} />
-            <Metric label={copy.stressedDsr} value={result ? `${result.stressed.dsrRate.toDecimalPlaces(1)}%` : "—"} featured />
-            <Metric label={copy.increase} value={result ? `${result.dsrIncrease.toDecimalPlaces(1)}%p` : "—"} />
+            <Metric
+              label={copy.baseDsr}
+              value={
+                result ? `${result.base.dsrRate.toDecimalPlaces(1)}%` : "—"
+              }
+            />
+            <Metric
+              label={copy.stressedDsr}
+              value={
+                result ? `${result.stressed.dsrRate.toDecimalPlaces(1)}%` : "—"
+              }
+              featured
+            />
+            <Metric
+              label={copy.increase}
+              value={
+                result ? `${result.dsrIncrease.toDecimalPlaces(1)}%p` : "—"
+              }
+            />
           </div>
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
-            <Metric label={copy.basePayment} value={result ? formatKrw(result.base.monthlyPayment, locale) : "—"} />
-            <Metric label={copy.stressedPayment} value={result ? formatKrw(result.stressed.monthlyPayment, locale) : "—"} />
+            <Metric
+              label={copy.basePayment}
+              value={
+                result ? formatKrw(result.base.monthlyPayment, locale) : "—"
+              }
+            />
+            <Metric
+              label={copy.stressedPayment}
+              value={
+                result ? formatKrw(result.stressed.monthlyPayment, locale) : "—"
+              }
+            />
           </div>
         </section>
         <section className="rounded-xl border bg-card p-5 text-sm leading-7 text-muted-foreground shadow-sm">
@@ -112,19 +188,44 @@ export function StressDsrCalculator({ locale }: { locale: StressDsrLocale }) {
   );
 }
 
-function Field({ label, value, suffix, onChange }: { label: string; value: string; suffix: string; onChange: (value: string) => void }) {
+function Field({
+  label,
+  value,
+  suffix,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  suffix: string;
+  onChange: (value: string) => void;
+}) {
   return (
     <label className="mt-4 block text-sm font-medium">
       {label}
       <div className="relative">
-        <input inputMode="decimal" value={value} onChange={(event) => onChange(event.target.value)} className={`${fieldClass} pr-16`} />
-        <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center pt-1.5 text-sm text-muted-foreground">{suffix}</span>
+        <input
+          inputMode="decimal"
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          className={`${fieldClass} pr-16`}
+        />
+        <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center pt-1.5 text-sm text-muted-foreground">
+          {suffix}
+        </span>
       </div>
     </label>
   );
 }
 
-function Metric({ label, value, featured = false }: { label: string; value: string; featured?: boolean }) {
+function Metric({
+  label,
+  value,
+  featured = false,
+}: {
+  label: string;
+  value: string;
+  featured?: boolean;
+}) {
   return (
     <div className={`rounded-lg border p-4 ${featured ? "bg-muted/60" : ""}`}>
       <p className="text-sm text-muted-foreground">{label}</p>
