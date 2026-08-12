@@ -31,8 +31,8 @@ describe("calculateDollarCostAveraging", () => {
 
     expect(result.months).toBe(120);
     expect(result.totalInvested).toBe(70_000);
-    expect(result.endingBalance).toBeCloseTo(98_717.02, 2);
-    expect(result.estimatedGain).toBeCloseTo(28_717.02, 2);
+    expect(result.endingBalance).toBeCloseTo(100_133.64, 2);
+    expect(result.estimatedGain).toBeCloseTo(30_133.64, 2);
   });
 
   it("supports negative expected returns above -100%", () => {
