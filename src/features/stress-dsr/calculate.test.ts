@@ -29,7 +29,9 @@ describe("calculateStressDsr", () => {
     });
 
     expect(result.stressedAnnualInterestRate.eq(6)).toBe(true);
-    expect(result.stressed.monthlyPayment.gt(result.base.monthlyPayment)).toBe(true);
+    expect(
+      result.stressed.monthlyPayment.gt(result.base.monthlyPayment),
+    ).toBe(true);
     expect(result.stressed.dsrRate.gt(result.base.dsrRate)).toBe(true);
     expect(result.dsrIncrease.gt(0)).toBe(true);
   });
@@ -44,7 +46,9 @@ describe("calculateStressDsr", () => {
     expect(result.base.monthlyPayment.eq(new Decimal(100_000_000).div(240))).toBe(
       true,
     );
-    expect(result.stressed.monthlyPayment.gt(result.base.monthlyPayment)).toBe(true);
+    expect(
+      result.stressed.monthlyPayment.gt(result.base.monthlyPayment),
+    ).toBe(true);
   });
 
   it("rejects a negative stress add-on", () => {
