@@ -36,7 +36,12 @@ export const dollarCostAveragingCalculator = {
   name: "적립식 투자 계산기",
   description:
     "초기 투자금과 매월 적립액, 예상 연 수익률, 투자 기간으로 적립식 투자 결과를 계산합니다.",
-  keywords: ["적립식 투자", "DCA", "분할매수", "dollar cost averaging"],
+  keywords: [
+    "적립식 투자",
+    "DCA",
+    "분할매수",
+    "dollar cost averaging",
+  ],
   category: "금융",
   href: "/ko/finance/dollar-cost-averaging",
 } as const satisfies PublishedCalculator;
