@@ -4,8 +4,7 @@ export const stressDsrContent = {
   ko: {
     title: "스트레스 DSR 계산기",
     metaTitle: "스트레스 DSR 계산기 | 가산금리 적용 DSR 비교",
-    description:
-      "연소득과 대출 조건, 스트레스 가산금리를 입력해 기본 DSR과 스트레스 DSR을 비교합니다.",
+    description: "연소득과 대출 조건, 스트레스 가산금리를 입력해 기본 DSR과 스트레스 DSR을 비교합니다.",
     category: "대출·신용 계산기",
     intro:
       "대한민국 스트레스 DSR 제도의 원리를 기준으로 한 계획용 계산기입니다. 실제 적용 가산금리는 시기와 대출 유형에 따라 달라질 수 있습니다.",
@@ -22,10 +21,8 @@ export const stressDsrContent = {
     increase: "DSR 증가폭",
     basePayment: "기본 월 상환액",
     stressedPayment: "스트레스 적용 월 상환액",
-    note:
-      "금액은 KRW 기준입니다. 스트레스 금리는 실제 대출금리에 더해 납부하는 금리가 아니라 한도 심사를 위한 가산금리입니다.",
-    caution:
-      "금융기관의 인정소득, 대출 종류, 상환방식, 예외 규정과 최신 정책에 따라 실제 심사 결과는 달라질 수 있습니다.",
+    note: "금액은 KRW 기준입니다. 스트레스 금리는 실제 대출금리에 더해 납부하는 금리가 아니라 한도 심사를 위한 가산금리입니다.",
+    caution: "금융기관의 인정소득, 대출 종류, 상환방식, 예외 규정과 최신 정책에 따라 실제 심사 결과는 달라질 수 있습니다.",
   },
   en: {
     title: "South Korea Stress DSR Calculator",
