@@ -1,7 +1,4 @@
-import {
-  publishedCalculators,
-  type PublishedCalculator,
-} from "./calculators";
+import { publishedCalculators, type PublishedCalculator } from "./calculators";
 
 export type CalculatorDirectoryCategory = {
   id:
