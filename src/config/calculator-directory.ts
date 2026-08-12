@@ -38,15 +38,27 @@ export const dollarCostAveragingCalculator = {
   href: "/ko/finance/dollar-cost-averaging",
 } as const satisfies PublishedCalculator;
 
+export const stressDsrCalculator = {
+  id: "stress-dsr",
+  name: "스트레스 DSR 계산기",
+  description:
+    "기본 대출금리와 스트레스 가산금리를 적용한 DSR과 월 상환액을 비교합니다.",
+  keywords: ["스트레스 DSR", "스트레스 금리", "대출 한도", "stress dsr"],
+  category: "금융",
+  href: "/ko/finance/stress-dsr",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...publishedCalculators,
   dividendYieldCalculator,
   dollarCostAveragingCalculator,
+  stressDsrCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 const directoryAliases: Readonly<Record<string, readonly string[]>> = {
   ltv: ["주담대", "담보대출"],
   dsr: ["대출규제", "총부채원리금"],
+  "stress-dsr": ["가산금리", "스트레스 금리", "대출 규제"],
   "mortgage-payment": ["주담대", "주택 대출"],
   "real-estate-brokerage-fee": ["복비", "중개수수료"],
   "stock-average-cost": ["물타기", "평단", "평단가"],
@@ -86,6 +98,7 @@ export const calculatorDirectoryCategories = [
     calculatorIds: [
       "ltv",
       "dsr",
+      "stress-dsr",
       "loan",
       "loan-interest-comparison",
       "loan-refinancing-savings",
