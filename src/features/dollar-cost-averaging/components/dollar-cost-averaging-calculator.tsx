@@ -88,9 +88,7 @@ export function DollarCostAveragingCalculator({
 
   const numberLocale = locale === "ko" ? "ko-KR" : "en-US";
   const money = (value?: number) =>
-    value === undefined
-      ? "—"
-      : formatDisplayCurrency(value, locale, currency);
+    value === undefined ? "—" : formatDisplayCurrency(value, locale, currency);
 
   return (
     <section aria-labelledby="dca-input-title">
