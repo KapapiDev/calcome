@@ -37,12 +37,16 @@ describe("HourlyWageCalculator", () => {
   it("makes the English South Korea and KRW scope visible before input", () => {
     render(<HourlyWageCalculator locale="en" />);
 
-    expect(screen.getByText("South Korea pay conversion settings (KRW)")).toBeVisible();
+    expect(
+      screen.getByText("South Korea pay conversion settings (KRW)"),
+    ).toBeVisible();
     expect(screen.getByLabelText("Pay amount (KRW)")).toBeVisible();
     expect(
       screen.getByText("2026 South Korea minimum-wage comparison (KRW)"),
     ).toBeVisible();
-    expect(screen.getByText("South Korea pay equivalents (KRW)")).toBeVisible();
+    expect(
+      screen.getByText("South Korea pay equivalents (KRW)"),
+    ).toBeVisible();
   });
 
   it("calculates decimal hours, renders exact results, and scrolls", async () => {
