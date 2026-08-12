@@ -37,7 +37,7 @@ describe("LocalizedHourlyWagePage", () => {
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: "Hourly Wage Calculator",
+        name: "South Korea Hourly Wage Calculator",
       }),
     ).toBeVisible();
     expect(screen.getByText("Official references")).toBeVisible();
