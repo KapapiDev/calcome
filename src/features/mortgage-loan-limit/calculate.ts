@@ -63,7 +63,10 @@ export function calculateMortgageLoanLimit(
 ): MortgageLoanLimitResult {
   requireNonNegative("homePrice", input.homePrice);
   requireNonNegative("annualIncome", input.annualIncome);
-  requireNonNegative("existingAnnualDebtService", input.existingAnnualDebtService);
+  requireNonNegative(
+    "existingAnnualDebtService",
+    input.existingAnnualDebtService,
+  );
   requireNonNegative("annualInterestRate", input.annualInterestRate);
   requireRate("ltvLimitRate", input.ltvLimitRate);
   requireRate("dsrLimitRate", input.dsrLimitRate);
