@@ -34,11 +34,22 @@ describe("HourlyWageCalculator", () => {
     expect(screen.getByText("급여 단위별 환산")).toBeVisible();
   });
 
+  it("makes the English South Korea and KRW scope visible before input", () => {
+    render(<HourlyWageCalculator locale="en" />);
+
+    expect(screen.getByText("South Korea pay conversion settings (KRW)")).toBeVisible();
+    expect(screen.getByLabelText("Pay amount (KRW)")).toBeVisible();
+    expect(
+      screen.getByText("2026 South Korea minimum-wage comparison (KRW)"),
+    ).toBeVisible();
+    expect(screen.getByText("South Korea pay equivalents (KRW)")).toBeVisible();
+  });
+
   it("calculates decimal hours, renders exact results, and scrolls", async () => {
     const user = userEvent.setup();
     render(<HourlyWageCalculator locale="en" />);
 
-    await user.type(screen.getByLabelText("Pay amount"), "12000");
+    await user.type(screen.getByLabelText("Pay amount (KRW)"), "12000");
     await user.selectOptions(screen.getByLabelText("Pay period"), "hourly");
     await user.type(screen.getByLabelText("Scheduled daily hours"), "7.5");
     await user.type(screen.getByLabelText("Scheduled weekly hours"), "15.5");
@@ -51,7 +62,7 @@ describe("HourlyWageCalculator", () => {
       "₩12,000",
     );
     expect(
-      screen.getByRole("table", { name: "Pay equivalents" }),
+      screen.getByRole("table", { name: "South Korea pay equivalents (KRW)" }),
     ).toBeVisible();
     expect(screen.getByRole("img")).toHaveAccessibleName(/₩12,000/);
   });
