@@ -154,6 +154,8 @@ Run at minimum:
 
 For calculators, manually verify representative examples, boundary values, units, rounding, monthly versus annual conversion, tax treatment, and invalid inputs. Record expected and actual results.
 
+Formatting-only failures are a preflight defect, not a reason to burn repeated CI runs. If the formatter cannot run locally, normalize every touched file to the repository's existing Prettier conventions before pushing. After the first formatting-only CI failure, inspect and correct all touched files in one pass; never rerun the same head unchanged or fix one formatting line per scheduled execution.
+
 A first failure is not terminal. Diagnose, fix, and rerun. Never weaken a legitimate test merely to pass.
 
 ---
