@@ -31,12 +31,7 @@ const money = (
   value: { toDecimalPlaces: (places: number) => { toNumber: () => number } },
   locale: GrossUpSalaryLocale,
   currency: DisplayCurrency,
-) =>
-  formatDisplayCurrency(
-    value.toDecimalPlaces(0).toNumber(),
-    locale,
-    currency,
-  );
+) => formatDisplayCurrency(value.toDecimalPlaces(0).toNumber(), locale, currency);
 
 export function GrossUpSalaryCalculator({
   locale,
