@@ -1,7 +1,7 @@
 import {
   publishedCalculators,
   type PublishedCalculator,
-} from "@/config/calculators";
+} from "./calculators";
 
 export type CalculatorDirectoryCategory = {
   id:
