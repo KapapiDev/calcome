@@ -45,8 +45,7 @@ export function calculateDollarCostAveraging(
       ? monthlyContribution * months
       : monthlyContribution * ((growthFactor - 1) / monthlyRate);
   const totalInvested = initialInvestment + monthlyContribution * months;
-  const endingBalance =
-    initialInvestmentFutureValue + contributionFutureValue;
+  const endingBalance = initialInvestmentFutureValue + contributionFutureValue;
 
   return {
     months,
