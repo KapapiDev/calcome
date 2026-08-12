@@ -109,10 +109,38 @@ export function DollarCostAveragingCalculator({
             </p>
           ) : null}
           <CurrencySelector locale={locale} />
-          <MoneyField id="initialInvestment" label={copy.initialInvestment} value={values.initialInvestment} error={errors.initialInvestment} suffix={currency} onChange={(value) => updateMoney("initialInvestment", value)} />
-          <MoneyField id="monthlyContribution" label={copy.monthlyContribution} value={values.monthlyContribution} error={errors.monthlyContribution} suffix={currency} onChange={(value) => updateMoney("monthlyContribution", value)} />
-          <NumberField id="annualReturnPercent" label={copy.annualReturnPercent} value={values.annualReturnPercent} error={errors.annualReturnPercent} suffix="%" onChange={(value) => updateNumber("annualReturnPercent", value)} />
-          <NumberField id="years" label={copy.years} value={values.years} error={errors.years} suffix={locale === "ko" ? "년" : "years"} onChange={(value) => updateNumber("years", value)} />
+          <MoneyField
+            id="initialInvestment"
+            label={copy.initialInvestment}
+            value={values.initialInvestment}
+            error={errors.initialInvestment}
+            suffix={currency}
+            onChange={(value) => updateMoney("initialInvestment", value)}
+          />
+          <MoneyField
+            id="monthlyContribution"
+            label={copy.monthlyContribution}
+            value={values.monthlyContribution}
+            error={errors.monthlyContribution}
+            suffix={currency}
+            onChange={(value) => updateMoney("monthlyContribution", value)}
+          />
+          <NumberField
+            id="annualReturnPercent"
+            label={copy.annualReturnPercent}
+            value={values.annualReturnPercent}
+            error={errors.annualReturnPercent}
+            suffix="%"
+            onChange={(value) => updateNumber("annualReturnPercent", value)}
+          />
+          <NumberField
+            id="years"
+            label={copy.years}
+            value={values.years}
+            error={errors.years}
+            suffix={locale === "ko" ? "년" : "years"}
+            onChange={(value) => updateNumber("years", value)}
+          />
           <div className="mt-4 grid grid-cols-[1fr_auto] gap-2">
             <Button type="submit">{copy.calculate}</Button>
             <Button type="button" variant="outline" onClick={reset}>
@@ -121,18 +149,35 @@ export function DollarCostAveragingCalculator({
           </div>
         </form>
 
-        <section ref={resultRef} aria-labelledby="dca-result-title" className="scroll-mt-20 rounded-xl border bg-card p-4 shadow-sm">
+        <section
+          ref={resultRef}
+          aria-labelledby="dca-result-title"
+          className="scroll-mt-20 rounded-xl border bg-card p-4 shadow-sm"
+        >
           <h2 id="dca-result-title" className="text-xl font-semibold">
             {copy.result}
           </h2>
           <PrimaryResults
             metrics={[
-              { label: copy.endingBalance, value: money(result?.endingBalance), featured: true },
-              { label: copy.totalInvested, value: money(result?.totalInvested) },
-              { label: copy.estimatedGain, value: money(result?.estimatedGain) },
+              {
+                label: copy.endingBalance,
+                value: money(result?.endingBalance),
+                featured: true,
+              },
+              {
+                label: copy.totalInvested,
+                value: money(result?.totalInvested),
+              },
+              {
+                label: copy.estimatedGain,
+                value: money(result?.estimatedGain),
+              },
               {
                 label: copy.months,
-                value: result === undefined ? "—" : result.months.toLocaleString(numberLocale),
+                value:
+                  result === undefined
+                    ? "—"
+                    : result.months.toLocaleString(numberLocale),
               },
             ]}
           />
@@ -160,15 +205,39 @@ function NumberField(props: FieldProps) {
   return <InputField {...props} inputMode="decimal" />;
 }
 
-function InputField({ id, label, value, error, suffix, onChange, inputMode }: FieldProps & { inputMode: "decimal" }) {
+function InputField({
+  id,
+  label,
+  value,
+  error,
+  suffix,
+  onChange,
+  inputMode,
+}: FieldProps & { inputMode: "decimal" }) {
   return (
     <div className="mt-4">
-      <label htmlFor={id} className="block text-sm font-medium">{label}</label>
+      <label htmlFor={id} className="block text-sm font-medium">
+        {label}
+      </label>
       <div className="relative">
-        <input id={id} inputMode={inputMode} value={value} onChange={(event) => onChange(event.target.value)} aria-invalid={Boolean(error)} aria-describedby={error ? `${id}-error` : undefined} className={fieldClass} />
-        <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center pt-1.5 text-sm text-muted-foreground">{suffix}</span>
+        <input
+          id={id}
+          inputMode={inputMode}
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          aria-invalid={Boolean(error)}
+          aria-describedby={error ? `${id}-error` : undefined}
+          className={fieldClass}
+        />
+        <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center pt-1.5 text-sm text-muted-foreground">
+          {suffix}
+        </span>
       </div>
-      {error ? <p id={`${id}-error`} className="mt-1 text-sm text-destructive">{error}</p> : null}
+      {error ? (
+        <p id={`${id}-error`} className="mt-1 text-sm text-destructive">
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 }
