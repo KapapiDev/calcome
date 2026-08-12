@@ -48,17 +48,29 @@ export const stressDsrCalculator = {
   href: "/ko/finance/stress-dsr",
 } as const satisfies PublishedCalculator;
 
+export const mortgageLoanLimitCalculator = {
+  id: "mortgage-loan-limit",
+  name: "주택담보대출 한도 계산기",
+  description:
+    "주택가격과 소득, LTV·DSR 조건으로 예상 주택담보대출 한도를 계산합니다.",
+  keywords: ["주택담보대출 한도", "주담대", "LTV", "DSR", "mortgage limit"],
+  category: "금융",
+  href: "/ko/finance/mortgage-loan-limit",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...publishedCalculators,
   dividendYieldCalculator,
   dollarCostAveragingCalculator,
   stressDsrCalculator,
+  mortgageLoanLimitCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 const directoryAliases: Readonly<Record<string, readonly string[]>> = {
   ltv: ["주담대", "담보대출"],
   dsr: ["대출규제", "총부채원리금"],
   "stress-dsr": ["가산금리", "스트레스 금리", "대출 규제"],
+  "mortgage-loan-limit": ["주담대 한도", "담보대출 한도", "대출 가능 금액"],
   "mortgage-payment": ["주담대", "주택 대출"],
   "real-estate-brokerage-fee": ["복비", "중개수수료"],
   "stock-average-cost": ["물타기", "평단", "평단가"],
@@ -99,6 +111,7 @@ export const calculatorDirectoryCategories = [
       "ltv",
       "dsr",
       "stress-dsr",
+      "mortgage-loan-limit",
       "loan",
       "loan-interest-comparison",
       "loan-refinancing-savings",
