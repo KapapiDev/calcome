@@ -43,9 +43,9 @@ describe("calculateStressDsr", () => {
       stressRateAddOn: new Decimal(1.5),
     });
 
-    expect(result.base.monthlyPayment.eq(new Decimal(100_000_000).div(240))).toBe(
-      true,
-    );
+    expect(
+      result.base.monthlyPayment.eq(new Decimal(100_000_000).div(240)),
+    ).toBe(true);
     expect(
       result.stressed.monthlyPayment.gt(result.base.monthlyPayment),
     ).toBe(true);
