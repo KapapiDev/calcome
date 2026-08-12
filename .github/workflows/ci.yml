@@ -33,9 +33,7 @@ jobs:
         run: npm run typecheck
 
       - name: Check formatting
-        run: |
-          npx prettier --write src/features/dollar-cost-averaging/calculate.ts src/features/dollar-cost-averaging/components/dollar-cost-averaging-calculator.tsx
-          git diff --exit-code -- src/features/dollar-cost-averaging/calculate.ts src/features/dollar-cost-averaging/components/dollar-cost-averaging-calculator.tsx
+        run: npm run format:check
 
       - name: Run tests
         run: npm run test
