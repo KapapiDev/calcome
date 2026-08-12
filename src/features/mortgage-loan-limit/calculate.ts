@@ -41,7 +41,9 @@ function principalFromMonthlyPayment(
   if (monthlyRate.eq(0)) return monthlyPayment.mul(months);
 
   const growth = new Decimal(1).plus(monthlyRate).pow(months);
-  return monthlyPayment.mul(new Decimal(1).minus(new Decimal(1).div(growth))).div(monthlyRate);
+  return monthlyPayment
+    .mul(new Decimal(1).minus(new Decimal(1).div(growth)))
+    .div(monthlyRate);
 }
 
 function monthlyPaymentForPrincipal(
@@ -75,7 +77,10 @@ export function calculateMortgageLoanLimit(
   const ltvLimit = input.homePrice.mul(input.ltvLimitRate).div(100);
   const annualDebtServiceCapacity = Decimal.max(
     0,
-    input.annualIncome.mul(input.dsrLimitRate).div(100).minus(input.existingAnnualDebtService),
+    input.annualIncome
+      .mul(input.dsrLimitRate)
+      .div(100)
+      .minus(input.existingAnnualDebtService),
   );
   const monthlyPaymentCapacity = annualDebtServiceCapacity.div(12);
   const dsrLimit = principalFromMonthlyPayment(
