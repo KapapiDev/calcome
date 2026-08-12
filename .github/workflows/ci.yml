@@ -26,9 +26,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Show gross-up formatting diff
-        run: npx prettier src/features/gross-up-salary/components/gross-up-salary-calculator.tsx | diff -u src/features/gross-up-salary/components/gross-up-salary-calculator.tsx - || true
-
       - name: Run static checks
         run: npm run check
 
