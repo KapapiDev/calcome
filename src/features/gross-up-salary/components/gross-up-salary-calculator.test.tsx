@@ -1,10 +1,40 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import userEvent from "@testing-library/user-event";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { GrossUpSalaryCalculator } from "./gross-up-salary-calculator";
 
 Element.prototype.scrollIntoView = vi.fn();
 
 describe("GrossUpSalaryCalculator", () => {
+  beforeEach(() => {
+    window.localStorage.clear();
+  });
+
+  it("defaults English money to USD and persists supported currency choices", async () => {
+    const user = userEvent.setup();
+    render(<GrossUpSalaryCalculator locale="en" />);
+
+    const currency = screen.getByLabelText("Display currency");
+    expect(currency).toHaveValue("USD");
+    expect(screen.getAllByText("USD").length).toBeGreaterThan(0);
+
+    await user.type(screen.getByLabelText("Target take-home salary"), "90000");
+    await user.type(screen.getByLabelText("Estimated deduction rate"), "10");
+    await user.click(
+      screen.getByRole("button", { name: "Calculate required gross pay" }),
+    );
+    expect(screen.getAllByTestId("animated-won")[0]).toHaveAccessibleName(
+      "$100,000",
+    );
+
+    await user.selectOptions(currency, "GBP");
+    expect(window.localStorage.getItem("calcome.currency")).toBe("GBP");
+    expect(screen.getAllByText("GBP").length).toBeGreaterThan(0);
+    expect(screen.getAllByTestId("animated-won")[0]).toHaveAccessibleName(
+      "£100,000",
+    );
+  });
+
   it("starts empty, calculates, and resets", () => {
     render(<GrossUpSalaryCalculator locale="ko" />);
     const salary = screen.getByLabelText("목표 실수령액");

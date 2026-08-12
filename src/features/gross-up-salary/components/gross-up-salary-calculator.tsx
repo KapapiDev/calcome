@@ -6,6 +6,12 @@ import {
   compactCalculatorSettingsClass,
   dashboardCalculatorWorkspaceClass,
 } from "@/components/calculators/calculator-workspace";
+import {
+  CurrencySelector,
+  formatDisplayCurrency,
+  type DisplayCurrency,
+  useDisplayCurrency,
+} from "@/components/calculators/currency-selector";
 import { Button } from "@/components/ui/button";
 import { AnimatedWon } from "@/features/compound-interest/components/animated-won";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
@@ -21,16 +27,12 @@ import { validateGrossUpSalary, type GrossUpSalaryErrors } from "../validation";
 const fieldClass =
   "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none placeholder:text-muted-foreground/70 focus-visible:ring-3 focus-visible:ring-ring/30 aria-invalid:border-destructive sm:text-sm";
 const errorSummaryId = "gross-up-salary-error-summary";
-const won = (
+const money = (
   value: { toDecimalPlaces: (places: number) => { toNumber: () => number } },
   locale: GrossUpSalaryLocale,
+  currency: DisplayCurrency,
 ) =>
-  `${value
-    .toDecimalPlaces(0)
-    .toNumber()
-    .toLocaleString(
-      locale === "ko" ? "ko-KR" : "en-US",
-    )} ${locale === "ko" ? "원" : "KRW"}`;
+  formatDisplayCurrency(value.toDecimalPlaces(0).toNumber(), locale, currency);
 
 export function GrossUpSalaryCalculator({
   locale,
@@ -38,6 +40,7 @@ export function GrossUpSalaryCalculator({
   locale: GrossUpSalaryLocale;
 }) {
   const copy = grossUpSalaryContent[locale];
+  const { currency } = useDisplayCurrency(locale);
   const [period, setPeriod] = useState<SalaryPeriod>("annual");
   const [targetNetSalary, setTargetNetSalary] = useState("");
   const [deductionRate, setDeductionRate] = useState("");
@@ -91,6 +94,7 @@ export function GrossUpSalaryCalculator({
           <h2 id="gross-up-salary-title" className="mt-1 text-xl font-semibold">
             {copy.input}
           </h2>
+          <CurrencySelector locale={locale} />
           {hasErrors ? (
             <p
               id={errorSummaryId}
@@ -125,28 +129,33 @@ export function GrossUpSalaryCalculator({
           >
             {copy.salary}
           </label>
-          <input
-            id="targetNetSalary"
-            inputMode="decimal"
-            value={targetNetSalary}
-            placeholder={
-              period === "annual"
-                ? copy.annualPlaceholder
-                : copy.monthlyPlaceholder
-            }
-            onChange={(event) =>
-              setTargetNetSalary(
-                formatMoneyInput(event.target.value, targetNetSalary),
-              )
-            }
-            aria-invalid={Boolean(errors.targetNetSalary)}
-            aria-describedby={
-              errors.targetNetSalary
-                ? `target-net-error ${errorSummaryId}`
-                : undefined
-            }
-            className={fieldClass}
-          />
+          <div className="relative">
+            <input
+              id="targetNetSalary"
+              inputMode="decimal"
+              value={targetNetSalary}
+              placeholder={
+                period === "annual"
+                  ? copy.annualPlaceholder
+                  : copy.monthlyPlaceholder
+              }
+              onChange={(event) =>
+                setTargetNetSalary(
+                  formatMoneyInput(event.target.value, targetNetSalary),
+                )
+              }
+              aria-invalid={Boolean(errors.targetNetSalary)}
+              aria-describedby={
+                errors.targetNetSalary
+                  ? `target-net-error ${errorSummaryId}`
+                  : undefined
+              }
+              className={`${fieldClass} pr-16`}
+            />
+            <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center pt-1.5 text-sm text-muted-foreground">
+              {currency}
+            </span>
+          </div>
           {errors.targetNetSalary ? (
             <p id="target-net-error" className="mt-1 text-sm text-destructive">
               {errors.targetNetSalary}
@@ -208,6 +217,8 @@ export function GrossUpSalaryCalculator({
                   value: (
                     <AnimatedWon
                       value={result?.requiredAnnualGross ?? null}
+                      locale={locale}
+                      currency={currency}
                       animationKey={animationKey}
                     />
                   ),
@@ -218,6 +229,8 @@ export function GrossUpSalaryCalculator({
                   value: (
                     <AnimatedWon
                       value={result?.requiredMonthlyGross ?? null}
+                      locale={locale}
+                      currency={currency}
                       animationKey={animationKey}
                     />
                   ),
@@ -227,6 +240,8 @@ export function GrossUpSalaryCalculator({
                   value: (
                     <AnimatedWon
                       value={result?.annualDeductions ?? null}
+                      locale={locale}
+                      currency={currency}
                       animationKey={animationKey}
                     />
                   ),
@@ -243,15 +258,15 @@ export function GrossUpSalaryCalculator({
               <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
                 <Detail
                   label={copy.annualNet}
-                  value={won(result.targetAnnualNet, locale)}
+                  value={money(result.targetAnnualNet, locale, currency)}
                 />
                 <Detail
                   label={copy.monthlyNet}
-                  value={won(result.targetMonthlyNet, locale)}
+                  value={money(result.targetMonthlyNet, locale, currency)}
                 />
                 <Detail
                   label={copy.monthlyDeductions}
-                  value={won(result.monthlyDeductions, locale)}
+                  value={money(result.monthlyDeductions, locale, currency)}
                 />
                 <Detail
                   label={copy.appliedRate}
