@@ -15,7 +15,7 @@ describe("calculator directory", () => {
       (calculator) => calculator.id,
     );
 
-    expect(allPublishedCalculators).toHaveLength(51);
+    expect(allPublishedCalculators).toHaveLength(52);
     expect(new Set(assignedIds).size).toBe(assignedIds.length);
     expect([...assignedIds].sort()).toEqual([...publishedIds].sort());
   });

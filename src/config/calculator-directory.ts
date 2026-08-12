@@ -1,7 +1,4 @@
-import {
-  publishedCalculators,
-  type PublishedCalculator,
-} from "@/config/calculators";
+import { publishedCalculators, type PublishedCalculator } from "./calculators";
 
 export type CalculatorDirectoryCategory = {
   id:
@@ -31,9 +28,20 @@ export const dividendYieldCalculator = {
   href: "/ko/finance/dividend-yield",
 } as const satisfies PublishedCalculator;
 
+export const dollarCostAveragingCalculator = {
+  id: "dollar-cost-averaging",
+  name: "적립식 투자 계산기",
+  description:
+    "초기 투자금과 매월 적립액, 예상 연 수익률, 투자 기간으로 적립식 투자 결과를 계산합니다.",
+  keywords: ["적립식 투자", "DCA", "분할매수", "dollar cost averaging"],
+  category: "금융",
+  href: "/ko/finance/dollar-cost-averaging",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...publishedCalculators,
   dividendYieldCalculator,
+  dollarCostAveragingCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 const directoryAliases: Readonly<Record<string, readonly string[]>> = {
@@ -44,6 +52,7 @@ const directoryAliases: Readonly<Record<string, readonly string[]>> = {
   "stock-average-cost": ["물타기", "평단", "평단가"],
   "net-salary": ["연봉 실수령", "월급 실수령"],
   "freelancer-3-3-tax": ["3.3", "삼쩜삼"],
+  "dollar-cost-averaging": ["정액매수", "월 적립", "분할 투자"],
 };
 
 export const calculatorDirectoryCategories = [
@@ -134,6 +143,7 @@ export const calculatorDirectoryCategories = [
       "stock-profit-loss",
       "dividend",
       "dividend-yield",
+      "dollar-cost-averaging",
     ],
   },
   {
