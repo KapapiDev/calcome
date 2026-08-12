@@ -1,5 +1,9 @@
 import Decimal from "decimal.js";
-import { calculateDsr, type DsrInput, type DsrResult } from "@/features/dsr/calculate";
+import {
+  calculateDsr,
+  type DsrInput,
+  type DsrResult,
+} from "@/features/dsr/calculate";
 
 export type StressDsrInput = DsrInput & {
   stressRateAddOn: Decimal;
