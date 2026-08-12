@@ -25,7 +25,7 @@ type DollarCostAveragingCopy = {
 
 export const dollarCostAveragingContent: Record<
   DollarCostAveragingLocale,
-  DollarCostAveragingCopy,
+  DollarCostAveragingCopy
 > = {
   ko: {
     title: "적립식 투자 계산기",
