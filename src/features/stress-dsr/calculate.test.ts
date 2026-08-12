@@ -27,11 +27,12 @@ describe("calculateStressDsr", () => {
       ...baseInput,
       stressRateAddOn: new Decimal(1.5),
     });
+    const paymentRose = result.stressed.monthlyPayment.gt(
+      result.base.monthlyPayment,
+    );
 
     expect(result.stressedAnnualInterestRate.eq(6)).toBe(true);
-    expect(
-      result.stressed.monthlyPayment.gt(result.base.monthlyPayment),
-    ).toBe(true);
+    expect(paymentRose).toBe(true);
     expect(result.stressed.dsrRate.gt(result.base.dsrRate)).toBe(true);
     expect(result.dsrIncrease.gt(0)).toBe(true);
   });
@@ -42,21 +43,22 @@ describe("calculateStressDsr", () => {
       annualInterestRate: new Decimal(0),
       stressRateAddOn: new Decimal(1.5),
     });
+    const zeroRatePayment = new Decimal(100_000_000).div(240);
+    const paymentRose = result.stressed.monthlyPayment.gt(
+      result.base.monthlyPayment,
+    );
 
-    expect(
-      result.base.monthlyPayment.eq(new Decimal(100_000_000).div(240)),
-    ).toBe(true);
-    expect(
-      result.stressed.monthlyPayment.gt(result.base.monthlyPayment),
-    ).toBe(true);
+    expect(result.base.monthlyPayment.eq(zeroRatePayment)).toBe(true);
+    expect(paymentRose).toBe(true);
   });
 
   it("rejects a negative stress add-on", () => {
-    expect(() =>
+    const calculate = () =>
       calculateStressDsr({
         ...baseInput,
         stressRateAddOn: new Decimal(-0.1),
-      }),
-    ).toThrow(RangeError);
+      });
+
+    expect(calculate).toThrow(RangeError);
   });
 });
