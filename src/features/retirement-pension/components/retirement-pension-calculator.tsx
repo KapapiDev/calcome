@@ -1,5 +1,9 @@
 "use client";
 import { type FormEvent, useState } from "react";
+import {
+  CurrencySelector,
+  useDisplayCurrency,
+} from "@/components/calculators/currency-selector";
 import { Button } from "@/components/ui/button";
 import {
   compactCalculatorSettingsClass,
@@ -17,17 +21,22 @@ import { validateRetirementPension } from "../validation";
 
 const errorId = "retirement-pension-error";
 
+function initialValues(locale: RetirementPensionLocale) {
+  return {
+    monthlyContribution: locale === "ko" ? "500,000" : "500",
+    years: "20",
+    annualReturnRate: "4",
+  };
+}
+
 export function RetirementPensionCalculator({
   locale,
 }: {
   locale: RetirementPensionLocale;
 }) {
   const copy = retirementPensionContent[locale];
-  const [values, setValues] = useState({
-    monthlyContribution: "500,000",
-    years: "20",
-    annualReturnRate: "4",
-  });
+  const { currency } = useDisplayCurrency(locale);
+  const [values, setValues] = useState(() => initialValues(locale));
   const [result, setResult] = useState<ReturnType<
     typeof calculateRetirementPension
   > | null>(null);
@@ -46,11 +55,7 @@ export function RetirementPensionCalculator({
     setAnimationKey((key) => key + 1);
   }
   function reset() {
-    setValues({
-      monthlyContribution: "500,000",
-      years: "20",
-      annualReturnRate: "4",
-    });
+    setValues(initialValues(locale));
     setResult(null);
     setError("");
   }
@@ -69,6 +74,7 @@ export function RetirementPensionCalculator({
           >
             {copy.input}
           </h2>
+          <CurrencySelector locale={locale} />
           {error ? (
             <p
               id={errorId}
@@ -82,6 +88,7 @@ export function RetirementPensionCalculator({
             (field) => (
               <label key={field} className="mt-4 block text-sm font-medium">
                 {copy[field]}
+                {field === "monthlyContribution" ? ` (${currency})` : ""}
                 <input
                   inputMode="decimal"
                   value={values[field]}
@@ -122,6 +129,8 @@ export function RetirementPensionCalculator({
                 value: (
                   <AnimatedWon
                     value={result?.estimatedBalance ?? null}
+                    locale={locale}
+                    currency={currency}
                     animationKey={animationKey}
                   />
                 ),
@@ -132,6 +141,8 @@ export function RetirementPensionCalculator({
                 value: (
                   <AnimatedWon
                     value={result?.principal ?? null}
+                    locale={locale}
+                    currency={currency}
                     animationKey={animationKey}
                   />
                 ),
@@ -141,6 +152,8 @@ export function RetirementPensionCalculator({
                 value: (
                   <AnimatedWon
                     value={result?.investmentGain ?? null}
+                    locale={locale}
+                    currency={currency}
                     animationKey={animationKey}
                   />
                 ),
