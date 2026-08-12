@@ -18,7 +18,7 @@ describe("GrossUpSalaryCalculator", () => {
     expect(currency).toHaveValue("USD");
     expect(screen.getAllByText("USD").length).toBeGreaterThan(0);
 
-    await user.type(screen.getByLabelText("Target take-home pay"), "90000");
+    await user.type(screen.getByLabelText("Target take-home salary"), "90000");
     await user.type(screen.getByLabelText("Estimated deduction rate"), "10");
     await user.click(
       screen.getByRole("button", { name: "Calculate required gross pay" }),
