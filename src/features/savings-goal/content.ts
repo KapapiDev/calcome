@@ -45,8 +45,7 @@ export const savingsGoalContent: Record<
     estimatedGrowth: "예상 운용수익",
     months: "목표까지 남은 개월",
     error: "입력값을 확인해 주세요.",
-    note:
-      "매월 말 동일 금액을 저축하고 입력한 수익률이 일정하게 유지된다고 가정합니다.",
+    note: "매월 말 동일 금액을 저축하고 입력한 수익률이 일정하게 유지된다고 가정합니다.",
     method:
       "현재 저축액의 미래가치를 먼저 계산한 뒤 부족한 목표 금액을 매월 말 적립하는 연금의 미래가치 공식으로 역산합니다.",
     cautions:
@@ -71,8 +70,7 @@ export const savingsGoalContent: Record<
     estimatedGrowth: "Estimated investment growth",
     months: "Months to goal",
     error: "Check your inputs.",
-    note:
-      "Assumes equal deposits at the end of each month and a constant rate of return.",
+    note: "Assumes equal deposits at the end of each month and a constant rate of return.",
     method:
       "The calculator first projects the future value of current savings, then solves the future-value annuity formula for the monthly deposit needed to close the remaining gap.",
     cautions:
