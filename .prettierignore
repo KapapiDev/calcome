@@ -3,5 +3,5 @@ coverage
 node_modules
 out
 package-lock.json
-src/app/[locale]/finance/savings-goal/page.tsx
+src/app/*/finance/savings-goal/page.tsx
 src/features/savings-goal/components/savings-goal-calculator.tsx
