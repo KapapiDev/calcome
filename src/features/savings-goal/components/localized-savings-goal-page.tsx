@@ -1,5 +1,8 @@
 import Link from "next/link";
-import { JsonLdScript, createPageStructuredData } from "@/lib/seo/structured-data";
+import {
+  JsonLdScript,
+  createPageStructuredData,
+} from "@/lib/seo/structured-data";
 import { savingsGoalContent } from "../content";
 import type { SavingsGoalLocale } from "../validation";
 import { SavingsGoalCalculator } from "./savings-goal-calculator";

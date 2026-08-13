@@ -23,7 +23,10 @@ type SavingsGoalCopy = {
   metaTitle: string;
 };
 
-export const savingsGoalContent: Record<SavingsGoalLocale, SavingsGoalCopy> = {
+export const savingsGoalContent: Record<
+  SavingsGoalLocale,
+  SavingsGoalCopy
+> = {
   ko: {
     title: "저축 목표 계산기",
     description: "목표 금액과 현재 저축액, 예상 수익률, 기간을 입력해 목표 달성에 필요한 월 저축액을 계산합니다.",
@@ -48,7 +51,8 @@ export const savingsGoalContent: Record<SavingsGoalLocale, SavingsGoalCopy> = {
   },
   en: {
     title: "Savings Goal Calculator",
-    description: "Calculate the monthly saving needed to reach a target amount from your current savings, expected return, and time horizon.",
+    description:
+      "Calculate the monthly saving needed to reach a target amount from your current savings, expected return, and time horizon.",
     category: "Savings calculator",
     input: "Savings goal assumptions",
     targetAmount: "Target amount",
@@ -63,9 +67,12 @@ export const savingsGoalContent: Record<SavingsGoalLocale, SavingsGoalCopy> = {
     estimatedGrowth: "Estimated investment growth",
     months: "Months to goal",
     error: "Check your inputs.",
-    note: "Assumes equal deposits at the end of each month and a constant rate of return.",
-    method: "The calculator first projects the future value of current savings, then solves the future-value annuity formula for the monthly deposit needed to close the remaining gap.",
-    cautions: "Taxes, fees, FX, and actual return variability are excluded. The estimate does not guarantee the goal will be reached.",
+    note:
+      "Assumes equal deposits at the end of each month and a constant rate of return.",
+    method:
+      "The calculator first projects the future value of current savings, then solves the future-value annuity formula for the monthly deposit needed to close the remaining gap.",
+    cautions:
+      "Taxes, fees, FX, and actual return variability are excluded. The estimate does not guarantee the goal will be reached.",
     metaTitle: "Savings Goal Calculator | Monthly Saving Needed",
   },
 };
