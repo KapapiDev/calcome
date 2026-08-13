@@ -23,10 +23,7 @@ type SavingsGoalCopy = {
   metaTitle: string;
 };
 
-export const savingsGoalContent: Record<
-  SavingsGoalLocale,
-  SavingsGoalCopy
-> = {
+export const savingsGoalContent: Record<SavingsGoalLocale, SavingsGoalCopy> = {
   ko: {
     title: "저축 목표 계산기",
     description:
