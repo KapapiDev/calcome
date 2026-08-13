@@ -58,12 +58,23 @@ export const mortgageLoanLimitCalculator = {
   href: "/ko/finance/mortgage-loan-limit",
 } as const satisfies PublishedCalculator;
 
+export const savingsGoalCalculator = {
+  id: "savings-goal",
+  name: "저축 목표 계산기",
+  description:
+    "목표 금액과 현재 저축액, 예상 수익률, 기간으로 필요한 월 저축액을 계산합니다.",
+  keywords: ["저축 목표", "목표 금액", "월 저축액", "savings goal"],
+  category: "금융",
+  href: "/ko/finance/savings-goal",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...publishedCalculators,
   dividendYieldCalculator,
   dollarCostAveragingCalculator,
   stressDsrCalculator,
   mortgageLoanLimitCalculator,
+  savingsGoalCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 const directoryAliases: Readonly<Record<string, readonly string[]>> = {
@@ -77,6 +88,7 @@ const directoryAliases: Readonly<Record<string, readonly string[]>> = {
   "net-salary": ["연봉 실수령", "월급 실수령"],
   "freelancer-3-3-tax": ["3.3", "삼쩜삼"],
   "dollar-cost-averaging": ["정액매수", "월 적립", "분할 투자"],
+  "savings-goal": ["목표저축", "월 저축", "목돈 만들기"],
 };
 
 export const calculatorDirectoryCategories = [
@@ -157,7 +169,7 @@ export const calculatorDirectoryCategories = [
     id: "savings",
     name: "저축·연금",
     description: "예금, 적금, 복리와 장기 자산 성장을 계산합니다.",
-    calculatorIds: ["deposit", "savings", "compound-interest"],
+    calculatorIds: ["deposit", "savings", "compound-interest", "savings-goal"],
   },
   {
     id: "investment",
