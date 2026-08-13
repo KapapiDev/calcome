@@ -59,7 +59,10 @@ export function SavingsGoalCalculator({ locale }: { locale: SavingsGoalLocale })
   }
 
   function updateMoney(key: "targetAmount" | "initialSavings", value: string) {
-    setValues((current) => ({ ...current, [key]: formatMoneyInput(value, current[key]) }));
+    setValues((current) => ({
+      ...current,
+      [key]: formatMoneyInput(value, current[key]),
+    }));
   }
 
   function updateNumber(key: "annualReturnPercent" | "years", value: string) {
@@ -84,29 +87,82 @@ export function SavingsGoalCalculator({ locale }: { locale: SavingsGoalLocale })
             {copy.input}
           </h2>
           {Object.keys(errors).length ? (
-            <p role="alert" className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive">
+            <p
+              role="alert"
+              className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
+            >
               {copy.error}
             </p>
           ) : null}
           <CurrencySelector locale={locale} />
-          <InputField id="targetAmount" label={copy.targetAmount} value={values.targetAmount} error={errors.targetAmount} suffix={currency} onChange={(value) => updateMoney("targetAmount", value)} />
-          <InputField id="initialSavings" label={copy.initialSavings} value={values.initialSavings} error={errors.initialSavings} suffix={currency} onChange={(value) => updateMoney("initialSavings", value)} />
-          <InputField id="annualReturnPercent" label={copy.annualReturnPercent} value={values.annualReturnPercent} error={errors.annualReturnPercent} suffix="%" onChange={(value) => updateNumber("annualReturnPercent", value)} />
-          <InputField id="years" label={copy.years} value={values.years} error={errors.years} suffix={locale === "ko" ? "년" : "years"} onChange={(value) => updateNumber("years", value)} />
+          <InputField
+            id="targetAmount"
+            label={copy.targetAmount}
+            value={values.targetAmount}
+            error={errors.targetAmount}
+            suffix={currency}
+            onChange={(value) => updateMoney("targetAmount", value)}
+          />
+          <InputField
+            id="initialSavings"
+            label={copy.initialSavings}
+            value={values.initialSavings}
+            error={errors.initialSavings}
+            suffix={currency}
+            onChange={(value) => updateMoney("initialSavings", value)}
+          />
+          <InputField
+            id="annualReturnPercent"
+            label={copy.annualReturnPercent}
+            value={values.annualReturnPercent}
+            error={errors.annualReturnPercent}
+            suffix="%"
+            onChange={(value) => updateNumber("annualReturnPercent", value)}
+          />
+          <InputField
+            id="years"
+            label={copy.years}
+            value={values.years}
+            error={errors.years}
+            suffix={locale === "ko" ? "년" : "years"}
+            onChange={(value) => updateNumber("years", value)}
+          />
           <div className="mt-4 grid grid-cols-[1fr_auto] gap-2">
             <Button type="submit">{copy.calculate}</Button>
-            <Button type="button" variant="outline" onClick={reset}>{copy.reset}</Button>
+            <Button type="button" variant="outline" onClick={reset}>
+              {copy.reset}
+            </Button>
           </div>
         </form>
 
-        <section ref={resultRef} aria-labelledby="savings-goal-result-title" className="scroll-mt-20 rounded-xl border bg-card p-4 shadow-sm">
-          <h2 id="savings-goal-result-title" className="text-xl font-semibold">{copy.result}</h2>
+        <section
+          ref={resultRef}
+          aria-labelledby="savings-goal-result-title"
+          className="scroll-mt-20 rounded-xl border bg-card p-4 shadow-sm"
+        >
+          <h2 id="savings-goal-result-title" className="text-xl font-semibold">
+            {copy.result}
+          </h2>
           <PrimaryResults
             metrics={[
-              { label: copy.monthlyContribution, value: money(result?.monthlyContribution), featured: true },
-              { label: copy.totalContributions, value: money(result?.totalContributions) },
-              { label: copy.estimatedGrowth, value: money(result?.estimatedGrowth) },
-              { label: copy.months, value: result === undefined ? "—" : result.months.toLocaleString(numberLocale) },
+              {
+                label: copy.monthlyContribution,
+                value: money(result?.monthlyContribution),
+                featured: true,
+              },
+              {
+                label: copy.totalContributions,
+                value: money(result?.totalContributions),
+              },
+              {
+                label: copy.estimatedGrowth,
+                value: money(result?.estimatedGrowth),
+              },
+              {
+                label: copy.months,
+                value:
+                  result === undefined ? "—" : result.months.toLocaleString(numberLocale),
+              },
             ]}
           />
           <p className="mt-3 text-sm text-muted-foreground">{copy.note}</p>
@@ -128,7 +184,9 @@ type FieldProps = {
 function InputField({ id, label, value, error, suffix, onChange }: FieldProps) {
   return (
     <div className="mt-4">
-      <label htmlFor={id} className="block text-sm font-medium">{label}</label>
+      <label htmlFor={id} className="block text-sm font-medium">
+        {label}
+      </label>
       <div className="relative">
         <input
           id={id}
@@ -139,9 +197,15 @@ function InputField({ id, label, value, error, suffix, onChange }: FieldProps) {
           aria-describedby={error ? `${id}-error` : undefined}
           className={fieldClass}
         />
-        <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center pt-1.5 text-sm text-muted-foreground">{suffix}</span>
+        <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center pt-1.5 text-sm text-muted-foreground">
+          {suffix}
+        </span>
       </div>
-      {error ? <p id={`${id}-error`} className="mt-1 text-sm text-destructive">{error}</p> : null}
+      {error ? (
+        <p id={`${id}-error`} className="mt-1 text-sm text-destructive">
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 }
