@@ -91,10 +91,7 @@ export function SavingsGoalCalculator({
           className={`${compactCalculatorSettingsClass} min-w-0`}
         >
           <p className="text-sm font-semibold text-primary">{copy.category}</p>
-          <h2
-            id="savings-goal-input-title"
-            className="mt-1 text-xl font-semibold"
-          >
+          <h2 id="savings-goal-input-title" className="mt-1 text-xl font-semibold">
             {copy.input}
           </h2>
           {Object.keys(errors).length ? (
@@ -151,10 +148,7 @@ export function SavingsGoalCalculator({
           aria-labelledby="savings-goal-result-title"
           className="scroll-mt-20 rounded-xl border bg-card p-4 shadow-sm"
         >
-          <h2
-            id="savings-goal-result-title"
-            className="text-xl font-semibold"
-          >
+          <h2 id="savings-goal-result-title" className="text-xl font-semibold">
             {copy.result}
           </h2>
           <PrimaryResults
