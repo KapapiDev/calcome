@@ -12,14 +12,20 @@ export type SavingsGoalResult = {
   months: number;
 };
 
-export function calculateSavingsGoal(input: SavingsGoalInput): SavingsGoalResult {
+export function calculateSavingsGoal(
+  input: SavingsGoalInput,
+): SavingsGoalResult {
   const { targetAmount, initialSavings, annualReturnPercent, years } = input;
 
   for (const [name, value] of Object.entries(input)) {
     if (!Number.isFinite(value)) throw new RangeError(`${name} must be finite`);
   }
-  if (targetAmount <= 0) throw new RangeError("targetAmount must be greater than zero");
-  if (initialSavings < 0) throw new RangeError("initialSavings must be zero or greater");
+  if (targetAmount <= 0) {
+    throw new RangeError("targetAmount must be greater than zero");
+  }
+  if (initialSavings < 0) {
+    throw new RangeError("initialSavings must be zero or greater");
+  }
   if (annualReturnPercent <= -100) {
     throw new RangeError("annualReturnPercent must be greater than -100");
   }
@@ -40,7 +46,8 @@ export function calculateSavingsGoal(input: SavingsGoalInput): SavingsGoalResult
     if (monthlyRate === 0) {
       monthlyContribution = remainingTarget / months;
     } else {
-      const annuityFactor = (Math.pow(1 + monthlyRate, months) - 1) / monthlyRate;
+      const annuityFactor =
+        (Math.pow(1 + monthlyRate, months) - 1) / monthlyRate;
       monthlyContribution = remainingTarget / annuityFactor;
     }
   }
