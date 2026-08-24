@@ -39,28 +39,52 @@ describe("localizedDestination", () => {
 describe("LanguageSelector", () => {
   it("shows Korean as the current locale and preserves the target calculator", async () => {
     const user = userEvent.setup();
-    render(<LanguageSelector locale="ko" pathname="/ko/employment/weekly-holiday-pay" />);
+    render(
+      <LanguageSelector
+        locale="ko"
+        pathname="/ko/employment/weekly-holiday-pay"
+      />,
+    );
     const selector = screen.getByLabelText("언어 선택");
     expect(selector).toHaveTextContent("한국어");
     expect(selector).toHaveClass("min-h-11", "min-w-11");
     selector.focus();
     expect(selector).toHaveFocus();
     await user.click(selector);
-    expect(screen.queryByRole("link", { name: "한국어" })).not.toBeInTheDocument();
-    expect(screen.getByText("한국어", { selector: 'span[aria-current="page"]' })).toBeVisible();
-    expect(screen.getByRole("link", { name: "English" })).toHaveAttribute("href", "/en/employment/weekly-holiday-pay");
+    expect(
+      screen.queryByRole("link", { name: "한국어" }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByText("한국어", { selector: 'span[aria-current="page"]' }),
+    ).toBeVisible();
+    expect(screen.getByRole("link", { name: "English" })).toHaveAttribute(
+      "href",
+      "/en/employment/weekly-holiday-pay",
+    );
   });
 
   it("shows English as the current locale and preserves the target calculator", async () => {
     const user = userEvent.setup();
-    render(<LanguageSelector locale="en" pathname="/en/employment/weekly-holiday-pay" />);
+    render(
+      <LanguageSelector
+        locale="en"
+        pathname="/en/employment/weekly-holiday-pay"
+      />,
+    );
     const selector = screen.getByLabelText("Select language");
     expect(selector).toHaveTextContent("English");
     expect(selector).toHaveClass("min-h-11", "min-w-11");
     await user.click(selector);
-    expect(screen.getByRole("link", { name: "한국어" })).toHaveAttribute("href", "/ko/employment/weekly-holiday-pay");
-    expect(screen.queryByRole("link", { name: "English" })).not.toBeInTheDocument();
-    expect(screen.getByText("English", { selector: 'span[aria-current="page"]' })).toBeVisible();
+    expect(screen.getByRole("link", { name: "한국어" })).toHaveAttribute(
+      "href",
+      "/ko/employment/weekly-holiday-pay",
+    );
+    expect(
+      screen.queryByRole("link", { name: "English" }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByText("English", { selector: 'span[aria-current="page"]' }),
+    ).toBeVisible();
     expect(screen.queryByText("日本語")).not.toBeInTheDocument();
   });
 });
