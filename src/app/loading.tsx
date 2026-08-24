@@ -1,4 +1,11 @@
-export default function Loading() {
+import { headers } from "next/headers";
+
+export default async function Loading() {
+  const requestHeaders = await headers();
+  const locale = requestHeaders.get("x-calcome-locale") === "en" ? "en" : "ko";
+  const loadingLabel =
+    locale === "en" ? "Loading the page." : "페이지를 불러오는 중입니다.";
+
   return (
     <main id="main-content" className="flex flex-1 items-center">
       <div
@@ -12,7 +19,7 @@ export default function Loading() {
           <div className="mt-4 h-6 w-full rounded bg-muted" />
           <div className="mt-2 h-6 w-2/3 rounded bg-muted" />
         </div>
-        <span className="sr-only">페이지를 불러오는 중입니다.</span>
+        <span className="sr-only">{loadingLabel}</span>
       </div>
     </main>
   );
