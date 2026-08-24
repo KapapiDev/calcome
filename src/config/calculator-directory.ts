@@ -68,6 +68,16 @@ export const savingsGoalCalculator = {
   href: "/ko/finance/savings-goal",
 } as const satisfies PublishedCalculator;
 
+export const investmentFeeImpactCalculator = {
+  id: "investment-fee-impact",
+  name: "투자 수수료 영향 계산기",
+  description:
+    "연간 운용 수수료가 장기 투자 결과와 최종 자산에 미치는 영향을 비교합니다.",
+  keywords: ["투자 수수료", "운용 보수", "수수료 영향", "investment fee impact"],
+  category: "금융",
+  href: "/ko/finance/investment-fee-impact",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...publishedCalculators,
   dividendYieldCalculator,
@@ -75,6 +85,7 @@ export const allPublishedCalculators = [
   stressDsrCalculator,
   mortgageLoanLimitCalculator,
   savingsGoalCalculator,
+  investmentFeeImpactCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 const directoryAliases: Readonly<Record<string, readonly string[]>> = {
@@ -89,6 +100,7 @@ const directoryAliases: Readonly<Record<string, readonly string[]>> = {
   "freelancer-3-3-tax": ["3.3", "삼쩜삼"],
   "dollar-cost-averaging": ["정액매수", "월 적립", "분할 투자"],
   "savings-goal": ["목표저축", "월 저축", "목돈 만들기"],
+  "investment-fee-impact": ["운용보수", "펀드 수수료", "장기 수수료"],
 };
 
 export const calculatorDirectoryCategories = [
@@ -182,6 +194,7 @@ export const calculatorDirectoryCategories = [
       "dividend",
       "dividend-yield",
       "dollar-cost-averaging",
+      "investment-fee-impact",
     ],
   },
   {
