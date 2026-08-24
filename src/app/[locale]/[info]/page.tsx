@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import AboutPage from "@/app/about/page";
+import ContactPage from "@/app/contact/page";
+import PrivacyPage from "@/app/privacy/page";
+import TermsPage from "@/app/terms/page";
 import { InfoPage } from "@/components/layout/info-page";
 
 const englishPages = {
@@ -11,10 +15,13 @@ const englishPages = {
 } as const;
 
 type InfoKey = keyof typeof englishPages;
+const koreanPages: Record<InfoKey, React.ComponentType> = { about: AboutPage, privacy: PrivacyPage, terms: TermsPage, contact: ContactPage };
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; info: string }> }): Promise<Metadata> {
   const { locale, info } = await params;
-  if (locale !== "en" || !(info in englishPages)) return {};
+  if (!(info in englishPages)) return {};
+  if (locale === "ko") return { alternates: { canonical: `/${info}`, languages: { ko: `/${info}`, en: `/en/${info}`, "x-default": `/${info}` } } };
+  if (locale !== "en") return {};
   const page = englishPages[info as InfoKey];
   const path = `/en/${info}`;
   return { title: page.title, description: page.description, alternates: { canonical: path, languages: { ko: `/${info}`, en: path, "x-default": `/${info}` } } };
@@ -22,7 +29,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function LocalizedInfoPage({ params }: { params: Promise<{ locale: string; info: string }> }) {
   const { locale, info } = await params;
-  if (locale !== "en" || !(info in englishPages)) notFound();
+  if (!(info in englishPages) || (locale !== "ko" && locale !== "en")) notFound();
+  if (locale === "ko") { const KoreanPage = koreanPages[info as InfoKey]; return <KoreanPage />; }
   const page = englishPages[info as InfoKey];
   return <InfoPage eyebrow={info.toUpperCase()} title={page.title} description={page.description}>{page.sections.map(([heading, body]) => <section key={heading}><h2 className="text-2xl font-semibold tracking-tight">{heading}</h2><p className="mt-4 leading-8 text-muted-foreground">{body}</p></section>)}</InfoPage>;
 }
