@@ -27,8 +27,7 @@ const categoryCopy: Record<string, { name: string; description: string }> = {
   },
   housing: {
     name: "Housing & Property",
-    description:
-      "Housing, rent, property, and transaction-cost calculators.",
+    description: "Housing, rent, property, and transaction-cost calculators.",
   },
   savings: {
     name: "Savings & Retirement",
@@ -106,10 +105,7 @@ export default async function LocalizedCalculatorsPage({
   return (
     <main id="main-content" className="flex-1">
       <div className="mx-auto w-full max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
-        <nav
-          aria-label="Breadcrumb"
-          className="text-sm text-muted-foreground"
-        >
+        <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground">
           <ol className="flex items-center gap-2">
             <li>
               <Link
