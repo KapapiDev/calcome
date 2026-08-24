@@ -74,16 +74,13 @@ describe("production metadata routes", () => {
 
   it("keeps sitemap and hreflang URLs on the production host", () => {
     const productionHost = new URL(robots().host!).host;
-
     for (const entry of sitemap()) {
       expect(new URL(entry.url).host).toBe(productionHost);
-
       for (const alternate of Object.values(
         entry.alternates?.languages ?? {},
       )) {
         expect(alternate).toBeDefined();
         if (!alternate) continue;
-
         expect(new URL(alternate).host).toBe(productionHost);
       }
     }
@@ -93,7 +90,6 @@ describe("production metadata routes", () => {
 describe("production recovery and navigation", () => {
   it("positions the homepage around the calculator catalog", () => {
     const { container } = render(<Home />);
-
     expect(
       screen.getByRole("heading", { name: "금융 계산을 쉽게." }),
     ).toBeVisible();
@@ -178,7 +174,6 @@ describe("production recovery and navigation", () => {
       screen.queryByRole("link", { name: "복리 계산기" }),
     ).not.toBeInTheDocument();
     unmount();
-
     render(<SiteFooter />);
     const footerNavigation = screen.getByRole("navigation", {
       name: "하단 탐색",
@@ -212,7 +207,6 @@ describe("production recovery and navigation", () => {
 
   it("offers useful recovery from a missing page", () => {
     render(<NotFound />);
-
     expect(
       screen.getByRole("heading", { name: "페이지를 찾을 수 없습니다" }),
     ).toBeVisible();
@@ -227,17 +221,13 @@ describe("production recovery and navigation", () => {
 
   it("announces loading without requiring motion", () => {
     render(<Loading />);
-
-    expect(screen.getByRole("status")).toHaveTextContent(
-      "페이지를 불러오는 중입니다.",
-    );
+    expect(screen.getByRole("status")).toHaveTextContent("Loading…");
   });
 
   it("lets users retry a route error", async () => {
     const user = userEvent.setup();
     const retry = vi.fn();
     render(<ErrorPage error={new Error("test")} unstable_retry={retry} />);
-
     await user.click(screen.getByRole("button", { name: "다시 시도" }));
     expect(retry).toHaveBeenCalledOnce();
   });

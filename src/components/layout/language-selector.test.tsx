@@ -9,20 +9,20 @@ import { LanguageSelector } from "./language-selector";
 describe("localizedDestination", () => {
   it("preserves every published calculator route in both directions", () => {
     expect(publishedCalculators.length).toBeGreaterThan(0);
-
     for (const calculator of publishedCalculators) {
       const koreanPath = calculator.href;
       const englishPath = koreanPath.replace(/^\/ko(?=\/|$)/, "/en");
-
       expect(localizedDestination(koreanPath, "en")).toBe(englishPath);
       expect(localizedDestination(englishPath, "ko")).toBe(koreanPath);
     }
   });
 
-  it("keeps shared pages on their canonical locale-less routes", () => {
-    expect(localizedDestination("/ko/calculators", "en")).toBe("/calculators");
+  it("serves English shared pages under /en and keeps Korean canonicals locale-less", () => {
+    expect(localizedDestination("/ko/calculators", "en")).toBe(
+      "/en/calculators",
+    );
     expect(localizedDestination("/en/about", "ko")).toBe("/about");
-    expect(localizedDestination("/", "en")).toBe("/");
+    expect(localizedDestination("/", "en")).toBe("/en");
     expect(localizedDestination("calculators", "ko")).toBe("/calculators");
   });
 
@@ -45,13 +45,11 @@ describe("LanguageSelector", () => {
         pathname="/ko/employment/weekly-holiday-pay"
       />,
     );
-
     const selector = screen.getByLabelText("언어 선택");
     expect(selector).toHaveTextContent("한국어");
     expect(selector).toHaveClass("min-h-11", "min-w-11");
     selector.focus();
     expect(selector).toHaveFocus();
-
     await user.click(selector);
     expect(
       screen.queryByRole("link", { name: "한국어" }),
@@ -73,11 +71,9 @@ describe("LanguageSelector", () => {
         pathname="/en/employment/weekly-holiday-pay"
       />,
     );
-
     const selector = screen.getByLabelText("Select language");
     expect(selector).toHaveTextContent("English");
     expect(selector).toHaveClass("min-h-11", "min-w-11");
-
     await user.click(selector);
     expect(screen.getByRole("link", { name: "한국어" })).toHaveAttribute(
       "href",

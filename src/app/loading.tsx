@@ -12,7 +12,7 @@ export default function Loading() {
           <div className="mt-4 h-6 w-full rounded bg-muted" />
           <div className="mt-2 h-6 w-2/3 rounded bg-muted" />
         </div>
-        <span className="sr-only">페이지를 불러오는 중입니다.</span>
+        <span className="sr-only">Loading…</span>
       </div>
     </main>
   );
