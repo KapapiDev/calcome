@@ -19,11 +19,13 @@ describe("localizedDestination", () => {
     }
   });
 
-  it("keeps shared pages on their canonical locale-less routes", () => {
-    expect(localizedDestination("/ko/calculators", "en")).toBe("/calculators");
-    expect(localizedDestination("/en/about", "ko")).toBe("/about");
-    expect(localizedDestination("/", "en")).toBe("/");
-    expect(localizedDestination("calculators", "ko")).toBe("/calculators");
+  it("preserves locale across shared pages", () => {
+    expect(localizedDestination("/ko/calculators", "en")).toBe(
+      "/en/calculators",
+    );
+    expect(localizedDestination("/en/about", "ko")).toBe("/ko/about");
+    expect(localizedDestination("/", "en")).toBe("/en");
+    expect(localizedDestination("calculators", "ko")).toBe("/ko/calculators");
   });
 
   it("localizes legacy calculator routes without creating a second redirect", () => {
