@@ -1,5 +1,21 @@
 import type { CompoundLocale } from "@/features/compound-interest/i18n";
 
+const localeAwareGlobalPaths = new Set([
+  "/",
+  "/calculators",
+  "/about",
+  "/privacy",
+  "/terms",
+  "/contact",
+]);
+
+function shouldPreserveLocale(pathname: string) {
+  return (
+    localeAwareGlobalPaths.has(pathname) ||
+    /^\/(?:finance|employment)(?:\/|$)/.test(pathname)
+  );
+}
+
 export function localizedDestination(
   pathname: string,
   locale: CompoundLocale,
@@ -12,12 +28,12 @@ export function localizedDestination(
   if (localizedMatch) {
     const pathWithoutLocale = localizedMatch[1] ?? "/";
 
-    return /^\/(?:finance|employment)(?:\/|$)/.test(pathWithoutLocale)
-      ? `/${locale}${pathWithoutLocale}`
+    return shouldPreserveLocale(pathWithoutLocale)
+      ? `/${locale}${pathWithoutLocale === "/" ? "" : pathWithoutLocale}`
       : pathWithoutLocale;
   }
 
-  return /^\/(?:finance|employment)(?:\/|$)/.test(normalizedPathname)
-    ? `/${locale}${normalizedPathname}`
+  return shouldPreserveLocale(normalizedPathname)
+    ? `/${locale}${normalizedPathname === "/" ? "" : normalizedPathname}`
     : normalizedPathname;
 }
