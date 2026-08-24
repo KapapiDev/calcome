@@ -12,6 +12,14 @@ const files = result.stdout
 
 if (files.length > 0) {
   console.error(`Prettier files: ${files.join(", ")}`);
+  spawnSync("npx", ["prettier", "--write", ...files], {
+    encoding: "utf8",
+    shell: process.platform === "win32",
+  });
+  const diff = spawnSync("git", ["diff", "--", ...files], {
+    encoding: "utf8",
+  });
+  if (diff.stdout) process.stderr.write(diff.stdout);
 }
 
 for (const file of files) {
