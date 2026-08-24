@@ -11,6 +11,7 @@ const files = result.stdout
   .filter(Boolean);
 
 for (const file of files) {
+  console.error(`Prettier formatting required: ${file}`);
   console.error(`::error file=${file}::Prettier formatting required`);
 }
 
