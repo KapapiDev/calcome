@@ -51,7 +51,7 @@ describe("shared localized layout UI", () => {
     expect(
       screen
         .getByRole("navigation", { name: "Primary navigation" })
-        .querySelector('a[href="/calculators"]'),
+        .querySelector('a[href="/en/calculators"]'),
     ).toHaveClass("min-h-11");
     for (const link of screen
       .getByRole("navigation", { name: "Footer navigation" })
