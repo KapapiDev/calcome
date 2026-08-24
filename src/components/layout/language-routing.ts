@@ -9,11 +9,15 @@ const localeAwareGlobalPaths = new Set([
   "/contact",
 ]);
 
-function shouldPreserveLocale(pathname: string) {
-  return (
-    localeAwareGlobalPaths.has(pathname) ||
-    /^\/(?:finance|employment)(?:\/|$)/.test(pathname)
-  );
+function localizedPath(pathname: string, locale: CompoundLocale) {
+  if (localeAwareGlobalPaths.has(pathname)) {
+    if (locale === "ko") return pathname;
+    return `/en${pathname === "/" ? "" : pathname}`;
+  }
+
+  return /^\/(?:finance|employment)(?:\/|$)/.test(pathname)
+    ? `/${locale}${pathname}`
+    : pathname;
 }
 
 export function localizedDestination(
@@ -26,14 +30,8 @@ export function localizedDestination(
   const localizedMatch = normalizedPathname.match(/^\/(?:ko|en)(\/.*)?$/);
 
   if (localizedMatch) {
-    const pathWithoutLocale = localizedMatch[1] ?? "/";
-
-    return shouldPreserveLocale(pathWithoutLocale)
-      ? `/${locale}${pathWithoutLocale === "/" ? "" : pathWithoutLocale}`
-      : pathWithoutLocale;
+    return localizedPath(localizedMatch[1] ?? "/", locale);
   }
 
-  return shouldPreserveLocale(normalizedPathname)
-    ? `/${locale}${normalizedPathname === "/" ? "" : normalizedPathname}`
-    : normalizedPathname;
+  return localizedPath(normalizedPathname, locale);
 }
