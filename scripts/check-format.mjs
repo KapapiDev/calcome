@@ -10,6 +10,10 @@ const files = result.stdout
   .map((file) => file.trim())
   .filter(Boolean);
 
+if (files.length > 0) {
+  console.error(`Prettier files: ${files.join(", ")}`);
+}
+
 for (const file of files) {
   console.error(`::error file=${file}::Prettier formatting required`);
 }
