@@ -1,4 +1,5 @@
 import { spawnSync } from "node:child_process";
+import { readFileSync } from "node:fs";
 
 const result = spawnSync("npx", ["prettier", "--list-different", "."], {
   encoding: "utf8",
@@ -12,6 +13,20 @@ const files = result.stdout
 
 for (const file of files) {
   console.error(`Prettier formatting required: ${file}`);
+  const formatted = spawnSync("npx", ["prettier", file], {
+    encoding: "utf8",
+    shell: process.platform === "win32",
+  }).stdout;
+  const currentLines = readFileSync(file, "utf8").split(/\r?\n/);
+  const formattedLines = formatted.split(/\r?\n/);
+  const max = Math.max(currentLines.length, formattedLines.length);
+  for (let index = 0; index < max; index += 1) {
+    if (currentLines[index] !== formattedLines[index]) {
+      console.error(`current ${index + 1}: ${currentLines[index] ?? "<missing>"}`);
+      console.error(`format  ${index + 1}: ${formattedLines[index] ?? "<missing>"}`);
+      break;
+    }
+  }
   console.error(`::error file=${file}::Prettier formatting required`);
 }
 
