@@ -73,7 +73,12 @@ export const investmentFeeImpactCalculator = {
   name: "투자 수수료 영향 계산기",
   description:
     "연간 운용 수수료가 장기 투자 결과와 최종 자산에 미치는 영향을 비교합니다.",
-  keywords: ["투자 수수료", "운용 보수", "수수료 영향", "investment fee impact"],
+  keywords: [
+    "투자 수수료",
+    "운용 보수",
+    "수수료 영향",
+    "investment fee impact",
+  ],
   category: "금융",
   href: "/ko/finance/investment-fee-impact",
 } as const satisfies PublishedCalculator;
