@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { siteConfig } from "@/config/site";
 import type { CompoundLocale } from "@/features/compound-interest/i18n";
+import { localizedDestination } from "./language-routing";
 import { sharedLayoutCopy } from "./layout-i18n";
 
 const footerLinkClass =
@@ -9,6 +10,8 @@ const footerLinkClass =
 
 export function SiteFooter({ locale = "ko" }: { locale?: CompoundLocale }) {
   const copy = sharedLayoutCopy[locale];
+  const href = (pathname: string) => localizedDestination(pathname, locale);
+
   return (
     <footer className="border-t">
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-6 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-8">
@@ -18,27 +21,27 @@ export function SiteFooter({ locale = "ko" }: { locale?: CompoundLocale }) {
         <nav aria-label={copy.footerNavigation}>
           <ul className="flex flex-wrap gap-x-5 gap-y-2">
             <li>
-              <Link href="/calculators" className={footerLinkClass}>
+              <Link href={href("/calculators")} className={footerLinkClass}>
                 {copy.calculators}
               </Link>
             </li>
             <li>
-              <Link href="/about" className={footerLinkClass}>
+              <Link href={href("/about")} className={footerLinkClass}>
                 {copy.about}
               </Link>
             </li>
             <li>
-              <Link href="/privacy" className={footerLinkClass}>
+              <Link href={href("/privacy")} className={footerLinkClass}>
                 {copy.privacy}
               </Link>
             </li>
             <li>
-              <Link href="/terms" className={footerLinkClass}>
+              <Link href={href("/terms")} className={footerLinkClass}>
                 {copy.terms}
               </Link>
             </li>
             <li>
-              <Link href="/contact" className={footerLinkClass}>
+              <Link href={href("/contact")} className={footerLinkClass}>
                 {copy.contact}
               </Link>
             </li>
