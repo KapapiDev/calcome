@@ -3,7 +3,10 @@ import { describe, expect, it } from "vitest";
 
 import { allPublishedCalculators } from "@/config/calculator-directory";
 
-import sitemap, { calculatorSitemapEntries } from "./sitemap";
+import sitemap, {
+  calculatorSitemapEntries,
+  staticSitemapEntries,
+} from "./sitemap";
 
 describe("XML sitemap", () => {
   it("serializes canonical public routes as a standards-compliant urlset", () => {
@@ -21,8 +24,12 @@ describe("XML sitemap", () => {
     expect(locations).toEqual(urls);
     expect(new Set(urls).size).toBe(urls.length);
     expect(urls).toContain("https://www.calcome.com/");
+    expect(urls).toContain("https://www.calcome.com/en");
     expect(urls).toContain("https://www.calcome.com/calculators");
+    expect(urls).toContain("https://www.calcome.com/en/calculators");
     expect(urls).toContain("https://www.calcome.com/contact");
+    expect(urls).toContain("https://www.calcome.com/en/contact");
+    expect(urls).not.toContain("https://www.calcome.com/ko");
 
     for (const url of urls) {
       expect(new URL(url).origin).toBe("https://www.calcome.com");
@@ -32,6 +39,40 @@ describe("XML sitemap", () => {
     expect(xml).not.toContain("<changefreq>");
     expect(xml).not.toContain("<priority>");
     expect(xml).not.toMatch(/\nmonthly\n|\n0\.9\n/);
+  });
+
+  it("emits reciprocal locale alternates for every static canonical page", () => {
+    const entries = staticSitemapEntries();
+    const expectedPairs = [
+      ["https://www.calcome.com/", "https://www.calcome.com/en"],
+      [
+        "https://www.calcome.com/calculators",
+        "https://www.calcome.com/en/calculators",
+      ],
+      ["https://www.calcome.com/about", "https://www.calcome.com/en/about"],
+      [
+        "https://www.calcome.com/privacy",
+        "https://www.calcome.com/en/privacy",
+      ],
+      ["https://www.calcome.com/terms", "https://www.calcome.com/en/terms"],
+      [
+        "https://www.calcome.com/contact",
+        "https://www.calcome.com/en/contact",
+      ],
+    ];
+
+    expect(entries).toHaveLength(expectedPairs.length * 2);
+
+    for (const [ko, en] of expectedPairs) {
+      for (const url of [ko, en]) {
+        expect(entries).toContainEqual({
+          url,
+          alternates: {
+            languages: { ko, en, "x-default": ko },
+          },
+        });
+      }
+    }
   });
 
   it("includes both localized routes for every published calculator", () => {
