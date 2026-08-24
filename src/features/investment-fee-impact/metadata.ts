@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/config/site";
-import { investmentFeeImpactContent, type InvestmentFeeImpactLocale } from "./content";
+import {
+  investmentFeeImpactContent,
+  type InvestmentFeeImpactLocale,
+} from "./content";
 
 export function createInvestmentFeeImpactMetadata(
   locale: InvestmentFeeImpactLocale,
