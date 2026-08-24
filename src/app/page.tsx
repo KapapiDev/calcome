@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { CalculatorCard } from "@/components/calculators/calculator-card";
+import { HomeCategoryEntry } from "@/components/calculators/home-category-entry";
 import { CalculatorSearch } from "@/components/calculators/calculator-search";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -42,6 +43,7 @@ export default function Home() {
             </span>
           </p>
           <CalculatorSearch calculators={directorySearchCalculators} />
+          <HomeCategoryEntry />
         </div>
       </section>
       <section
