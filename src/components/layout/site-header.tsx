@@ -5,6 +5,7 @@ import { siteConfig } from "@/config/site";
 import type { CompoundLocale } from "@/features/compound-interest/i18n";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { LanguageSelector } from "./language-selector";
+import { localizedDestination } from "./language-routing";
 import { sharedLayoutCopy } from "./layout-i18n";
 
 export function SiteHeader({
@@ -20,7 +21,7 @@ export function SiteHeader({
       <div className="mx-auto flex h-14 w-full max-w-[1440px] items-center gap-4 px-5 sm:gap-8 sm:px-6">
         <div className="flex shrink-0 items-center gap-3">
           <Link
-            href="/"
+            href={localizedDestination("/", locale)}
             className="inline-flex min-h-11 items-center rounded-sm text-xl font-bold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             {siteConfig.name}
@@ -36,7 +37,7 @@ export function SiteHeader({
         >
           <div className="flex items-center text-sm font-medium">
             <Link
-              href="/calculators"
+              href={localizedDestination("/calculators", locale)}
               className="flex min-h-11 items-center gap-1 rounded-md px-2 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               {copy.calculators}{" "}
