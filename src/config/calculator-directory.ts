@@ -123,7 +123,12 @@ const directoryAliases: Readonly<Record<string, readonly string[]>> = {
   "dollar-cost-averaging": ["정액매수", "월 적립", "분할 투자"],
   "savings-goal": ["목표저축", "월 저축", "목돈 만들기"],
   "investment-fee-impact": ["운용보수", "펀드 수수료", "장기 수수료"],
-  "inflation-purchasing-power": ["인플레이션", "돈 가치", "화폐 가치", "실질 구매력"],
+  "inflation-purchasing-power": [
+    "인플레이션",
+    "돈 가치",
+    "화폐 가치",
+    "실질 구매력",
+  ],
 };
 
 export const calculatorDirectoryCategories = [
