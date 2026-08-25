@@ -10,11 +10,17 @@ describe("calculateCurrencyConversion", () => {
   });
 
   it("allows a zero amount", () => {
-    expect(calculateCurrencyConversion({ amount: 0, rate: 1300 }).convertedAmount).toBe(0);
+    expect(
+      calculateCurrencyConversion({ amount: 0, rate: 1300 }).convertedAmount,
+    ).toBe(0);
   });
 
   it("rejects invalid rates and amounts", () => {
-    expect(() => calculateCurrencyConversion({ amount: -1, rate: 1 })).toThrow(RangeError);
-    expect(() => calculateCurrencyConversion({ amount: 1, rate: 0 })).toThrow(RangeError);
+    expect(() =>
+      calculateCurrencyConversion({ amount: -1, rate: 1 }),
+    ).toThrow(RangeError);
+    expect(() =>
+      calculateCurrencyConversion({ amount: 1, rate: 0 }),
+    ).toThrow(RangeError);
   });
 });
