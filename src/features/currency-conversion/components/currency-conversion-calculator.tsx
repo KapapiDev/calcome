@@ -14,15 +14,7 @@ import {
 } from "../calculate";
 import type { CurrencyConversionLocale } from "../metadata";
 
-const currencies = [
-  "USD",
-  "EUR",
-  "GBP",
-  "JPY",
-  "KRW",
-  "CAD",
-  "AUD",
-] as const;
+const currencies = ["USD", "EUR", "GBP", "JPY", "KRW", "CAD", "AUD"] as const;
 
 type CurrencyCode = (typeof currencies)[number];
 
