@@ -83,6 +83,22 @@ export const investmentFeeImpactCalculator = {
   href: "/ko/finance/investment-fee-impact",
 } as const satisfies PublishedCalculator;
 
+export const inflationPurchasingPowerCalculator = {
+  id: "inflation-purchasing-power",
+  name: "물가상승·구매력 계산기",
+  description:
+    "예상 물가상승률과 기간으로 미래 가격과 현재 돈의 실질 구매력 변화를 계산합니다.",
+  keywords: [
+    "물가상승",
+    "구매력",
+    "돈 가치",
+    "인플레이션",
+    "inflation purchasing power",
+  ],
+  category: "금융",
+  href: "/ko/finance/inflation-purchasing-power",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...publishedCalculators,
   dividendYieldCalculator,
@@ -91,6 +107,7 @@ export const allPublishedCalculators = [
   mortgageLoanLimitCalculator,
   savingsGoalCalculator,
   investmentFeeImpactCalculator,
+  inflationPurchasingPowerCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 const directoryAliases: Readonly<Record<string, readonly string[]>> = {
@@ -106,6 +123,12 @@ const directoryAliases: Readonly<Record<string, readonly string[]>> = {
   "dollar-cost-averaging": ["정액매수", "월 적립", "분할 투자"],
   "savings-goal": ["목표저축", "월 저축", "목돈 만들기"],
   "investment-fee-impact": ["운용보수", "펀드 수수료", "장기 수수료"],
+  "inflation-purchasing-power": [
+    "인플레이션",
+    "돈 가치",
+    "화폐 가치",
+    "실질 구매력",
+  ],
 };
 
 export const calculatorDirectoryCategories = [
@@ -186,7 +209,13 @@ export const calculatorDirectoryCategories = [
     id: "savings",
     name: "저축·연금",
     description: "예금, 적금, 복리와 장기 자산 성장을 계산합니다.",
-    calculatorIds: ["deposit", "savings", "compound-interest", "savings-goal"],
+    calculatorIds: [
+      "deposit",
+      "savings",
+      "compound-interest",
+      "savings-goal",
+      "inflation-purchasing-power",
+    ],
   },
   {
     id: "investment",
