@@ -117,10 +117,7 @@ export function IsaTaxSavingsCalculator({
           </select>
 
           <div className="mt-4">
-            <label
-              className="block text-sm font-medium"
-              htmlFor="net-profit"
-            >
+            <label className="block text-sm font-medium" htmlFor="net-profit">
               {ko
                 ? "손익통산 후 순이익 (KRW)"
                 : "Net profit after loss offsetting (KRW)"}
