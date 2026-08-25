@@ -92,11 +92,17 @@ export function InflationPurchasingPowerCalculator({
           className={`${compactCalculatorSettingsClass} min-w-0`}
         >
           <p className="text-sm font-semibold text-primary">{copy.category}</p>
-          <h2 id="inflation-purchasing-power-input-title" className="mt-1 text-xl font-semibold">
+          <h2
+            id="inflation-purchasing-power-input-title"
+            className="mt-1 text-xl font-semibold"
+          >
             {copy.input}
           </h2>
           {Object.keys(errors).length ? (
-            <p role="alert" className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive">
+            <p
+              role="alert"
+              className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
+            >
               {copy.error}
             </p>
           ) : null}
@@ -121,7 +127,10 @@ export function InflationPurchasingPowerCalculator({
             error={errors.annualInflationPercent}
             suffix="%"
             onChange={(value) =>
-              setValues((current) => ({ ...current, annualInflationPercent: value }))
+              setValues((current) => ({
+                ...current,
+                annualInflationPercent: value,
+              }))
             }
           />
           <InputField
@@ -147,7 +156,10 @@ export function InflationPurchasingPowerCalculator({
           aria-labelledby="inflation-purchasing-power-result-title"
           className="scroll-mt-20 rounded-xl border bg-card p-4 shadow-sm"
         >
-          <h2 id="inflation-purchasing-power-result-title" className="text-xl font-semibold">
+          <h2
+            id="inflation-purchasing-power-result-title"
+            className="text-xl font-semibold"
+          >
             {copy.result}
           </h2>
           <PrimaryResults
