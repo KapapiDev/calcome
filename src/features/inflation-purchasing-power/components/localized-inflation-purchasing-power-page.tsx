@@ -43,8 +43,12 @@ export function LocalizedInflationPurchasingPowerPage({
         </nav>
         <header className="mt-5 max-w-3xl">
           <p className="text-sm font-semibold text-primary">{copy.category}</p>
-          <h1 className="mt-2 text-4xl font-semibold tracking-tight">{copy.title}</h1>
-          <p className="mt-3 leading-7 text-muted-foreground">{copy.description}</p>
+          <h1 className="mt-2 text-4xl font-semibold tracking-tight">
+            {copy.title}
+          </h1>
+          <p className="mt-3 leading-7 text-muted-foreground">
+            {copy.description}
+          </p>
         </header>
         <div className="mt-6">
           <InflationPurchasingPowerCalculator locale={locale} />
@@ -53,17 +57,27 @@ export function LocalizedInflationPurchasingPowerPage({
           <h2 className="text-xl font-semibold">
             {locale === "ko" ? "계산 방법" : "How it works"}
           </h2>
-          <p className="mt-3 text-sm leading-7 text-muted-foreground">{copy.method}</p>
+          <p className="mt-3 text-sm leading-7 text-muted-foreground">
+            {copy.method}
+          </p>
           <h2 className="mt-6 text-xl font-semibold">
             {locale === "ko" ? "확인할 점" : "What to consider"}
           </h2>
-          <p className="mt-3 text-sm leading-7 text-muted-foreground">{copy.cautions}</p>
+          <p className="mt-3 text-sm leading-7 text-muted-foreground">
+            {copy.cautions}
+          </p>
           <h2 className="mt-6 text-xl font-semibold">{copy.related}</h2>
           <div className="mt-3 flex flex-wrap gap-3 text-sm">
-            <Link className="underline underline-offset-4" href={`/${locale}/finance/compound-interest`}>
+            <Link
+              className="underline underline-offset-4"
+              href={`/${locale}/finance/compound-interest`}
+            >
               {locale === "ko" ? "복리 계산기" : "Compound Interest Calculator"}
             </Link>
-            <Link className="underline underline-offset-4" href={`/${locale}/finance/savings-goal`}>
+            <Link
+              className="underline underline-offset-4"
+              href={`/${locale}/finance/savings-goal`}
+            >
               {locale === "ko" ? "저축 목표 계산기" : "Savings Goal Calculator"}
             </Link>
           </div>
