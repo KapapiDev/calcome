@@ -115,7 +115,10 @@ export function RetirementPensionTaxCreditCalculator({
             </p>
           ) : null}
 
-          <label className="mt-4 block text-sm font-medium" htmlFor="income-type">
+          <label
+            className="mt-4 block text-sm font-medium"
+            htmlFor="income-type"
+          >
             {ko ? "소득 기준" : "Income basis"}
           </label>
           <select
@@ -214,7 +217,9 @@ export function RetirementPensionTaxCreditCalculator({
                 value: result ? money(result.currentIncomeTaxCredit) : "—",
               },
               {
-                label: ko ? "한도 충족 시 최대 공제" : "Maximum credit at limit",
+                label: ko
+                  ? "한도 충족 시 최대 공제"
+                  : "Maximum credit at limit",
                 value: result ? money(result.maximumIncomeTaxCredit) : "—",
               },
               {
