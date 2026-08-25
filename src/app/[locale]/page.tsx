@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import Home from "@/app/page";
 import { CalculatorCard } from "@/components/calculators/calculator-card";
+import { HomeCategoryEntry } from "@/components/calculators/home-category-entry";
 import { CalculatorSearch } from "@/components/calculators/calculator-search";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -84,6 +85,7 @@ export default async function LocalizedHome({
             payroll, and more.
           </p>
           <CalculatorSearch calculators={searchCalculators} />
+          <HomeCategoryEntry locale="en" />
         </div>
       </section>
       <section

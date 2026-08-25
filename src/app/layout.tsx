@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 
+import { RelatedCalculators } from "@/components/calculators/related-calculators";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SkipLink } from "@/components/layout/skip-link";
@@ -83,6 +84,7 @@ export default async function RootLayout({
           <div className="flex min-h-screen flex-col">
             <SiteHeader locale={locale} pathname={pathname} />
             {children}
+            <RelatedCalculators locale={locale} pathname={pathname} />
             <SiteFooter locale={locale} />
           </div>
         </ThemeProvider>
