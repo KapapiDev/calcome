@@ -77,7 +77,10 @@ export function IsaTaxSavingsCalculator({
           <p className="text-sm font-semibold text-primary">
             {ko ? "투자" : "Investment"}
           </p>
-          <h2 id="isa-tax-savings-input-title" className="mt-1 text-xl font-semibold">
+          <h2
+            id="isa-tax-savings-input-title"
+            className="mt-1 text-xl font-semibold"
+          >
             {ko ? "ISA 조건" : "ISA inputs"}
           </h2>
           {error ? (
@@ -89,7 +92,10 @@ export function IsaTaxSavingsCalculator({
             </p>
           ) : null}
 
-          <label className="mt-4 block text-sm font-medium" htmlFor="account-type">
+          <label
+            className="mt-4 block text-sm font-medium"
+            htmlFor="account-type"
+          >
             {ko ? "가입 유형" : "Account eligibility"}
           </label>
           <select
@@ -111,8 +117,13 @@ export function IsaTaxSavingsCalculator({
           </select>
 
           <div className="mt-4">
-            <label className="block text-sm font-medium" htmlFor="net-profit">
-              {ko ? "손익통산 후 순이익 (KRW)" : "Net profit after loss offsetting (KRW)"}
+            <label
+              className="block text-sm font-medium"
+              htmlFor="net-profit"
+            >
+              {ko
+                ? "손익통산 후 순이익 (KRW)"
+                : "Net profit after loss offsetting (KRW)"}
             </label>
             <input
               id="net-profit"
@@ -141,7 +152,10 @@ export function IsaTaxSavingsCalculator({
           aria-labelledby="isa-tax-savings-result-title"
           className="scroll-mt-20 rounded-xl border bg-card p-4 shadow-sm"
         >
-          <h2 id="isa-tax-savings-result-title" className="text-xl font-semibold">
+          <h2
+            id="isa-tax-savings-result-title"
+            className="text-xl font-semibold"
+          >
             {ko ? "예상 절세 결과" : "Estimated tax savings"}
           </h2>
           <PrimaryResults
@@ -158,7 +172,12 @@ export function IsaTaxSavingsCalculator({
               {
                 label: ko ? "비과세 적용액" : "Tax-free profit",
                 value: result
-                  ? money(Math.min(Number(netProfit.replaceAll(",", "")) || 0, result.taxFreeLimit))
+                  ? money(
+                      Math.min(
+                        Number(netProfit.replaceAll(",", "")) || 0,
+                        result.taxFreeLimit,
+                      ),
+                    )
                   : "—",
               },
               {
