@@ -99,6 +99,22 @@ export const inflationPurchasingPowerCalculator = {
   href: "/ko/finance/inflation-purchasing-power",
 } as const satisfies PublishedCalculator;
 
+export const currencyConversionCalculator = {
+  id: "currency-conversion",
+  name: "환율 변환 계산기",
+  description:
+    "직접 확인한 환율을 입력해 두 통화 사이의 금액과 역환율을 계산합니다.",
+  keywords: [
+    "환율",
+    "통화 변환",
+    "외화",
+    "currency conversion",
+    "exchange rate",
+  ],
+  category: "금융",
+  href: "/ko/finance/currency-conversion",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...publishedCalculators,
   dividendYieldCalculator,
@@ -108,6 +124,7 @@ export const allPublishedCalculators = [
   savingsGoalCalculator,
   investmentFeeImpactCalculator,
   inflationPurchasingPowerCalculator,
+  currencyConversionCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 const directoryAliases: Readonly<Record<string, readonly string[]>> = {
@@ -129,6 +146,7 @@ const directoryAliases: Readonly<Record<string, readonly string[]>> = {
     "화폐 가치",
     "실질 구매력",
   ],
+  "currency-conversion": ["환전", "외환", "달러 환율", "exchange"],
 };
 
 export const calculatorDirectoryCategories = [
@@ -235,7 +253,7 @@ export const calculatorDirectoryCategories = [
     id: "business-life",
     name: "사업·생활",
     description: "사업과 생활 금융에 필요한 계산기를 모았습니다.",
-    calculatorIds: [],
+    calculatorIds: ["currency-conversion"],
   },
 ] as const satisfies readonly CalculatorDirectoryCategory[];
 
