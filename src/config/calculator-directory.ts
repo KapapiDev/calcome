@@ -233,12 +233,7 @@ const directoryAliases: Readonly<Record<string, readonly string[]>> = {
     "IRP 납입 한도",
     "연금계좌 한도",
   ],
-  "year-end-tax-refund": [
-    "연말정산",
-    "환급금",
-    "추가납부",
-    "차감징수세액",
-  ],
+  "year-end-tax-refund": ["연말정산", "환급금", "추가납부", "차감징수세액"],
 };
 
 export const calculatorDirectoryCategories = [
