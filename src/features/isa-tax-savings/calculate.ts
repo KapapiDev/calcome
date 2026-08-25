@@ -29,9 +29,7 @@ export function calculateIsaTaxSavings(
   }
 
   const taxFreeLimit =
-    accountType === "special"
-      ? SPECIAL_TAX_FREE_LIMIT
-      : GENERAL_TAX_FREE_LIMIT;
+    accountType === "special" ? SPECIAL_TAX_FREE_LIMIT : GENERAL_TAX_FREE_LIMIT;
   const taxableProfit = Math.max(0, netProfit - taxFreeLimit);
   const isaTax = taxableProfit * ISA_SEPARATE_TAX_RATE;
   const ordinaryTax = netProfit * ORDINARY_WITHHOLDING_RATE;
