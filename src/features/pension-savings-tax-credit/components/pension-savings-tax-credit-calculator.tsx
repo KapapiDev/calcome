@@ -115,7 +115,10 @@ export function PensionSavingsTaxCreditCalculator({
             </p>
           ) : null}
 
-          <label className="mt-4 block text-sm font-medium" htmlFor="income-type">
+          <label
+            className="mt-4 block text-sm font-medium"
+            htmlFor="income-type"
+          >
             {ko ? "소득 기준" : "Income basis"}
           </label>
           <select
@@ -123,14 +126,20 @@ export function PensionSavingsTaxCreditCalculator({
             className={fieldClass}
             value={incomeType}
             onChange={(event) =>
-              setIncomeType(event.target.value as PensionSavingsTaxCreditIncomeType)
+              setIncomeType(
+                event.target.value as PensionSavingsTaxCreditIncomeType,
+              )
             }
           >
             <option value="salary">
-              {ko ? "근로소득만 있음 (총급여)" : "Salary income only (gross pay)"}
+              {ko
+                ? "근로소득만 있음 (총급여)"
+                : "Salary income only (gross pay)"}
             </option>
             <option value="other">
-              {ko ? "그 외 종합소득 (종합소득금액)" : "Other comprehensive income"}
+              {ko
+                ? "그 외 종합소득 (종합소득금액)"
+                : "Other comprehensive income"}
             </option>
           </select>
 
@@ -142,13 +151,21 @@ export function PensionSavingsTaxCreditCalculator({
           />
           <MoneyField
             id="pension-savings"
-            label={ko ? "연금저축 납입액 (KRW)" : "Pension savings contribution (KRW)"}
+            label={
+              ko
+                ? "연금저축 납입액 (KRW)"
+                : "Pension savings contribution (KRW)"
+            }
             value={pensionSavings}
             setValue={setPensionSavings}
           />
           <MoneyField
             id="retirement-pension"
-            label={ko ? "퇴직연금·IRP 납입액 (KRW)" : "Retirement pension / IRP contribution (KRW)"}
+            label={
+              ko
+                ? "퇴직연금·IRP 납입액 (KRW)"
+                : "Retirement pension / IRP contribution (KRW)"
+            }
             value={retirementPension}
             setValue={setRetirementPension}
           />
