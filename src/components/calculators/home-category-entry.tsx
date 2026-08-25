@@ -19,6 +19,7 @@ export function HomeCategoryEntry({
 }) {
   const isEnglish = locale === "en";
   const categories = visibleCalculatorDirectory;
+  const directoryHref = isEnglish ? "/en/calculators" : "/calculators";
 
   return (
     <nav
@@ -29,9 +30,7 @@ export function HomeCategoryEntry({
         {categories.map((category) => (
           <li key={category.id} className="shrink-0 snap-start">
             <Link
-              href={`${
-                isEnglish ? "/en/calculators" : "/calculators"
-              }#${category.id}`}
+              href={`${directoryHref}#${category.id}`}
               className="inline-flex min-h-11 items-center rounded-lg border bg-background px-4 text-sm font-medium transition hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/30"
             >
               {isEnglish
