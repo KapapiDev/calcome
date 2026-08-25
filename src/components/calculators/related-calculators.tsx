@@ -5,7 +5,9 @@ import {
   calculatorDirectoryCategories,
 } from "@/config/calculator-directory";
 
-const calculatorsById = new Map(
+type PublishedDirectoryCalculator = (typeof allPublishedCalculators)[number];
+
+const calculatorsById: ReadonlyMap<string, PublishedDirectoryCalculator> = new Map(
   allPublishedCalculators.map((calculator) => [calculator.id, calculator] as const),
 );
 
@@ -74,7 +76,7 @@ export function getRelatedCalculators(pathname: string, limit = 4) {
   if (!current) return [];
 
   const category = calculatorDirectoryCategories.find((entry) =>
-    entry.calculatorIds.includes(current.id),
+    (entry.calculatorIds as readonly string[]).includes(current.id),
   );
   if (!category) return [];
 
@@ -91,7 +93,7 @@ export function getRelatedCalculators(pathname: string, limit = 4) {
       return true;
     })
     .map((id) => calculatorsById.get(id))
-    .filter((calculator) => calculator !== undefined)
+    .filter((calculator): calculator is PublishedDirectoryCalculator => calculator !== undefined)
     .slice(0, limit);
 }
 
