@@ -7,9 +7,12 @@ import {
 
 type PublishedDirectoryCalculator = (typeof allPublishedCalculators)[number];
 
-const calculatorsById: ReadonlyMap<string, PublishedDirectoryCalculator> = new Map(
-  allPublishedCalculators.map((calculator) => [calculator.id, calculator] as const),
-);
+const calculatorsById: ReadonlyMap<string, PublishedDirectoryCalculator> =
+  new Map(
+    allPublishedCalculators.map(
+      (calculator) => [calculator.id, calculator] as const,
+    ),
+  );
 
 const priorityRelatedIds: Readonly<Record<string, readonly string[]>> = {
   "compound-interest": [
@@ -57,11 +60,13 @@ function normalizeCalculatorPath(pathname: string) {
 function englishCalculatorName(href: string) {
   const slug = href.split("/").filter(Boolean).at(-1) ?? "calculator";
   const acronyms = new Set(["apr", "apy", "cagr", "dsr", "dti", "ltv", "vat"]);
-  const words = slug.split("-").map((word) =>
-    acronyms.has(word)
-      ? word.toUpperCase()
-      : `${word.charAt(0).toUpperCase()}${word.slice(1)}`,
-  );
+  const words = slug
+    .split("-")
+    .map((word) =>
+      acronyms.has(word)
+        ? word.toUpperCase()
+        : `${word.charAt(0).toUpperCase()}${word.slice(1)}`,
+    );
 
   return `${words.join(" ")} Calculator`;
 }
@@ -93,7 +98,10 @@ export function getRelatedCalculators(pathname: string, limit = 4) {
       return true;
     })
     .map((id) => calculatorsById.get(id))
-    .filter((calculator): calculator is PublishedDirectoryCalculator => calculator !== undefined)
+    .filter(
+      (calculator): calculator is PublishedDirectoryCalculator =>
+        calculator !== undefined,
+    )
     .slice(0, limit);
 }
 
