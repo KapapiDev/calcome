@@ -163,6 +163,22 @@ export const retirementPensionTaxCreditCalculator = {
   href: "/ko/finance/retirement-pension-tax-credit",
 } as const satisfies PublishedCalculator;
 
+export const yearEndTaxRefundCalculator = {
+  id: "year-end-tax-refund",
+  name: "연말정산 환급액 계산기",
+  description:
+    "결정세액과 기납부세액, 납부특례세액으로 연말정산 환급액 또는 추가 납부액을 계산합니다.",
+  keywords: [
+    "연말정산 환급액",
+    "연말정산 추가납부",
+    "차감징수세액",
+    "원천징수영수증",
+    "year end tax refund",
+  ],
+  category: "금융",
+  href: "/ko/finance/year-end-tax-refund",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...publishedCalculators,
   dividendYieldCalculator,
@@ -176,6 +192,7 @@ export const allPublishedCalculators = [
   pensionSavingsTaxCreditCalculator,
   isaTaxSavingsCalculator,
   retirementPensionTaxCreditCalculator,
+  yearEndTaxRefundCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 const directoryAliases: Readonly<Record<string, readonly string[]>> = {
@@ -216,6 +233,7 @@ const directoryAliases: Readonly<Record<string, readonly string[]>> = {
     "IRP 납입 한도",
     "연금계좌 한도",
   ],
+  "year-end-tax-refund": ["연말정산", "환급금", "추가납부", "차감징수세액"],
 };
 
 export const calculatorDirectoryCategories = [
@@ -280,6 +298,7 @@ export const calculatorDirectoryCategories = [
       "comprehensive-income-tax",
       "withholding-tax",
       "freelancer-3-3-tax",
+      "year-end-tax-refund",
     ],
   },
   {
