@@ -1,7 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { getRelatedCalculators, RelatedCalculators } from "./related-calculators";
+import {
+  getRelatedCalculators,
+  RelatedCalculators,
+} from "./related-calculators";
 
 describe("RelatedCalculators", () => {
   it("derives deterministic compound-interest journeys from published sources", () => {
@@ -20,14 +23,15 @@ describe("RelatedCalculators", () => {
       />,
     );
 
-    expect(screen.getByRole("heading", { name: "Related calculators" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Related calculators" }),
+    ).toBeInTheDocument();
     for (const link of screen.getAllByRole("link")) {
       expect(link.getAttribute("href")).toMatch(/^\/en\//);
     }
-    expect(screen.getByRole("link", { name: "Savings Calculator" })).toHaveAttribute(
-      "href",
-      "/en/finance/savings",
-    );
+    expect(
+      screen.getByRole("link", { name: "Savings Calculator" }),
+    ).toHaveAttribute("href", "/en/finance/savings");
   });
 
   it("does not render recommendations on non-calculator routes", () => {
