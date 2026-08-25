@@ -187,7 +187,12 @@ const directoryAliases: Readonly<Record<string, readonly string[]>> = {
     "IRP",
     "연말정산 연금",
   ],
-  "isa-tax-savings": ["개인종합자산관리계좌", "ISA 비과세", "ISA 세금", "중개형 ISA"],
+  "isa-tax-savings": [
+    "개인종합자산관리계좌",
+    "ISA 비과세",
+    "ISA 세금",
+    "중개형 ISA",
+  ],
 };
 
 export const calculatorDirectoryCategories = [
