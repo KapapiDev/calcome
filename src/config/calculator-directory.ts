@@ -115,6 +115,22 @@ export const currencyConversionCalculator = {
   href: "/ko/finance/currency-conversion",
 } as const satisfies PublishedCalculator;
 
+export const pensionSavingsTaxCreditCalculator = {
+  id: "pension-savings-tax-credit",
+  name: "연금저축 세액공제 계산기",
+  description:
+    "연금저축과 퇴직연금·IRP 납입액, 소득 기준으로 연금계좌 세액공제 예상액을 계산합니다.",
+  keywords: [
+    "연금저축 세액공제",
+    "연금계좌 세액공제",
+    "IRP 세액공제",
+    "연말정산 연금저축",
+    "pension savings tax credit",
+  ],
+  category: "금융",
+  href: "/ko/finance/pension-savings-tax-credit",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...publishedCalculators,
   dividendYieldCalculator,
@@ -125,6 +141,7 @@ export const allPublishedCalculators = [
   investmentFeeImpactCalculator,
   inflationPurchasingPowerCalculator,
   currencyConversionCalculator,
+  pensionSavingsTaxCreditCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 const directoryAliases: Readonly<Record<string, readonly string[]>> = {
@@ -147,6 +164,12 @@ const directoryAliases: Readonly<Record<string, readonly string[]>> = {
     "실질 구매력",
   ],
   "currency-conversion": ["환전", "외환", "달러 환율", "exchange"],
+  "pension-savings-tax-credit": [
+    "연금저축",
+    "연금 세액공제",
+    "IRP",
+    "연말정산 연금",
+  ],
 };
 
 export const calculatorDirectoryCategories = [
@@ -233,6 +256,7 @@ export const calculatorDirectoryCategories = [
       "compound-interest",
       "savings-goal",
       "inflation-purchasing-power",
+      "pension-savings-tax-credit",
     ],
   },
   {
