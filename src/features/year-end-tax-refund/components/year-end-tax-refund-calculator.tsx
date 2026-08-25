@@ -124,9 +124,7 @@ export function YearEndTaxRefundCalculator({
           />
           <MoneyField
             id="special-payment-tax"
-            label={
-              ko ? "납부특례세액 (KRW)" : "Special-payment tax (KRW)"
-            }
+            label={ko ? "납부특례세액 (KRW)" : "Special-payment tax (KRW)"}
             value={specialPaymentTax}
             setValue={setSpecialPaymentTax}
           />
