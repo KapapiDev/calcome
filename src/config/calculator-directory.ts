@@ -104,7 +104,13 @@ export const currencyConversionCalculator = {
   name: "환율 변환 계산기",
   description:
     "직접 확인한 환율을 입력해 두 통화 사이의 금액과 역환율을 계산합니다.",
-  keywords: ["환율", "통화 변환", "외화", "currency conversion", "exchange rate"],
+  keywords: [
+    "환율",
+    "통화 변환",
+    "외화",
+    "currency conversion",
+    "exchange rate",
+  ],
   category: "금융",
   href: "/ko/finance/currency-conversion",
 } as const satisfies PublishedCalculator;
