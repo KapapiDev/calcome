@@ -21,10 +21,9 @@ describe("HomeCategoryEntry", () => {
   it("preserves the English locale for category entry", () => {
     render(<HomeCategoryEntry locale="en" />);
 
-    expect(screen.getByRole("link", { name: /Loans & Credit/ })).toHaveAttribute(
-      "href",
-      "/en/calculators#loan",
-    );
+    expect(
+      screen.getByRole("link", { name: /Loans & Credit/ }),
+    ).toHaveAttribute("href", "/en/calculators#loan");
     expect(screen.getByRole("link", { name: /Investing/ })).toHaveAttribute(
       "href",
       "/en/calculators#investment",
