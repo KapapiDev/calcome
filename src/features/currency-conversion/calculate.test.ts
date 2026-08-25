@@ -16,11 +16,11 @@ describe("calculateCurrencyConversion", () => {
   });
 
   it("rejects invalid rates and amounts", () => {
-    expect(() =>
-      calculateCurrencyConversion({ amount: -1, rate: 1 }),
-    ).toThrow(RangeError);
-    expect(() =>
-      calculateCurrencyConversion({ amount: 1, rate: 0 }),
-    ).toThrow(RangeError);
+    expect(() => calculateCurrencyConversion({ amount: -1, rate: 1 })).toThrow(
+      RangeError,
+    );
+    expect(() => calculateCurrencyConversion({ amount: 1, rate: 0 })).toThrow(
+      RangeError,
+    );
   });
 });
