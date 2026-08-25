@@ -49,10 +49,16 @@ describe("calculateIsaTaxSavings", () => {
 
   it("rejects invalid profit values", () => {
     expect(() =>
-      calculateIsaTaxSavings({ accountType: "general", netProfit: -1 }),
+      calculateIsaTaxSavings({
+        accountType: "general",
+        netProfit: -1,
+      }),
     ).toThrow(RangeError);
     expect(() =>
-      calculateIsaTaxSavings({ accountType: "general", netProfit: Number.NaN }),
+      calculateIsaTaxSavings({
+        accountType: "general",
+        netProfit: Number.NaN,
+      }),
     ).toThrow(RangeError);
   });
 });
