@@ -131,6 +131,22 @@ export const pensionSavingsTaxCreditCalculator = {
   href: "/ko/finance/pension-savings-tax-credit",
 } as const satisfies PublishedCalculator;
 
+export const isaTaxSavingsCalculator = {
+  id: "isa-tax-savings",
+  name: "ISA 절세 계산기",
+  description:
+    "ISA 손익통산 후 순이익과 가입 유형으로 비과세 한도, 분리과세액과 예상 절세액을 계산합니다.",
+  keywords: [
+    "ISA 절세",
+    "ISA 세금",
+    "ISA 비과세",
+    "ISA 분리과세",
+    "isa tax savings",
+  ],
+  category: "금융",
+  href: "/ko/finance/isa-tax-savings",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...publishedCalculators,
   dividendYieldCalculator,
@@ -142,6 +158,7 @@ export const allPublishedCalculators = [
   inflationPurchasingPowerCalculator,
   currencyConversionCalculator,
   pensionSavingsTaxCreditCalculator,
+  isaTaxSavingsCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 const directoryAliases: Readonly<Record<string, readonly string[]>> = {
@@ -169,6 +186,12 @@ const directoryAliases: Readonly<Record<string, readonly string[]>> = {
     "연금 세액공제",
     "IRP",
     "연말정산 연금",
+  ],
+  "isa-tax-savings": [
+    "개인종합자산관리계좌",
+    "ISA 비과세",
+    "ISA 세금",
+    "중개형 ISA",
   ],
 };
 
@@ -271,6 +294,7 @@ export const calculatorDirectoryCategories = [
       "dividend-yield",
       "dollar-cost-averaging",
       "investment-fee-impact",
+      "isa-tax-savings",
     ],
   },
   {
