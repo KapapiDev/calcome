@@ -13,7 +13,12 @@ export function calculateCurrencyConversion(
 ): CurrencyConversionResult {
   const { amount, rate } = input;
 
-  if (!Number.isFinite(amount) || !Number.isFinite(rate) || amount < 0 || rate <= 0) {
+  if (
+    !Number.isFinite(amount) ||
+    !Number.isFinite(rate) ||
+    amount < 0 ||
+    rate <= 0
+  ) {
     throw new RangeError("Invalid currency conversion input");
   }
 
