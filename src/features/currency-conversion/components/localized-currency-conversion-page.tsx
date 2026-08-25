@@ -49,9 +49,7 @@ export function LocalizedCurrencyConversionPage({
           <h1 className="mt-2 text-4xl font-semibold tracking-tight">
             {title}
           </h1>
-          <p className="mt-3 leading-7 text-muted-foreground">
-            {description}
-          </p>
+          <p className="mt-3 leading-7 text-muted-foreground">{description}</p>
         </header>
         <div className="mt-6">
           <CurrencyConversionCalculator locale={locale} />
