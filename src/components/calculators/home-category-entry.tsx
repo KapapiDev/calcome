@@ -12,11 +12,7 @@ const englishCategoryNames: Record<string, string> = {
   "business-life": "Business & Everyday",
 };
 
-export function HomeCategoryEntry({
-  locale = "ko",
-}: {
-  locale?: "ko" | "en";
-}) {
+export function HomeCategoryEntry({ locale = "ko" }: { locale?: "ko" | "en" }) {
   const isEnglish = locale === "en";
   const categories = visibleCalculatorDirectory;
   const directoryHref = isEnglish ? "/en/calculators" : "/calculators";
