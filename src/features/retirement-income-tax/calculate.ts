@@ -26,27 +26,20 @@ function serviceYearsDeduction(years: number) {
 
 function convertedSalaryDeduction(amount: number) {
   if (amount <= 8_000_000) return amount;
-  if (amount <= 70_000_000)
-    return 8_000_000 + (amount - 8_000_000) * 0.6;
-  if (amount <= 100_000_000)
-    return 45_200_000 + (amount - 70_000_000) * 0.55;
-  if (amount <= 300_000_000)
-    return 61_700_000 + (amount - 100_000_000) * 0.45;
+  if (amount <= 70_000_000) return 8_000_000 + (amount - 8_000_000) * 0.6;
+  if (amount <= 100_000_000) return 45_200_000 + (amount - 70_000_000) * 0.55;
+  if (amount <= 300_000_000) return 61_700_000 + (amount - 100_000_000) * 0.45;
   return 151_700_000 + (amount - 300_000_000) * 0.35;
 }
 
 function progressiveIncomeTax(taxBase: number) {
   if (taxBase <= 14_000_000) return taxBase * 0.06;
-  if (taxBase <= 50_000_000)
-    return 840_000 + (taxBase - 14_000_000) * 0.15;
-  if (taxBase <= 88_000_000)
-    return 6_240_000 + (taxBase - 50_000_000) * 0.24;
-  if (taxBase <= 150_000_000)
-    return 15_360_000 + (taxBase - 88_000_000) * 0.35;
+  if (taxBase <= 50_000_000) return 840_000 + (taxBase - 14_000_000) * 0.15;
+  if (taxBase <= 88_000_000) return 6_240_000 + (taxBase - 50_000_000) * 0.24;
+  if (taxBase <= 150_000_000) return 15_360_000 + (taxBase - 88_000_000) * 0.35;
   if (taxBase <= 300_000_000)
     return 37_060_000 + (taxBase - 150_000_000) * 0.38;
-  if (taxBase <= 500_000_000)
-    return 94_060_000 + (taxBase - 300_000_000) * 0.4;
+  if (taxBase <= 500_000_000) return 94_060_000 + (taxBase - 300_000_000) * 0.4;
   if (taxBase <= 1_000_000_000)
     return 174_060_000 + (taxBase - 500_000_000) * 0.42;
   return 384_060_000 + (taxBase - 1_000_000_000) * 0.45;
