@@ -108,13 +108,17 @@ export function DailyWorkerPayCalculator({
           />
           <NumberField
             id="work-days"
-            label={ko ? "한 번에 지급하는 근무일수" : "Workdays in this payment"}
+            label={
+              ko ? "한 번에 지급하는 근무일수" : "Workdays in this payment"
+            }
             value={workDays}
             setValue={setWorkDays}
           />
           <MoneyField
             id="non-taxable-daily-pay"
-            label={ko ? "일별 비과세 금액 (KRW)" : "Daily non-taxable pay (KRW)"}
+            label={
+              ko ? "일별 비과세 금액 (KRW)" : "Daily non-taxable pay (KRW)"
+            }
             value={nonTaxableDailyPay}
             setValue={setNonTaxableDailyPay}
           />
@@ -183,7 +187,9 @@ export function DailyWorkerPayCalculator({
                   value={money(result.totalWithholding)}
                 />
                 <Detail
-                  label={ko ? "총 비과세 입력액" : "Total entered non-taxable pay"}
+                  label={
+                    ko ? "총 비과세 입력액" : "Total entered non-taxable pay"
+                  }
                   value={money(result.totalNonTaxablePay)}
                 />
               </dl>

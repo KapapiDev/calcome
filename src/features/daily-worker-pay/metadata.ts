@@ -14,7 +14,10 @@ const metadataCopy = {
     description:
       "Estimate South Korean daily-worker income tax, local income tax, and net KRW pay from daily gross pay, workdays, and daily non-taxable pay.",
   },
-} satisfies Record<DailyWorkerPayLocale, { title: string; description: string }>;
+} satisfies Record<
+  DailyWorkerPayLocale,
+  { title: string; description: string }
+>;
 
 export function createDailyWorkerPayMetadata(
   locale: DailyWorkerPayLocale,
