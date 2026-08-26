@@ -7,45 +7,47 @@ This file is the compact mutable execution ledger for autonomous development.
 ## Reconciliation baseline
 
 - Reconciled date: 2026-08-26
-- Reconciled base `main`: `6bcc971fca4729f61dd7081820cbb717bd2cc480`
-- Current public-calculator count derived from the 51-calculator original baseline plus 20 completed expansion tasks: **71**
+- Reconciled base `main`: `f202c0f1`
+- Current public-calculator count derived from the 51-calculator original baseline plus 21 completed expansion tasks: **72**
 - Target: **100**
-- Completed expansion tasks: **20 / 49**
-- Remaining expansion tasks: **29**
+- Completed expansion tasks: **21 / 49**
+- Remaining expansion tasks: **28**
 - Exactly one task is OPEN below.
 
 ## Current execution state
 
-| Task        | Status | Priority | Evidence / next action                                                                                                                                        |
-| ----------- | ------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| OPS-001     | DONE   | CRITICAL | PR #268 merged; release-drift evidence recorded.                                                                                                              |
-| OPS-002     | DONE   | CRITICAL | PR #283 merged; autonomous-development reliability rules and mutable state ledger installed.                                                                  |
-| UX-009      | DONE   | CRITICAL | PR #269 merged.                                                                                                                                               |
-| SEO-FIX-002 | DONE   | CRITICAL | PR #270 merged.                                                                                                                                               |
-| UX-010      | DONE   | HIGH     | PR #271 merged.                                                                                                                                               |
-| UX-007      | DONE   | HIGH     | PR #272 merged.                                                                                                                                               |
-| P-045       | DONE   | HIGH     | PR #266 merged.                                                                                                                                               |
-| P-046       | DONE   | HIGH     | PR #273 merged.                                                                                                                                               |
-| P-047       | DONE   | HIGH     | PR #274 merged.                                                                                                                                               |
-| P-048       | DONE   | HIGH     | PR #275 merged.                                                                                                                                               |
-| P-049       | DONE   | HIGH     | PR #276 merged.                                                                                                                                               |
-| P-050       | DONE   | HIGH     | PR #277 merged.                                                                                                                                               |
-| P-051       | DONE   | HIGH     | PR #278 merged.                                                                                                                                               |
-| P-052       | DONE   | HIGH     | PR #279 merged.                                                                                                                                               |
-| P-053       | DONE   | HIGH     | PR #280 merged.                                                                                                                                               |
-| P-054       | DONE   | HIGH     | PR #281 merged.                                                                                                                                               |
-| P-055       | DONE   | HIGH     | PR #282 merged.                                                                                                                                               |
-| P-056       | DONE   | HIGH     | Weekly and Monthly Work-Hours Converter added with bilingual routes, directory/search integration, and conversion regression coverage.                        |
-| P-057       | DONE   | HIGH     | Calculator added with bilingual routes, shared-currency semantics, directory/search integration, and tests.                                                   |
-| P-058       | DONE   | HIGH     | Salary Negotiation Target Calculator added with bilingual routes, shared-currency semantics, directory/search integration, and regression tests.              |
-| P-059       | DONE   | HIGH     | Employer Total Labor Cost Calculator added with 2026 official-source rates, bilingual routes, directory/search integration, and regression tests.             |
-| P-060       | DONE   | HIGH     | Parental Leave Benefit Calculator added with 2026 statutory rates, bilingual routes, official sources, and tests.                                             |
-| P-061       | OPEN   | HIGH     | Next calculator: Maternity Leave Benefit Calculator.                                                                                                          |
-| P-062       | DONE   | HIGH     | Previously merged on main.                                                                                                                                    |
-| P-063       | DONE   | HIGH     | Previously merged on main.                                                                                                                                    |
-| P-076       | DONE   | HIGH     | Previously merged on main.                                                                                                                                    |
-| P-089       | DONE   | HIGH     | Previously merged on main.                                                                                                                                    |
-| SEC-001     | DONE   | CRITICAL | PR #284 upgrades Next.js 16.2.10 to patched 16.3.3, applies compatible non-forced transitive fixes, and adds a permanent production high-severity audit gate. |
+| Task        | Status  | Priority | Evidence / next action                                                                                                                                        |
+| ----------- | ------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| OPS-001     | DONE    | CRITICAL | PR #268 merged; release-drift evidence recorded.                                                                                                              |
+| OPS-002     | DONE    | CRITICAL | PR #283 merged; autonomous-development reliability rules and mutable state ledger installed.                                                                  |
+| UX-009      | DONE    | CRITICAL | PR #269 merged.                                                                                                                                               |
+| SEO-FIX-002 | DONE    | CRITICAL | PR #270 merged.                                                                                                                                               |
+| UX-010      | DONE    | HIGH     | PR #271 merged.                                                                                                                                               |
+| UX-007      | DONE    | HIGH     | PR #272 merged.                                                                                                                                               |
+| P-045       | DONE    | HIGH     | PR #266 merged.                                                                                                                                               |
+| P-046       | DONE    | HIGH     | PR #273 merged.                                                                                                                                               |
+| P-047       | DONE    | HIGH     | PR #274 merged.                                                                                                                                               |
+| P-048       | DONE    | HIGH     | PR #275 merged.                                                                                                                                               |
+| P-049       | DONE    | HIGH     | PR #276 merged.                                                                                                                                               |
+| P-050       | DONE    | HIGH     | PR #277 merged.                                                                                                                                               |
+| P-051       | DONE    | HIGH     | PR #278 merged.                                                                                                                                               |
+| P-052       | DONE    | HIGH     | PR #279 merged.                                                                                                                                               |
+| P-053       | DONE    | HIGH     | PR #280 merged.                                                                                                                                               |
+| P-054       | DONE    | HIGH     | PR #281 merged.                                                                                                                                               |
+| P-055       | DONE    | HIGH     | PR #282 merged.                                                                                                                                               |
+| P-056       | DONE    | HIGH     | Weekly and Monthly Work-Hours Converter added with bilingual routes, directory/search integration, and conversion regression coverage.                        |
+| P-057       | DONE    | HIGH     | Calculator added with bilingual routes, shared-currency semantics, directory/search integration, and tests.                                                   |
+| P-058       | DONE    | HIGH     | Salary Negotiation Target Calculator added with bilingual routes, shared-currency semantics, directory/search integration, and regression tests.              |
+| P-059       | DONE    | HIGH     | Employer Total Labor Cost Calculator added with 2026 official-source rates, bilingual routes, directory/search integration, and regression tests.             |
+| P-060       | DONE    | HIGH     | Parental Leave Benefit Calculator added with 2026 statutory rates, bilingual routes, official sources, and tests.                                             |
+| P-061       | DONE    | HIGH     | Maternity Leave Benefit Calculator added with current official 90/120-day rules, employer-type split, current cap, bilingual routes, sources, and tests.       |
+| REG-EXP-001 | OPEN    | HIGH     | Expansion regression gate is overdue: verify locale, directory, sitemap/indexability, current production/release evidence, and Search Console evidence if available before P-064. |
+| P-062       | DONE    | HIGH     | Previously merged on main.                                                                                                                                    |
+| P-063       | DONE    | HIGH     | Previously merged on main.                                                                                                                                    |
+| P-064       | BLOCKED | HIGH     | Next calculator after the expansion regression gate: Jeonse Loan Limit Calculator.                                                                            |
+| P-076       | DONE    | HIGH     | Previously merged on main.                                                                                                                                    |
+| P-089       | DONE    | HIGH     | Previously merged on main.                                                                                                                                    |
+| SEC-001     | DONE    | CRITICAL | PR #284 upgrades Next.js 16.2.10 to patched 16.3.3, applies compatible non-forced transitive fixes, and adds a permanent production high-severity audit gate. |
 
 All later uncompleted catalog tasks remain ordered by `TASK_QUEUE.md` and are effectively BLOCKED until they become the single OPEN task here.
 
@@ -72,7 +74,7 @@ Current operating interpretation:
 
 ## Expansion continuation
 
-P-061 is the single current OPEN task. Continue the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
+REG-EXP-001 is the single current OPEN task. It exists because the four-calculator expansion regression cadence was not consistently inserted while P-045 through P-061 advanced. Complete the repository-defined regression gate before P-064, then resume the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
 
 Each calculator PR must update this file in the same PR:
 
