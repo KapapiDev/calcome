@@ -53,7 +53,10 @@ function highSalaryBaseTax(monthlySalary: number, dependents: number) {
 
 function simplifiedTableTax(monthlySalary: number, dependents: number) {
   if (monthlySalary < 770_000) return 0;
-  if (monthlySalary >= 10_000_000) {
+  if (monthlySalary === 10_000_000) {
+    return baseTaxForDependents(TAX_TABLE_HIGH, dependents);
+  }
+  if (monthlySalary > 10_000_000) {
     return highSalaryBaseTax(monthlySalary, dependents);
   }
 
