@@ -51,11 +51,28 @@ export const employerTotalLaborCostCalculator = {
   href: "/ko/employment/employer-total-labor-cost",
 } as const satisfies PublishedCalculator;
 
+export const parentalLeaveBenefitCalculator = {
+  id: "parental-leave-benefit",
+  name: "육아휴직 급여 계산기",
+  description:
+    "월 통상임금과 육아휴직 기간으로 2026년 일반 육아휴직급여의 월별 지급액과 총 예상 급여를 계산합니다.",
+  keywords: [
+    "육아휴직 급여",
+    "육아휴직 수당",
+    "육아휴직 계산기",
+    "육아휴직 250만원",
+    "parental leave benefit",
+  ],
+  category: "금융",
+  href: "/ko/employment/parental-leave-benefit",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...base.allPublishedCalculators,
   totalCompensationComparisonCalculator,
   salaryNegotiationTargetCalculator,
   employerTotalLaborCostCalculator,
+  parentalLeaveBenefitCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -67,6 +84,7 @@ export const calculatorDirectoryCategories =
             ...category.calculatorIds,
             "total-compensation-comparison",
             "salary-negotiation-target",
+            "parental-leave-benefit",
           ],
         }
       : category.id === "business-life"
@@ -113,6 +131,17 @@ export const directorySearchCalculators = [
       "인건비 계산",
       "고용 비용",
       "payroll employer cost",
+    ],
+  },
+  {
+    ...parentalLeaveBenefitCalculator,
+    primaryCategory: "급여·근로",
+    keywords: [
+      ...parentalLeaveBenefitCalculator.keywords,
+      "육아휴직 급여 2026",
+      "육아휴직 상한액",
+      "육아휴직 하한액",
+      "parental leave pay korea",
     ],
   },
 ] satisfies readonly base.DirectorySearchCalculator[];
