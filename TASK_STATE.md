@@ -6,8 +6,8 @@ This file is the compact mutable execution ledger for autonomous development.
 
 ## Reconciliation baseline
 
-- Reconciled date: 2026-08-26
-- Reconciled base `main`: `f202c0f1`
+- Reconciled date: 2026-08-27
+- Reconciled base `main`: `0c37394e`
 - Current public-calculator count derived from the 51-calculator original baseline plus 21 completed expansion tasks: **72**
 - Target: **100**
 - Completed expansion tasks: **21 / 49**
@@ -39,10 +39,10 @@ This file is the compact mutable execution ledger for autonomous development.
 - P-059 — DONE — HIGH — Employer Total Labor Cost Calculator added with 2026 official-source rates, bilingual routes, directory/search integration, and regression tests.
 - P-060 — DONE — HIGH — Parental Leave Benefit Calculator added with 2026 statutory rates, bilingual routes, official sources, and tests.
 - P-061 — DONE — HIGH — Maternity Leave Benefit Calculator added with current official 90/120-day rules, employer-type split, current cap, bilingual routes, sources, and tests.
-- REG-EXP-001 — OPEN — HIGH — Expansion regression gate is overdue: verify locale, directory, sitemap/indexability, current production/release evidence, and Search Console evidence if available before P-064.
+- REG-EXP-001 — DONE — HIGH — Expansion regression gate completed 2026-08-27; exact-head CI #1006 was green, P-061 Vercel Preview was Ready, connector resource limitations were classified, and no verified product blocker was found. See `docs/REG_EXP_001_2026-08-27.md`.
 - P-062 — DONE — HIGH — Previously merged on main.
 - P-063 — DONE — HIGH — Previously merged on main.
-- P-064 — BLOCKED — HIGH — Next calculator after the expansion regression gate: Jeonse Loan Limit Calculator.
+- P-064 — OPEN — HIGH — Jeonse Loan Limit Calculator.
 - P-076 — DONE — HIGH — Previously merged on main.
 - P-089 — DONE — HIGH — Previously merged on main.
 - SEC-001 — DONE — CRITICAL — PR #284 upgrades Next.js 16.2.10 to patched 16.3.3, applies compatible non-forced transitive fixes, and adds a permanent production high-severity audit gate.
@@ -72,7 +72,7 @@ Current operating interpretation:
 
 ## Expansion continuation
 
-REG-EXP-001 is the single current OPEN task. It exists because the four-calculator expansion regression cadence was not consistently inserted while P-045 through P-061 advanced. Complete the repository-defined regression gate before P-064, then resume the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
+REG-EXP-001 is complete. P-064 is the single current OPEN task. Resume the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
 
 Each calculator PR must update this file in the same PR:
 
