@@ -16,31 +16,31 @@ This file is the compact mutable execution ledger for autonomous development.
 
 ## Current execution state
 
-| Task        | Status | Priority | Evidence / next action |
-| ----------- | ------ | -------- | ---------------------- |
-| OPS-001 | DONE | CRITICAL | PR #268 merged; release-drift evidence recorded. |
-| OPS-002 | DONE | CRITICAL | PR #283 merged; autonomous-development reliability rules and mutable state ledger installed. |
-| UX-009 | DONE | CRITICAL | PR #269 merged. |
-| SEO-FIX-002 | DONE | CRITICAL | PR #270 merged. |
-| UX-010 | DONE | HIGH | PR #271 merged. |
-| UX-007 | DONE | HIGH | PR #272 merged. |
-| P-045 | DONE | HIGH | PR #266 merged. |
-| P-046 | DONE | HIGH | PR #273 merged. |
-| P-047 | DONE | HIGH | PR #274 merged. |
-| P-048 | DONE | HIGH | PR #275 merged. |
-| P-049 | DONE | HIGH | PR #276 merged. |
-| P-050 | DONE | HIGH | PR #277 merged. |
-| P-051 | DONE | HIGH | PR #278 merged. |
-| P-052 | DONE | HIGH | PR #279 merged. |
-| P-053 | DONE | HIGH | PR #280 merged. |
-| P-054 | DONE | HIGH | PR #281 merged. |
-| P-055 | DONE | HIGH | PR #282 merged. |
-| P-062 | DONE | HIGH | Previously merged on main. |
-| P-063 | DONE | HIGH | Previously merged on main. |
-| P-076 | DONE | HIGH | Previously merged on main. |
-| P-089 | DONE | HIGH | Previously merged on main. |
-| SEC-001 | DONE | CRITICAL | PR #284 upgrades Next.js 16.2.10 to patched 16.3.3, applies compatible non-forced transitive fixes, and adds a permanent production high-severity audit gate. |
-| P-056 | OPEN | HIGH | Next calculator: Weekly and Monthly Work-Hours Converter. |
+| Task        | Status | Priority | Evidence / next action                                                                                                                                        |
+| ----------- | ------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| OPS-001     | DONE   | CRITICAL | PR #268 merged; release-drift evidence recorded.                                                                                                              |
+| OPS-002     | DONE   | CRITICAL | PR #283 merged; autonomous-development reliability rules and mutable state ledger installed.                                                                  |
+| UX-009      | DONE   | CRITICAL | PR #269 merged.                                                                                                                                               |
+| SEO-FIX-002 | DONE   | CRITICAL | PR #270 merged.                                                                                                                                               |
+| UX-010      | DONE   | HIGH     | PR #271 merged.                                                                                                                                               |
+| UX-007      | DONE   | HIGH     | PR #272 merged.                                                                                                                                               |
+| P-045       | DONE   | HIGH     | PR #266 merged.                                                                                                                                               |
+| P-046       | DONE   | HIGH     | PR #273 merged.                                                                                                                                               |
+| P-047       | DONE   | HIGH     | PR #274 merged.                                                                                                                                               |
+| P-048       | DONE   | HIGH     | PR #275 merged.                                                                                                                                               |
+| P-049       | DONE   | HIGH     | PR #276 merged.                                                                                                                                               |
+| P-050       | DONE   | HIGH     | PR #277 merged.                                                                                                                                               |
+| P-051       | DONE   | HIGH     | PR #278 merged.                                                                                                                                               |
+| P-052       | DONE   | HIGH     | PR #279 merged.                                                                                                                                               |
+| P-053       | DONE   | HIGH     | PR #280 merged.                                                                                                                                               |
+| P-054       | DONE   | HIGH     | PR #281 merged.                                                                                                                                               |
+| P-055       | DONE   | HIGH     | PR #282 merged.                                                                                                                                               |
+| P-062       | DONE   | HIGH     | Previously merged on main.                                                                                                                                    |
+| P-063       | DONE   | HIGH     | Previously merged on main.                                                                                                                                    |
+| P-076       | DONE   | HIGH     | Previously merged on main.                                                                                                                                    |
+| P-089       | DONE   | HIGH     | Previously merged on main.                                                                                                                                    |
+| SEC-001     | DONE   | CRITICAL | PR #284 upgrades Next.js 16.2.10 to patched 16.3.3, applies compatible non-forced transitive fixes, and adds a permanent production high-severity audit gate. |
+| P-056       | OPEN   | HIGH     | Next calculator: Weekly and Monthly Work-Hours Converter.                                                                                                     |
 
 All later uncompleted catalog tasks remain ordered by `TASK_QUEUE.md` and are effectively BLOCKED until they become the single OPEN task here.
 
