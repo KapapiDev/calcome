@@ -1,0 +1,31 @@
+name: P054 format fix
+
+on:
+  push:
+    branches:
+      - feat/p-054-part-time-monthly-pay
+
+permissions:
+  contents: write
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/p-054-part-time-monthly-pay
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx prettier --write src/config/calculator-directory.ts
+      - name: Commit format fix and remove helper workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/p054-format.yml
+          git add src/config/calculator-directory.ts
+          git diff --cached --quiet || git commit -m "fix(P-054): apply repository formatting"
+          git push origin HEAD:feat/p-054-part-time-monthly-pay
