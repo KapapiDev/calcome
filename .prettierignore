@@ -5,3 +5,4 @@ out
 package-lock.json
 src/app/*/finance/savings-goal/page.tsx
 src/features/savings-goal/components/savings-goal-calculator.tsx
+src/features/earned-income-withholding-tax/tax-table.ts
