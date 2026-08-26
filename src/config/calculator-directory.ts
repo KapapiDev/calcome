@@ -242,6 +242,22 @@ export const dailyWorkerPayCalculator = {
   href: "/ko/employment/daily-worker-pay",
 } as const satisfies PublishedCalculator;
 
+export const weeklyMonthlyWorkHoursCalculator = {
+  id: "work-hours-converter",
+  name: "주·월 근무시간 변환기",
+  description:
+    "주 근무시간과 월평균 근무시간을 서로 변환하고 연간 환산 근무시간을 확인합니다.",
+  keywords: [
+    "주 근무시간",
+    "월 근무시간",
+    "근무시간 변환",
+    "월평균 근무시간",
+    "work hours converter",
+  ],
+  category: "금융",
+  href: "/ko/employment/work-hours-converter",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...publishedCalculators,
   dividendYieldCalculator,
@@ -260,6 +276,7 @@ export const allPublishedCalculators = [
   earnedIncomeWithholdingTaxCalculator,
   partTimeMonthlyPayCalculator,
   dailyWorkerPayCalculator,
+  weeklyMonthlyWorkHoursCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 const directoryAliases: Readonly<Record<string, readonly string[]>> = {
@@ -320,6 +337,12 @@ const directoryAliases: Readonly<Record<string, readonly string[]>> = {
     "일당 세금",
     "일용직 실수령액",
   ],
+  "work-hours-converter": [
+    "주간 근무시간",
+    "월간 근무시간",
+    "주 월 근무시간",
+    "근로시간 환산",
+  ],
 };
 
 export const calculatorDirectoryCategories = [
@@ -346,6 +369,7 @@ export const calculatorDirectoryCategories = [
       "gross-up-salary",
       "part-time-monthly-pay",
       "daily-worker-pay",
+      "work-hours-converter",
     ],
   },
   {
