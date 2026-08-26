@@ -226,6 +226,22 @@ export const partTimeMonthlyPayCalculator = {
   href: "/ko/employment/part-time-monthly-pay",
 } as const satisfies PublishedCalculator;
 
+export const dailyWorkerPayCalculator = {
+  id: "daily-worker-pay",
+  name: "일용직 급여 계산기",
+  description:
+    "일당과 근무일수, 일별 비과세 금액으로 일용근로자 세금과 예상 실수령액을 계산합니다.",
+  keywords: [
+    "일용직 급여",
+    "일용근로자 세금",
+    "일당 실수령액",
+    "일용직 세금",
+    "daily worker pay",
+  ],
+  category: "금융",
+  href: "/ko/employment/daily-worker-pay",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...publishedCalculators,
   dividendYieldCalculator,
@@ -243,6 +259,7 @@ export const allPublishedCalculators = [
   retirementIncomeTaxCalculator,
   earnedIncomeWithholdingTaxCalculator,
   partTimeMonthlyPayCalculator,
+  dailyWorkerPayCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 const directoryAliases: Readonly<Record<string, readonly string[]>> = {
@@ -297,6 +314,12 @@ const directoryAliases: Readonly<Record<string, readonly string[]>> = {
     "시급 월급",
     "파트타임 월급",
   ],
+  "daily-worker-pay": [
+    "일용직 일당",
+    "일용근로자",
+    "일당 세금",
+    "일용직 실수령액",
+  ],
 };
 
 export const calculatorDirectoryCategories = [
@@ -322,6 +345,7 @@ export const calculatorDirectoryCategories = [
       "retirement-pension",
       "gross-up-salary",
       "part-time-monthly-pay",
+      "daily-worker-pay",
     ],
   },
   {
