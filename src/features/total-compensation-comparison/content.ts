@@ -24,7 +24,8 @@ export const totalCompensationComparisonContent = {
     recurringAnnual: "반복 연간 보상",
     difference: "총보상 차이",
     tie: "동일",
-    error: "모든 보상 항목에는 0 이상의 금액을, 비교 기간에는 1~10년을 입력해 주세요.",
+    error:
+      "모든 보상 항목에는 0 이상의 금액을, 비교 기간에는 1~10년을 입력해 주세요.",
     note: "세전 명목 보상 비교입니다. 주식의 실제 가치, 보너스 지급 조건, 세금, 퇴직금, 보험료, 통화 환율, 베스팅·클리프·퇴사 조건은 반영하지 않습니다.",
     method:
       "반복 연간 보상은 기본연봉 + 연간 보너스 + 연간 주식보상 + 연간 복리후생 가치입니다. 기간 총보상은 반복 연간 보상 × 비교 기간 + 사이닝 보너스로 계산하고, 이를 비교 기간으로 나눠 연평균 총보상도 보여줍니다.",
@@ -64,7 +65,4 @@ export const totalCompensationComparisonContent = {
       "Check the probability and conditions of bonus and equity payouts separately. Convert offers to the same currency before entering them; this calculator does not perform foreign-exchange conversion.",
     metaTitle: "Job Offer Total Compensation Comparison Calculator",
   },
-} satisfies Record<
-  TotalCompensationComparisonLocale,
-  Record<string, string>
->;
+} satisfies Record<TotalCompensationComparisonLocale, Record<string, string>>;

@@ -20,7 +20,9 @@ export function createTotalCompensationComparisonMetadata(
       languages: {
         ko: absoluteUrl("/ko/employment/total-compensation-comparison"),
         en: absoluteUrl("/en/employment/total-compensation-comparison"),
-        "x-default": absoluteUrl("/ko/employment/total-compensation-comparison"),
+        "x-default": absoluteUrl(
+          "/ko/employment/total-compensation-comparison",
+        ),
       },
     },
     openGraph: {

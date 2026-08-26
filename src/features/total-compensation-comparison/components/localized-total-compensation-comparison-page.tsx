@@ -74,13 +74,17 @@ export function LocalizedTotalCompensationComparisonPage({
               className="underline underline-offset-4"
               href={`/${locale}/employment/salary-conversion`}
             >
-              {locale === "ko" ? "연봉 환산 계산기" : "Salary Conversion Calculator"}
+              {locale === "ko"
+                ? "연봉 환산 계산기"
+                : "Salary Conversion Calculator"}
             </Link>
             <Link
               className="underline underline-offset-4"
               href={`/${locale}/employment/net-salary`}
             >
-              {locale === "ko" ? "연봉 실수령액 계산기" : "Net Salary Calculator"}
+              {locale === "ko"
+                ? "연봉 실수령액 계산기"
+                : "Net Salary Calculator"}
             </Link>
           </div>
         </section>

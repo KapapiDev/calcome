@@ -268,11 +268,7 @@ type OfferFieldsProps = {
   values: Record<OfferKey, string>;
   currency: string;
   copy: Record<string, string>;
-  onChange: (
-    offer: "offerA" | "offerB",
-    key: OfferKey,
-    value: string,
-  ) => void;
+  onChange: (offer: "offerA" | "offerB", key: OfferKey, value: string) => void;
 };
 
 function OfferFields({

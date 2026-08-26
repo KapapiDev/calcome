@@ -36,7 +36,7 @@ This file is the compact mutable execution ledger for autonomous development.
 | P-054       | DONE   | HIGH     | PR #281 merged.                                                                                                                                               |
 | P-055       | DONE   | HIGH     | PR #282 merged.                                                                                                                                               |
 | P-056       | DONE   | HIGH     | Weekly and Monthly Work-Hours Converter added with bilingual routes, directory/search integration, and conversion regression coverage.                        |
-| P-057       | DONE   | HIGH     | Job Offer Total Compensation Comparison Calculator added with bilingual routes, shared-currency semantics, directory/search integration, and comparison tests. |
+| P-057       | DONE   | HIGH     | Calculator added with bilingual routes, shared-currency semantics, directory/search integration, and tests.                                                   |
 | P-058       | OPEN   | HIGH     | Next calculator: Salary Negotiation Target Calculator.                                                                                                        |
 | P-062       | DONE   | HIGH     | Previously merged on main.                                                                                                                                    |
 | P-063       | DONE   | HIGH     | Previously merged on main.                                                                                                                                    |

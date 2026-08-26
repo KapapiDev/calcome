@@ -24,8 +24,8 @@ export const allPublishedCalculators = [
   totalCompensationComparisonCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
-export const calculatorDirectoryCategories = base.calculatorDirectoryCategories.map(
-  (category) =>
+export const calculatorDirectoryCategories =
+  base.calculatorDirectoryCategories.map((category) =>
     category.id === "employment"
       ? {
           ...category,
@@ -35,7 +35,7 @@ export const calculatorDirectoryCategories = base.calculatorDirectoryCategories.
           ],
         }
       : category,
-) satisfies readonly base.CalculatorDirectoryCategory[];
+  ) satisfies readonly base.CalculatorDirectoryCategory[];
 
 export const directorySearchCalculators = [
   ...base.directorySearchCalculators,
