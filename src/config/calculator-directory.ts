@@ -52,7 +52,7 @@ export const directorySearchCalculators = [
   },
 ] satisfies readonly base.DirectorySearchCalculator[];
 
-const calculatorsById = new Map(
+const calculatorsById = new Map<string, PublishedCalculator>(
   allPublishedCalculators.map(
     (calculator) => [calculator.id, calculator] as const,
   ),
