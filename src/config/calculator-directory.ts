@@ -195,6 +195,22 @@ export const retirementIncomeTaxCalculator = {
   href: "/ko/finance/retirement-income-tax",
 } as const satisfies PublishedCalculator;
 
+export const earnedIncomeWithholdingTaxCalculator = {
+  id: "earned-income-withholding-tax",
+  name: "근로소득 원천징수세액 계산기",
+  description:
+    "월 과세급여와 공제대상 가족 수로 근로소득 간이세액표 기준 예상 원천징수세액을 계산합니다.",
+  keywords: [
+    "근로소득 원천징수",
+    "근로소득 간이세액표",
+    "월급 세금",
+    "급여 원천징수",
+    "earned income withholding tax",
+  ],
+  category: "금융",
+  href: "/ko/finance/earned-income-withholding-tax",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...publishedCalculators,
   dividendYieldCalculator,
@@ -210,6 +226,7 @@ export const allPublishedCalculators = [
   retirementPensionTaxCreditCalculator,
   yearEndTaxRefundCalculator,
   retirementIncomeTaxCalculator,
+  earnedIncomeWithholdingTaxCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 const directoryAliases: Readonly<Record<string, readonly string[]>> = {
@@ -252,6 +269,12 @@ const directoryAliases: Readonly<Record<string, readonly string[]>> = {
   ],
   "year-end-tax-refund": ["연말정산", "환급금", "추가납부", "차감징수세액"],
   "retirement-income-tax": ["퇴직금 세금", "퇴직소득세", "퇴직 원천징수"],
+  "earned-income-withholding-tax": [
+    "간이세액표",
+    "월급 세금",
+    "급여 세금",
+    "원천징수액",
+  ],
 };
 
 export const calculatorDirectoryCategories = [
@@ -318,6 +341,7 @@ export const calculatorDirectoryCategories = [
       "freelancer-3-3-tax",
       "year-end-tax-refund",
       "retirement-income-tax",
+      "earned-income-withholding-tax",
     ],
   },
   {
