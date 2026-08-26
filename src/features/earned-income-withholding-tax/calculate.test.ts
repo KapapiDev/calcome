@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { calculateEarnedIncomeWithholdingTax, childTaxAdjustment } from "./calculate";
+import {
+  calculateEarnedIncomeWithholdingTax,
+  childTaxAdjustment,
+} from "./calculate";
 
 describe("calculateEarnedIncomeWithholdingTax", () => {
   it("matches the March 2026 child-adjusted example", () => {
