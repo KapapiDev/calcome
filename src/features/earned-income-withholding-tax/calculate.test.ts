@@ -33,7 +33,7 @@ describe("calculateEarnedIncomeWithholdingTax", () => {
     expect(result.localIncomeTax).toBe(280);
   });
 
-  it("uses the statutory high-salary formula from 10 million KRW", () => {
+  it("uses the statutory high-salary formula only above 10 million KRW", () => {
     expect(
       calculateEarnedIncomeWithholdingTax({
         monthlyTaxableSalary: 10_000_000,
@@ -42,6 +42,15 @@ describe("calculateEarnedIncomeWithholdingTax", () => {
         withholdingRate: 100,
       }).baseTableTax,
     ).toBe(1_507_400);
+
+    expect(
+      calculateEarnedIncomeWithholdingTax({
+        monthlyTaxableSalary: 10_000_001,
+        dependents: 1,
+        eligibleChildren: 0,
+        withholdingRate: 100,
+      }).baseTableTax,
+    ).toBe(1_532_400);
 
     expect(
       calculateEarnedIncomeWithholdingTax({
