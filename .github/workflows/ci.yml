@@ -23,6 +23,16 @@ jobs:
           node-version: 20
           cache: npm
 
+      - name: Generate patched lockfile for SEC-001
+        run: npm install --package-lock-only
+
+      - name: Upload generated lockfile
+        uses: actions/upload-artifact@v4
+        with:
+          name: sec-001-package-lock
+          path: package-lock.json
+          retention-days: 1
+
       - name: Install dependencies
         run: npm ci
 
