@@ -35,10 +35,27 @@ export const salaryNegotiationTargetCalculator = {
   href: "/ko/employment/salary-negotiation-target",
 } as const satisfies PublishedCalculator;
 
+export const employerTotalLaborCostCalculator = {
+  id: "employer-total-labor-cost",
+  name: "사업주 총 인건비 계산기",
+  description:
+    "월 보수에 2026년 사업주 부담 사회보험과 퇴직급여 충당액을 더해 총 인건비를 추정합니다.",
+  keywords: [
+    "사업주 인건비",
+    "총 인건비",
+    "4대보험 사업주 부담",
+    "직원 고용 비용",
+    "employer labor cost",
+  ],
+  category: "금융",
+  href: "/ko/employment/employer-total-labor-cost",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...base.allPublishedCalculators,
   totalCompensationComparisonCalculator,
   salaryNegotiationTargetCalculator,
+  employerTotalLaborCostCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -52,7 +69,15 @@ export const calculatorDirectoryCategories =
             "salary-negotiation-target",
           ],
         }
-      : category,
+      : category.id === "business-life"
+        ? {
+            ...category,
+            calculatorIds: [
+              ...category.calculatorIds,
+              "employer-total-labor-cost",
+            ],
+          }
+        : category,
   ) satisfies readonly base.CalculatorDirectoryCategory[];
 
 export const directorySearchCalculators = [
@@ -77,6 +102,17 @@ export const directorySearchCalculators = [
       "인상률 계산",
       "협상 연봉",
       "raise target",
+    ],
+  },
+  {
+    ...employerTotalLaborCostCalculator,
+    primaryCategory: "사업·생활",
+    keywords: [
+      ...employerTotalLaborCostCalculator.keywords,
+      "사업주 4대보험",
+      "인건비 계산",
+      "고용 비용",
+      "payroll employer cost",
     ],
   },
 ] satisfies readonly base.DirectorySearchCalculator[];

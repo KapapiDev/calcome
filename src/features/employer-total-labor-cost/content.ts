@@ -1,0 +1,66 @@
+export type EmployerTotalLaborCostLocale = "ko" | "en";
+
+export const employerTotalLaborCostContent = {
+  ko: {
+    title: "사업주 총 인건비 계산기",
+    description:
+      "월 보수와 사업장 규모, 산재보험 적용률로 2026년 사업주 부담 4대보험과 퇴직급여 충당액을 더한 총 인건비를 추정합니다.",
+    category: "사업·생활",
+    input: "인건비 조건",
+    monthlyWage: "월 보수",
+    trainingRate: "고용안정·직업능력개발 사업주 부담률",
+    industrialAccidentRate: "산재보험 적용률",
+    includeRetirement: "퇴직급여 월 충당액 포함",
+    calculate: "총 인건비 계산하기",
+    reset: "초기화",
+    result: "사업주 부담 추정",
+    totalMonthly: "월 총 인건비",
+    totalAnnual: "연 총 인건비",
+    employerOnCost: "월 추가 사업주 부담",
+    onCostPercent: "급여 대비 추가 부담률",
+    pension: "국민연금 사업주 부담",
+    health: "건강보험·장기요양 사업주 부담",
+    employment: "고용보험 사업주 부담",
+    industrialAccident: "산재보험 사업주 부담",
+    retirement: "퇴직급여 월 충당액",
+    error:
+      "월 보수는 0보다 크게, 산재보험 적용률은 0~20% 범위로 입력해 주세요.",
+    note: "2026년 일반 근로자의 월 보수를 기준으로 한 계획용 추정치입니다. 국민연금 기준소득월액 상·하한, 건강보험 보수 조정, 비과세 항목, 보험별 적용 제외, 실제 산재보험 업종률과 개별 사업장 정산은 반영하지 않으므로 신고·납부액은 공단 고지액을 확인하세요.",
+    method:
+      "사업주 부담 국민연금 4.75%, 건강보험·장기요양 합계 4.0674%, 고용보험 실업급여 0.9%에 사업장 규모별 고용안정·직업능력개발 부담률을 더합니다. 산재보험은 2026년에도 업종별 요율이 달라 실제 적용률을 직접 입력합니다. 퇴직급여 충당액은 계속근로 1년에 30일분 이상의 평균임금이라는 법정 기준을 단순 월급 기준으로 월 1/12씩 적립하는 계획값입니다.",
+    sources: "2026년 공식 기준",
+    verified: "검증일: 2026-08-26",
+    metaTitle: "사업주 총 인건비 계산기 | 2026 4대보험·퇴직급여",
+  },
+  en: {
+    title: "South Korea Employer Total Labor Cost Calculator",
+    description:
+      "Estimate 2026 South Korea employer payroll cost in KRW, including employer social-insurance contributions and an optional retirement-benefit provision.",
+    category: "Business & Life",
+    input: "Labor-cost assumptions",
+    monthlyWage: "Monthly remuneration (KRW)",
+    trainingRate: "Employment stability / training employer rate",
+    industrialAccidentRate: "Industrial accident insurance rate",
+    includeRetirement: "Include monthly retirement-benefit provision",
+    calculate: "Calculate employer cost",
+    reset: "Reset",
+    result: "Employer cost estimate",
+    totalMonthly: "Monthly total labor cost",
+    totalAnnual: "Annual total labor cost",
+    employerOnCost: "Monthly employer on-cost",
+    onCostPercent: "On-cost as % of wage",
+    pension: "Employer National Pension",
+    health: "Employer health + long-term care",
+    employment: "Employer employment insurance",
+    industrialAccident: "Employer industrial accident insurance",
+    retirement: "Monthly retirement provision",
+    error:
+      "Enter monthly remuneration above zero and an industrial accident rate from 0% to 20%.",
+    note: "This is a 2026 South Korea planning estimate in KRW. It does not model National Pension contribution floors/caps, remuneration adjustments, non-taxable items, coverage exceptions, industry-specific workers' compensation classification, or later reconciliations. Confirm filing and payment amounts with the relevant agencies.",
+    method:
+      "The estimate applies the employer share of National Pension at 4.75%, combined health and long-term care at 4.0674%, and the 0.9% unemployment-insurance share plus the selected employer-only employment-stability/training rate. Industrial accident insurance varies by industry, so you enter the applicable 2026 rate. The optional retirement provision simply spreads one month of wage across 12 months as a planning proxy for the statutory 30-days-of-average-wage-per-service-year rule.",
+    sources: "Official 2026 references",
+    verified: "Verified: 2026-08-26",
+    metaTitle: "South Korea Employer Total Labor Cost Calculator",
+  },
+} satisfies Record<EmployerTotalLaborCostLocale, Record<string, string>>;
