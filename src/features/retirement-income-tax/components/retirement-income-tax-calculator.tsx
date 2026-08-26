@@ -118,9 +118,7 @@ export function RetirementIncomeTaxCalculator({
           <NumberField
             id="non-taxable-pay"
             label={
-              ko
-                ? "비과세 퇴직급여 (KRW)"
-                : "Non-taxable retirement pay (KRW)"
+              ko ? "비과세 퇴직급여 (KRW)" : "Non-taxable retirement pay (KRW)"
             }
             value={nonTaxablePay}
             setValue={setNonTaxablePay}
