@@ -67,12 +67,29 @@ export const parentalLeaveBenefitCalculator = {
   href: "/ko/employment/parental-leave-benefit",
 } as const satisfies PublishedCalculator;
 
+export const maternityLeaveBenefitCalculator = {
+  id: "maternity-leave-benefit",
+  name: "출산전후휴가 급여 계산기",
+  description:
+    "월 통상임금과 사업장 유형으로 현행 출산전후휴가의 고용보험 지원액과 사업주 지급액을 추정합니다.",
+  keywords: [
+    "출산전후휴가 급여",
+    "출산휴가 급여",
+    "출산휴가 계산기",
+    "다태아 출산휴가",
+    "maternity leave benefit korea",
+  ],
+  category: "금융",
+  href: "/ko/employment/maternity-leave-benefit",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...base.allPublishedCalculators,
   totalCompensationComparisonCalculator,
   salaryNegotiationTargetCalculator,
   employerTotalLaborCostCalculator,
   parentalLeaveBenefitCalculator,
+  maternityLeaveBenefitCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -85,6 +102,7 @@ export const calculatorDirectoryCategories =
             "total-compensation-comparison",
             "salary-negotiation-target",
             "parental-leave-benefit",
+            "maternity-leave-benefit",
           ],
         }
       : category.id === "business-life"
@@ -142,6 +160,17 @@ export const directorySearchCalculators = [
       "육아휴직 상한액",
       "육아휴직 하한액",
       "parental leave pay korea",
+    ],
+  },
+  {
+    ...maternityLeaveBenefitCalculator,
+    primaryCategory: "급여·근로",
+    keywords: [
+      ...maternityLeaveBenefitCalculator.keywords,
+      "출산휴가 90일",
+      "출산휴가 120일",
+      "출산전후휴가 상한액",
+      "우선지원 대상기업 출산휴가",
     ],
   },
 ] satisfies readonly base.DirectorySearchCalculator[];
