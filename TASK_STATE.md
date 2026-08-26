@@ -39,8 +39,8 @@ This file is the compact mutable execution ledger for autonomous development.
 | P-057       | DONE   | HIGH     | Calculator added with bilingual routes, shared-currency semantics, directory/search integration, and tests.                                                   |
 | P-058       | DONE   | HIGH     | Salary Negotiation Target Calculator added with bilingual routes, shared-currency semantics, directory/search integration, and regression tests.              |
 | P-059       | DONE   | HIGH     | Employer Total Labor Cost Calculator added with 2026 official-source rates, bilingual routes, directory/search integration, and regression tests.             |
-| P-060       | DONE   | HIGH     | Parental Leave Benefit Calculator added with 2026 statutory benefit bands, bilingual routes, directory/search integration, official sources, and tests.        |
-| P-061       | OPEN   | HIGH     | Next calculator: Maternity Leave Benefit Calculator.                                                                                                           |
+| P-060       | DONE   | HIGH     | Parental Leave Benefit Calculator added with 2026 statutory rates, bilingual routes, official sources, and tests.                                             |
+| P-061       | OPEN   | HIGH     | Next calculator: Maternity Leave Benefit Calculator.                                                                                                          |
 | P-062       | DONE   | HIGH     | Previously merged on main.                                                                                                                                    |
 | P-063       | DONE   | HIGH     | Previously merged on main.                                                                                                                                    |
 | P-076       | DONE   | HIGH     | Previously merged on main.                                                                                                                                    |
