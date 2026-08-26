@@ -7,11 +7,11 @@ This file is the compact mutable execution ledger for autonomous development.
 ## Reconciliation baseline
 
 - Reconciled date: 2026-08-26
-- Reconciled base `main`: `1236eae5523c9d809fb74719b5bf3b622af019d7`
-- Current public-calculator count derived from the 51-calculator original baseline plus 17 completed expansion tasks: **68**
+- Reconciled base `main`: `5b923bf551f675107ef4d00a182720492e159bc4`
+- Current public-calculator count derived from the 51-calculator original baseline plus 18 completed expansion tasks: **69**
 - Target: **100**
-- Completed expansion tasks: **17 / 49**
-- Remaining expansion tasks: **32**
+- Completed expansion tasks: **18 / 49**
+- Remaining expansion tasks: **31**
 - Exactly one task is OPEN below.
 
 ## Current execution state
@@ -37,7 +37,8 @@ This file is the compact mutable execution ledger for autonomous development.
 | P-055       | DONE   | HIGH     | PR #282 merged.                                                                                                                                               |
 | P-056       | DONE   | HIGH     | Weekly and Monthly Work-Hours Converter added with bilingual routes, directory/search integration, and conversion regression coverage.                        |
 | P-057       | DONE   | HIGH     | Calculator added with bilingual routes, shared-currency semantics, directory/search integration, and tests.                                                   |
-| P-058       | OPEN   | HIGH     | Next calculator: Salary Negotiation Target Calculator.                                                                                                        |
+| P-058       | DONE   | HIGH     | Salary Negotiation Target Calculator added with bilingual routes, shared-currency semantics, directory/search integration, and regression tests.              |
+| P-059       | OPEN   | HIGH     | Next calculator: Employer Total Labor Cost Calculator.                                                                                                        |
 | P-062       | DONE   | HIGH     | Previously merged on main.                                                                                                                                    |
 | P-063       | DONE   | HIGH     | Previously merged on main.                                                                                                                                    |
 | P-076       | DONE   | HIGH     | Previously merged on main.                                                                                                                                    |
@@ -69,7 +70,7 @@ Current operating interpretation:
 
 ## Expansion continuation
 
-P-058 is the single current OPEN task. Continue the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
+P-059 is the single current OPEN task. Continue the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
 
 Each calculator PR must update this file in the same PR:
 
