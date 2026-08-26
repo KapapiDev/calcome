@@ -30,8 +30,12 @@ export function EarnedIncomeWithholdingTaxCalculator({
   const [rate, setRate] = useState<WithholdingRate>(100);
   const [error, setError] = useState("");
   const [result, setResult] = useState<EarnedIncomeWithholdingTaxResult>();
-  const { resultRef, noteNumericInputFocus, requestResultScroll, cancelResultScroll } =
-    useStableResultScroll(result ?? null);
+  const {
+    resultRef,
+    noteNumericInputFocus,
+    requestResultScroll,
+    cancelResultScroll,
+  } = useStableResultScroll(result ?? null);
 
   const money = (value: number) =>
     `${Math.round(value).toLocaleString(ko ? "ko-KR" : "en-US")} KRW`;
@@ -43,7 +47,9 @@ export function EarnedIncomeWithholdingTaxCalculator({
     const eligibleChildren = Number(children);
 
     if (
-      ![monthlyTaxableSalary, dependentCount, eligibleChildren].every(Number.isFinite) ||
+      ![monthlyTaxableSalary, dependentCount, eligibleChildren].every(
+        Number.isFinite,
+      ) ||
       monthlyTaxableSalary < 0 ||
       !Number.isInteger(dependentCount) ||
       dependentCount < 1 ||
@@ -92,19 +98,60 @@ export function EarnedIncomeWithholdingTaxCalculator({
           noValidate
           className={`${compactCalculatorSettingsClass} min-w-0`}
         >
-          <p className="text-sm font-semibold text-primary">{ko ? "급여·세금" : "Payroll tax"}</p>
-          <h2 id="earned-withholding-input-title" className="mt-1 text-xl font-semibold">
+          <p className="text-sm font-semibold text-primary">
+            {ko ? "급여·세금" : "Payroll tax"}
+          </p>
+          <h2
+            id="earned-withholding-input-title"
+            className="mt-1 text-xl font-semibold"
+          >
             {ko ? "원천징수 조건 입력" : "Enter withholding details"}
           </h2>
-          {error ? <p role="alert" className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive">{error}</p> : null}
-          <NumberField id="monthly-taxable-salary" label={ko ? "월 과세급여 (KRW)" : "Monthly taxable salary (KRW)"} value={salary} setValue={setSalary} />
-          <NumberField id="dependents" label={ko ? "공제대상 가족 수 (본인 포함)" : "Qualifying dependents (including you)"} value={dependents} setValue={setDependents} />
-          <NumberField id="eligible-children" label={ko ? "8~20세 자녀 수" : "Children aged 8–20"} value={children} setValue={setChildren} />
+          {error ? (
+            <p
+              role="alert"
+              className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
+            >
+              {error}
+            </p>
+          ) : null}
+          <NumberField
+            id="monthly-taxable-salary"
+            label={ko ? "월 과세급여 (KRW)" : "Monthly taxable salary (KRW)"}
+            value={salary}
+            setValue={setSalary}
+          />
+          <NumberField
+            id="dependents"
+            label={
+              ko
+                ? "공제대상 가족 수 (본인 포함)"
+                : "Qualifying dependents (including you)"
+            }
+            value={dependents}
+            setValue={setDependents}
+          />
+          <NumberField
+            id="eligible-children"
+            label={ko ? "8~20세 자녀 수" : "Children aged 8–20"}
+            value={children}
+            setValue={setChildren}
+          />
           <div className="mt-4">
-            <label className="block text-sm font-medium" htmlFor="withholding-rate">
+            <label
+              className="block text-sm font-medium"
+              htmlFor="withholding-rate"
+            >
               {ko ? "간이세액표 선택 비율" : "Withholding election"}
             </label>
-            <select id="withholding-rate" className={fieldClass} value={rate} onChange={(event) => setRate(Number(event.target.value) as WithholdingRate)}>
+            <select
+              id="withholding-rate"
+              className={fieldClass}
+              value={rate}
+              onChange={(event) =>
+                setRate(Number(event.target.value) as WithholdingRate)
+              }
+            >
               <option value={80}>80%</option>
               <option value={100}>100%</option>
               <option value={120}>120%</option>
@@ -117,24 +164,58 @@ export function EarnedIncomeWithholdingTaxCalculator({
           </p>
           <div className="mt-4 grid grid-cols-[1fr_auto] gap-2">
             <Button type="submit">{ko ? "계산하기" : "Calculate"}</Button>
-            <Button type="button" variant="outline" onClick={reset}>{ko ? "초기화" : "Reset"}</Button>
+            <Button type="button" variant="outline" onClick={reset}>
+              {ko ? "초기화" : "Reset"}
+            </Button>
           </div>
         </form>
 
-        <section ref={resultRef} aria-labelledby="earned-withholding-result-title" className="scroll-mt-20 rounded-xl border bg-card p-4 shadow-sm">
-          <h2 id="earned-withholding-result-title" className="text-xl font-semibold">{ko ? "월 원천징수 예상액" : "Estimated monthly withholding"}</h2>
+        <section
+          ref={resultRef}
+          aria-labelledby="earned-withholding-result-title"
+          className="scroll-mt-20 rounded-xl border bg-card p-4 shadow-sm"
+        >
+          <h2
+            id="earned-withholding-result-title"
+            className="text-xl font-semibold"
+          >
+            {ko ? "월 원천징수 예상액" : "Estimated monthly withholding"}
+          </h2>
           <PrimaryResults
             metrics={[
-              { label: ko ? "소득세+지방소득세" : "Income + local income tax", value: result ? money(result.totalWithholding) : "—", featured: true },
-              { label: ko ? "근로소득세" : "Income tax", value: result ? money(result.incomeTax) : "—" },
-              { label: ko ? "지방소득세" : "Local income tax", value: result ? money(result.localIncomeTax) : "—" },
-              { label: ko ? "자녀 조정 전 간이세액" : "Table tax before child adjustment", value: result ? money(result.baseTableTax) : "—" },
+              {
+                label: ko
+                  ? "소득세+지방소득세"
+                  : "Income + local income tax",
+                value: result ? money(result.totalWithholding) : "—",
+                featured: true,
+              },
+              {
+                label: ko ? "근로소득세" : "Income tax",
+                value: result ? money(result.incomeTax) : "—",
+              },
+              {
+                label: ko ? "지방소득세" : "Local income tax",
+                value: result ? money(result.localIncomeTax) : "—",
+              },
+              {
+                label: ko
+                  ? "자녀 조정 전 간이세액"
+                  : "Table tax before child adjustment",
+                value: result ? money(result.baseTableTax) : "—",
+              },
             ]}
           />
           {result ? (
             <dl className="mt-5 grid gap-3 text-sm sm:grid-cols-2">
-              <Detail label={ko ? "8~20세 자녀 조정액" : "Child adjustment"} value={money(result.childTaxAdjustment)} />
-              <Detail label={ko ? "선택 비율 적용 전 세액" : "Tax before election"} value={money(result.adjustedTableTax)} />
+              <Detail
+                label={ko ? "8~20세 자녀 조정액" : "Child adjustment"}
+                value={money(result.childTaxAdjustment)}
+              />
+              <Detail
+                label={ko ? "선택 비율 적용 전 세액" : "Tax before election"}
+                value={money(result.adjustedTableTax)}
+              />
             </dl>
           ) : null}
         </section>
@@ -143,15 +224,38 @@ export function EarnedIncomeWithholdingTaxCalculator({
   );
 }
 
-function NumberField({ id, label, value, setValue }: { id: string; label: string; value: string; setValue: (value: string) => void }) {
+function NumberField({
+  id,
+  label,
+  value,
+  setValue,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  setValue: (value: string) => void;
+}) {
   return (
     <div className="mt-4">
-      <label className="block text-sm font-medium" htmlFor={id}>{label}</label>
-      <input id={id} inputMode="numeric" className={fieldClass} value={value} onChange={(event) => setValue(event.target.value)} />
+      <label className="block text-sm font-medium" htmlFor={id}>
+        {label}
+      </label>
+      <input
+        id={id}
+        inputMode="numeric"
+        className={fieldClass}
+        value={value}
+        onChange={(event) => setValue(event.target.value)}
+      />
     </div>
   );
 }
 
 function Detail({ label, value }: { label: string; value: string }) {
-  return <div className="rounded-lg border p-3"><dt className="text-muted-foreground">{label}</dt><dd className="mt-1 font-semibold tabular-nums">{value}</dd></div>;
+  return (
+    <div className="rounded-lg border p-3">
+      <dt className="text-muted-foreground">{label}</dt>
+      <dd className="mt-1 font-semibold tabular-nums">{value}</dd>
+    </div>
+  );
 }
