@@ -184,9 +184,7 @@ export function EarnedIncomeWithholdingTaxCalculator({
           <PrimaryResults
             metrics={[
               {
-                label: ko
-                  ? "소득세+지방소득세"
-                  : "Income + local income tax",
+                label: ko ? "소득세+지방소득세" : "Income + local income tax",
                 value: result ? money(result.totalWithholding) : "—",
                 featured: true,
               },
