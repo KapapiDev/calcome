@@ -23,7 +23,10 @@ function prorateMonthly(amount: number, days: number) {
 export function calculateMaternityLeaveBenefit(
   input: MaternityLeaveBenefitInput,
 ): MaternityLeaveBenefitResult {
-  if (!Number.isFinite(input.monthlyOrdinaryWage) || input.monthlyOrdinaryWage <= 0) {
+  if (
+    !Number.isFinite(input.monthlyOrdinaryWage) ||
+    input.monthlyOrdinaryWage <= 0
+  ) {
     throw new RangeError("Invalid maternity leave benefit input");
   }
 

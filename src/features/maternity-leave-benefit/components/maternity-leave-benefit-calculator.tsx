@@ -60,8 +60,7 @@ export function MaternityLeaveBenefitCalculator({
       calculateMaternityLeaveBenefit({
         monthlyOrdinaryWage,
         multipleBirth: values.multipleBirth === "true",
-        prioritySupportedEmployer:
-          values.prioritySupportedEmployer === "true",
+        prioritySupportedEmployer: values.prioritySupportedEmployer === "true",
       }),
     );
   }
