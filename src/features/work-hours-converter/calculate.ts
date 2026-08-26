@@ -30,13 +30,9 @@ export function calculateWorkHoursConverter(
   }
 
   const weeklyHours =
-    direction === "weekly-to-monthly"
-      ? hours
-      : hours / AVERAGE_WEEKS_PER_MONTH;
+    direction === "weekly-to-monthly" ? hours : hours / AVERAGE_WEEKS_PER_MONTH;
   const averageMonthlyHours =
-    direction === "weekly-to-monthly"
-      ? hours * AVERAGE_WEEKS_PER_MONTH
-      : hours;
+    direction === "weekly-to-monthly" ? hours * AVERAGE_WEEKS_PER_MONTH : hours;
   const annualHours = weeklyHours * WEEKS_PER_YEAR;
 
   return {

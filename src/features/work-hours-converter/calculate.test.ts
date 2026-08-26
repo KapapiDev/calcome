@@ -14,10 +14,7 @@ describe("calculateWorkHoursConverter", () => {
     expect(result.weeklyHours).toBe(40);
     expect(result.averageMonthlyHours).toBeCloseTo(173.925, 3);
     expect(result.annualHours).toBeCloseTo(2_087.1, 1);
-    expect(result.averageWeeksPerMonth).toBeCloseTo(
-      AVERAGE_WEEKS_PER_MONTH,
-      6,
-    );
+    expect(result.averageWeeksPerMonth).toBeCloseTo(AVERAGE_WEEKS_PER_MONTH, 6);
   });
 
   it("converts average monthly hours back to weekly hours", () => {
