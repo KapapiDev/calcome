@@ -216,7 +216,12 @@ export const partTimeMonthlyPayCalculator = {
   name: "알바 월급 계산기",
   description:
     "시급과 하루 근무시간, 주 근무일수로 주급과 평균 월급, 연간 예상 급여를 계산합니다.",
-  keywords: ["알바 월급", "시급 월급", "파트타임 급여", "part time monthly pay"],
+  keywords: [
+    "알바 월급",
+    "시급 월급",
+    "파트타임 급여",
+    "part time monthly pay",
+  ],
   category: "금융",
   href: "/ko/employment/part-time-monthly-pay",
 } as const satisfies PublishedCalculator;
@@ -286,7 +291,12 @@ const directoryAliases: Readonly<Record<string, readonly string[]>> = {
     "급여 세금",
     "원천징수액",
   ],
-  "part-time-monthly-pay": ["알바비", "알바 월급", "시급 월급", "파트타임 월급"],
+  "part-time-monthly-pay": [
+    "알바비",
+    "알바 월급",
+    "시급 월급",
+    "파트타임 월급",
+  ],
 };
 
 export const calculatorDirectoryCategories = [
