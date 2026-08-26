@@ -20,9 +20,7 @@ export function createEmployerTotalLaborCostMetadata(
       languages: {
         ko: absoluteUrl("/ko/employment/employer-total-labor-cost"),
         en: absoluteUrl("/en/employment/employer-total-labor-cost"),
-        "x-default": absoluteUrl(
-          "/ko/employment/employer-total-labor-cost",
-        ),
+        "x-default": absoluteUrl("/ko/employment/employer-total-labor-cost"),
       },
     },
     openGraph: {
