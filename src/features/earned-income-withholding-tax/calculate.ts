@@ -25,7 +25,8 @@ function baseTaxForDependents(values: readonly number[], dependents: number) {
 
   const dependent10 = values[9] ?? 0;
   const dependent11 = values[10] ?? 0;
-  const extension = dependent11 - (dependent10 - dependent11) * (dependents - 11);
+  const extension =
+    dependent11 - (dependent10 - dependent11) * (dependents - 11);
   return Math.max(0, extension);
 }
 
