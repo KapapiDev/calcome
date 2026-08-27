@@ -14,10 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
 import { formatMoneyInput } from "@/lib/input/money";
-import {
-  calculateJeonseVsRent,
-  type JeonseVsRentResult,
-} from "../calculate";
+import { calculateJeonseVsRent, type JeonseVsRentResult } from "../calculate";
 import { jeonseVsRentContent, type JeonseVsRentLocale } from "../content";
 
 const fieldClass =
