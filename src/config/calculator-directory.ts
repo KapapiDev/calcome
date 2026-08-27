@@ -115,6 +115,22 @@ export const retirementWithdrawalCalculator = {
   href: "/ko/finance/retirement-withdrawal",
 } as const satisfies PublishedCalculator;
 
+export const pensionFutureMonthlyIncomeCalculator = {
+  id: "pension-future-monthly-income",
+  name: "연금 미래 월소득 계산기",
+  description:
+    "현재 연금자산, 월 납입액, 은퇴까지 남은 기간과 수익률 가정으로 은퇴 시점 예상 자산과 미래 월수령액을 계산합니다.",
+  keywords: [
+    "연금 월수령액 계산기",
+    "연금 미래가치",
+    "은퇴 월소득",
+    "연금 예상 수령액",
+    "pension future monthly income calculator",
+  ],
+  category: "금융",
+  href: "/ko/finance/pension-future-monthly-income",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...previous.allPublishedCalculators,
   ageCalculator,
@@ -123,6 +139,7 @@ export const allPublishedCalculators = [
   emergencyFundCalculator,
   fireRetirementTargetCalculator,
   retirementWithdrawalCalculator,
+  pensionFutureMonthlyIncomeCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -146,6 +163,7 @@ export const calculatorDirectoryCategories =
           "emergency-fund",
           "fire-retirement-target",
           "retirement-withdrawal",
+          "pension-future-monthly-income",
         ],
       };
     }
@@ -227,6 +245,19 @@ export const directorySearchCalculators = [
       "portfolio drawdown",
       "retirement drawdown calculator",
       "withdrawal rate calculator",
+    ],
+  },
+  {
+    ...pensionFutureMonthlyIncomeCalculator,
+    primaryCategory: "저축·연금",
+    keywords: [
+      ...pensionFutureMonthlyIncomeCalculator.keywords,
+      "연금 예상액",
+      "연금 적립 계산",
+      "은퇴 예상 소득",
+      "future pension income",
+      "retirement monthly income",
+      "pension projection calculator",
     ],
   },
 ] satisfies readonly previous.DirectorySearchCalculator[];
