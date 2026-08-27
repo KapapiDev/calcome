@@ -1,27 +1,27 @@
 import type { PublishedCalculator } from "./calculators";
-import * as previous from "./calculator-directory.pre-portfolio-rebalancing";
+import * as previous from "./calculator-directory.pre-dividend";
 
-export * from "./calculator-directory.pre-portfolio-rebalancing";
+export * from "./calculator-directory.pre-dividend";
 
-export const portfolioRebalancingCalculator = {
-  id: "portfolio-rebalancing",
-  name: "포트폴리오 리밸런싱 계산기",
+export const dividendReinvestmentCalculator = {
+  id: "dividend-reinvestment",
+  name: "배당 재투자 계산기",
   description:
-    "현재 자산별 금액과 목표 비중으로 목표 포트폴리오에 맞추기 위한 자산별 매수·매도 금액과 회전율을 계산합니다.",
+    "초기 투자금, 배당수익률, 주가·배당 성장률과 투자기간으로 배당 재투자와 현금 배당의 장기 결과를 비교합니다.",
   keywords: [
-    "포트폴리오 리밸런싱 계산기",
-    "자산배분 계산기",
-    "목표 비중",
-    "리밸런싱 매수 매도",
-    "portfolio rebalancing calculator",
+    "배당 재투자 계산기",
+    "배당 복리",
+    "DRIP 계산기",
+    "배당 성장",
+    "dividend reinvestment calculator",
   ],
   category: "금융",
-  href: "/ko/finance/portfolio-rebalancing",
+  href: "/ko/finance/dividend-reinvestment",
 } as const satisfies PublishedCalculator;
 
 export const allPublishedCalculators = [
   ...previous.allPublishedCalculators,
-  portfolioRebalancingCalculator,
+  dividendReinvestmentCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -29,7 +29,7 @@ export const calculatorDirectoryCategories =
     if (category.id === "investment") {
       return {
         ...category,
-        calculatorIds: [...category.calculatorIds, "portfolio-rebalancing"],
+        calculatorIds: [...category.calculatorIds, "dividend-reinvestment"],
       };
     }
     return category;
@@ -38,16 +38,16 @@ export const calculatorDirectoryCategories =
 export const directorySearchCalculators = [
   ...previous.directorySearchCalculators,
   {
-    ...portfolioRebalancingCalculator,
+    ...dividendReinvestmentCalculator,
     primaryCategory: "투자",
     keywords: [
-      ...portfolioRebalancingCalculator.keywords,
-      "포트폴리오 비중 조정",
-      "주식 채권 리밸런싱",
-      "자산 비중 맞추기",
-      "asset allocation rebalancing",
-      "rebalance portfolio",
-      "buy sell rebalancing",
+      ...dividendReinvestmentCalculator.keywords,
+      "배당 재투자",
+      "배당금 재투자",
+      "배당 복리 효과",
+      "dividend reinvestment",
+      "DRIP calculator",
+      "dividend compounding",
     ],
   },
 ] satisfies readonly previous.DirectorySearchCalculator[];
