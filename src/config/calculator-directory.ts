@@ -104,7 +104,7 @@ export const calculatorDirectoryCategories =
         ],
       };
     }
-    if (category.id === "savings-pension") {
+    if (category.id === "savings") {
       return {
         ...category,
         calculatorIds: [...category.calculatorIds, "emergency-fund"],
