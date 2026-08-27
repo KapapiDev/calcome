@@ -103,7 +103,6 @@ export function calculateDateDifference(
     fullWeeks: Math.floor(absoluteDays / 7),
     extraDays: absoluteDays % 7,
     ...breakdown,
-    direction:
-      signedDays > 0 ? "forward" : signedDays < 0 ? "reverse" : "same",
+    direction: signedDays > 0 ? "forward" : signedDays < 0 ? "reverse" : "same",
   };
 }

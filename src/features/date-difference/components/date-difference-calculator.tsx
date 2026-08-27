@@ -12,10 +12,7 @@ import {
   calculateDateDifference,
   type DateDifferenceResult,
 } from "../calculate";
-import {
-  dateDifferenceContent,
-  type DateDifferenceLocale,
-} from "../content";
+import { dateDifferenceContent, type DateDifferenceLocale } from "../content";
 
 const fieldClass =
   "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base outline-none focus-visible:ring-3 focus-visible:ring-ring/30 aria-invalid:border-destructive sm:text-sm";

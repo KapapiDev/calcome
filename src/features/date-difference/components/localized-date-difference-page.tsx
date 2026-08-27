@@ -3,10 +3,7 @@ import {
   JsonLdScript,
   createPageStructuredData,
 } from "@/lib/seo/structured-data";
-import {
-  dateDifferenceContent,
-  type DateDifferenceLocale,
-} from "../content";
+import { dateDifferenceContent, type DateDifferenceLocale } from "../content";
 import { DateDifferenceCalculator } from "./date-difference-calculator";
 
 export function LocalizedDateDifferencePage({

@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/config/site";
-import {
-  dateDifferenceContent,
-  type DateDifferenceLocale,
-} from "./content";
+import { dateDifferenceContent, type DateDifferenceLocale } from "./content";
 
 export function createDateDifferenceMetadata(
   locale: DateDifferenceLocale,
