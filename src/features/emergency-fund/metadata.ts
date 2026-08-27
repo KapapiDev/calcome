@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/config/site";
 import { emergencyFundContent, type EmergencyFundLocale } from "./content";
 
-export function createEmergencyFundMetadata(locale: EmergencyFundLocale): Metadata {
+export function createEmergencyFundMetadata(
+  locale: EmergencyFundLocale,
+): Metadata {
   const copy = emergencyFundContent[locale];
   const path = `/${locale}/finance/emergency-fund`;
 
