@@ -66,10 +66,7 @@ export function calculateAge(input: AgeInput): AgeResult {
   );
 
   let fullYears = asOfDate.getUTCFullYear() - birthDate.getUTCFullYear();
-  const birthdayThisYear = birthdayInYear(
-    birthDate,
-    asOfDate.getUTCFullYear(),
-  );
+  const birthdayThisYear = birthdayInYear(birthDate, asOfDate.getUTCFullYear());
 
   if (asOfDate.getTime() < birthdayThisYear.getTime()) {
     fullYears -= 1;
