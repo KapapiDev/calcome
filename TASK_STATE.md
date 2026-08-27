@@ -7,11 +7,11 @@ This file is the compact mutable execution ledger for autonomous development.
 ## Reconciliation baseline
 
 - Reconciled date: 2026-08-28
-- Reconciled base `main`: `81db3424`
-- Current public-calculator count derived from the 51-calculator original baseline plus 36 completed expansion tasks: **87**
+- Reconciled base `main`: `950d297e`
+- Current public-calculator count derived from the 51-calculator original baseline plus 37 completed expansion tasks: **88**
 - Target: **100**
-- Completed expansion tasks: **36 / 49**
-- Remaining expansion tasks: **13**
+- Completed expansion tasks: **37 / 49**
+- Remaining expansion tasks: **12**
 - Exactly one task is OPEN below.
 
 ## Current execution state
@@ -61,7 +61,8 @@ This file is the compact mutable execution ledger for autonomous development.
 - P-078 — DONE — HIGH — FIRE Retirement Target Calculator added with user-selected withdrawal-rate target, portfolio progress, time-to-goal projection, shared-currency semantics, bilingual routes, directory/search integration, and regression tests.
 - REG-EXP-004 — DONE — HIGH — Expansion regression gate completed 2026-08-28 after P-074, P-075, P-077, and P-078; exact-head CI and latest Preview are healthy, Production has advanced to 82 calculators but remains four behind repository main, and no verified product blocker was found. See `docs/REG_EXP_004_2026-08-28.md`.
 - P-079 — DONE — HIGH — Retirement Withdrawal Calculator added with portfolio drawdown simulation, user-entered return and withdrawal assumptions, shared-currency semantics, bilingual routes, directory/search integration, and regression tests.
-- P-080 — OPEN — HIGH — Pension Future Monthly Income Calculator is the next expansion task.
+- P-080 — DONE — HIGH — Pension Future Monthly Income Calculator added with accumulation and payout projections, user-entered return assumptions, shared-currency semantics, bilingual routes, directory/search integration, and regression tests.
+- P-081 — OPEN — MEDIUM — Dividend Reinvestment Calculator is the next expansion task.
 - P-089 — DONE — HIGH — Previously merged on main.
 - SEC-001 — DONE — CRITICAL — PR #284 upgrades Next.js 16.2.10 to patched 16.3.3, applies compatible non-forced transitive fixes, and adds a permanent production high-severity audit gate.
 
@@ -80,7 +81,7 @@ Current operating interpretation:
 
 ## Expansion continuation
 
-REG-EXP-004 completed the required regression gate after P-074, P-075, P-077, and P-078. P-079 is complete and P-080 is the single next OPEN task. Continue the expansion program in `TASK_QUEUE.md` order after P-080, skipping tasks already marked DONE here.
+REG-EXP-004 completed the required regression gate after P-074, P-075, P-077, and P-078. P-079 and P-080 are complete; P-081 is the single next OPEN task. Continue the expansion program in `TASK_QUEUE.md` order after P-081, skipping tasks already marked DONE here.
 
 Each calculator PR must update this file in the same PR:
 
