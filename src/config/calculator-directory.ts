@@ -115,6 +115,22 @@ export const rentAffordabilityCalculator = {
   href: "/ko/finance/rent-affordability",
 } as const satisfies PublishedCalculator;
 
+export const jeonseVsRentCalculator = {
+  id: "jeonse-vs-rent",
+  name: "전세 보증금 vs 월세 비용 비교 계산기",
+  description:
+    "전세대출 이자와 보증금 기회비용을 월세 보증금 기회비용·월세 납부액과 같은 기간으로 비교합니다.",
+  keywords: [
+    "전세 월세 비교",
+    "전세 vs 월세",
+    "전세 기회비용",
+    "월세 비용",
+    "jeonse vs rent",
+  ],
+  category: "금융",
+  href: "/ko/finance/jeonse-vs-rent",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...base.allPublishedCalculators,
   totalCompensationComparisonCalculator,
@@ -124,6 +140,7 @@ export const allPublishedCalculators = [
   maternityLeaveBenefitCalculator,
   jeonseLoanLimitCalculator,
   rentAffordabilityCalculator,
+  jeonseVsRentCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -158,6 +175,7 @@ export const calculatorDirectoryCategories =
                 calculatorIds: [
                   ...category.calculatorIds,
                   "rent-affordability",
+                  "jeonse-vs-rent",
                 ],
               }
             : category,
@@ -240,6 +258,17 @@ export const directorySearchCalculators = [
       "월세 얼마",
       "월세 소득 비율",
       "rent budget",
+    ],
+  },
+  {
+    ...jeonseVsRentCalculator,
+    primaryCategory: "부동산·주거",
+    keywords: [
+      ...jeonseVsRentCalculator.keywords,
+      "전월세 비교",
+      "전세 월세 손익",
+      "보증금 기회비용",
+      "rent versus jeonse",
     ],
   },
 ] satisfies readonly base.DirectorySearchCalculator[];
