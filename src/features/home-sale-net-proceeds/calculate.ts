@@ -48,7 +48,8 @@ export function calculateHomeSaleNetProceeds(
   const proceedsBeforeLoanPayoff = input.salePrice - sellingCosts;
   const netProceeds = proceedsBeforeLoanPayoff - input.mortgagePayoff;
   const sellingCostRatePercent = (sellingCosts / input.salePrice) * 100;
-  const mortgagePayoffRatePercent = (input.mortgagePayoff / input.salePrice) * 100;
+  const mortgagePayoffRatePercent =
+    (input.mortgagePayoff / input.salePrice) * 100;
 
   return {
     sellingCosts,

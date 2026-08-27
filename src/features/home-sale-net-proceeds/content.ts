@@ -52,7 +52,8 @@ export const homeSaleNetProceedsContent = {
     netProceeds: "Estimated net proceeds",
     sellingCostRate: "Seller costs as % of sale price",
     mortgagePayoffRate: "Mortgage payoff as % of sale price",
-    error: "Enter a sale price above zero and non-negative amounts for all other fields.",
+    error:
+      "Enter a sale price above zero and non-negative amounts for all other fields.",
     note: "This calculator does not determine statutory capital-gains tax or brokerage caps. Enter transaction-specific amounts you have verified for your location and circumstances. A negative net-proceeds result means the sale price is not enough to cover the entered payoff and seller costs.",
     method:
       "Seller costs combine brokerage, transfer/tax amounts, legal and closing costs, repairs/cleaning/staging, moving, and other entered costs. Proceeds before mortgage payoff subtract those costs from the sale price. Estimated net proceeds then subtract the entered mortgage payoff balance.",
