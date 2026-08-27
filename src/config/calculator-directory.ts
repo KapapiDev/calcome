@@ -147,6 +147,22 @@ export const homePurchaseTotalCostCalculator = {
   href: "/ko/finance/home-purchase-total-cost",
 } as const satisfies PublishedCalculator;
 
+export const homeSaleNetProceedsCalculator = {
+  id: "home-sale-net-proceeds",
+  name: "주택 매도 순수익 계산기",
+  description:
+    "주택 매도가에서 대출 상환액과 중개보수, 세금, 법무·정산, 수리·이사 등 매도 비용을 빼 예상 순수익을 계산합니다.",
+  keywords: [
+    "주택 매도 순수익",
+    "집 팔면 남는 돈",
+    "주택 매도 비용",
+    "매도 정산",
+    "home sale net proceeds",
+  ],
+  category: "금융",
+  href: "/ko/finance/home-sale-net-proceeds",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...base.allPublishedCalculators,
   totalCompensationComparisonCalculator,
@@ -158,6 +174,7 @@ export const allPublishedCalculators = [
   rentAffordabilityCalculator,
   jeonseVsRentCalculator,
   homePurchaseTotalCostCalculator,
+  homeSaleNetProceedsCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -194,6 +211,7 @@ export const calculatorDirectoryCategories =
                   "rent-affordability",
                   "jeonse-vs-rent",
                   "home-purchase-total-cost",
+                  "home-sale-net-proceeds",
                 ],
               }
             : category,
@@ -300,6 +318,17 @@ export const directorySearchCalculators = [
       "closing costs",
     ],
   },
+  {
+    ...homeSaleNetProceedsCalculator,
+    primaryCategory: "부동산·주거",
+    keywords: [
+      ...homeSaleNetProceedsCalculator.keywords,
+      "매도대금 정산",
+      "주택담보대출 상환",
+      "집 매도 순수익",
+      "seller net proceeds",
+    ],
+  },
 ] satisfies readonly base.DirectorySearchCalculator[];
 
 const calculatorsById = new Map<string, PublishedCalculator>(
@@ -313,9 +342,8 @@ export const groupedCalculatorDirectory = calculatorDirectoryCategories.map(
     ...category,
     calculators: category.calculatorIds.map((id) => {
       const calculator = calculatorsById.get(id);
-      if (!calculator) {
+      if (!calculator)
         throw new Error(`Unknown calculator directory id: ${id}`);
-      }
       return calculator;
     }),
   }),

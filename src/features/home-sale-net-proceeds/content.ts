@@ -1,0 +1,63 @@
+export type HomeSaleNetProceedsLocale = "ko" | "en";
+
+export const homeSaleNetProceedsContent = {
+  ko: {
+    title: "주택 매도 순수익 계산기",
+    description:
+      "주택 매도가에서 남은 대출금과 중개보수, 세금, 법무·정산, 수리·홈스테이징, 이사 등 매도 비용을 빼 실제 손에 남는 예상 금액을 계산합니다.",
+    category: "부동산·주거",
+    input: "매도 정산 입력",
+    salePrice: "주택 매도가",
+    mortgagePayoff: "상환할 주택담보대출 잔액",
+    brokerageFee: "중개보수",
+    transferTax: "양도·이전 관련 세금",
+    legalClosingCost: "법무·등기·정산 비용",
+    repairStagingCost: "수리·청소·홈스테이징 비용",
+    movingCost: "이사 비용",
+    otherCost: "기타 매도 관련 비용",
+    calculate: "순수익 계산하기",
+    reset: "초기화",
+    result: "주택 매도 예상 정산",
+    sellingCosts: "대출 제외 매도 비용",
+    proceedsBeforeLoanPayoff: "대출 상환 전 예상 잔액",
+    netProceeds: "예상 순수익",
+    sellingCostRate: "매도가 대비 매도 비용 비율",
+    mortgagePayoffRate: "매도가 대비 대출 상환 비율",
+    error: "매도가는 0보다 크게, 나머지 금액은 0 이상으로 입력해 주세요.",
+    note: "이 계산기는 양도소득세나 중개보수 상한을 자동 산정하지 않습니다. 실제 거래·보유 조건과 관할 규정에 맞게 확인한 금액을 입력하세요. 예상 순수익이 음수이면 매도대금만으로 대출과 비용을 모두 정산하기 어렵다는 뜻입니다.",
+    method:
+      "매도 비용은 중개보수, 양도·이전 관련 세금, 법무·정산, 수리·청소·홈스테이징, 이사, 기타 비용을 합산합니다. 대출 상환 전 예상 잔액은 매도가에서 매도 비용을 뺀 금액이며, 예상 순수익은 여기서 상환할 주택담보대출 잔액을 다시 뺀 값입니다.",
+    tips: "실제 정산액은 대출 중도상환수수료, 세금, 계약상 정산 항목, 관리비·공과금, 잔금일에 따라 달라질 수 있습니다. 매도 계약 전 금융기관의 정확한 상환예정액과 세무·중개 관련 금액을 확인해 입력하세요.",
+    metaTitle: "주택 매도 순수익 계산기 | 대출·중개보수·매도비용 정산",
+  },
+  en: {
+    title: "Home Sale Net Proceeds Calculator",
+    description:
+      "Estimate how much cash remains after selling a home by subtracting mortgage payoff, brokerage, taxes, legal and closing costs, repairs, staging, moving, and other seller costs.",
+    category: "Housing & Real Estate",
+    input: "Sale settlement inputs",
+    salePrice: "Home sale price",
+    mortgagePayoff: "Mortgage payoff balance",
+    brokerageFee: "Brokerage fee",
+    transferTax: "Transfer / capital-gains related taxes",
+    legalClosingCost: "Legal, registration and closing costs",
+    repairStagingCost: "Repairs, cleaning and staging costs",
+    movingCost: "Moving costs",
+    otherCost: "Other seller costs",
+    calculate: "Calculate net proceeds",
+    reset: "Reset",
+    result: "Estimated home sale settlement",
+    sellingCosts: "Seller costs excluding mortgage",
+    proceedsBeforeLoanPayoff: "Proceeds before mortgage payoff",
+    netProceeds: "Estimated net proceeds",
+    sellingCostRate: "Seller costs as % of sale price",
+    mortgagePayoffRate: "Mortgage payoff as % of sale price",
+    error:
+      "Enter a sale price above zero and non-negative amounts for all other fields.",
+    note: "This calculator does not determine statutory capital-gains tax or brokerage caps. Enter transaction-specific amounts you have verified for your location and circumstances. A negative net-proceeds result means the sale price is not enough to cover the entered payoff and seller costs.",
+    method:
+      "Seller costs combine brokerage, transfer/tax amounts, legal and closing costs, repairs/cleaning/staging, moving, and other entered costs. Proceeds before mortgage payoff subtract those costs from the sale price. Estimated net proceeds then subtract the entered mortgage payoff balance.",
+    tips: "Actual closing proceeds can differ because of lender payoff quotes, prepayment fees, tax treatment, prorations, utilities, management fees, and settlement timing. Confirm the lender payoff amount and transaction-specific costs before relying on the estimate.",
+    metaTitle: "Home Sale Net Proceeds Calculator | Mortgage & Selling Costs",
+  },
+} satisfies Record<HomeSaleNetProceedsLocale, Record<string, string>>;
