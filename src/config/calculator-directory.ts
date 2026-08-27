@@ -83,12 +83,29 @@ export const emergencyFundCalculator = {
   href: "/ko/finance/emergency-fund",
 } as const satisfies PublishedCalculator;
 
+export const fireRetirementTargetCalculator = {
+  id: "fire-retirement-target",
+  name: "FIRE 은퇴 목표 계산기",
+  description:
+    "월 생활비와 목표 인출률로 경제적 자유에 필요한 목표 자산, 부족액, 달성률과 예상 도달 기간을 계산합니다.",
+  keywords: [
+    "FIRE 계산기",
+    "파이어족 계산기",
+    "은퇴 목표 자산",
+    "경제적 자유",
+    "fire retirement calculator",
+  ],
+  category: "금융",
+  href: "/ko/finance/fire-retirement-target",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...previous.allPublishedCalculators,
   ageCalculator,
   dDayCalculator,
   dateDifferenceCalculator,
   emergencyFundCalculator,
+  fireRetirementTargetCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -107,7 +124,11 @@ export const calculatorDirectoryCategories =
     if (category.id === "savings") {
       return {
         ...category,
-        calculatorIds: [...category.calculatorIds, "emergency-fund"],
+        calculatorIds: [
+          ...category.calculatorIds,
+          "emergency-fund",
+          "fire-retirement-target",
+        ],
       };
     }
     return category;
@@ -163,6 +184,18 @@ export const directorySearchCalculators = [
       "rainy day fund",
       "emergency savings",
       "months of expenses",
+    ],
+  },
+  {
+    ...fireRetirementTargetCalculator,
+    primaryCategory: "저축·연금",
+    keywords: [
+      ...fireRetirementTargetCalculator.keywords,
+      "FIRE number",
+      "financial independence number",
+      "4% rule",
+      "25x expenses",
+      "safe withdrawal rate",
     ],
   },
 ] satisfies readonly previous.DirectorySearchCalculator[];
