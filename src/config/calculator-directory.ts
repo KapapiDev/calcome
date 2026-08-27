@@ -133,10 +133,7 @@ export const calculatorDirectoryCategories =
         : category.id === "loan"
           ? {
               ...category,
-              calculatorIds: [
-                ...category.calculatorIds,
-                "jeonse-loan-limit",
-              ],
+              calculatorIds: [...category.calculatorIds, "jeonse-loan-limit"],
             }
           : category,
   ) satisfies readonly base.CalculatorDirectoryCategory[];

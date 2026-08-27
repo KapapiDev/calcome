@@ -7,10 +7,7 @@ import {
   calculateJeonseLoanLimit,
   type JeonseLoanLimitResult,
 } from "../calculate";
-import {
-  jeonseLoanLimitContent,
-  type JeonseLoanLimitLocale,
-} from "../content";
+import { jeonseLoanLimitContent, type JeonseLoanLimitLocale } from "../content";
 
 const fieldClass =
   "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none focus-visible:ring-3 focus-visible:ring-ring/30 sm:text-sm";

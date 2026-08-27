@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/config/site";
-import {
-  jeonseLoanLimitContent,
-  type JeonseLoanLimitLocale,
-} from "./content";
+import { jeonseLoanLimitContent, type JeonseLoanLimitLocale } from "./content";
 
 export function createJeonseLoanLimitMetadata(
   locale: JeonseLoanLimitLocale,

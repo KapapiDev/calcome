@@ -31,10 +31,16 @@ export function calculateJeonseLoanLimit(
 ): JeonseLoanLimitResult {
   requireNonNegative("deposit", input.deposit);
   requireNonNegative("requestedAmount", input.requestedAmount);
-  requireNonNegative("existingGuaranteeBalance", input.existingGuaranteeBalance);
+  requireNonNegative(
+    "existingGuaranteeBalance",
+    input.existingGuaranteeBalance,
+  );
   requireNonNegative("recognizedAnnualIncome", input.recognizedAnnualIncome);
   requireNonNegative("annualDebtService", input.annualDebtService);
-  requireNonNegative("repaymentPreferenceAmount", input.repaymentPreferenceAmount);
+  requireNonNegative(
+    "repaymentPreferenceAmount",
+    input.repaymentPreferenceAmount,
+  );
 
   const subjectCap = input.oneHomeHousehold
     ? new Decimal(input.capitalOrRegulatedArea ? 180_000_000 : 200_000_000)
@@ -45,14 +51,9 @@ export function calculateJeonseLoanLimit(
   );
   const fundingFromDeposit = Decimal.max(
     0,
-    input.deposit
-      .mul(0.8)
-      .minus(input.existingGuaranteeBalance),
+    input.deposit.mul(0.8).minus(input.existingGuaranteeBalance),
   );
-  const fundingLimit = Decimal.min(
-    fundingFromDeposit,
-    input.requestedAmount,
-  );
+  const fundingLimit = Decimal.min(fundingFromDeposit, input.requestedAmount);
   const repaymentLimit = Decimal.max(
     0,
     input.recognizedAnnualIncome

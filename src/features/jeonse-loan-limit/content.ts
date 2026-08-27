@@ -59,6 +59,7 @@ export const jeonseLoanLimitContent = {
     note: "Official HF general jeonse guarantee guidance was verified on 2026-08-27. For capital or regulated areas, HF recognizes 8/9 of the minimum result from the three published limits.",
     caution:
       "This is a guarantee-limit estimate, not an eligibility decision or loan approval. Deposit, homeownership, property, and lender requirements must be checked separately.",
-    source: "Korea Housing Finance Corporation general jeonse guarantee guidance",
+    source:
+      "Korea Housing Finance Corporation general jeonse guarantee guidance",
   },
 } as const;
