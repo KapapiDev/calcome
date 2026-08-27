@@ -7,11 +7,11 @@ This file is the compact mutable execution ledger for autonomous development.
 ## Reconciliation baseline
 
 - Reconciled date: 2026-08-27
-- Reconciled base `main`: `c03444f4`
-- Current public-calculator count derived from the 51-calculator original baseline plus 25 completed expansion tasks: **76**
+- Reconciled base `main`: `b80036e9`
+- Current public-calculator count derived from the 51-calculator original baseline plus 26 completed expansion tasks: **77**
 - Target: **100**
-- Completed expansion tasks: **25 / 49**
-- Remaining expansion tasks: **24**
+- Completed expansion tasks: **26 / 49**
+- Remaining expansion tasks: **23**
 - Exactly one task is OPEN below.
 
 ## Current execution state
@@ -46,23 +46,13 @@ This file is the compact mutable execution ledger for autonomous development.
 - P-065 — DONE — HIGH — Rent Affordability Calculator added with ratio and cash-flow budget constraints, shared-currency semantics, bilingual routes, directory/search integration, and regression tests.
 - P-066 — DONE — HIGH — Jeonse Deposit vs Monthly Rent Cost Calculator added with financing/opportunity-cost comparison, shared-currency semantics, bilingual routes, directory/search integration, and regression tests.
 - P-067 — DONE — HIGH — Home Purchase Total Cost Calculator added with user-entered transaction costs, shared-currency semantics, bilingual routes, directory/search integration, and regression tests.
-- P-068 — OPEN — HIGH — Home Sale Net Proceeds Calculator.
+- P-068 — DONE — HIGH — Home Sale Net Proceeds Calculator added with mortgage payoff and seller-cost settlement, shared-currency semantics, bilingual routes, directory/search integration, and regression tests.
+- P-069 — OPEN — HIGH — Rental Yield Calculator.
 - P-076 — DONE — HIGH — Previously merged on main.
 - P-089 — DONE — HIGH — Previously merged on main.
 - SEC-001 — DONE — CRITICAL — PR #284 upgrades Next.js 16.2.10 to patched 16.3.3, applies compatible non-forced transitive fixes, and adds a permanent production high-severity audit gate.
 
 All later uncompleted catalog tasks remain ordered by `TASK_QUEUE.md` and are effectively BLOCKED until they become the single OPEN task here.
-
-## SEC-001 — Dependency Vulnerability Triage
-
-Resolution recorded 2026-08-26:
-
-- Initial CI production audit reproduced **11 vulnerabilities: 2 moderate, 9 high** in the production dependency tree, so the signal was not dismissed as dev-only noise.
-- Direct runtime dependency `next` 16.2.10 was affected by high-severity advisories. npm identified 16.3.3 as the compatible non-major patched release, so Next.js was upgraded to 16.3.3 without `--force`.
-- After the Next.js patch, the audit dropped to 8 vulnerabilities. The remaining production advisories were transitive `brace-expansion`, `fast-uri`, `ip-address`, `js-yaml`, `nanoid`, `undici`, plus moderate `hono` / `@hono/node-server` findings; npm reported compatible fixes for all of them.
-- `npm audit fix --package-lock-only` was used without `--force` to update only the lockfile-resolved transitive versions. The resulting production audit passed the high-severity gate.
-- The permanent CI keeps `npm audit --json` as diagnostic output and blocks on `npm audit --omit=dev --audit-level=high` before lint, typecheck, format, tests, and build.
-- No forced breaking dependency upgrade was used. No known safely-fixable high/critical production dependency blocker remains from this baseline.
 
 ## Vercel connector state
 
@@ -76,7 +66,7 @@ Current operating interpretation:
 
 ## Expansion continuation
 
-REG-EXP-001 is complete. P-068 is the single next OPEN task after P-067 merges. Resume the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
+P-069 is the single next OPEN task after P-068 merges. Resume the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
 
 Each calculator PR must update this file in the same PR:
 
