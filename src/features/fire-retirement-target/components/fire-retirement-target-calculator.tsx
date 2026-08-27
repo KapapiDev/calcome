@@ -62,7 +62,9 @@ export function FireRetirementTargetCalculator({
     const withdrawalRatePercent = number(values.withdrawalRatePercent);
     const currentPortfolio = number(values.currentPortfolio);
     const monthlyContribution = number(values.monthlyContribution);
-    const expectedAnnualReturnPercent = number(values.expectedAnnualReturnPercent);
+    const expectedAnnualReturnPercent = number(
+      values.expectedAnnualReturnPercent,
+    );
     const invalid =
       monthlyExpenses === null ||
       monthlyExpenses <= 0 ||
@@ -144,36 +146,103 @@ export function FireRetirementTargetCalculator({
           className={`${compactCalculatorSettingsClass} min-w-0`}
         >
           <p className="text-sm font-semibold text-primary">{copy.category}</p>
-          <h2 id="fire-retirement-target-input-title" className="mt-1 text-xl font-semibold">
+          <h2
+            id="fire-retirement-target-input-title"
+            className="mt-1 text-xl font-semibold"
+          >
             {copy.input}
           </h2>
           {error ? (
-            <p role="alert" className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive">
+            <p
+              role="alert"
+              className="mt-3 rounded-lg border border-destructive/30 p-3 text-sm text-destructive"
+            >
               {copy.error}
             </p>
           ) : null}
           <CurrencySelector locale={locale} />
-          <Field id="monthlyExpenses" label={copy.monthlyExpenses} value={values.monthlyExpenses} suffix={currency} onChange={(value) => updateMoney("monthlyExpenses", value)} />
-          <Field id="withdrawalRatePercent" label={copy.withdrawalRate} value={values.withdrawalRatePercent} suffix="%" onChange={(value) => setValues((current) => ({ ...current, withdrawalRatePercent: value }))} />
-          <Field id="currentPortfolio" label={copy.currentPortfolio} value={values.currentPortfolio} suffix={currency} onChange={(value) => updateMoney("currentPortfolio", value)} />
-          <Field id="monthlyContribution" label={copy.monthlyContribution} value={values.monthlyContribution} suffix={currency} onChange={(value) => updateMoney("monthlyContribution", value)} />
-          <Field id="expectedAnnualReturnPercent" label={copy.expectedReturn} value={values.expectedAnnualReturnPercent} suffix="%" onChange={(value) => setValues((current) => ({ ...current, expectedAnnualReturnPercent: value }))} />
+          <Field
+            id="monthlyExpenses"
+            label={copy.monthlyExpenses}
+            value={values.monthlyExpenses}
+            suffix={currency}
+            onChange={(value) => updateMoney("monthlyExpenses", value)}
+          />
+          <Field
+            id="withdrawalRatePercent"
+            label={copy.withdrawalRate}
+            value={values.withdrawalRatePercent}
+            suffix="%"
+            onChange={(value) =>
+              setValues((current) => ({
+                ...current,
+                withdrawalRatePercent: value,
+              }))
+            }
+          />
+          <Field
+            id="currentPortfolio"
+            label={copy.currentPortfolio}
+            value={values.currentPortfolio}
+            suffix={currency}
+            onChange={(value) => updateMoney("currentPortfolio", value)}
+          />
+          <Field
+            id="monthlyContribution"
+            label={copy.monthlyContribution}
+            value={values.monthlyContribution}
+            suffix={currency}
+            onChange={(value) => updateMoney("monthlyContribution", value)}
+          />
+          <Field
+            id="expectedAnnualReturnPercent"
+            label={copy.expectedReturn}
+            value={values.expectedAnnualReturnPercent}
+            suffix="%"
+            onChange={(value) =>
+              setValues((current) => ({
+                ...current,
+                expectedAnnualReturnPercent: value,
+              }))
+            }
+          />
           <div className="mt-4 grid grid-cols-[1fr_auto] gap-2">
             <Button type="submit">{copy.calculate}</Button>
-            <Button type="button" variant="outline" onClick={reset}>{copy.reset}</Button>
+            <Button type="button" variant="outline" onClick={reset}>
+              {copy.reset}
+            </Button>
           </div>
         </form>
 
-        <section ref={resultRef} aria-labelledby="fire-retirement-target-result-title" className="scroll-mt-20 rounded-xl border bg-card p-4 shadow-sm">
-          <h2 id="fire-retirement-target-result-title" className="text-xl font-semibold">{copy.result}</h2>
+        <section
+          ref={resultRef}
+          aria-labelledby="fire-retirement-target-result-title"
+          className="scroll-mt-20 rounded-xl border bg-card p-4 shadow-sm"
+        >
+          <h2
+            id="fire-retirement-target-result-title"
+            className="text-xl font-semibold"
+          >
+            {copy.result}
+          </h2>
           <PrimaryResults
             metrics={[
-              { label: copy.targetPortfolio, value: money(result?.targetPortfolio), featured: true },
+              {
+                label: copy.targetPortfolio,
+                value: money(result?.targetPortfolio),
+                featured: true,
+              },
               { label: copy.fundingGap, value: money(result?.fundingGap) },
               { label: copy.fundedPercent, value: progress },
               { label: copy.monthsToTarget, value: timeToTarget },
-              { label: copy.annualExpenses, value: money(result?.annualExpenses) },
-              { label: copy.annualWithdrawal, value: money(result?.annualWithdrawalAtTarget) },
+              {
+                label: copy.annualExpenses,
+                value: money(result?.annualExpenses),
+              },
+              {
+                label: copy.annualWithdrawal,
+                value: money(result?.annualWithdrawalAtTarget),
+              },
             ]}
           />
           <p className="mt-3 text-sm text-muted-foreground">{copy.note}</p>
@@ -183,13 +252,35 @@ export function FireRetirementTargetCalculator({
   );
 }
 
-function Field({ id, label, value, suffix, onChange }: { id: string; label: string; value: string; suffix: string; onChange: (value: string) => void }) {
+function Field({
+  id,
+  label,
+  value,
+  suffix,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  suffix: string;
+  onChange: (value: string) => void;
+}) {
   return (
     <div className="mt-4">
-      <label htmlFor={id} className="block text-sm font-medium">{label}</label>
+      <label htmlFor={id} className="block text-sm font-medium">
+        {label}
+      </label>
       <div className="relative">
-        <input id={id} inputMode="decimal" value={value} onChange={(event) => onChange(event.target.value)} className={fieldClass} />
-        <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center pt-1.5 text-sm text-muted-foreground">{suffix}</span>
+        <input
+          id={id}
+          inputMode="decimal"
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          className={fieldClass}
+        />
+        <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center pt-1.5 text-sm text-muted-foreground">
+          {suffix}
+        </span>
       </div>
     </div>
   );

@@ -38,7 +38,10 @@ export function calculateFireRetirementTarget(
   if (currentPortfolio < 0 || monthlyContribution < 0) {
     throw new RangeError("portfolio values must be zero or greater");
   }
-  if (expectedAnnualReturnPercent <= -100 || expectedAnnualReturnPercent > 100) {
+  if (
+    expectedAnnualReturnPercent <= -100 ||
+    expectedAnnualReturnPercent > 100
+  ) {
     throw new RangeError(
       "expectedAnnualReturnPercent must be greater than -100 and at most 100",
     );
