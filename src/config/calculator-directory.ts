@@ -195,6 +195,22 @@ export const apartmentManagementFeeBudgetCalculator = {
   href: "/ko/finance/apartment-management-fee-budget",
 } as const satisfies PublishedCalculator;
 
+export const percentageCalculator = {
+  id: "percentage",
+  name: "퍼센트 계산기",
+  description:
+    "어떤 수의 몇 퍼센트인지, 구성비와 이전 값 대비 증감률을 한 번에 계산합니다.",
+  keywords: [
+    "퍼센트 계산기",
+    "비율 계산",
+    "백분율",
+    "증감률",
+    "percentage calculator",
+  ],
+  category: "금융",
+  href: "/ko/finance/percentage",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...base.allPublishedCalculators,
   totalCompensationComparisonCalculator,
@@ -209,6 +225,7 @@ export const allPublishedCalculators = [
   homeSaleNetProceedsCalculator,
   rentalYieldCalculator,
   apartmentManagementFeeBudgetCalculator,
+  percentageCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -230,6 +247,7 @@ export const calculatorDirectoryCategories =
             calculatorIds: [
               ...category.calculatorIds,
               "employer-total-labor-cost",
+              "percentage",
             ],
           }
         : category.id === "loan"
@@ -386,6 +404,17 @@ export const directorySearchCalculators = [
       "관리비 소득 비율",
       "㎡당 관리비",
       "condo fee budget",
+    ],
+  },
+  {
+    ...percentageCalculator,
+    primaryCategory: "사업·생활",
+    keywords: [
+      ...percentageCalculator.keywords,
+      "몇 퍼센트",
+      "퍼센트 증가",
+      "퍼센트 감소",
+      "percent change",
     ],
   },
 ] satisfies readonly base.DirectorySearchCalculator[];
