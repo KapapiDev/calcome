@@ -131,6 +131,22 @@ export const jeonseVsRentCalculator = {
   href: "/ko/finance/jeonse-vs-rent",
 } as const satisfies PublishedCalculator;
 
+export const homePurchaseTotalCostCalculator = {
+  id: "home-purchase-total-cost",
+  name: "주택 매수 총비용 계산기",
+  description:
+    "매매가에 취득세, 중개보수, 등기·법무, 대출·감정, 이사·설치, 수리·가구 비용 등을 더해 총매입원가와 필요 자기자금을 계산합니다.",
+  keywords: [
+    "주택 매수 비용",
+    "집 살 때 비용",
+    "주택 구입 총비용",
+    "매매 부대비용",
+    "home purchase total cost",
+  ],
+  category: "금융",
+  href: "/ko/finance/home-purchase-total-cost",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...base.allPublishedCalculators,
   totalCompensationComparisonCalculator,
@@ -141,6 +157,7 @@ export const allPublishedCalculators = [
   jeonseLoanLimitCalculator,
   rentAffordabilityCalculator,
   jeonseVsRentCalculator,
+  homePurchaseTotalCostCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -176,6 +193,7 @@ export const calculatorDirectoryCategories =
                   ...category.calculatorIds,
                   "rent-affordability",
                   "jeonse-vs-rent",
+                  "home-purchase-total-cost",
                 ],
               }
             : category,
@@ -269,6 +287,17 @@ export const directorySearchCalculators = [
       "전세 월세 손익",
       "보증금 기회비용",
       "rent versus jeonse",
+    ],
+  },
+  {
+    ...homePurchaseTotalCostCalculator,
+    primaryCategory: "부동산·주거",
+    keywords: [
+      ...homePurchaseTotalCostCalculator.keywords,
+      "주택 취득 비용",
+      "집 매수 예산",
+      "부동산 매매 비용",
+      "closing costs",
     ],
   },
 ] satisfies readonly base.DirectorySearchCalculator[];
