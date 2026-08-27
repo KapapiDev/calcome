@@ -7,7 +7,7 @@ This file is the compact mutable execution ledger for autonomous development.
 ## Reconciliation baseline
 
 - Reconciled date: 2026-08-27
-- Reconciled base `main`: `0c0e6167`
+- Reconciled base `main`: `4c22db4c`
 - Current public-calculator count derived from the 51-calculator original baseline plus 31 completed expansion tasks: **82**
 - Target: **100**
 - Completed expansion tasks: **31 / 49**
@@ -53,6 +53,7 @@ This file is the compact mutable execution ledger for autonomous development.
 - P-071 — DONE — HIGH — Percentage Calculator added with percent-of-value, part-of-whole, and percentage-change modes, bilingual routes, directory/search integration, and regression tests.
 - P-072 — DONE — HIGH — Discount Rate and Sale Price Calculator added with unit sale price, per-item savings, quantity totals, shared-currency semantics, bilingual routes, directory/search integration, and regression tests.
 - P-073 — DONE — HIGH — Age Calculator added with completed-age, elapsed-day/week, next-birthday calculation, bilingual routes, directory/search integration, and leap-day regression coverage.
+- REG-EXP-003 — DONE — HIGH — Expansion regression gate completed 2026-08-27 after P-070 through P-073; exact-head CI and latest Preview are healthy, Production has advanced to 78 calculators but remains four behind repository main, and no verified product blocker was found. See `docs/REG_EXP_003_2026-08-27.md`.
 - P-074 — OPEN — HIGH — D-Day Calculator.
 - P-076 — DONE — HIGH — Previously merged on main.
 - P-089 — DONE — HIGH — Previously merged on main.
@@ -68,12 +69,12 @@ Current operating interpretation:
 - CalCome team: `team_cuJFcIPj1zvkSmGeDk3hckZd` on Hobby.
 - GitHub Vercel-bot evidence identifies project `prj_nNXkUJGK9l7vG83KDZE2XOVHHd80` and has continued to report Preview deployments.
 - Direct project/deployment lookup may return empty results, `403`, or `404` from the connected Vercel resource path. Treat that as resource-level visibility/permission limitation, not as proof that the connector, project, or deployment does not exist.
-- Fresh public observation during REG-EXP-002 found Production serving an older calculator inventory than current `main`; retain this as release-drift evidence until Production catches up or a concrete deployment defect is identified.
+- Fresh public observation during REG-EXP-003 found Production serving 78 calculators while repository `main` contains 82; this is improved propagation from the prior 72/78 gate but remains release-drift evidence until Production catches up or a concrete deployment defect is identified.
 - This limitation does not block repository development when current-head CI and application validation pass and no Vercel application-code failure is evidenced.
 
 ## Expansion continuation
 
-P-073 is complete. P-074 is the single next OPEN task. Continue the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
+REG-EXP-003 is complete. P-074 is the single next OPEN task. Continue the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
 
 Each calculator PR must update this file in the same PR:
 
