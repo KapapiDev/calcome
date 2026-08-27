@@ -22,8 +22,7 @@ export const apartmentManagementFeeBudgetContent = {
     annualBudgetedCost: "연간 예산 관리비",
     monthlyCostPerSqm: "㎡당 월 관리비",
     incomeSharePercent: "월 순소득 대비 관리비 비율",
-    error:
-      "비용은 0 이상, 주택 면적과 월 순소득은 0보다 크게 입력해 주세요.",
+    error: "비용은 0 이상, 주택 면적과 월 순소득은 0보다 크게 입력해 주세요.",
     note: "실제 관리비 고지액은 계절, 난방·냉방 사용량, 단지별 부과 기준, 장기수선·특별부과금에 따라 달라질 수 있습니다. 이 계산기는 법정 요율을 적용하지 않고 사용자가 입력한 금액만 예산화합니다.",
     method:
       "월 반복 관리비는 기본 관리비, 공과금·사용료, 주차·기타 반복비를 합산합니다. 연간 특별부과금은 12개월로 나눠 월 예산에 반영하며, 이를 기준으로 연간 총액, ㎡당 월 비용, 월 순소득 대비 비율을 계산합니다.",
@@ -60,7 +59,4 @@ export const apartmentManagementFeeBudgetContent = {
     metaTitle:
       "Apartment Management Fee Budget Calculator | Monthly & Annual Costs",
   },
-} satisfies Record<
-  ApartmentManagementFeeBudgetLocale,
-  Record<string, string>
->;
+} satisfies Record<ApartmentManagementFeeBudgetLocale, Record<string, string>>;

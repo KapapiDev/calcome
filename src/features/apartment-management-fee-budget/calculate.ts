@@ -47,7 +47,8 @@ export function calculateApartmentManagementFeeBudget(
   const monthlySpecialAssessmentEquivalent = input.annualSpecialAssessment / 12;
   const monthlyBudgetedCost =
     monthlyRecurringCost + monthlySpecialAssessmentEquivalent;
-  const annualBudgetedCost = monthlyRecurringCost * 12 + input.annualSpecialAssessment;
+  const annualBudgetedCost =
+    monthlyRecurringCost * 12 + input.annualSpecialAssessment;
   const monthlyCostPerSqm = monthlyBudgetedCost / input.homeSizeSqm;
   const incomeSharePercent =
     (monthlyBudgetedCost / input.monthlyNetIncome) * 100;

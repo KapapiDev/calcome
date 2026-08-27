@@ -45,7 +45,10 @@ describe("calculateApartmentManagementFeeBudget", () => {
       calculateApartmentManagementFeeBudget({ ...baseInput, homeSizeSqm: 0 }),
     ).toThrow(RangeError);
     expect(() =>
-      calculateApartmentManagementFeeBudget({ ...baseInput, monthlyNetIncome: 0 }),
+      calculateApartmentManagementFeeBudget({
+        ...baseInput,
+        monthlyNetIncome: 0,
+      }),
     ).toThrow(RangeError);
   });
 });

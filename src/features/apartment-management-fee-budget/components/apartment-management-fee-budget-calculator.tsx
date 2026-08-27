@@ -55,8 +55,7 @@ export function ApartmentManagementFeeBudgetCalculator({
   const defaults = useMemo(() => initialValues(locale), [locale]);
   const [values, setValues] = useState(defaults);
   const [hasError, setHasError] = useState(false);
-  const [result, setResult] =
-    useState<ApartmentManagementFeeBudgetResult>();
+  const [result, setResult] = useState<ApartmentManagementFeeBudgetResult>();
   const { currency } = useDisplayCurrency(locale);
   const {
     resultRef,
