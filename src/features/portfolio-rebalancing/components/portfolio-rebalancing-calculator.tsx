@@ -106,7 +106,11 @@ export function PortfolioRebalancingCalculator({
     setResult(undefined);
   }
 
-  function updateValue(index: number, key: keyof (typeof values)[number], value: string) {
+  function updateValue(
+    index: number,
+    key: keyof (typeof values)[number],
+    value: string,
+  ) {
     setValues((current) =>
       current.map((asset, assetIndex) =>
         assetIndex === index
@@ -152,7 +156,10 @@ export function PortfolioRebalancingCalculator({
           <CurrencySelector locale={locale} />
           <div className="mt-4 space-y-3">
             {values.map((asset, index) => (
-              <fieldset key={copy.assetNames[index]} className="rounded-lg border p-3">
+              <fieldset
+                key={copy.assetNames[index]}
+                className="rounded-lg border p-3"
+              >
                 <legend className="px-1 text-sm font-medium">
                   {copy.assetNames[index]}
                 </legend>
@@ -231,7 +238,9 @@ export function PortfolioRebalancingCalculator({
             <table className="w-full min-w-[620px] text-sm">
               <thead>
                 <tr className="border-b text-left text-muted-foreground">
-                  <th className="py-2 pr-3">{locale === "ko" ? "자산" : "Asset"}</th>
+                  <th className="py-2 pr-3">
+                    {locale === "ko" ? "자산" : "Asset"}
+                  </th>
                   <th className="py-2 pr-3">{copy.currentWeight}</th>
                   <th className="py-2 pr-3">{copy.targetWeight}</th>
                   <th className="py-2 pr-3">{copy.targetValue}</th>
@@ -247,7 +256,10 @@ export function PortfolioRebalancingCalculator({
                         ? copy.buy
                         : copy.sell;
                   return (
-                    <tr key={copy.assetNames[index]} className="border-b last:border-0">
+                    <tr
+                      key={copy.assetNames[index]}
+                      className="border-b last:border-0"
+                    >
                       <th className="py-2 pr-3 text-left font-medium">
                         {copy.assetNames[index]}
                       </th>

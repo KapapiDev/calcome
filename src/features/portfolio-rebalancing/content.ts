@@ -55,7 +55,8 @@ export const portfolioRebalancingContent: Record<
     buy: "매수",
     sell: "매도",
     hold: "유지",
-    error: "현재 금액은 0 이상이어야 하고 목표 비중의 합은 정확히 100%여야 합니다.",
+    error:
+      "현재 금액은 0 이상이어야 하고 목표 비중의 합은 정확히 100%여야 합니다.",
     note: "매수액과 매도액은 세금, 거래 수수료, 최소 주문 단위, 현금 유입·유출을 반영하지 않은 이론적 조정액입니다.",
     method:
       "현재 자산 금액을 합산해 포트폴리오 총액을 구한 뒤 각 목표 비중을 곱해 목표 금액을 계산합니다. 목표 금액에서 현재 금액을 뺀 값이 양수면 매수, 음수면 매도 금액입니다. 회전율은 전체 절대 조정액의 절반을 현재 총액으로 나눠 계산합니다.",
@@ -86,7 +87,8 @@ export const portfolioRebalancingContent: Record<
     buy: "Buy",
     sell: "Sell",
     hold: "Hold",
-    error: "Current values must be zero or greater and target weights must add up to exactly 100%.",
+    error:
+      "Current values must be zero or greater and target weights must add up to exactly 100%.",
     note: "Buy and sell amounts are theoretical adjustments before taxes, trading fees, minimum order sizes, and external cash flows.",
     method:
       "The calculator totals the current asset values, multiplies that total by each target weight, and compares the resulting target value with the current value. Positive differences are buys and negative differences are sells. Turnover equals half of total absolute trades divided by current portfolio value.",

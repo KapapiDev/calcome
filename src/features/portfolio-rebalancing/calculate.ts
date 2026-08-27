@@ -59,8 +59,7 @@ export function calculatePortfolioRebalancing(
   }
 
   const assets = input.assets.map((asset) => {
-    const targetValue =
-      totalPortfolioValue * (asset.targetWeightPercent / 100);
+    const targetValue = totalPortfolioValue * (asset.targetWeightPercent / 100);
     return {
       ...asset,
       currentWeightPercent: (asset.currentValue / totalPortfolioValue) * 100,
