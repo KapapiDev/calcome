@@ -7,11 +7,11 @@ This file is the compact mutable execution ledger for autonomous development.
 ## Reconciliation baseline
 
 - Reconciled date: 2026-08-27
-- Reconciled base `main`: `8faac829`
-- Current public-calculator count derived from the 51-calculator original baseline plus 27 completed expansion tasks: **78**
+- Reconciled base `main`: `17c833a2`
+- Current public-calculator count derived from the 51-calculator original baseline plus 28 completed expansion tasks: **79**
 - Target: **100**
-- Completed expansion tasks: **27 / 49**
-- Remaining expansion tasks: **22**
+- Completed expansion tasks: **28 / 49**
+- Remaining expansion tasks: **21**
 - Exactly one task is OPEN below.
 
 ## Current execution state
@@ -49,7 +49,8 @@ This file is the compact mutable execution ledger for autonomous development.
 - P-068 — DONE — HIGH — Home Sale Net Proceeds Calculator added with mortgage payoff and seller-cost settlement, shared-currency semantics, bilingual routes, directory/search integration, and regression tests.
 - P-069 — DONE — HIGH — Rental Yield Calculator added with gross/net yield, vacancy, NOI, shared-currency semantics, bilingual routes, directory/search integration, and regression tests.
 - REG-EXP-002 — DONE — HIGH — Expansion regression gate completed 2026-08-27; repository CI and latest Preview are healthy, while fresh public observation records Production inventory lag behind current main. See `docs/REG_EXP_002_2026-08-27.md`.
-- P-070 — OPEN — MEDIUM — Apartment Management Fee Budget Calculator is the next expansion task after REG-EXP-002.
+- P-070 — DONE — MEDIUM — Apartment Management Fee Budget Calculator added with recurring and annual fee budgeting, shared-currency semantics, bilingual routes, directory/search integration, and regression tests.
+- P-071 — OPEN — HIGH — Percentage Calculator.
 - P-076 — DONE — HIGH — Previously merged on main.
 - P-089 — DONE — HIGH — Previously merged on main.
 - SEC-001 — DONE — CRITICAL — PR #284 upgrades Next.js 16.2.10 to patched 16.3.3, applies compatible non-forced transitive fixes, and adds a permanent production high-severity audit gate.
@@ -69,7 +70,7 @@ Current operating interpretation:
 
 ## Expansion continuation
 
-REG-EXP-002 completes the current four-calculator regression gate after P-066 through P-069. P-070 is the single next OPEN task. Continue the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
+P-070 is complete. P-071 is the single next OPEN task. Continue the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
 
 Each calculator PR must update this file in the same PR:
 
