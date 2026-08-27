@@ -179,6 +179,22 @@ export const rentalYieldCalculator = {
   href: "/ko/finance/rental-yield",
 } as const satisfies PublishedCalculator;
 
+export const apartmentManagementFeeBudgetCalculator = {
+  id: "apartment-management-fee-budget",
+  name: "아파트 관리비 예산 계산기",
+  description:
+    "월 관리비·공과금·주차비와 연간 특별부과금을 합쳐 월·연간 관리비 예산과 ㎡당 비용, 소득 대비 비율을 계산합니다.",
+  keywords: [
+    "아파트 관리비",
+    "관리비 예산",
+    "관리비 계산기",
+    "평당 관리비",
+    "apartment management fee",
+  ],
+  category: "금융",
+  href: "/ko/finance/apartment-management-fee-budget",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...base.allPublishedCalculators,
   totalCompensationComparisonCalculator,
@@ -192,6 +208,7 @@ export const allPublishedCalculators = [
   homePurchaseTotalCostCalculator,
   homeSaleNetProceedsCalculator,
   rentalYieldCalculator,
+  apartmentManagementFeeBudgetCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -230,6 +247,7 @@ export const calculatorDirectoryCategories =
                   "home-purchase-total-cost",
                   "home-sale-net-proceeds",
                   "rental-yield",
+                  "apartment-management-fee-budget",
                 ],
               }
             : category,
@@ -357,6 +375,17 @@ export const directorySearchCalculators = [
       "월세 투자수익률",
       "gross rental yield",
       "net rental yield",
+    ],
+  },
+  {
+    ...apartmentManagementFeeBudgetCalculator,
+    primaryCategory: "부동산·주거",
+    keywords: [
+      ...apartmentManagementFeeBudgetCalculator.keywords,
+      "관리비 월평균",
+      "관리비 소득 비율",
+      "㎡당 관리비",
+      "condo fee budget",
     ],
   },
 ] satisfies readonly base.DirectorySearchCalculator[];
