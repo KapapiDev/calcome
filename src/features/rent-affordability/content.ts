@@ -1,0 +1,68 @@
+export type RentAffordabilityLocale = "ko" | "en";
+
+export const rentAffordabilityContent = {
+  ko: {
+    title: "월세 적정 예산 계산기",
+    description:
+      "월 순소득, 고정지출, 남기고 싶은 금액과 주거비 목표 비율을 함께 비교해 감당 가능한 월세 상한을 계산합니다.",
+    category: "부동산·주거",
+    input: "월세 예산 조건",
+    monthlyIncome: "월 순소득",
+    fixedObligations: "월 고정지출·부채상환",
+    desiredLeftover: "월말에 남기고 싶은 금액",
+    nonRentHousingCosts: "월세 외 주거비",
+    targetHousingPercent: "목표 총 주거비 비율",
+    calculate: "월세 예산 계산하기",
+    reset: "초기화",
+    result: "월세 예산 결과",
+    recommendedRent: "추천 월세 상한",
+    annualRent: "연간 월세",
+    ratioCap: "주거비 비율 기준 월세 상한",
+    cashFlowCap: "현금흐름 기준 월세 상한",
+    remainingAfterPlan: "월세·고정지출 후 남는 금액",
+    housingShare: "총 주거비 비율",
+    limitingFactor: "한도를 결정한 기준",
+    ratioFactor: "주거비 비율",
+    cashFlowFactor: "현금흐름",
+    bothFactor: "두 기준 동일",
+    error:
+      "순소득은 0보다 크게, 다른 금액은 0 이상으로 입력하고 주거비 비율은 0~100% 범위로 입력해 주세요.",
+    note: "목표 주거비 비율은 사용자가 정하는 계획값입니다. 30% 같은 수치는 보편적 법정 기준이나 임대인 승인 기준이 아니며, 지역·가구·부채·생활비에 따라 적정선이 달라집니다.",
+    method:
+      "먼저 순소득 × 목표 주거비 비율에서 월세 외 주거비를 빼 비율 기준 월세 상한을 구합니다. 별도로 순소득에서 고정지출, 남기고 싶은 금액, 월세 외 주거비를 빼 현금흐름 기준 상한을 구한 뒤 둘 중 작은 값을 추천 월세 상한으로 사용합니다.",
+    tips: "관리비, 공과금, 보험료처럼 월세 외에 반복되는 주거비를 따로 넣고, 고정지출과 비상저축 목표도 빠뜨리지 않으면 현실적인 예산선을 잡는 데 도움이 됩니다.",
+    metaTitle: "월세 적정 예산 계산기 | 소득·지출 기준 월세 상한",
+  },
+  en: {
+    title: "Rent Affordability Calculator",
+    description:
+      "Compare a housing-cost target with your actual monthly cash flow to estimate a practical maximum rent budget.",
+    category: "Housing & Real Estate",
+    input: "Rent budget assumptions",
+    monthlyIncome: "Monthly take-home income",
+    fixedObligations: "Fixed monthly obligations",
+    desiredLeftover: "Desired monthly leftover",
+    nonRentHousingCosts: "Non-rent housing costs",
+    targetHousingPercent: "Target total housing-cost share",
+    calculate: "Calculate rent budget",
+    reset: "Reset",
+    result: "Rent affordability result",
+    recommendedRent: "Recommended maximum monthly rent",
+    annualRent: "Annual rent",
+    ratioCap: "Housing-ratio rent cap",
+    cashFlowCap: "Cash-flow rent cap",
+    remainingAfterPlan: "Amount left after rent and fixed obligations",
+    housingShare: "Total housing-cost share",
+    limitingFactor: "Binding constraint",
+    ratioFactor: "Housing-cost ratio",
+    cashFlowFactor: "Cash flow",
+    bothFactor: "Both are equal",
+    error:
+      "Enter take-home income above zero, non-negative amounts for other money fields, and a housing share above 0% and at most 100%.",
+    note: "The housing-cost percentage is a planning target you control. A figure such as 30% is not a universal legal rule or landlord approval standard, and an appropriate budget varies by location, household, debt, and living costs.",
+    method:
+      "The ratio cap starts with take-home income × your target housing-cost share, then subtracts recurring non-rent housing costs. The cash-flow cap subtracts fixed obligations, your desired leftover, and non-rent housing costs from take-home income. The calculator recommends the lower of the two rent caps.",
+    tips: "Include recurring utilities, building fees, insurance, debt payments, and the amount you want left for savings and flexible spending to make the budget more realistic.",
+    metaTitle: "Rent Affordability Calculator | Income & Cash-Flow Rent Budget",
+  },
+} satisfies Record<RentAffordabilityLocale, Record<string, string>>;

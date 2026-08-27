@@ -99,6 +99,22 @@ export const jeonseLoanLimitCalculator = {
   href: "/ko/finance/jeonse-loan-limit",
 } as const satisfies PublishedCalculator;
 
+export const rentAffordabilityCalculator = {
+  id: "rent-affordability",
+  name: "월세 적정 예산 계산기",
+  description:
+    "월 순소득, 고정지출, 남기고 싶은 금액과 목표 주거비 비율로 감당 가능한 월세 상한을 계산합니다.",
+  keywords: [
+    "월세 적정",
+    "월세 예산",
+    "월세 한도",
+    "주거비 비율",
+    "rent affordability",
+  ],
+  category: "금융",
+  href: "/ko/finance/rent-affordability",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...base.allPublishedCalculators,
   totalCompensationComparisonCalculator,
@@ -107,6 +123,7 @@ export const allPublishedCalculators = [
   parentalLeaveBenefitCalculator,
   maternityLeaveBenefitCalculator,
   jeonseLoanLimitCalculator,
+  rentAffordabilityCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -135,7 +152,15 @@ export const calculatorDirectoryCategories =
               ...category,
               calculatorIds: [...category.calculatorIds, "jeonse-loan-limit"],
             }
-          : category,
+          : category.id === "housing"
+            ? {
+                ...category,
+                calculatorIds: [
+                  ...category.calculatorIds,
+                  "rent-affordability",
+                ],
+              }
+            : category,
   ) satisfies readonly base.CalculatorDirectoryCategory[];
 
 export const directorySearchCalculators = [
@@ -204,6 +229,17 @@ export const directorySearchCalculators = [
       "전세대출 가능금액",
       "전세자금 보증",
       "korea jeonse guarantee",
+    ],
+  },
+  {
+    ...rentAffordabilityCalculator,
+    primaryCategory: "부동산·주거",
+    keywords: [
+      ...rentAffordabilityCalculator.keywords,
+      "월세 적정선",
+      "월세 얼마",
+      "월세 소득 비율",
+      "rent budget",
     ],
   },
 ] satisfies readonly base.DirectorySearchCalculator[];
