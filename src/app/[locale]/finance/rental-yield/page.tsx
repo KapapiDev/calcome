@@ -10,7 +10,9 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
-  return locale === "ko" || locale === "en" ? createRentalYieldMetadata(locale) : {};
+  return locale === "ko" || locale === "en"
+    ? createRentalYieldMetadata(locale)
+    : {};
 }
 
 export default async function Page({ params }: Props) {

@@ -20,20 +20,33 @@ describe("calculateRentalYield", () => {
   });
 
   it("supports other income and zero vacancy", () => {
-    const result = calculateRentalYield({ ...baseInput, annualOtherIncome: 1_200_000, vacancyRatePercent: 0 });
+    const result = calculateRentalYield({
+      ...baseInput,
+      annualOtherIncome: 1_200_000,
+      vacancyRatePercent: 0,
+    });
     expect(result.grossAnnualIncome).toBe(25_200_000);
     expect(result.effectiveAnnualIncome).toBe(25_200_000);
   });
 
   it("allows negative NOI when operating costs exceed effective income", () => {
-    const result = calculateRentalYield({ ...baseInput, annualOperatingCosts: 30_000_000 });
+    const result = calculateRentalYield({
+      ...baseInput,
+      annualOperatingCosts: 30_000_000,
+    });
     expect(result.netOperatingIncome).toBeLessThan(0);
     expect(result.netYieldPercent).toBeLessThan(0);
   });
 
   it("rejects invalid inputs", () => {
-    expect(() => calculateRentalYield({ ...baseInput, purchasePrice: 0 })).toThrow(RangeError);
-    expect(() => calculateRentalYield({ ...baseInput, monthlyRent: -1 })).toThrow(RangeError);
-    expect(() => calculateRentalYield({ ...baseInput, vacancyRatePercent: 101 })).toThrow(RangeError);
+    expect(() =>
+      calculateRentalYield({ ...baseInput, purchasePrice: 0 }),
+    ).toThrow(RangeError);
+    expect(() =>
+      calculateRentalYield({ ...baseInput, monthlyRent: -1 }),
+    ).toThrow(RangeError);
+    expect(() =>
+      calculateRentalYield({ ...baseInput, vacancyRatePercent: 101 }),
+    ).toThrow(RangeError);
   });
 });
