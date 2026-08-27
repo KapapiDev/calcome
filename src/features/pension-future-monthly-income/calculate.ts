@@ -39,7 +39,9 @@ export function calculatePensionFutureMonthlyIncome(
     throw new RangeError("monthlyContribution must be zero or greater");
   }
   if (currentBalance === 0 && monthlyContribution === 0) {
-    throw new RangeError("currentBalance or monthlyContribution must be positive");
+    throw new RangeError(
+      "currentBalance or monthlyContribution must be positive",
+    );
   }
   if (yearsUntilRetirement < 0 || yearsUntilRetirement > 80) {
     throw new RangeError("yearsUntilRetirement must be between 0 and 80");
