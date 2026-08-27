@@ -112,7 +112,10 @@ export function DiscountSalePriceCalculator({
           ) : null}
           <CurrencySelector locale={locale} />
           <div className="mt-4">
-            <label htmlFor="originalPrice" className="block text-sm font-medium">
+            <label
+              htmlFor="originalPrice"
+              className="block text-sm font-medium"
+            >
               {copy.originalPrice}
             </label>
             <div className="relative">
