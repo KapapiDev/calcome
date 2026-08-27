@@ -211,6 +211,22 @@ export const percentageCalculator = {
   href: "/ko/finance/percentage",
 } as const satisfies PublishedCalculator;
 
+export const discountSalePriceCalculator = {
+  id: "discount-sale-price",
+  name: "할인율·할인가 계산기",
+  description:
+    "정가와 할인율, 수량을 입력해 개당 할인가, 절약액, 정가 합계와 최종 결제금액을 계산합니다.",
+  keywords: [
+    "할인 계산기",
+    "할인율 계산",
+    "할인가 계산",
+    "세일 가격",
+    "discount calculator",
+  ],
+  category: "금융",
+  href: "/ko/finance/discount-sale-price",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...base.allPublishedCalculators,
   totalCompensationComparisonCalculator,
@@ -226,6 +242,7 @@ export const allPublishedCalculators = [
   rentalYieldCalculator,
   apartmentManagementFeeBudgetCalculator,
   percentageCalculator,
+  discountSalePriceCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -248,6 +265,7 @@ export const calculatorDirectoryCategories =
               ...category.calculatorIds,
               "employer-total-labor-cost",
               "percentage",
+              "discount-sale-price",
             ],
           }
         : category.id === "loan"
@@ -415,6 +433,18 @@ export const directorySearchCalculators = [
       "퍼센트 증가",
       "퍼센트 감소",
       "percent change",
+    ],
+  },
+  {
+    ...discountSalePriceCalculator,
+    primaryCategory: "사업·생활",
+    keywords: [
+      ...discountSalePriceCalculator.keywords,
+      "정가 할인",
+      "세일가 계산",
+      "몇 퍼센트 할인",
+      "sale price calculator",
+      "discount rate",
     ],
   },
 ] satisfies readonly base.DirectorySearchCalculator[];
