@@ -7,7 +7,7 @@ This file is the compact mutable execution ledger for autonomous development.
 ## Reconciliation baseline
 
 - Reconciled date: 2026-08-28
-- Reconciled base `main`: `ff642c59`
+- Reconciled base `main`: `2f667d07`
 - Current public-calculator count derived from the 51-calculator original baseline plus 35 completed expansion tasks: **86**
 - Target: **100**
 - Completed expansion tasks: **35 / 49**
@@ -59,7 +59,8 @@ This file is the compact mutable execution ledger for autonomous development.
 - P-076 — DONE — HIGH — Previously merged on main.
 - P-077 — DONE — HIGH — Emergency Fund Calculator added with target fund, savings gap, expense-coverage, time-to-goal planning, shared-currency semantics, bilingual routes, directory/search integration, and regression tests.
 - P-078 — DONE — HIGH — FIRE Retirement Target Calculator added with user-selected withdrawal-rate target, portfolio progress, time-to-goal projection, shared-currency semantics, bilingual routes, directory/search integration, and regression tests.
-- REG-EXP-004 — OPEN — HIGH — Expansion regression gate after the P-074, P-075, P-077, and P-078 post-REG-EXP-003 calculator merges; verify repository integration, locale, directory, indexability, Preview/Production propagation, and Search Console evidence when available before continuing expansion.
+- REG-EXP-004 — DONE — HIGH — Expansion regression gate completed 2026-08-28 after P-074, P-075, P-077, and P-078; exact-head CI and latest Preview are healthy, Production has advanced to 82 calculators but remains four behind repository main, and no verified product blocker was found. See `docs/REG_EXP_004_2026-08-28.md`.
+- P-079 — OPEN — HIGH — Retirement Withdrawal Calculator is the next expansion task after REG-EXP-004.
 - P-089 — DONE — HIGH — Previously merged on main.
 - SEC-001 — DONE — CRITICAL — PR #284 upgrades Next.js 16.2.10 to patched 16.3.3, applies compatible non-forced transitive fixes, and adds a permanent production high-severity audit gate.
 
@@ -73,12 +74,12 @@ Current operating interpretation:
 - CalCome team: `team_cuJFcIPj1zvkSmGeDk3hckZd` on Hobby.
 - GitHub Vercel-bot evidence identifies project `prj_nNXkUJGK9l7vG83KDZE2XOVHHd80` and has continued to report Preview deployments.
 - Direct project/deployment lookup may return empty results, `403`, or `404` from the connected Vercel resource path. Treat that as resource-level visibility/permission limitation, not as proof that the connector, project, or deployment does not exist.
-- Fresh public observation during REG-EXP-003 found Production serving 78 calculators while repository `main` contains 82; this is improved propagation from the prior 72/78 gate but remains release-drift evidence until Production catches up or a concrete deployment defect is identified.
+- Fresh public observation during REG-EXP-004 found Production serving 82 calculators while repository `main` contains 86; Production has advanced by four calculators since REG-EXP-003 but remains four behind current repository state.
 - This limitation does not block repository development when current-head CI and application validation pass and no Vercel application-code failure is evidenced.
 
 ## Expansion continuation
 
-P-078 completes the next four post-REG-EXP-003 calculator additions. REG-EXP-004 is the single next OPEN task before P-079. Continue the expansion program in `TASK_QUEUE.md` order after the regression gate, skipping tasks already marked DONE here.
+REG-EXP-004 completed the required regression gate after P-074, P-075, P-077, and P-078. P-079 is the single next OPEN task. Continue the expansion program in `TASK_QUEUE.md` order after P-079, skipping tasks already marked DONE here.
 
 Each calculator PR must update this file in the same PR:
 
