@@ -83,6 +83,22 @@ export const maternityLeaveBenefitCalculator = {
   href: "/ko/employment/maternity-leave-benefit",
 } as const satisfies PublishedCalculator;
 
+export const jeonseLoanLimitCalculator = {
+  id: "jeonse-loan-limit",
+  name: "전세대출 한도 계산기",
+  description:
+    "HF 일반전세자금보증의 보증과목·소요자금·상환능력 기준으로 예상 전세자금 보증한도를 계산합니다.",
+  keywords: [
+    "전세대출 한도",
+    "전세자금대출 한도",
+    "전세 보증한도",
+    "HF 전세자금보증",
+    "jeonse loan limit",
+  ],
+  category: "금융",
+  href: "/ko/finance/jeonse-loan-limit",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...base.allPublishedCalculators,
   totalCompensationComparisonCalculator,
@@ -90,6 +106,7 @@ export const allPublishedCalculators = [
   employerTotalLaborCostCalculator,
   parentalLeaveBenefitCalculator,
   maternityLeaveBenefitCalculator,
+  jeonseLoanLimitCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -113,7 +130,12 @@ export const calculatorDirectoryCategories =
               "employer-total-labor-cost",
             ],
           }
-        : category,
+        : category.id === "loan"
+          ? {
+              ...category,
+              calculatorIds: [...category.calculatorIds, "jeonse-loan-limit"],
+            }
+          : category,
   ) satisfies readonly base.CalculatorDirectoryCategory[];
 
 export const directorySearchCalculators = [
@@ -171,6 +193,17 @@ export const directorySearchCalculators = [
       "출산휴가 120일",
       "출산전후휴가 상한액",
       "우선지원 대상기업 출산휴가",
+    ],
+  },
+  {
+    ...jeonseLoanLimitCalculator,
+    primaryCategory: "대출·신용",
+    keywords: [
+      ...jeonseLoanLimitCalculator.keywords,
+      "전세 한도",
+      "전세대출 가능금액",
+      "전세자금 보증",
+      "korea jeonse guarantee",
     ],
   },
 ] satisfies readonly base.DirectorySearchCalculator[];
