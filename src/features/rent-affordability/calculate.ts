@@ -26,7 +26,10 @@ function requireNonNegative(name: string, value: number) {
 export function calculateRentAffordability(
   input: RentAffordabilityInput,
 ): RentAffordabilityResult {
-  if (!Number.isFinite(input.monthlyTakeHomeIncome) || input.monthlyTakeHomeIncome <= 0) {
+  if (
+    !Number.isFinite(input.monthlyTakeHomeIncome) ||
+    input.monthlyTakeHomeIncome <= 0
+  ) {
     throw new RangeError("monthlyTakeHomeIncome must be greater than zero");
   }
   requireNonNegative("fixedMonthlyObligations", input.fixedMonthlyObligations);
@@ -37,7 +40,9 @@ export function calculateRentAffordability(
     input.targetHousingPercent <= 0 ||
     input.targetHousingPercent > 100
   ) {
-    throw new RangeError("targetHousingPercent must be greater than zero and at most 100");
+    throw new RangeError(
+      "targetHousingPercent must be greater than zero and at most 100",
+    );
   }
 
   const ratioBasedRentCap = Math.max(
@@ -52,10 +57,7 @@ export function calculateRentAffordability(
       input.desiredMonthlyLeftover -
       input.nonRentHousingCosts,
   );
-  const recommendedMonthlyRent = Math.min(
-    ratioBasedRentCap,
-    cashFlowRentCap,
-  );
+  const recommendedMonthlyRent = Math.min(ratioBasedRentCap, cashFlowRentCap);
   const totalMonthlyHousingCost =
     recommendedMonthlyRent + input.nonRentHousingCosts;
   const remainingAfterPlan =
