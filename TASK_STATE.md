@@ -7,11 +7,11 @@ This file is the compact mutable execution ledger for autonomous development.
 ## Reconciliation baseline
 
 - Reconciled date: 2026-08-27
-- Reconciled base `main`: `267606d1`
-- Current public-calculator count derived from the 51-calculator original baseline plus 33 completed expansion tasks: **84**
+- Reconciled base `main`: `c8fa8f06`
+- Current public-calculator count derived from the 51-calculator original baseline plus 34 completed expansion tasks: **85**
 - Target: **100**
-- Completed expansion tasks: **33 / 49**
-- Remaining expansion tasks: **16**
+- Completed expansion tasks: **34 / 49**
+- Remaining expansion tasks: **15**
 - Exactly one task is OPEN below.
 
 ## Current execution state
@@ -57,7 +57,8 @@ This file is the compact mutable execution ledger for autonomous development.
 - P-074 — DONE — HIGH — D-Day Calculator added with D-/D+ target-date countdown semantics, bilingual routes, directory/search integration, and calendar-day regression coverage.
 - P-075 — DONE — HIGH — Date Difference Calculator added with total-day, week, calendar year/month/day, bilingual route, directory/search, and leap-date regression coverage.
 - P-076 — DONE — HIGH — Previously merged on main.
-- P-077 — OPEN — HIGH — Emergency Fund Calculator.
+- P-077 — DONE — HIGH — Emergency Fund Calculator added with target fund, savings gap, expense-coverage, time-to-goal planning, shared-currency semantics, bilingual routes, directory/search integration, and regression tests.
+- P-078 — OPEN — HIGH — FIRE Retirement Target Calculator.
 - P-089 — DONE — HIGH — Previously merged on main.
 - SEC-001 — DONE — CRITICAL — PR #284 upgrades Next.js 16.2.10 to patched 16.3.3, applies compatible non-forced transitive fixes, and adds a permanent production high-severity audit gate.
 
@@ -76,7 +77,7 @@ Current operating interpretation:
 
 ## Expansion continuation
 
-REG-EXP-003 is complete. P-077 is the single next OPEN task after P-075 merges, with P-076 already DONE. Continue the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
+REG-EXP-003 is complete. P-078 is the single next OPEN task after P-077 merges. Continue the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
 
 Each calculator PR must update this file in the same PR:
 

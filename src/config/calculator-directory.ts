@@ -67,27 +67,51 @@ export const dateDifferenceCalculator = {
   href: "/ko/finance/date-difference",
 } as const satisfies PublishedCalculator;
 
+export const emergencyFundCalculator = {
+  id: "emergency-fund",
+  name: "비상금 계산기",
+  description:
+    "월 필수지출과 목표 보장 개월 수로 필요한 비상금, 현재 부족액, 생활비 보장 기간과 목표 달성 예상 기간을 계산합니다.",
+  keywords: [
+    "비상금 계산기",
+    "비상자금",
+    "생활비 몇개월",
+    "비상금 얼마",
+    "emergency fund calculator",
+  ],
+  category: "금융",
+  href: "/ko/finance/emergency-fund",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...previous.allPublishedCalculators,
   ageCalculator,
   dDayCalculator,
   dateDifferenceCalculator,
+  emergencyFundCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
-  previous.calculatorDirectoryCategories.map((category) =>
-    category.id === "business-life"
-      ? {
-          ...category,
-          calculatorIds: [
-            ...category.calculatorIds,
-            "age",
-            "d-day",
-            "date-difference",
-          ],
-        }
-      : category,
-  ) satisfies readonly previous.CalculatorDirectoryCategory[];
+  previous.calculatorDirectoryCategories.map((category) => {
+    if (category.id === "business-life") {
+      return {
+        ...category,
+        calculatorIds: [
+          ...category.calculatorIds,
+          "age",
+          "d-day",
+          "date-difference",
+        ],
+      };
+    }
+    if (category.id === "savings-pension") {
+      return {
+        ...category,
+        calculatorIds: [...category.calculatorIds, "emergency-fund"],
+      };
+    }
+    return category;
+  }) satisfies readonly previous.CalculatorDirectoryCategory[];
 
 export const directorySearchCalculators = [
   ...previous.directorySearchCalculators,
@@ -126,6 +150,19 @@ export const directorySearchCalculators = [
       "기간 일수",
       "days between dates",
       "calendar duration",
+    ],
+  },
+  {
+    ...emergencyFundCalculator,
+    primaryCategory: "저축·연금",
+    keywords: [
+      ...emergencyFundCalculator.keywords,
+      "생활비 3개월",
+      "생활비 6개월",
+      "비상자금 목표",
+      "rainy day fund",
+      "emergency savings",
+      "months of expenses",
     ],
   },
 ] satisfies readonly previous.DirectorySearchCalculator[];
