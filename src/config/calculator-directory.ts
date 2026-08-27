@@ -99,6 +99,22 @@ export const fireRetirementTargetCalculator = {
   href: "/ko/finance/fire-retirement-target",
 } as const satisfies PublishedCalculator;
 
+export const retirementWithdrawalCalculator = {
+  id: "retirement-withdrawal",
+  name: "은퇴 인출 계산기",
+  description:
+    "은퇴 시작 자산, 월 인출액, 예상 수익률과 은퇴 기간으로 종료 잔액, 총 인출액, 초기 인출률과 자산 고갈 시점을 계산합니다.",
+  keywords: [
+    "은퇴 인출 계산기",
+    "은퇴자산 인출",
+    "연금 인출 계획",
+    "은퇴자금 지속기간",
+    "retirement withdrawal calculator",
+  ],
+  category: "금융",
+  href: "/ko/finance/retirement-withdrawal",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...previous.allPublishedCalculators,
   ageCalculator,
@@ -106,6 +122,7 @@ export const allPublishedCalculators = [
   dateDifferenceCalculator,
   emergencyFundCalculator,
   fireRetirementTargetCalculator,
+  retirementWithdrawalCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -128,6 +145,7 @@ export const calculatorDirectoryCategories =
           ...category.calculatorIds,
           "emergency-fund",
           "fire-retirement-target",
+          "retirement-withdrawal",
         ],
       };
     }
@@ -196,6 +214,19 @@ export const directorySearchCalculators = [
       "4% rule",
       "25x expenses",
       "safe withdrawal rate",
+    ],
+  },
+  {
+    ...retirementWithdrawalCalculator,
+    primaryCategory: "저축·연금",
+    keywords: [
+      ...retirementWithdrawalCalculator.keywords,
+      "은퇴 포트폴리오 인출",
+      "은퇴 자금 고갈",
+      "은퇴 생활비",
+      "portfolio drawdown",
+      "retirement drawdown calculator",
+      "withdrawal rate calculator",
     ],
   },
 ] satisfies readonly previous.DirectorySearchCalculator[];
