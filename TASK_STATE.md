@@ -7,7 +7,7 @@ This file is the compact mutable execution ledger for autonomous development.
 ## Reconciliation baseline
 
 - Reconciled date: 2026-08-27
-- Reconciled base `main`: `09841d7b`
+- Reconciled base `main`: `8faac829`
 - Current public-calculator count derived from the 51-calculator original baseline plus 27 completed expansion tasks: **78**
 - Target: **100**
 - Completed expansion tasks: **27 / 49**
@@ -48,7 +48,8 @@ This file is the compact mutable execution ledger for autonomous development.
 - P-067 — DONE — HIGH — Home Purchase Total Cost Calculator added with user-entered transaction costs, shared-currency semantics, bilingual routes, directory/search integration, and regression tests.
 - P-068 — DONE — HIGH — Home Sale Net Proceeds Calculator added with mortgage payoff and seller-cost settlement, shared-currency semantics, bilingual routes, directory/search integration, and regression tests.
 - P-069 — DONE — HIGH — Rental Yield Calculator added with gross/net yield, vacancy, NOI, shared-currency semantics, bilingual routes, directory/search integration, and regression tests.
-- REG-EXP-002 — OPEN — HIGH — Run the overdue four-calculator expansion regression gate before P-070; cover locale, directory, production/indexability and current Search Console evidence when available.
+- REG-EXP-002 — DONE — HIGH — Expansion regression gate completed 2026-08-27; repository CI and latest Preview are healthy, while fresh public observation records Production inventory lag behind current main. See `docs/REG_EXP_002_2026-08-27.md`.
+- P-070 — OPEN — MEDIUM — Apartment Management Fee Budget Calculator is the next expansion task after REG-EXP-002.
 - P-076 — DONE — HIGH — Previously merged on main.
 - P-089 — DONE — HIGH — Previously merged on main.
 - SEC-001 — DONE — CRITICAL — PR #284 upgrades Next.js 16.2.10 to patched 16.3.3, applies compatible non-forced transitive fixes, and adds a permanent production high-severity audit gate.
@@ -63,11 +64,12 @@ Current operating interpretation:
 - CalCome team: `team_cuJFcIPj1zvkSmGeDk3hckZd` on Hobby.
 - GitHub Vercel-bot evidence identifies project `prj_nNXkUJGK9l7vG83KDZE2XOVHHd80` and has continued to report Preview deployments.
 - Direct project/deployment lookup may return empty results, `403`, or `404` from the connected Vercel resource path. Treat that as resource-level visibility/permission limitation, not as proof that the connector, project, or deployment does not exist.
+- Fresh public observation during REG-EXP-002 found Production serving an older calculator inventory than current `main`; retain this as release-drift evidence until Production catches up or a concrete deployment defect is identified.
 - This limitation does not block repository development when current-head CI and application validation pass and no Vercel application-code failure is evidenced.
 
 ## Expansion continuation
 
-P-069 completes the current housing calculator increment. REG-EXP-002 is the single next OPEN task so the repository-defined four-calculator regression cadence is restored before P-070. After that gate, resume the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
+REG-EXP-002 completes the current four-calculator regression gate after P-066 through P-069. P-070 is the single next OPEN task. Continue the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
 
 Each calculator PR must update this file in the same PR:
 
