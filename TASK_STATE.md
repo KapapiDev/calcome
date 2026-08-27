@@ -7,11 +7,11 @@ This file is the compact mutable execution ledger for autonomous development.
 ## Reconciliation baseline
 
 - Reconciled date: 2026-08-27
-- Reconciled base `main`: `4c22db4c`
-- Current public-calculator count derived from the 51-calculator original baseline plus 31 completed expansion tasks: **82**
+- Reconciled base `main`: `b2246842`
+- Current public-calculator count derived from the 51-calculator original baseline plus 32 completed expansion tasks: **83**
 - Target: **100**
-- Completed expansion tasks: **31 / 49**
-- Remaining expansion tasks: **18**
+- Completed expansion tasks: **32 / 49**
+- Remaining expansion tasks: **17**
 - Exactly one task is OPEN below.
 
 ## Current execution state
@@ -54,7 +54,8 @@ This file is the compact mutable execution ledger for autonomous development.
 - P-072 — DONE — HIGH — Discount Rate and Sale Price Calculator added with unit sale price, per-item savings, quantity totals, shared-currency semantics, bilingual routes, directory/search integration, and regression tests.
 - P-073 — DONE — HIGH — Age Calculator added with completed-age, elapsed-day/week, next-birthday calculation, bilingual routes, directory/search integration, and leap-day regression coverage.
 - REG-EXP-003 — DONE — HIGH — Expansion regression gate completed 2026-08-27 after P-070 through P-073; exact-head CI and latest Preview are healthy, Production has advanced to 78 calculators but remains four behind repository main, and no verified product blocker was found. See `docs/REG_EXP_003_2026-08-27.md`.
-- P-074 — OPEN — HIGH — D-Day Calculator.
+- P-074 — DONE — HIGH — D-Day Calculator added with D-/D+ target-date countdown semantics, bilingual routes, directory/search integration, and calendar-day regression coverage.
+- P-075 — OPEN — HIGH — Date Difference Calculator.
 - P-076 — DONE — HIGH — Previously merged on main.
 - P-089 — DONE — HIGH — Previously merged on main.
 - SEC-001 — DONE — CRITICAL — PR #284 upgrades Next.js 16.2.10 to patched 16.3.3, applies compatible non-forced transitive fixes, and adds a permanent production high-severity audit gate.
@@ -74,7 +75,7 @@ Current operating interpretation:
 
 ## Expansion continuation
 
-REG-EXP-003 is complete. P-074 is the single next OPEN task. Continue the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
+REG-EXP-003 is complete. P-075 is the single next OPEN task after P-074 merges. Continue the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
 
 Each calculator PR must update this file in the same PR:
 

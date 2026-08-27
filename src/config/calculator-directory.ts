@@ -35,9 +35,26 @@ export const ageCalculator = {
   href: "/ko/finance/age",
 } as const satisfies PublishedCalculator;
 
+export const dDayCalculator = {
+  id: "d-day",
+  name: "디데이 계산기",
+  description:
+    "기준일과 목표일로 D-·D+ 표시, 남은·지난 일수, 주 단위 기간과 목표일 요일을 계산합니다.",
+  keywords: [
+    "디데이 계산기",
+    "D-Day",
+    "D-day 계산",
+    "날짜 카운트다운",
+    "d day calculator",
+  ],
+  category: "금융",
+  href: "/ko/finance/d-day",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...previous.allPublishedCalculators,
   ageCalculator,
+  dDayCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -45,7 +62,7 @@ export const calculatorDirectoryCategories =
     category.id === "business-life"
       ? {
           ...category,
-          calculatorIds: [...category.calculatorIds, "age"],
+          calculatorIds: [...category.calculatorIds, "age", "d-day"],
         }
       : category,
   ) satisfies readonly previous.CalculatorDirectoryCategory[];
@@ -62,6 +79,19 @@ export const directorySearchCalculators = [
       "나이 일수",
       "birthday calculator",
       "age in days",
+    ],
+  },
+  {
+    ...dDayCalculator,
+    primaryCategory: "사업·생활",
+    keywords: [
+      ...dDayCalculator.keywords,
+      "디데이",
+      "D-100",
+      "D+100",
+      "목표일까지 며칠",
+      "days until date",
+      "countdown calculator",
     ],
   },
 ] satisfies readonly previous.DirectorySearchCalculator[];
