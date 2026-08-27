@@ -7,11 +7,11 @@ This file is the compact mutable execution ledger for autonomous development.
 ## Reconciliation baseline
 
 - Reconciled date: 2026-08-27
-- Reconciled base `main`: `0c37394e`
-- Current public-calculator count derived from the 51-calculator original baseline plus 21 completed expansion tasks: **72**
+- Reconciled base `main`: `118b09aa`
+- Current public-calculator count derived from the 51-calculator original baseline plus 22 completed expansion tasks: **73**
 - Target: **100**
-- Completed expansion tasks: **21 / 49**
-- Remaining expansion tasks: **28**
+- Completed expansion tasks: **22 / 49**
+- Remaining expansion tasks: **27**
 - Exactly one task is OPEN below.
 
 ## Current execution state
@@ -39,10 +39,11 @@ This file is the compact mutable execution ledger for autonomous development.
 - P-059 — DONE — HIGH — Employer Total Labor Cost Calculator added with 2026 official-source rates, bilingual routes, directory/search integration, and regression tests.
 - P-060 — DONE — HIGH — Parental Leave Benefit Calculator added with 2026 statutory rates, bilingual routes, official sources, and tests.
 - P-061 — DONE — HIGH — Maternity Leave Benefit Calculator added with current official 90/120-day rules, employer-type split, current cap, bilingual routes, sources, and tests.
-- REG-EXP-001 — DONE — HIGH — Expansion regression gate completed 2026-08-27; exact-head CI #1006 was green, P-061 Vercel Preview was Ready, connector resource limitations were classified, and no verified product blocker was found. See `docs/REG_EXP_001_2026-08-27.md`.
+- REG-EXP-001 — DONE — HIGH — Expansion regression gate completed 2026-08-27; current-head CI passed, Vercel Preview was Ready, connector resource limitations were classified, and no verified product blocker was found. See `docs/REG_EXP_001_2026-08-27.md`.
 - P-062 — DONE — HIGH — Previously merged on main.
 - P-063 — DONE — HIGH — Previously merged on main.
-- P-064 — OPEN — HIGH — Jeonse Loan Limit Calculator.
+- P-064 — DONE — HIGH — Jeonse Loan Limit Calculator added from the current HF general jeonse guarantee limit rules, with bilingual routes, official-source disclosure, directory/search integration, and regression tests.
+- P-065 — OPEN — HIGH — Rent Affordability Calculator.
 - P-076 — DONE — HIGH — Previously merged on main.
 - P-089 — DONE — HIGH — Previously merged on main.
 - SEC-001 — DONE — CRITICAL — PR #284 upgrades Next.js 16.2.10 to patched 16.3.3, applies compatible non-forced transitive fixes, and adds a permanent production high-severity audit gate.
@@ -72,7 +73,7 @@ Current operating interpretation:
 
 ## Expansion continuation
 
-REG-EXP-001 is complete. P-064 is the single current OPEN task. Resume the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
+REG-EXP-001 is complete. P-065 is the single next OPEN task after P-064 merges. Resume the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
 
 Each calculator PR must update this file in the same PR:
 
