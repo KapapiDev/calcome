@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/config/site";
 import { jeonseVsRentContent, type JeonseVsRentLocale } from "./content";
 
-export function createJeonseVsRentMetadata(locale: JeonseVsRentLocale): Metadata {
+export function createJeonseVsRentMetadata(
+  locale: JeonseVsRentLocale,
+): Metadata {
   const copy = jeonseVsRentContent[locale];
   const path = `/${locale}/finance/jeonse-vs-rent`;
   const alternateLocale = locale === "ko" ? "en" : "ko";

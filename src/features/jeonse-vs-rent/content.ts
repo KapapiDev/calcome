@@ -71,6 +71,7 @@ export const jeonseVsRentContent = {
     method:
       "Jeonse cost combines jeonse-loan interest with compounded opportunity cost on the part of the jeonse deposit funded by your own cash. Monthly-rent cost combines the opportunity cost of the rent deposit with all rent payments over the selected period.",
     tips: "The opportunity return is an assumption for what your tied-up cash might otherwise earn, not a guaranteed return. Try conservative and higher-return scenarios to see how sensitive the decision is.",
-    metaTitle: "Jeonse vs Monthly Rent Cost Calculator | Deposit & Interest Comparison",
+    metaTitle:
+      "Jeonse vs Monthly Rent Cost Calculator | Deposit & Interest Comparison",
   },
 } satisfies Record<JeonseVsRentLocale, Record<string, string>>;

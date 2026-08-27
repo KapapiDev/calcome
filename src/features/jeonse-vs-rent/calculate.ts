@@ -27,18 +27,30 @@ function requireNonNegative(name: string, value: number) {
   }
 }
 
-function opportunityCost(principal: number, annualPercent: number, months: number) {
+function opportunityCost(
+  principal: number,
+  annualPercent: number,
+  months: number,
+) {
   const annualRate = annualPercent / 100;
   return principal * (Math.pow(1 + annualRate, months / 12) - 1);
 }
 
-export function calculateJeonseVsRent(input: JeonseVsRentInput): JeonseVsRentResult {
+export function calculateJeonseVsRent(
+  input: JeonseVsRentInput,
+): JeonseVsRentResult {
   requireNonNegative("jeonseDeposit", input.jeonseDeposit);
   requireNonNegative("jeonseLoanAmount", input.jeonseLoanAmount);
-  requireNonNegative("jeonseLoanAnnualRatePercent", input.jeonseLoanAnnualRatePercent);
+  requireNonNegative(
+    "jeonseLoanAnnualRatePercent",
+    input.jeonseLoanAnnualRatePercent,
+  );
   requireNonNegative("monthlyRentDeposit", input.monthlyRentDeposit);
   requireNonNegative("monthlyRent", input.monthlyRent);
-  requireNonNegative("opportunityAnnualRatePercent", input.opportunityAnnualRatePercent);
+  requireNonNegative(
+    "opportunityAnnualRatePercent",
+    input.opportunityAnnualRatePercent,
+  );
   if (!Number.isFinite(input.comparisonMonths) || input.comparisonMonths <= 0) {
     throw new RangeError("comparisonMonths must be greater than zero");
   }

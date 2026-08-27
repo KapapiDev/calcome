@@ -27,7 +27,10 @@ describe("calculateJeonseVsRent", () => {
   });
 
   it("can identify monthly rent as cheaper", () => {
-    const result = calculateJeonseVsRent({ ...baseInput, monthlyRent: 600_000 });
+    const result = calculateJeonseVsRent({
+      ...baseInput,
+      monthlyRent: 600_000,
+    });
     expect(result.cheaperOption).toBe("rent");
     expect(result.costDifference).toBeLessThan(0);
   });
