@@ -7,7 +7,7 @@ This file is the compact mutable execution ledger for autonomous development.
 ## Reconciliation baseline
 
 - Reconciled date: 2026-08-28
-- Reconciled base `main`: post-P-082
+- Reconciled base `main`: post-P-082 / REG-EXP-005
 - Current public-calculator count derived from the 51-calculator original baseline plus 39 completed expansion tasks: **90**
 - Target: **100**
 - Completed expansion tasks: **39 / 49**
@@ -32,7 +32,8 @@ This file is the compact mutable execution ledger for autonomous development.
 - P-080 — DONE — Pension Future Monthly Income Calculator merged.
 - P-081 — DONE — MEDIUM — Dividend Reinvestment Calculator merged.
 - P-082 — DONE — MEDIUM — Portfolio Rebalancing Calculator added with bilingual routes, shared-currency semantics, directory/search integration, target-allocation buy/sell guidance, turnover reporting, and regression tests.
-- REG-EXP-005 — OPEN — HIGH — expansion regression gate after P-079 through P-082; verify repository integration, locale, directory, indexability, Preview/Production propagation, and Search Console evidence when available before continuing expansion.
+- REG-EXP-005 — DONE — HIGH — repository/full-suite, locale, directory, indexability, Vercel, and Production propagation evidence reconciled after P-079 through P-082; Production currently trails repository main by four calculators without application-failure evidence.
+- P-083 — OPEN — MEDIUM — Bond Yield to Maturity Calculator; next calculator after REG-EXP-005.
 - P-089 — DONE — previously merged on main.
 
 All later uncompleted catalog tasks remain ordered by `TASK_QUEUE.md` and are effectively BLOCKED until they become the single OPEN task here.
@@ -47,7 +48,7 @@ All later uncompleted catalog tasks remain ordered by `TASK_QUEUE.md` and are ef
 
 ## Expansion continuation
 
-P-082 completes the four-calculator batch after REG-EXP-004. REG-EXP-005 is the single next OPEN task. After that regression gate, continue with P-083 and the remaining expansion program in `TASK_QUEUE.md` order, skipping tasks already DONE here.
+REG-EXP-005 completes the required regression gate after P-079 through P-082. P-083 is the single next OPEN task. Continue the remaining expansion program in `TASK_QUEUE.md` order, skipping tasks already DONE here.
 
 Each calculator PR must update this file in the same PR:
 
