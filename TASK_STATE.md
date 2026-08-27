@@ -7,11 +7,11 @@ This file is the compact mutable execution ledger for autonomous development.
 ## Reconciliation baseline
 
 - Reconciled date: 2026-08-27
-- Reconciled base `main`: `4d11a249`
-- Current public-calculator count derived from the 51-calculator original baseline plus 24 completed expansion tasks: **75**
+- Reconciled base `main`: `c03444f4`
+- Current public-calculator count derived from the 51-calculator original baseline plus 25 completed expansion tasks: **76**
 - Target: **100**
-- Completed expansion tasks: **24 / 49**
-- Remaining expansion tasks: **25**
+- Completed expansion tasks: **25 / 49**
+- Remaining expansion tasks: **24**
 - Exactly one task is OPEN below.
 
 ## Current execution state
@@ -45,7 +45,8 @@ This file is the compact mutable execution ledger for autonomous development.
 - P-064 — DONE — HIGH — Jeonse Loan Limit Calculator added from the current HF general jeonse guarantee limit rules, with bilingual routes, official-source disclosure, directory/search integration, and regression tests.
 - P-065 — DONE — HIGH — Rent Affordability Calculator added with ratio and cash-flow budget constraints, shared-currency semantics, bilingual routes, directory/search integration, and regression tests.
 - P-066 — DONE — HIGH — Jeonse Deposit vs Monthly Rent Cost Calculator added with financing/opportunity-cost comparison, shared-currency semantics, bilingual routes, directory/search integration, and regression tests.
-- P-067 — OPEN — HIGH — Home Purchase Total Cost Calculator.
+- P-067 — DONE — HIGH — Home Purchase Total Cost Calculator added with user-entered transaction costs, shared-currency semantics, bilingual routes, directory/search integration, and regression tests.
+- P-068 — OPEN — HIGH — Home Sale Net Proceeds Calculator.
 - P-076 — DONE — HIGH — Previously merged on main.
 - P-089 — DONE — HIGH — Previously merged on main.
 - SEC-001 — DONE — CRITICAL — PR #284 upgrades Next.js 16.2.10 to patched 16.3.3, applies compatible non-forced transitive fixes, and adds a permanent production high-severity audit gate.
@@ -75,7 +76,7 @@ Current operating interpretation:
 
 ## Expansion continuation
 
-REG-EXP-001 is complete. P-067 is the single next OPEN task after P-066 merges. Resume the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
+REG-EXP-001 is complete. P-068 is the single next OPEN task after P-067 merges. Resume the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
 
 Each calculator PR must update this file in the same PR:
 
