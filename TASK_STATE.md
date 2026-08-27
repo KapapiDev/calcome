@@ -7,11 +7,11 @@ This file is the compact mutable execution ledger for autonomous development.
 ## Reconciliation baseline
 
 - Reconciled date: 2026-08-27
-- Reconciled base `main`: `118b09aa`
-- Current public-calculator count derived from the 51-calculator original baseline plus 22 completed expansion tasks: **73**
+- Reconciled base `main`: `18e4a093`
+- Current public-calculator count derived from the 51-calculator original baseline plus 23 completed expansion tasks: **74**
 - Target: **100**
-- Completed expansion tasks: **22 / 49**
-- Remaining expansion tasks: **27**
+- Completed expansion tasks: **23 / 49**
+- Remaining expansion tasks: **26**
 - Exactly one task is OPEN below.
 
 ## Current execution state
@@ -43,7 +43,8 @@ This file is the compact mutable execution ledger for autonomous development.
 - P-062 — DONE — HIGH — Previously merged on main.
 - P-063 — DONE — HIGH — Previously merged on main.
 - P-064 — DONE — HIGH — Jeonse Loan Limit Calculator added from the current HF general jeonse guarantee limit rules, with bilingual routes, official-source disclosure, directory/search integration, and regression tests.
-- P-065 — OPEN — HIGH — Rent Affordability Calculator.
+- P-065 — DONE — HIGH — Rent Affordability Calculator added with ratio and cash-flow budget constraints, shared-currency semantics, bilingual routes, directory/search integration, and regression tests.
+- P-066 — OPEN — HIGH — Jeonse Deposit vs Monthly Rent Cost Calculator.
 - P-076 — DONE — HIGH — Previously merged on main.
 - P-089 — DONE — HIGH — Previously merged on main.
 - SEC-001 — DONE — CRITICAL — PR #284 upgrades Next.js 16.2.10 to patched 16.3.3, applies compatible non-forced transitive fixes, and adds a permanent production high-severity audit gate.
@@ -73,7 +74,7 @@ Current operating interpretation:
 
 ## Expansion continuation
 
-REG-EXP-001 is complete. P-065 is the single next OPEN task after P-064 merges. Resume the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
+REG-EXP-001 is complete. P-066 is the single next OPEN task after P-065 merges. Resume the expansion program in `TASK_QUEUE.md` order, skipping tasks already marked DONE here.
 
 Each calculator PR must update this file in the same PR:
 
