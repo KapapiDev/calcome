@@ -124,7 +124,10 @@ export function PercentageCalculator({ locale }: { locale: PercentageLocale }) {
           className={`${compactCalculatorSettingsClass} min-w-0`}
         >
           <p className="text-sm font-semibold text-primary">{copy.category}</p>
-          <h2 id="percentage-input-title" className="mt-1 text-xl font-semibold">
+          <h2
+            id="percentage-input-title"
+            className="mt-1 text-xl font-semibold"
+          >
             {copy.input}
           </h2>
           {hasError ? (

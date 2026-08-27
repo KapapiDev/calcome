@@ -37,6 +37,7 @@ export function calculatePercentage(input: PercentageInput): PercentageResult {
   return {
     percentOfValue: (input.percent / 100) * input.baseValue,
     partAsPercent: (input.partValue / input.wholeValue) * 100,
-    percentChange: ((input.newValue - input.oldValue) / Math.abs(input.oldValue)) * 100,
+    percentChange:
+      ((input.newValue - input.oldValue) / Math.abs(input.oldValue)) * 100,
   };
 }

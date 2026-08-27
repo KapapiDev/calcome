@@ -6,7 +6,11 @@ import {
 import { percentageContent, type PercentageLocale } from "../content";
 import { PercentageCalculator } from "./percentage-calculator";
 
-export function LocalizedPercentagePage({ locale }: { locale: PercentageLocale }) {
+export function LocalizedPercentagePage({
+  locale,
+}: {
+  locale: PercentageLocale;
+}) {
   const copy = percentageContent[locale];
   const path = `/${locale}/finance/percentage`;
   const home = locale === "ko" ? "홈" : "Home";
@@ -36,8 +40,12 @@ export function LocalizedPercentagePage({ locale }: { locale: PercentageLocale }
         </nav>
         <header className="mt-5 max-w-3xl">
           <p className="text-sm font-semibold text-primary">{copy.category}</p>
-          <h1 className="mt-2 text-4xl font-semibold tracking-tight">{copy.title}</h1>
-          <p className="mt-3 leading-7 text-muted-foreground">{copy.description}</p>
+          <h1 className="mt-2 text-4xl font-semibold tracking-tight">
+            {copy.title}
+          </h1>
+          <p className="mt-3 leading-7 text-muted-foreground">
+            {copy.description}
+          </p>
         </header>
         <div className="mt-6">
           <PercentageCalculator locale={locale} />
@@ -46,16 +54,23 @@ export function LocalizedPercentagePage({ locale }: { locale: PercentageLocale }
           <h2 className="text-xl font-semibold">
             {locale === "ko" ? "계산 방법" : "How it works"}
           </h2>
-          <p className="mt-3 text-sm leading-7 text-muted-foreground">{copy.method}</p>
+          <p className="mt-3 text-sm leading-7 text-muted-foreground">
+            {copy.method}
+          </p>
           <h2 className="mt-6 text-xl font-semibold">
             {locale === "ko" ? "사용할 때 확인할 점" : "What to check"}
           </h2>
-          <p className="mt-3 text-sm leading-7 text-muted-foreground">{copy.tips}</p>
+          <p className="mt-3 text-sm leading-7 text-muted-foreground">
+            {copy.tips}
+          </p>
           <h2 className="mt-6 text-xl font-semibold">
             {locale === "ko" ? "관련 계산기" : "Related calculators"}
           </h2>
           <div className="mt-3 flex flex-wrap gap-3 text-sm">
-            <Link className="underline underline-offset-4" href={`/${locale}/finance/cagr`}>
+            <Link
+              className="underline underline-offset-4"
+              href={`/${locale}/finance/cagr`}
+            >
               {locale === "ko" ? "CAGR 계산기" : "CAGR Calculator"}
             </Link>
             <Link
