@@ -163,6 +163,22 @@ export const homeSaleNetProceedsCalculator = {
   href: "/ko/finance/home-sale-net-proceeds",
 } as const satisfies PublishedCalculator;
 
+export const rentalYieldCalculator = {
+  id: "rental-yield",
+  name: "임대수익률 계산기",
+  description:
+    "매입가, 월 임대료, 공실률과 연간 운영비를 반영해 총 임대수익률과 순 임대수익률을 계산합니다.",
+  keywords: [
+    "임대수익률",
+    "월세 수익률",
+    "부동산 수익률",
+    "NOI",
+    "rental yield",
+  ],
+  category: "금융",
+  href: "/ko/finance/rental-yield",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...base.allPublishedCalculators,
   totalCompensationComparisonCalculator,
@@ -175,6 +191,7 @@ export const allPublishedCalculators = [
   jeonseVsRentCalculator,
   homePurchaseTotalCostCalculator,
   homeSaleNetProceedsCalculator,
+  rentalYieldCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -212,6 +229,7 @@ export const calculatorDirectoryCategories =
                   "jeonse-vs-rent",
                   "home-purchase-total-cost",
                   "home-sale-net-proceeds",
+                  "rental-yield",
                 ],
               }
             : category,
@@ -327,6 +345,18 @@ export const directorySearchCalculators = [
       "주택담보대출 상환",
       "집 매도 순수익",
       "seller net proceeds",
+    ],
+  },
+  {
+    ...rentalYieldCalculator,
+    primaryCategory: "부동산·주거",
+    keywords: [
+      ...rentalYieldCalculator.keywords,
+      "임대 수익",
+      "순영업소득",
+      "월세 투자수익률",
+      "gross rental yield",
+      "net rental yield",
     ],
   },
 ] satisfies readonly base.DirectorySearchCalculator[];
