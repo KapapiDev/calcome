@@ -72,8 +72,7 @@ export function calculateRetirementWithdrawal(
   const annualWithdrawal = monthlyWithdrawal * 12;
   return {
     annualWithdrawal,
-    initialWithdrawalRatePercent:
-      (annualWithdrawal / startingPortfolio) * 100,
+    initialWithdrawalRatePercent: (annualWithdrawal / startingPortfolio) * 100,
     projectedEndingBalance: balance,
     totalWithdrawn,
     depletedAfterMonths,
