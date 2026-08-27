@@ -34,14 +34,19 @@ export function calculateDividendReinvestment(
     throw new RangeError("initialInvestment must be positive");
   }
   if (initialDividendYieldPercent < 0 || initialDividendYieldPercent > 100) {
-    throw new RangeError("initialDividendYieldPercent must be between 0 and 100");
+    throw new RangeError(
+      "initialDividendYieldPercent must be between 0 and 100",
+    );
   }
   if (annualPriceGrowthPercent <= -100 || annualPriceGrowthPercent > 100) {
     throw new RangeError(
       "annualPriceGrowthPercent must be greater than -100 and at most 100",
     );
   }
-  if (annualDividendGrowthPercent <= -100 || annualDividendGrowthPercent > 100) {
+  if (
+    annualDividendGrowthPercent <= -100 ||
+    annualDividendGrowthPercent > 100
+  ) {
     throw new RangeError(
       "annualDividendGrowthPercent must be greater than -100 and at most 100",
     );
