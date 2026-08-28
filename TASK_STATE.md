@@ -6,6 +6,7 @@ Target Calculator Count: 100
 Remaining to Target: 0
 
 ## Active Queue
+
 - [x] SEO-001 DONE — Internal Linking Structure
   - PR: T.B.D.
 - [x] SEO-002 DONE — Category Hub and Navigation SEO

@@ -9,7 +9,9 @@ const localePrefixPattern = /^\/(?:ko|en)(?=\/|$)/;
 function normalizePathname(pathname: string) {
   const withLeadingSlash = pathname.startsWith("/") ? pathname : `/${pathname}`;
   const withoutTrailingSlash =
-    withLeadingSlash.length > 1 ? withLeadingSlash.replace(/\/+$/, "") : withLeadingSlash;
+    withLeadingSlash.length > 1
+      ? withLeadingSlash.replace(/\/+$/, "")
+      : withLeadingSlash;
 
   return withoutTrailingSlash || "/";
 }

@@ -28,7 +28,9 @@ describe("localized SEO metadata paths", () => {
   it("normalizes locale roots and non-localized fallbacks without duplicate slashes", () => {
     expect(localizedSeoPaths("/en/").canonical).toBe("/en");
     expect(localizedSeoPaths("/ko/").canonical).toBe("/ko");
-    expect(localizedSeoPaths("finance/loan/").canonical).toBe("/ko/finance/loan");
+    expect(localizedSeoPaths("finance/loan/").canonical).toBe(
+      "/ko/finance/loan",
+    );
   });
 
   it("maps Open Graph locale metadata to the active language", () => {
