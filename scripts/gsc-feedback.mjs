@@ -17,7 +17,10 @@ const HEADER_ALIASES = {
 };
 
 function normalizeHeader(value) {
-  return value.trim().replace(/^\uFEFF/, "").toLowerCase();
+  return value
+    .trim()
+    .replace(/^\uFEFF/, "")
+    .toLowerCase();
 }
 
 function parseCsv(text) {
@@ -62,9 +65,7 @@ function parseCsv(text) {
     rows.push(row);
   }
 
-  return rows.filter((values) =>
-    values.some((value) => value.trim() !== ""),
-  );
+  return rows.filter((values) => values.some((value) => value.trim() !== ""));
 }
 
 function headerIndex(headers, key, required = true) {
@@ -123,10 +124,7 @@ function loadExport(filename) {
     }
 
     const clicks = parseNumber(values[indexes.clicks], "clicks");
-    const impressions = parseNumber(
-      values[indexes.impressions],
-      "impressions",
-    );
+    const impressions = parseNumber(values[indexes.impressions], "impressions");
     const exportedCtr =
       indexes.ctr >= 0 ? parseNumber(values[indexes.ctr], "ctr") : null;
     const ctr =
