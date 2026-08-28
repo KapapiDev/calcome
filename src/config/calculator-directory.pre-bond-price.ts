@@ -1,27 +1,27 @@
 import type { PublishedCalculator } from "./calculators";
-import * as previous from "./calculator-directory.pre-bond-price";
+import * as previous from "./calculator-directory.pre-bond-yield-to-maturity";
 
-export * from "./calculator-directory.pre-bond-price";
+export * from "./calculator-directory.pre-bond-yield-to-maturity";
 
-export const bondPriceCalculator = {
-  id: "bond-price",
-  name: "채권 가격 계산기",
+export const bondYieldToMaturityCalculator = {
+  id: "bond-yield-to-maturity",
+  name: "채권 만기수익률(YTM) 계산기",
   description:
-    "액면가, 표면금리, 시장 요구수익률, 만기와 이자 지급주기로 고정금리 채권의 이론 가격과 프리미엄·할인을 계산합니다.",
+    "액면가, 시장가격, 표면금리, 만기와 이자 지급주기로 채권의 만기수익률(YTM)과 현재수익률을 계산합니다.",
   keywords: [
-    "채권 가격 계산기",
-    "채권 가치 계산기",
-    "채권 할인 계산",
-    "채권 프리미엄",
-    "bond price calculator",
+    "채권 만기수익률 계산기",
+    "YTM 계산기",
+    "채권 수익률",
+    "현재수익률",
+    "bond yield to maturity calculator",
   ],
   category: "금융",
-  href: "/ko/finance/bond-price",
+  href: "/ko/finance/bond-yield-to-maturity",
 } as const satisfies PublishedCalculator;
 
 export const allPublishedCalculators = [
   ...previous.allPublishedCalculators,
-  bondPriceCalculator,
+  bondYieldToMaturityCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -29,7 +29,7 @@ export const calculatorDirectoryCategories =
     if (category.id === "investment") {
       return {
         ...category,
-        calculatorIds: [...category.calculatorIds, "bond-price"],
+        calculatorIds: [...category.calculatorIds, "bond-yield-to-maturity"],
       };
     }
     return category;
@@ -38,16 +38,16 @@ export const calculatorDirectoryCategories =
 export const directorySearchCalculators = [
   ...previous.directorySearchCalculators,
   {
-    ...bondPriceCalculator,
+    ...bondYieldToMaturityCalculator,
     primaryCategory: "투자",
     keywords: [
-      ...bondPriceCalculator.keywords,
-      "채권 현재가치",
-      "YTM 채권 가격",
-      "표면금리 채권 가격",
-      "fixed income price calculator",
-      "bond valuation calculator",
-      "coupon bond price",
+      ...bondYieldToMaturityCalculator.keywords,
+      "채권 내부수익률",
+      "쿠폰 채권 수익률",
+      "채권 할인율",
+      "bond ytm",
+      "bond current yield",
+      "fixed income yield calculator",
     ],
   },
 ] satisfies readonly previous.DirectorySearchCalculator[];
