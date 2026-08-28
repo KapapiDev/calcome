@@ -106,7 +106,10 @@ export function BondPriceCalculator({ locale }: { locale: BondPriceLocale }) {
           className={`${compactCalculatorSettingsClass} min-w-0`}
         >
           <p className="text-sm font-semibold text-primary">{copy.category}</p>
-          <h2 id="bond-price-input-title" className="mt-1 text-xl font-semibold">
+          <h2
+            id="bond-price-input-title"
+            className="mt-1 text-xl font-semibold"
+          >
             {copy.input}
           </h2>
           {error ? (
@@ -150,7 +153,9 @@ export function BondPriceCalculator({ locale }: { locale: BondPriceLocale }) {
                   }
                   className={`${fieldClass} pr-10`}
                 />
-                <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-sm text-muted-foreground">%</span>
+                <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-sm text-muted-foreground">
+                  %
+                </span>
               </div>
             </label>
             <label className="text-sm font-medium">
@@ -167,7 +172,9 @@ export function BondPriceCalculator({ locale }: { locale: BondPriceLocale }) {
                   }
                   className={`${fieldClass} pr-10`}
                 />
-                <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-sm text-muted-foreground">%</span>
+                <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-sm text-muted-foreground">
+                  %
+                </span>
               </div>
             </label>
             <label className="text-sm font-medium">
@@ -221,14 +228,21 @@ export function BondPriceCalculator({ locale }: { locale: BondPriceLocale }) {
           </h2>
           <PrimaryResults
             metrics={[
-              { label: copy.price, value: money(result?.bondPrice), featured: true },
+              {
+                label: copy.price,
+                value: money(result?.bondPrice),
+                featured: true,
+              },
               {
                 label: copy.premiumDiscount,
                 value: result
                   ? `${money(result.premiumDiscountAmount)} (${result.premiumDiscountPercent.toFixed(2)}%)`
                   : "—",
               },
-              { label: copy.couponPv, value: money(result?.presentValueCoupons) },
+              {
+                label: copy.couponPv,
+                value: money(result?.presentValueCoupons),
+              },
               {
                 label: copy.redemptionPv,
                 value: money(result?.presentValueRedemption),

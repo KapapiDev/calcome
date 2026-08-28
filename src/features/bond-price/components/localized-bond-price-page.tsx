@@ -6,7 +6,11 @@ import {
 import { bondPriceContent, type BondPriceLocale } from "../content";
 import { BondPriceCalculator } from "./bond-price-calculator";
 
-export function LocalizedBondPricePage({ locale }: { locale: BondPriceLocale }) {
+export function LocalizedBondPricePage({
+  locale,
+}: {
+  locale: BondPriceLocale;
+}) {
   const copy = bondPriceContent[locale];
   const path = `/${locale}/finance/bond-price`;
   const home = locale === "ko" ? "홈" : "Home";
