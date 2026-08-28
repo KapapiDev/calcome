@@ -25,14 +25,21 @@ describe("CalculatorContentGuide", () => {
     expect(
       screen.getByRole("heading", { name: "Calculation basis and checks" }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Worked example" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Key assumptions" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Limits and checks" })).toBeInTheDocument();
-    expect(screen.getByText(/Content reviewed/)).toHaveTextContent("2026-08-28");
-    expect(screen.getByRole("link", { name: "Primary source" })).toHaveAttribute(
-      "href",
-      "https://example.com/source",
+    expect(
+      screen.getByRole("heading", { name: "Worked example" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Key assumptions" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Limits and checks" }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Content reviewed/)).toHaveTextContent(
+      "2026-08-28",
     );
+    expect(
+      screen.getByRole("link", { name: "Primary source" }),
+    ).toHaveAttribute("href", "https://example.com/source");
   });
 
   it("renders Korean trust labels without requiring a source", () => {

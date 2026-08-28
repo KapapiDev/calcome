@@ -50,10 +50,7 @@ export function CalculatorContentGuide({
       className="mt-10 rounded-xl border bg-card p-5 sm:p-6"
       aria-labelledby="calculator-content-guide-title"
     >
-      <h2
-        id="calculator-content-guide-title"
-        className="text-xl font-semibold"
-      >
+      <h2 id="calculator-content-guide-title" className="text-xl font-semibold">
         {copy.heading}
       </h2>
 
