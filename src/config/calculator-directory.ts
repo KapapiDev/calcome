@@ -19,9 +19,26 @@ export const foreignCurrencyAverageCostCalculator = {
   href: "/ko/finance/foreign-currency-average-cost",
 } as const satisfies PublishedCalculator;
 
+export const breakEvenSalesCalculator = {
+  id: "break-even-sales",
+  name: "손익분기 매출 계산기",
+  description:
+    "고정비, 단위 판매가격, 단위 변동비로 공헌이익과 손익분기 판매량·매출액을 계산합니다.",
+  keywords: [
+    "손익분기 매출 계산기",
+    "손익분기점 계산기",
+    "공헌이익 계산기",
+    "break even sales calculator",
+    "break even point calculator",
+  ],
+  category: "금융",
+  href: "/ko/finance/break-even-sales",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...previous.allPublishedCalculators,
   foreignCurrencyAverageCostCalculator,
+  breakEvenSalesCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -33,6 +50,12 @@ export const calculatorDirectoryCategories =
           ...category.calculatorIds,
           "foreign-currency-average-cost",
         ],
+      };
+    }
+    if (category.id === "business-life") {
+      return {
+        ...category,
+        calculatorIds: [...category.calculatorIds, "break-even-sales"],
       };
     }
     return category;
@@ -51,6 +74,18 @@ export const directorySearchCalculators = [
       "average exchange rate calculator",
       "weighted average fx rate",
       "currency cost basis calculator",
+    ],
+  },
+  {
+    ...breakEvenSalesCalculator,
+    primaryCategory: "사업·생활",
+    keywords: [
+      ...breakEvenSalesCalculator.keywords,
+      "손익분기 매출액",
+      "손익분기 판매량",
+      "공헌이익률",
+      "contribution margin calculator",
+      "break even revenue calculator",
     ],
   },
 ] satisfies readonly previous.DirectorySearchCalculator[];
