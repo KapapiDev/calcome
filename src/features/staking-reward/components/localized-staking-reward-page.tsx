@@ -43,7 +43,9 @@ export function LocalizedStakingRewardPage({
           <h1 className="mt-2 text-4xl font-semibold tracking-tight">
             {copy.title}
           </h1>
-          <p className="mt-3 leading-7 text-muted-foreground">{copy.description}</p>
+          <p className="mt-3 leading-7 text-muted-foreground">
+            {copy.description}
+          </p>
         </header>
         <div className="mt-6">
           <StakingRewardCalculator locale={locale} />
@@ -58,7 +60,9 @@ export function LocalizedStakingRewardPage({
           <h2 className="mt-6 text-xl font-semibold">
             {locale === "ko" ? "사용할 때 확인할 점" : "What to check"}
           </h2>
-          <p className="mt-3 text-sm leading-7 text-muted-foreground">{copy.tips}</p>
+          <p className="mt-3 text-sm leading-7 text-muted-foreground">
+            {copy.tips}
+          </p>
           <h2 className="mt-6 text-xl font-semibold">
             {locale === "ko" ? "관련 계산기" : "Related calculators"}
           </h2>
@@ -75,7 +79,9 @@ export function LocalizedStakingRewardPage({
               className="underline underline-offset-4"
               href={`/${locale}/finance/dollar-cost-averaging`}
             >
-              {locale === "ko" ? "정기매수 계산기" : "Dollar-Cost Averaging Calculator"}
+              {locale === "ko"
+                ? "정기매수 계산기"
+                : "Dollar-Cost Averaging Calculator"}
             </Link>
           </div>
         </section>

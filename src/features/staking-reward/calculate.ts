@@ -25,12 +25,19 @@ export function calculateStakingReward(
     throw new RangeError("all inputs must be finite and nonnegative");
   }
   if (input.stakedAmount <= 0 || input.stakingDays <= 0) {
-    throw new RangeError("stakedAmount and stakingDays must be greater than zero");
+    throw new RangeError(
+      "stakedAmount and stakingDays must be greater than zero",
+    );
   }
   if (input.annualRewardRatePercent > 10_000) {
-    throw new RangeError("annualRewardRatePercent is outside the supported range");
+    throw new RangeError(
+      "annualRewardRatePercent is outside the supported range",
+    );
   }
-  if (!Number.isInteger(input.compoundsPerYear) || input.compoundsPerYear > 365) {
+  if (
+    !Number.isInteger(input.compoundsPerYear) ||
+    input.compoundsPerYear > 365
+  ) {
     throw new RangeError("compoundsPerYear must be an integer from 0 to 365");
   }
 

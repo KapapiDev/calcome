@@ -8,10 +8,7 @@ import {
 } from "@/components/calculators/calculator-workspace";
 import { Button } from "@/components/ui/button";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
-import {
-  calculateStakingReward,
-  type StakingRewardResult,
-} from "../calculate";
+import { calculateStakingReward, type StakingRewardResult } from "../calculate";
 import { stakingRewardContent, type StakingRewardLocale } from "../content";
 
 const fieldClass =
@@ -114,7 +111,10 @@ export function StakingRewardCalculator({
           className={`${compactCalculatorSettingsClass} min-w-0`}
         >
           <p className="text-sm font-semibold text-primary">{copy.category}</p>
-          <h2 id="staking-reward-input-title" className="mt-1 text-xl font-semibold">
+          <h2
+            id="staking-reward-input-title"
+            className="mt-1 text-xl font-semibold"
+          >
             {copy.input}
           </h2>
           {hasError ? (
@@ -127,10 +127,16 @@ export function StakingRewardCalculator({
           ) : null}
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {numericField("stakedAmount", copy.stakedAmount)}
-            {numericField("annualRewardRatePercent", copy.annualRewardRatePercent)}
+            {numericField(
+              "annualRewardRatePercent",
+              copy.annualRewardRatePercent,
+            )}
             {numericField("stakingDays", copy.stakingDays)}
             <div>
-              <label htmlFor="compoundsPerYear" className="block text-sm font-medium">
+              <label
+                htmlFor="compoundsPerYear"
+                className="block text-sm font-medium"
+              >
                 {copy.compoundsPerYear}
               </label>
               <select
@@ -164,7 +170,10 @@ export function StakingRewardCalculator({
           aria-labelledby="staking-reward-result-title"
           className="scroll-mt-20 rounded-xl border bg-card p-4 shadow-sm"
         >
-          <h2 id="staking-reward-result-title" className="text-xl font-semibold">
+          <h2
+            id="staking-reward-result-title"
+            className="text-xl font-semibold"
+          >
             {copy.result}
           </h2>
           <PrimaryResults
@@ -189,7 +198,9 @@ export function StakingRewardCalculator({
               },
             ]}
           />
-          <p className="mt-3 text-sm leading-6 text-muted-foreground">{copy.note}</p>
+          <p className="mt-3 text-sm leading-6 text-muted-foreground">
+            {copy.note}
+          </p>
         </section>
       </div>
     </section>
