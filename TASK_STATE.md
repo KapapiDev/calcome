@@ -29,4 +29,6 @@ Remaining to Target: 0
   - PR: #332
 - [x] ADS-003 DONE — Ad Placement Architecture Without Layout Shift
   - PR: #333
-- [ ] ADS-004 OPEN — Consent and Regional Privacy Controls
+- [x] ADS-004 DONE — Consent and Regional Privacy Controls
+  - PR: this implementation PR
+- [ ] ADS-005 OPEN — AdSense Integration and ads.txt
