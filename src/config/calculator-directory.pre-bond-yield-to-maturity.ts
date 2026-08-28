@@ -1,27 +1,27 @@
 import type { PublishedCalculator } from "./calculators";
-import * as previous from "./calculator-directory.pre-bond-yield-to-maturity";
+import * as previous from "./calculator-directory.pre-portfolio-rebalancing";
 
-export * from "./calculator-directory.pre-bond-yield-to-maturity";
+export * from "./calculator-directory.pre-portfolio-rebalancing";
 
-export const bondYieldToMaturityCalculator = {
-  id: "bond-yield-to-maturity",
-  name: "채권 만기수익률(YTM) 계산기",
+export const portfolioRebalancingCalculator = {
+  id: "portfolio-rebalancing",
+  name: "포트폴리오 리밸런싱 계산기",
   description:
-    "액면가, 시장가격, 표면금리, 만기와 이자 지급주기로 채권의 만기수익률(YTM)과 현재수익률을 계산합니다.",
+    "현재 자산별 금액과 목표 비중으로 목표 포트폴리오에 맞추기 위한 자산별 매수·매도 금액과 회전율을 계산합니다.",
   keywords: [
-    "채권 만기수익률 계산기",
-    "YTM 계산기",
-    "채권 수익률",
-    "현재수익률",
-    "bond yield to maturity calculator",
+    "포트폴리오 리밸런싱 계산기",
+    "자산배분 계산기",
+    "목표 비중",
+    "리밸런싱 매수 매도",
+    "portfolio rebalancing calculator",
   ],
   category: "금융",
-  href: "/ko/finance/bond-yield-to-maturity",
+  href: "/ko/finance/portfolio-rebalancing",
 } as const satisfies PublishedCalculator;
 
 export const allPublishedCalculators = [
   ...previous.allPublishedCalculators,
-  bondYieldToMaturityCalculator,
+  portfolioRebalancingCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -29,7 +29,7 @@ export const calculatorDirectoryCategories =
     if (category.id === "investment") {
       return {
         ...category,
-        calculatorIds: [...category.calculatorIds, "bond-yield-to-maturity"],
+        calculatorIds: [...category.calculatorIds, "portfolio-rebalancing"],
       };
     }
     return category;
@@ -38,16 +38,16 @@ export const calculatorDirectoryCategories =
 export const directorySearchCalculators = [
   ...previous.directorySearchCalculators,
   {
-    ...bondYieldToMaturityCalculator,
+    ...portfolioRebalancingCalculator,
     primaryCategory: "투자",
     keywords: [
-      ...bondYieldToMaturityCalculator.keywords,
-      "채권 내부수익률",
-      "쿠폰 채권 수익률",
-      "채권 할인율",
-      "bond ytm",
-      "bond current yield",
-      "fixed income yield calculator",
+      ...portfolioRebalancingCalculator.keywords,
+      "포트폴리오 비중 조정",
+      "주식 채권 리밸런싱",
+      "자산 비중 맞추기",
+      "asset allocation rebalancing",
+      "rebalance portfolio",
+      "buy sell rebalancing",
     ],
   },
 ] satisfies readonly previous.DirectorySearchCalculator[];
