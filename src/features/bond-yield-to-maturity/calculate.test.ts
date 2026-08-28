@@ -45,7 +45,10 @@ describe("calculateBondYield", () => {
       yearsToMaturity: 5,
       paymentsPerYear: 1,
     });
-    expect(result.ytmPercent).toBeCloseTo((1000 / 800) ** (1 / 5) * 100 - 100, 8);
+    expect(result.ytmPercent).toBeCloseTo(
+      (1000 / 800) ** (1 / 5) * 100 - 100,
+      8,
+    );
   });
 
   it("rejects invalid inputs", () => {

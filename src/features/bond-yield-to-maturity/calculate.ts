@@ -44,11 +44,16 @@ export function calculateBondYield(input: BondYieldInput): BondYieldResult {
   if (input.faceValue <= 0 || input.marketPrice <= 0) {
     throw new RangeError("faceValue and marketPrice must be greater than zero");
   }
-  if (input.annualCouponRatePercent < 0 || input.annualCouponRatePercent > 100) {
+  if (
+    input.annualCouponRatePercent < 0 ||
+    input.annualCouponRatePercent > 100
+  ) {
     throw new RangeError("annualCouponRatePercent must be between 0 and 100");
   }
   if (input.yearsToMaturity <= 0 || input.yearsToMaturity > 100) {
-    throw new RangeError("yearsToMaturity must be greater than zero and at most 100");
+    throw new RangeError(
+      "yearsToMaturity must be greater than zero and at most 100",
+    );
   }
   if (![1, 2, 4, 12].includes(input.paymentsPerYear)) {
     throw new RangeError("paymentsPerYear is unsupported");
@@ -56,7 +61,9 @@ export function calculateBondYield(input: BondYieldInput): BondYieldResult {
 
   const periods = input.yearsToMaturity * input.paymentsPerYear;
   if (Math.abs(periods - Math.round(periods)) > 1e-9) {
-    throw new RangeError("yearsToMaturity must resolve to a whole payment period");
+    throw new RangeError(
+      "yearsToMaturity must resolve to a whole payment period",
+    );
   }
 
   let low = -0.99;
@@ -64,7 +71,9 @@ export function calculateBondYield(input: BondYieldInput): BondYieldResult {
   const lowValue = presentValue(input, low) - input.marketPrice;
   const highValue = presentValue(input, high) - input.marketPrice;
   if (lowValue * highValue > 0) {
-    throw new RangeError("yield could not be bracketed for the supplied inputs");
+    throw new RangeError(
+      "yield could not be bracketed for the supplied inputs",
+    );
   }
 
   for (let index = 0; index < 160; index += 1) {

@@ -110,7 +110,10 @@ export function BondYieldCalculator({ locale }: { locale: BondYieldLocale }) {
           className={`${compactCalculatorSettingsClass} min-w-0`}
         >
           <p className="text-sm font-semibold text-primary">{copy.category}</p>
-          <h2 id="bond-yield-input-title" className="mt-1 text-xl font-semibold">
+          <h2
+            id="bond-yield-input-title"
+            className="mt-1 text-xl font-semibold"
+          >
             {copy.input}
           </h2>
           {error ? (
@@ -131,7 +134,10 @@ export function BondYieldCalculator({ locale }: { locale: BondYieldLocale }) {
                 onChange={(event) =>
                   setValues((current) => ({
                     ...current,
-                    faceValue: formatMoneyInput(event.target.value, current.faceValue),
+                    faceValue: formatMoneyInput(
+                      event.target.value,
+                      current.faceValue,
+                    ),
                   }))
                 }
                 className={`${fieldClass} mt-1.5`}
@@ -145,7 +151,10 @@ export function BondYieldCalculator({ locale }: { locale: BondYieldLocale }) {
                 onChange={(event) =>
                   setValues((current) => ({
                     ...current,
-                    marketPrice: formatMoneyInput(event.target.value, current.marketPrice),
+                    marketPrice: formatMoneyInput(
+                      event.target.value,
+                      current.marketPrice,
+                    ),
                   }))
                 }
                 className={`${fieldClass} mt-1.5`}

@@ -6,7 +6,11 @@ import {
 import { bondYieldContent, type BondYieldLocale } from "../content";
 import { BondYieldCalculator } from "./bond-yield-calculator";
 
-export function LocalizedBondYieldPage({ locale }: { locale: BondYieldLocale }) {
+export function LocalizedBondYieldPage({
+  locale,
+}: {
+  locale: BondYieldLocale;
+}) {
   const copy = bondYieldContent[locale];
   const path = `/${locale}/finance/bond-yield-to-maturity`;
   const home = locale === "ko" ? "홈" : "Home";
