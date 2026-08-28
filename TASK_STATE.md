@@ -30,5 +30,8 @@ Remaining to Target: 0
 - [x] ADS-003 DONE — Ad Placement Architecture Without Layout Shift
   - PR: #333
 - [x] ADS-004 DONE — Consent and Regional Privacy Controls
+  - PR: #334
+- [x] ADS-005 DONE — AdSense Integration and ads.txt
   - PR: this implementation PR
-- [ ] ADS-005 OPEN — AdSense Integration and ads.txt
+- [ ] OPS-ADS-001 OPEN — Production AdSense Activation Verification
+  - Scope: verify the real AdSense publisher ID/site status against Vercel Production, canonical `/ads.txt`, production HTML, Preview isolation, and ADS-004 consent boundary; do not invent or commit an account ID.
