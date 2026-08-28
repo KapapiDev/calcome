@@ -7,11 +7,11 @@ This file is the compact mutable execution ledger for autonomous development.
 ## Reconciliation baseline
 
 - Reconciled date: 2026-08-28
-- Reconciled base `main`: post-P-087
-- Current public-calculator count derived from the 51-calculator original baseline plus 44 completed expansion tasks: **95**
+- Reconciled base `main`: post-P-088
+- Current public-calculator count derived from the 51-calculator original baseline plus 45 completed expansion tasks: **96**
 - Target: **100**
-- Completed expansion tasks: **44 / 49**
-- Remaining expansion tasks: **5**
+- Completed expansion tasks: **45 / 49**
+- Remaining expansion tasks: **4**
 - Exactly one task is OPEN below.
 
 ## Current execution state
@@ -24,8 +24,9 @@ This file is the compact mutable execution ledger for autonomous development.
 - REG-EXP-001 through REG-EXP-006 — DONE — required expansion regression gates completed through the P-083–P-086 batch.
 - P-086 — DONE — MEDIUM — Cryptocurrency Average Cost Calculator added with bilingual routes, shared-currency semantics, investment-directory integration, weighted average entry-price calculation, explanatory content, and regression tests.
 - P-087 — DONE — MEDIUM — Cryptocurrency Profit and Loss Calculator added with bilingual routes, fee-aware profit/loss and return calculations, break-even price, investment-directory integration, explanatory content, and regression tests.
-- P-088 — OPEN — MEDIUM — Staking Reward Calculator; next calculator after P-087.
+- P-088 — DONE — MEDIUM — Staking Reward Calculator added with bilingual routes, token-unit reward estimates, simple/compound reward modes, investment-directory integration, explanatory content, and regression tests.
 - P-089 — DONE — previously merged on main.
+- P-090 — OPEN — MEDIUM — Foreign-Currency Average Cost Calculator; next calculator after P-088 while skipping already-complete P-089.
 
 All later uncompleted catalog tasks remain ordered by `TASK_QUEUE.md` and are effectively BLOCKED until they become the single OPEN task here.
 
@@ -39,7 +40,7 @@ All later uncompleted catalog tasks remain ordered by `TASK_QUEUE.md` and are ef
 
 ## Expansion continuation
 
-REG-EXP-006 completed the required regression gate after P-083 through P-086. P-087 is complete and P-088 is the single next OPEN task. Continue the remaining expansion program in `TASK_QUEUE.md` order, skipping tasks already DONE here.
+REG-EXP-006 completed the required regression gate after P-083 through P-086. P-087 and P-088 are complete. P-089 was already complete before this batch, so the single next OPEN task is P-090. Continue the remaining expansion program in `TASK_QUEUE.md` order, skipping tasks already DONE here.
 
 Each calculator PR must update this file in the same PR:
 
