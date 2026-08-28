@@ -27,7 +27,9 @@ export function calculateForeignCurrencyAverageCost(
     throw new RangeError("all inputs must be finite and nonnegative");
   }
   if (input.currentAmount === 0 && input.additionalAmount === 0) {
-    throw new RangeError("total foreign-currency amount must be greater than zero");
+    throw new RangeError(
+      "total foreign-currency amount must be greater than zero",
+    );
   }
   if (input.currentAmount > 0 && input.currentAverageRate <= 0) {
     throw new RangeError("currentAverageRate must be greater than zero");
