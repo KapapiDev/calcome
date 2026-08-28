@@ -22,5 +22,7 @@ Remaining to Target: 0
 - [x] SEO-007 DONE — Live SEO Monitoring, Indexation, Crawl and Discovery Checks
   - PR: #329
 - [x] SEO-008 DONE — Search Console Query and Cannibalization Feedback Loop
+  - PR: #330
+- [x] ADS-001 DONE — AdSense Policy and Site Trust Readiness Audit
   - PR: this implementation PR
-- [ ] ADS-001 OPEN — AdSense Policy and Site Trust Readiness Audit
+- [ ] ADS-002 OPEN — Original Guide and Decision-Support Content Program
