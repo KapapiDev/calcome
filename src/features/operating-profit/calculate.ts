@@ -13,7 +13,11 @@ export type OperatingProfitResult = {
 export function calculateOperatingProfit(
   input: OperatingProfitInput,
 ): OperatingProfitResult {
-  const values = [input.revenue, input.costOfGoodsSold, input.operatingExpenses];
+  const values = [
+    input.revenue,
+    input.costOfGoodsSold,
+    input.operatingExpenses,
+  ];
   if (values.some((value) => !Number.isFinite(value) || value < 0)) {
     throw new RangeError("all inputs must be finite and nonnegative");
   }
