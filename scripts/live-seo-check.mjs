@@ -67,7 +67,9 @@ function verifyDocumentSeo(url, html) {
   );
 
   if (canonicalLinks.length !== 1) {
-    throw new Error(`expected exactly one canonical, found ${canonicalLinks.length}`);
+    throw new Error(
+      `expected exactly one canonical, found ${canonicalLinks.length}`,
+    );
   }
 
   const canonicalHref = canonicalLinks[0].get("href");
@@ -190,7 +192,9 @@ async function main() {
       const html = await fetchText(url, "text/html");
       verifyDocumentSeo(url, html);
     } catch (error) {
-      failures.push(`${url}: ${error instanceof Error ? error.message : String(error)}`);
+      failures.push(
+        `${url}: ${error instanceof Error ? error.message : String(error)}`,
+      );
     }
   });
 
