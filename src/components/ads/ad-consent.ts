@@ -29,9 +29,7 @@ export function canLoadAdPayload(
 
   if (!requiresCertifiedCmp(region)) return true;
 
-  return (
-    consent.decision === "granted" && consent.source === "certified-cmp"
-  );
+  return consent.decision === "granted" && consent.source === "certified-cmp";
 }
 
 export function parseStoredAdConsent(value: string | null): AdConsentSnapshot {

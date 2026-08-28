@@ -41,7 +41,5 @@ export function classifyGoogleConsentRegion(
   const normalized = countryCode?.trim().toUpperCase();
   if (!normalized || !/^[A-Z]{2}$/.test(normalized)) return "unknown";
 
-  return GOOGLE_CERTIFIED_CMP_COUNTRIES.has(normalized)
-    ? "regulated"
-    : "other";
+  return GOOGLE_CERTIFIED_CMP_COUNTRIES.has(normalized) ? "regulated" : "other";
 }

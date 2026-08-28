@@ -46,7 +46,10 @@ describe("ad consent policy", () => {
     expect(parseStoredAdConsent("not-json")).toEqual(defaultAdConsent);
     expect(
       parseStoredAdConsent(
-        JSON.stringify({ ...localGrant, version: AD_CONSENT_POLICY_VERSION + 1 }),
+        JSON.stringify({
+          ...localGrant,
+          version: AD_CONSENT_POLICY_VERSION + 1,
+        }),
       ),
     ).toEqual(defaultAdConsent);
   });
