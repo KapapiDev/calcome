@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 
 import { PrivacyControl } from "@/components/ads/privacy-control";
 import { classifyGoogleConsentRegion } from "@/components/ads/privacy-region";
+import { getAdSenseRuntimeConfig } from "@/components/ads/adsense";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
@@ -94,6 +95,7 @@ export default async function RootLayout({
   const privacyRegion = classifyGoogleConsentRegion(
     requestHeaders.get("x-vercel-ip-country"),
   );
+  const adsense = getAdSenseRuntimeConfig();
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -101,8 +103,19 @@ export default async function RootLayout({
         <script
           dangerouslySetInnerHTML={{ __html: themeInitializationScript }}
         />
+        {adsense.enabled && adsense.clientId ? (
+          <script
+            async
+            crossOrigin="anonymous"
+            data-ad-runtime-status={adsense.status}
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsense.clientId}`}
+          />
+        ) : null}
       </head>
-      <body className="min-h-screen bg-background font-sans text-foreground antialiased">
+      <body
+        className="min-h-screen bg-background font-sans text-foreground antialiased"
+        data-ad-runtime-status={adsense.status}
+      >
         <ThemeProvider>
           <SkipLink locale={locale} />
           <div className="flex min-h-screen flex-col">
