@@ -1,6 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
+import { allPublishedCalculators } from "@/config/calculator-directory";
+
 import {
   getRelatedCalculators,
   RelatedCalculators,
@@ -13,6 +15,22 @@ describe("RelatedCalculators", () => {
         (calculator) => calculator.id,
       ),
     ).toEqual(["savings", "deposit", "savings-goal", "cagr"]);
+  });
+
+  it("keeps every topic cluster bounded, unique, published, and free of self links", () => {
+    const publishedIds = new Set(
+      allPublishedCalculators.map((calculator) => calculator.id),
+    );
+
+    for (const calculator of allPublishedCalculators) {
+      const related = getRelatedCalculators(calculator.href);
+      const ids = related.map((entry) => entry.id);
+
+      expect(ids.length).toBeLessThanOrEqual(4);
+      expect(new Set(ids).size).toBe(ids.length);
+      expect(ids).not.toContain(calculator.id);
+      for (const id of ids) expect(publishedIds.has(id)).toBe(true);
+    }
   });
 
   it("preserves English locale in every related target", () => {
