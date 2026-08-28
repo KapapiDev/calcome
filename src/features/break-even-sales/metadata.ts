@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/config/site";
-import {
-  breakEvenSalesContent,
-  type BreakEvenSalesLocale,
-} from "./content";
+import { breakEvenSalesContent, type BreakEvenSalesLocale } from "./content";
 
 export function createBreakEvenSalesMetadata(
   locale: BreakEvenSalesLocale,

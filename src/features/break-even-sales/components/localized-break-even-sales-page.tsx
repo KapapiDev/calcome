@@ -3,10 +3,7 @@ import {
   JsonLdScript,
   createPageStructuredData,
 } from "@/lib/seo/structured-data";
-import {
-  breakEvenSalesContent,
-  type BreakEvenSalesLocale,
-} from "../content";
+import { breakEvenSalesContent, type BreakEvenSalesLocale } from "../content";
 import { BreakEvenSalesCalculator } from "./break-even-sales-calculator";
 
 export function LocalizedBreakEvenSalesPage({

@@ -13,10 +13,7 @@ import {
   calculateBreakEvenSales,
   type BreakEvenSalesResult,
 } from "../calculate";
-import {
-  breakEvenSalesContent,
-  type BreakEvenSalesLocale,
-} from "../content";
+import { breakEvenSalesContent, type BreakEvenSalesLocale } from "../content";
 
 const fieldClass =
   "mt-1.5 h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums outline-none focus-visible:ring-3 focus-visible:ring-ring/30 aria-invalid:border-destructive sm:text-sm";
