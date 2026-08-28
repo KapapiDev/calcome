@@ -6,7 +6,7 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 
 import ErrorPage from "./error";
-import { metadata } from "./layout";
+import { createRootMetadata } from "./layout";
 import Loading from "./loading";
 import manifest from "./manifest";
 import NotFound from "./not-found";
@@ -16,16 +16,26 @@ import sitemap from "./sitemap";
 
 describe("production metadata routes", () => {
   it("defines consistent global metadata and social cards", () => {
+    const metadata = createRootMetadata("/ko");
+
     expect(metadata.title).toMatchObject({
       default: "CalCome - 금융 계산을 쉽게.",
       template: "%s | CalCome",
     });
-    expect(metadata.alternates).toBeUndefined();
+    expect(metadata.alternates).toEqual({
+      canonical: "/ko",
+      languages: {
+        "ko-KR": "/ko",
+        "en-US": "/en",
+        "x-default": "/ko",
+      },
+    });
     expect(homeMetadata.alternates).toEqual({ canonical: "/" });
     expect(metadata.openGraph).toMatchObject({
       locale: "ko_KR",
+      alternateLocale: "en_US",
       siteName: "CalCome",
-      url: "/",
+      url: "/ko",
     });
     expect(metadata.twitter).toMatchObject({ card: "summary_large_image" });
     expect(metadata.robots).toMatchObject({ index: true, follow: true });

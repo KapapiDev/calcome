@@ -14,9 +14,7 @@ import { localizedSeoPaths, socialLocale } from "@/lib/seo/metadata";
 
 import "./globals.css";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const requestHeaders = await headers();
-  const pathname = requestHeaders.get("x-calcome-pathname") ?? "/ko";
+export function createRootMetadata(pathname: string): Metadata {
   const seo = localizedSeoPaths(pathname);
   const social = socialLocale(seo.locale);
 
@@ -67,6 +65,13 @@ export async function generateMetadata(): Promise<Metadata> {
       },
     },
   };
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const requestHeaders = await headers();
+  const pathname = requestHeaders.get("x-calcome-pathname") ?? "/ko";
+
+  return createRootMetadata(pathname);
 }
 
 export const viewport: Viewport = {
