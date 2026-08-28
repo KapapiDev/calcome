@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CalculatorContentGuide } from "@/components/calculators/calculator-content-guide";
 import {
   JsonLdScript,
   createPageStructuredData,
@@ -53,20 +54,18 @@ export function LocalizedBusinessCashRunwayPage({
         <div className="mt-6">
           <BusinessCashRunwayCalculator locale={locale} />
         </div>
-        <section className="mt-10 rounded-xl border bg-card p-5">
+
+        <CalculatorContentGuide
+          locale={locale}
+          method={copy.method}
+          example={copy.example}
+          assumptions={[copy.assumptionCashFlow, copy.assumptionCurrency]}
+          limitations={[copy.limitationCashFlow, copy.limitationDate]}
+          reviewedAt="2026-08-28"
+        />
+
+        <section className="mt-6 rounded-xl border bg-card p-5">
           <h2 className="text-xl font-semibold">
-            {locale === "ko" ? "계산 방법" : "How it works"}
-          </h2>
-          <p className="mt-3 text-sm leading-7 text-muted-foreground">
-            {copy.method}
-          </p>
-          <h2 className="mt-6 text-xl font-semibold">
-            {locale === "ko" ? "사용할 때 확인할 점" : "What to check"}
-          </h2>
-          <p className="mt-3 text-sm leading-7 text-muted-foreground">
-            {copy.tips}
-          </p>
-          <h2 className="mt-6 text-xl font-semibold">
             {locale === "ko" ? "관련 계산기" : "Related calculators"}
           </h2>
           <div className="mt-3 flex flex-wrap gap-3 text-sm">
