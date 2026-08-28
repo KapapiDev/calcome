@@ -48,7 +48,8 @@ export const businessCashRunwayContent = {
     reducedOutflow: "With 10% less outflow",
     months: "months",
     notConsuming: "Cash is not being consumed",
-    lowRunway: "Warning: cash runway is under 3 months at the current burn rate.",
+    lowRunway:
+      "Warning: cash runway is under 3 months at the current burn rate.",
     error:
       "Check the inputs. Starting cash and monthly inflow must be nonnegative, and monthly outflow must be greater than zero.",
     note: "Enter every monetary value in the same currency, such as KRW or USD. This calculator performs no FX conversion and keeps the currency unit you entered.",

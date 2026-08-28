@@ -19,7 +19,11 @@ function runwayMonths(startingCash: number, monthlyNetBurn: number) {
 export function calculateBusinessCashRunway(
   input: BusinessCashRunwayInput,
 ): BusinessCashRunwayResult {
-  const values = [input.startingCash, input.monthlyInflow, input.monthlyOutflow];
+  const values = [
+    input.startingCash,
+    input.monthlyInflow,
+    input.monthlyOutflow,
+  ];
   if (values.some((value) => !Number.isFinite(value))) {
     throw new RangeError("all inputs must be finite");
   }
@@ -55,7 +59,11 @@ export function estimateRunwayEndDate(
   startDate: Date,
 ): Date | null {
   if (runway === null) return null;
-  if (!Number.isFinite(runway) || runway < 0 || Number.isNaN(startDate.getTime())) {
+  if (
+    !Number.isFinite(runway) ||
+    runway < 0 ||
+    Number.isNaN(startDate.getTime())
+  ) {
     throw new RangeError("runway and start date must be valid");
   }
 
