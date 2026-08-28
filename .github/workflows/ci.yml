@@ -6,7 +6,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -20,8 +20,6 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -46,27 +44,7 @@ jobs:
         run: npm run typecheck
 
       - name: Check formatting
-        id: formatting
-        continue-on-error: true
         run: npm run format:check
-
-      - name: Commit formatter corrections
-        if: steps.formatting.outcome == 'failure' && github.event_name == 'pull_request'
-        run: |
-          if git diff --quiet; then
-            echo "Formatter failed without producing a working-tree diff."
-            exit 1
-          fi
-
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add --all
-          git commit -m "Apply Prettier formatting"
-          git push origin "HEAD:${{ github.head_ref }}"
-
-      - name: Enforce formatting result
-        if: steps.formatting.outcome == 'failure'
-        run: exit 1
 
       - name: Run tests
         run: npm run test
