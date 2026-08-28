@@ -1,27 +1,27 @@
 import type { PublishedCalculator } from "./calculators";
-import * as previous from "./calculator-directory.pre-foreign-currency-average-cost";
+import * as previous from "./calculator-directory.pre-staking-reward";
 
-export * from "./calculator-directory.pre-foreign-currency-average-cost";
+export * from "./calculator-directory.pre-staking-reward";
 
-export const foreignCurrencyAverageCostCalculator = {
-  id: "foreign-currency-average-cost",
-  name: "외화 평균단가 계산기",
+export const stakingRewardCalculator = {
+  id: "staking-reward",
+  name: "스테이킹 보상 계산기",
   description:
-    "기존 외화 보유량·평균 환율과 추가 매수량·환율을 합쳐 새 가중평균 환율과 총 외화 매입 원가를 계산합니다.",
+    "스테이킹 수량·연 보상률·기간과 재투자 빈도를 바탕으로 예상 보상 수량, 최종 수량, 기간 수익률을 계산합니다.",
   keywords: [
-    "외화 평균단가 계산기",
-    "달러 평단 계산기",
-    "환율 평단 계산기",
-    "외화 물타기 계산기",
-    "foreign currency average cost calculator",
+    "스테이킹 계산기",
+    "코인 스테이킹 보상",
+    "스테이킹 수익 계산기",
+    "staking reward calculator",
+    "crypto staking calculator",
   ],
   category: "금융",
-  href: "/ko/finance/foreign-currency-average-cost",
+  href: "/ko/finance/staking-reward",
 } as const satisfies PublishedCalculator;
 
 export const allPublishedCalculators = [
   ...previous.allPublishedCalculators,
-  foreignCurrencyAverageCostCalculator,
+  stakingRewardCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -29,10 +29,7 @@ export const calculatorDirectoryCategories =
     if (category.id === "investment") {
       return {
         ...category,
-        calculatorIds: [
-          ...category.calculatorIds,
-          "foreign-currency-average-cost",
-        ],
+        calculatorIds: [...category.calculatorIds, "staking-reward"],
       };
     }
     return category;
@@ -41,16 +38,16 @@ export const calculatorDirectoryCategories =
 export const directorySearchCalculators = [
   ...previous.directorySearchCalculators,
   {
-    ...foreignCurrencyAverageCostCalculator,
+    ...stakingRewardCalculator,
     primaryCategory: "투자",
     keywords: [
-      ...foreignCurrencyAverageCostCalculator.keywords,
-      "달러 평균 환율",
-      "엔화 평단",
-      "유로 평단",
-      "average exchange rate calculator",
-      "weighted average fx rate",
-      "currency cost basis calculator",
+      ...stakingRewardCalculator.keywords,
+      "스테이킹 apr",
+      "스테이킹 apy",
+      "스테이킹 복리",
+      "staking apr calculator",
+      "staking apy calculator",
+      "staking compound interest",
     ],
   },
 ] satisfies readonly previous.DirectorySearchCalculator[];
