@@ -24,5 +24,7 @@ Remaining to Target: 0
 - [x] SEO-008 DONE — Search Console Query and Cannibalization Feedback Loop
   - PR: #330
 - [x] ADS-001 DONE — AdSense Policy and Site Trust Readiness Audit
+  - PR: #331
+- [x] ADS-002 DONE — Original Guide and Decision-Support Content Program
   - PR: this implementation PR
-- [ ] ADS-002 OPEN — Original Guide and Decision-Support Content Program
+- [ ] ADS-003 OPEN — Ad Placement Architecture Without Layout Shift

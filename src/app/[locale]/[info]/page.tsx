@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import AboutPage from "@/app/about/page";
 import ContactPage from "@/app/contact/page";
+import GuidesPage from "@/app/guides/page";
 import PrivacyPage from "@/app/privacy/page";
 import TermsPage from "@/app/terms/page";
 import { InfoPage } from "@/components/layout/info-page";
@@ -24,6 +25,37 @@ const englishPages = {
       [
         "Operating principles",
         "CalCome prioritizes accessibility, performance, clear explanations, and reproducible calculations.",
+      ],
+    ],
+  },
+  guides: {
+    title: "How to Use Calculator Results for Decisions",
+    description:
+      "A practical CalCome guide to comparing, stress-testing, and verifying calculator results before making a financial decision.",
+    sections: [
+      [
+        "1. Write the decision as one question",
+        "Start with the decision, not the calculation. Define what the result needs to answer, such as whether a monthly payment is affordable, which option has the lower total cost, or how long a goal may take. A clear question keeps irrelevant numbers out of the comparison.",
+      ],
+      [
+        "2. Separate facts, assumptions, and variables",
+        "Distinguish values you can verify today from estimates and values that may change. For influential assumptions such as rates or future returns, compare conservative, baseline, and optimistic scenarios instead of relying on one forecast.",
+      ],
+      [
+        "3. Test how sensitive the result is",
+        "Change one important input at a time and watch how much the result moves. If a small input change causes a large output change, the calculation is more useful for identifying a sensitive variable than for producing a precise forecast.",
+      ],
+      [
+        "4. Check costs, rules, and product terms separately",
+        "Fees, taxes, eligibility rules, effective dates, and product-specific terms can change the real outcome. Before an important decision, review the calculator assumptions and verification date, then confirm policy-sensitive conditions with current official sources and actual product terms.",
+      ],
+      [
+        "5. Turn the number into an action threshold",
+        "Translate the result into a rule you can use, such as a maximum monthly payment, minimum emergency reserve, or acceptable loss range. This turns a calculator output from an isolated number into a decision aid.",
+      ],
+      [
+        "Before and after you calculate",
+        "Ask whether your decision question is clear, which inputs are facts versus assumptions, whether you tested alternative scenarios, what costs or conditions are excluded, whether policy-sensitive inputs were checked against current official sources, and what action threshold follows from the result. CalCome results are informational estimates, not financial, investment, tax, or legal advice.",
       ],
     ],
   },
@@ -88,6 +120,7 @@ type InfoKey = keyof typeof englishPages;
 
 const koreanPages: Record<InfoKey, React.ComponentType> = {
   about: AboutPage,
+  guides: GuidesPage,
   privacy: PrivacyPage,
   terms: TermsPage,
   contact: ContactPage,
