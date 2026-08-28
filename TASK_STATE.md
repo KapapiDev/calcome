@@ -16,5 +16,7 @@ Remaining to Target: 0
 - [x] SEO-004 DONE — Calculator Content Depth and Trust Template
   - PR: #326
 - [x] SEO-005 DONE — Search Intent and Metadata Optimization
+  - PR: #327
+- [x] SEO-006 DONE — Internal Linking and Topic Cluster Hubs
   - PR: this implementation PR
-- [ ] SEO-006 OPEN — Internal Linking and Topic Cluster Hubs
+- [ ] SEO-007 OPEN — Live SEO Monitoring, Indexation, Crawl and Discovery Checks
