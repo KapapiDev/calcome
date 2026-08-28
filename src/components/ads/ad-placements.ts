@@ -13,8 +13,7 @@ export const adPlacements = {
   "desktop-sidebar": {
     minHeightClass: "min-h-[600px]",
     containerClass: "hidden w-full max-w-[300px] lg:block",
-    purpose:
-      "Desktop-only rail outside calculator controls and result panels.",
+    purpose: "Desktop-only rail outside calculator controls and result panels.",
   },
 } as const;
 
