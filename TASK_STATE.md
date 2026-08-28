@@ -26,5 +26,7 @@ Remaining to Target: 0
 - [x] ADS-001 DONE — AdSense Policy and Site Trust Readiness Audit
   - PR: #331
 - [x] ADS-002 DONE — Original Guide and Decision-Support Content Program
-  - PR: this implementation PR
-- [ ] ADS-003 OPEN — Ad Placement Architecture Without Layout Shift
+  - PR: #332
+- [x] ADS-003 DONE — Ad Placement Architecture Without Layout Shift
+  - PR: #333
+- [ ] ADS-004 OPEN — Consent and Regional Privacy Controls
