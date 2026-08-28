@@ -1,35 +1,35 @@
 import type { PublishedCalculator } from "./calculators";
-import * as previous from "./calculator-directory.pre-crypto-average-cost";
+import * as previous from "./calculator-directory.pre-apr-apy-conversion";
 
-export * from "./calculator-directory.pre-crypto-average-cost";
+export * from "./calculator-directory.pre-apr-apy-conversion";
 
-export const cryptoAverageCostCalculator = {
-  id: "crypto-average-cost",
-  name: "암호화폐 평균단가 계산기",
+export const aprApyConversionCalculator = {
+  id: "apr-apy-conversion",
+  name: "APR·APY 변환 계산기",
   description:
-    "기존 보유 수량·평균단가와 추가 매수 수량·가격을 합쳐 새로운 평균단가와 총 투자금액을 계산합니다.",
+    "명목 연이율(APR)과 복리 효과를 포함한 연환산수익률(APY)을 복리 주기에 맞춰 서로 변환합니다.",
   keywords: [
-    "코인 물타기 계산기",
-    "암호화폐 평균단가",
-    "코인 평단 계산기",
-    "crypto average cost calculator",
-    "bitcoin average price calculator",
+    "APR APY 계산기",
+    "APR APY 변환",
+    "유효 연이율 계산기",
+    "명목 이율 변환",
+    "apr to apy calculator",
   ],
   category: "금융",
-  href: "/ko/finance/crypto-average-cost",
+  href: "/ko/finance/apr-apy-conversion",
 } as const satisfies PublishedCalculator;
 
 export const allPublishedCalculators = [
   ...previous.allPublishedCalculators,
-  cryptoAverageCostCalculator,
+  aprApyConversionCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
   previous.calculatorDirectoryCategories.map((category) => {
-    if (category.id === "investment") {
+    if (category.id === "savings") {
       return {
         ...category,
-        calculatorIds: [...category.calculatorIds, "crypto-average-cost"],
+        calculatorIds: [...category.calculatorIds, "apr-apy-conversion"],
       };
     }
     return category;
@@ -38,15 +38,16 @@ export const calculatorDirectoryCategories =
 export const directorySearchCalculators = [
   ...previous.directorySearchCalculators,
   {
-    ...cryptoAverageCostCalculator,
-    primaryCategory: "투자",
+    ...aprApyConversionCalculator,
+    primaryCategory: "저축·연금",
     keywords: [
-      ...cryptoAverageCostCalculator.keywords,
-      "비트코인 평단",
-      "이더리움 평단",
-      "코인 추가매수",
-      "crypto averaging down",
-      "average entry price",
+      ...aprApyConversionCalculator.keywords,
+      "APY APR 계산기",
+      "연이율 복리 계산",
+      "effective annual rate",
+      "nominal annual rate",
+      "annual percentage yield",
+      "annual percentage rate",
     ],
   },
 ] satisfies readonly previous.DirectorySearchCalculator[];

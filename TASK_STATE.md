@@ -7,11 +7,11 @@ This file is the compact mutable execution ledger for autonomous development.
 ## Reconciliation baseline
 
 - Reconciled date: 2026-08-28
-- Reconciled base `main`: post-P-085
-- Current public-calculator count derived from the 51-calculator original baseline plus 42 completed expansion tasks: **93**
+- Reconciled base `main`: post-P-086
+- Current public-calculator count derived from the 51-calculator original baseline plus 43 completed expansion tasks: **94**
 - Target: **100**
-- Completed expansion tasks: **42 / 49**
-- Remaining expansion tasks: **7**
+- Completed expansion tasks: **43 / 49**
+- Remaining expansion tasks: **6**
 - Exactly one task is OPEN below.
 
 ## Current execution state
@@ -20,23 +20,10 @@ This file is the compact mutable execution ledger for autonomous development.
 - OPS-002 — DONE — CRITICAL — autonomous-development reliability rules and mutable state ledger installed.
 - UX-007, UX-009, UX-010, SEO-FIX-002 — DONE — shared accessibility, locale, discovery, and indexability repair gates merged.
 - SEC-001 — DONE — CRITICAL — patched dependency set and permanent production high-severity audit gate merged.
-- P-045 through P-061 — DONE except no gaps in this range.
-- REG-EXP-001 — DONE — expansion regression gate after the first post-repair batch.
-- P-062, P-063, P-064, P-065, P-066, P-067, P-068, P-069 — DONE.
-- REG-EXP-002 — DONE — expansion regression gate after P-064 through P-069 batch progression.
-- P-070, P-071, P-072, P-073 — DONE.
-- REG-EXP-003 — DONE — expansion regression gate after P-070 through P-073.
-- P-074, P-075, P-076, P-077, P-078 — DONE.
-- REG-EXP-004 — DONE — expansion regression gate after P-074, P-075, P-077, and P-078.
-- P-079 — DONE — Retirement Withdrawal Calculator merged.
-- P-080 — DONE — Pension Future Monthly Income Calculator merged.
-- P-081 — DONE — MEDIUM — Dividend Reinvestment Calculator merged.
-- P-082 — DONE — MEDIUM — Portfolio Rebalancing Calculator added with bilingual routes, shared-currency semantics, directory/search integration, target-allocation buy/sell guidance, turnover reporting, and regression tests.
-- REG-EXP-005 — DONE — HIGH — repository/full-suite, locale, directory, indexability, Vercel, and Production propagation evidence reconciled after P-079 through P-082; Production currently trails repository main by four calculators without application-failure evidence.
-- P-083 — DONE — MEDIUM — Bond Yield to Maturity Calculator added with bilingual routes, shared-currency semantics, investment-directory integration, numerical YTM solving, current-yield output, and regression tests.
-- P-084 — DONE — MEDIUM — Bond Price Calculator added with bilingual routes, shared-currency semantics, investment-directory integration, fixed-rate bond present-value pricing, premium/discount output, and regression tests.
-- P-085 — DONE — MEDIUM — APR and APY Conversion Calculator added with bilingual routes, savings-directory integration, bidirectional nominal/effective annual-rate conversion, compounding-frequency selection, worked example, and regression tests.
-- P-086 — OPEN — MEDIUM — Cryptocurrency Average Cost Calculator; next calculator after P-085.
+- P-045 through P-085 — DONE except no gaps among expansion tasks already listed as complete in prior state.
+- REG-EXP-001 through REG-EXP-005 — DONE — required expansion regression gates completed through the P-079–P-082 batch.
+- P-086 — DONE — MEDIUM — Cryptocurrency Average Cost Calculator added with bilingual routes, shared-currency semantics, investment-directory integration, weighted average entry-price calculation, explanatory content, and regression tests.
+- P-087 — OPEN — MEDIUM — Cryptocurrency Profit and Loss Calculator; next calculator after P-086.
 - P-089 — DONE — previously merged on main.
 
 All later uncompleted catalog tasks remain ordered by `TASK_QUEUE.md` and are effectively BLOCKED until they become the single OPEN task here.
@@ -51,7 +38,7 @@ All later uncompleted catalog tasks remain ordered by `TASK_QUEUE.md` and are ef
 
 ## Expansion continuation
 
-REG-EXP-005 completed the required regression gate after P-079 through P-082. P-083 through P-085 are complete and P-086 is the single next OPEN task. Continue the remaining expansion program in `TASK_QUEUE.md` order, skipping tasks already DONE here.
+P-086 is complete and P-087 is the single next OPEN task. Continue the remaining expansion program in `TASK_QUEUE.md` order, skipping tasks already DONE here.
 
 Each calculator PR must update this file in the same PR:
 
