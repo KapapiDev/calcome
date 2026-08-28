@@ -17,7 +17,7 @@ describe("Google advertising consent region", () => {
 
   it("fails closed when country information is absent or malformed", () => {
     expect(classifyGoogleConsentRegion(null)).toBe("unknown");
-    expect(classifyGoogleConsentRegion("")) .toBe("unknown");
+    expect(classifyGoogleConsentRegion("")).toBe("unknown");
     expect(classifyGoogleConsentRegion("USA")).toBe("unknown");
   });
 });

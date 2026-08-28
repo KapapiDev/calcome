@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   AD_CONSENT_POLICY_VERSION,
@@ -52,9 +52,16 @@ export function PrivacyControl({ locale, region }: PrivacyControlProps) {
   const text = copy[locale];
   const cmpRequired = requiresCertifiedCmp(region);
 
-  useEffect(() => {
-    setConsent(parseStoredAdConsent(window.localStorage.getItem(AD_CONSENT_STORAGE_KEY)));
-  }, []);
+  const toggleOpen = () => {
+    if (!open) {
+      setConsent(
+        parseStoredAdConsent(
+          window.localStorage.getItem(AD_CONSENT_STORAGE_KEY),
+        ),
+      );
+    }
+    setOpen((value) => !value);
+  };
 
   const save = (decision: AdConsentDecision) => {
     const next: AdConsentSnapshot = {
@@ -62,7 +69,10 @@ export function PrivacyControl({ locale, region }: PrivacyControlProps) {
       decision,
       source: "site-control",
     };
-    window.localStorage.setItem(AD_CONSENT_STORAGE_KEY, serializeAdConsent(next));
+    window.localStorage.setItem(
+      AD_CONSENT_STORAGE_KEY,
+      serializeAdConsent(next),
+    );
     setConsent(next);
   };
 
@@ -124,7 +134,7 @@ export function PrivacyControl({ locale, region }: PrivacyControlProps) {
         type="button"
         aria-expanded={open}
         className="rounded-full border bg-background px-4 py-2 text-sm font-medium text-foreground shadow-sm hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        onClick={() => setOpen((value) => !value)}
+        onClick={toggleOpen}
       >
         {text.button}
       </button>
