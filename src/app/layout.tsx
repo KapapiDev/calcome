@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 
+import { PrivacyControl } from "@/components/ads/privacy-control";
+import { classifyGoogleConsentRegion } from "@/components/ads/privacy-region";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
@@ -89,6 +91,10 @@ export default async function RootLayout({
   const requestHeaders = await headers();
   const locale = requestHeaders.get("x-calcome-locale") === "en" ? "en" : "ko";
   const pathname = requestHeaders.get("x-calcome-pathname") ?? "/";
+  const privacyRegion = classifyGoogleConsentRegion(
+    requestHeaders.get("x-vercel-ip-country"),
+  );
+
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
@@ -105,6 +111,7 @@ export default async function RootLayout({
             <RelatedCalculators locale={locale} pathname={pathname} />
             <SiteFooter locale={locale} />
           </div>
+          <PrivacyControl locale={locale} region={privacyRegion} />
         </ThemeProvider>
       </body>
     </html>

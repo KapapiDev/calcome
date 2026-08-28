@@ -1,5 +1,11 @@
 import type { ReactNode } from "react";
 
+import {
+  canLoadAdPayload,
+  defaultAdConsent,
+  type AdConsentSnapshot,
+  type AdPrivacyRegion,
+} from "./ad-consent";
 import { getAdPlacement, type AdPlacement } from "./ad-placements";
 
 type AdSlotProps = {
@@ -7,6 +13,8 @@ type AdSlotProps = {
   children?: ReactNode;
   className?: string;
   label?: string;
+  privacyRegion?: AdPrivacyRegion;
+  consent?: AdConsentSnapshot;
 };
 
 export function AdSlot({
@@ -14,8 +22,11 @@ export function AdSlot({
   children,
   className = "",
   label = "Advertisement",
+  privacyRegion = "unknown",
+  consent = defaultAdConsent,
 }: AdSlotProps) {
   const config = getAdPlacement(placement);
+  const payloadAllowed = canLoadAdPayload(privacyRegion, consent);
   const classes = [
     "flex items-center justify-center overflow-hidden",
     config.minHeightClass,
@@ -30,9 +41,10 @@ export function AdSlot({
       aria-label={label}
       className={classes}
       data-ad-placement={placement}
+      data-ad-payload-allowed={payloadAllowed ? "true" : "false"}
       data-ad-reserved-space="true"
     >
-      {children}
+      {payloadAllowed ? children : null}
     </aside>
   );
 }
