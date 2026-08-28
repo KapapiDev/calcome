@@ -23,7 +23,8 @@ This file is the compact mutable execution ledger for autonomous development.
 - P-045 through P-085 — DONE except no gaps among expansion tasks already listed as complete in prior state.
 - REG-EXP-001 through REG-EXP-005 — DONE — required expansion regression gates completed through the P-079–P-082 batch.
 - P-086 — DONE — MEDIUM — Cryptocurrency Average Cost Calculator added with bilingual routes, shared-currency semantics, investment-directory integration, weighted average entry-price calculation, explanatory content, and regression tests.
-- P-087 — OPEN — MEDIUM — Cryptocurrency Profit and Loss Calculator; next calculator after P-086.
+- REG-EXP-006 — DONE — HIGH — required four-calculator regression gate reconciled after P-083 through P-086; repository/full-suite and current Vercel evidence show no verified product blocker.
+- P-087 — OPEN — MEDIUM — Cryptocurrency Profit and Loss Calculator; next calculator after REG-EXP-006.
 - P-089 — DONE — previously merged on main.
 
 All later uncompleted catalog tasks remain ordered by `TASK_QUEUE.md` and are effectively BLOCKED until they become the single OPEN task here.
@@ -38,7 +39,7 @@ All later uncompleted catalog tasks remain ordered by `TASK_QUEUE.md` and are ef
 
 ## Expansion continuation
 
-P-086 is complete and P-087 is the single next OPEN task. Continue the remaining expansion program in `TASK_QUEUE.md` order, skipping tasks already DONE here.
+REG-EXP-006 completed the required regression gate after P-083 through P-086. P-087 is the single next OPEN task. Continue the remaining expansion program in `TASK_QUEUE.md` order, skipping tasks already DONE here.
 
 Each calculator PR must update this file in the same PR:
 
