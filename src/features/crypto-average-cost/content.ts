@@ -19,8 +19,7 @@ export const cryptoAverageCostContent = {
     totalCost: "총 투자금액",
     additionalCost: "추가 매수금액",
     averagePriceChangePercent: "평균단가 변화율",
-    error:
-      "수량과 가격을 올바르게 입력해 주세요. 총 수량은 0보다 커야 합니다.",
+    error: "수량과 가격을 올바르게 입력해 주세요. 총 수량은 0보다 커야 합니다.",
     note: "거래 수수료, 세금, 슬리피지, 환율 변동은 포함하지 않습니다. 표시 통화는 계산 결과의 단위만 바꾸며 환전하지 않습니다.",
     method:
       "기존 투자금액과 추가 매수금액을 더한 뒤 총 보유 수량으로 나눠 가중평균 매수가를 계산합니다.",
