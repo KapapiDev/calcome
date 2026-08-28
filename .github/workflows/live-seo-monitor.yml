@@ -18,5 +18,13 @@ jobs:
     timeout-minutes: 15
 
     steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
       - name: Check live crawl and indexability signals
         run: node scripts/live-seo-check.mjs
