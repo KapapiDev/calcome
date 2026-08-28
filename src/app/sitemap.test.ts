@@ -50,6 +50,7 @@ describe("XML sitemap", () => {
         "https://www.calcome.com/en/calculators",
       ],
       ["https://www.calcome.com/about", "https://www.calcome.com/en/about"],
+      ["https://www.calcome.com/guides", "https://www.calcome.com/en/guides"],
       ["https://www.calcome.com/privacy", "https://www.calcome.com/en/privacy"],
       ["https://www.calcome.com/terms", "https://www.calcome.com/en/terms"],
       ["https://www.calcome.com/contact", "https://www.calcome.com/en/contact"],
