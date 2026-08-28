@@ -32,7 +32,9 @@ export function calculateCryptoProfitLoss(
     throw new RangeError("all inputs must be finite and nonnegative");
   }
   if (input.quantity <= 0 || input.averageEntryPrice <= 0) {
-    throw new RangeError("quantity and averageEntryPrice must be greater than zero");
+    throw new RangeError(
+      "quantity and averageEntryPrice must be greater than zero",
+    );
   }
   if (input.buyFeePercent >= 100 || input.sellFeePercent >= 100) {
     throw new RangeError("fee percentages must be below 100");
