@@ -28,9 +28,10 @@ describe("AdSense runtime configuration", () => {
   });
 
   it("surfaces missing and malformed production publisher settings", () => {
-    expect(
-      getAdSenseRuntimeConfig({ vercelEnv: "production" }),
-    ).toMatchObject({ enabled: false, status: "missing-publisher-id" });
+    expect(getAdSenseRuntimeConfig({ vercelEnv: "production" })).toMatchObject({
+      enabled: false,
+      status: "missing-publisher-id",
+    });
     expect(
       getAdSenseRuntimeConfig({
         vercelEnv: "production",

@@ -48,9 +48,7 @@ export function getAdSenseRuntimeConfig(
   if (!publisherId) {
     return {
       enabled: false,
-      status: env.publisherId
-        ? "invalid-publisher-id"
-        : "missing-publisher-id",
+      status: env.publisherId ? "invalid-publisher-id" : "missing-publisher-id",
       publisherId: null,
       clientId: null,
     };
