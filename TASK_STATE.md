@@ -18,5 +18,7 @@ Remaining to Target: 0
 - [x] SEO-005 DONE — Search Intent and Metadata Optimization
   - PR: #327
 - [x] SEO-006 DONE — Internal Linking and Topic Cluster Hubs
+  - PR: #328
+- [x] SEO-007 DONE — Live SEO Monitoring, Indexation, Crawl and Discovery Checks
   - PR: this implementation PR
-- [ ] SEO-007 OPEN — Live SEO Monitoring, Indexation, Crawl and Discovery Checks
+- [ ] SEO-008 OPEN — Search Console Query and Cannibalization Feedback Loop
