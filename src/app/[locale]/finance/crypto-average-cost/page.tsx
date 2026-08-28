@@ -10,7 +10,9 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
-  return locale === "ko" || locale === "en" ? createCryptoAverageCostMetadata(locale) : {};
+  return locale === "ko" || locale === "en"
+    ? createCryptoAverageCostMetadata(locale)
+    : {};
 }
 
 export default async function Page({ params }: Props) {
