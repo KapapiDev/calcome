@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: read
+  issues: write
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -44,7 +45,28 @@ jobs:
         run: npm run typecheck
 
       - name: Check formatting
-        run: npm run format:check
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          npm run format:check > /tmp/format-check.log 2>&1
+          status=$?
+          set -e
+          cat /tmp/format-check.log
+
+          if [ "$status" -ne 0 ] && [ "${{ github.event_name }}" = "pull_request" ]; then
+            {
+              echo '<!-- calcome-format-check -->'
+              echo '### Formatting corrective diff'
+              echo
+              echo '```text'
+              cat /tmp/format-check.log
+              echo '```'
+            } > /tmp/format-comment.md
+            gh pr comment "${{ github.event.pull_request.number }}" --body-file /tmp/format-comment.md
+          fi
+
+          exit "$status"
 
       - name: Run tests
         run: npm run test
