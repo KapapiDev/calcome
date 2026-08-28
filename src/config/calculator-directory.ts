@@ -35,10 +35,27 @@ export const breakEvenSalesCalculator = {
   href: "/ko/finance/break-even-sales",
 } as const satisfies PublishedCalculator;
 
+export const operatingProfitCalculator = {
+  id: "operating-profit",
+  name: "영업이익 계산기",
+  description:
+    "매출액, 매출원가, 영업비용으로 매출총이익, 영업이익, 영업이익률을 계산합니다.",
+  keywords: [
+    "영업이익 계산기",
+    "영업이익률 계산기",
+    "매출총이익 계산기",
+    "operating profit calculator",
+    "operating margin calculator",
+  ],
+  category: "금융",
+  href: "/ko/finance/operating-profit",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...previous.allPublishedCalculators,
   foreignCurrencyAverageCostCalculator,
   breakEvenSalesCalculator,
+  operatingProfitCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -55,7 +72,11 @@ export const calculatorDirectoryCategories =
     if (category.id === "business-life") {
       return {
         ...category,
-        calculatorIds: [...category.calculatorIds, "break-even-sales"],
+        calculatorIds: [
+          ...category.calculatorIds,
+          "break-even-sales",
+          "operating-profit",
+        ],
       };
     }
     return category;
@@ -86,6 +107,19 @@ export const directorySearchCalculators = [
       "공헌이익률",
       "contribution margin calculator",
       "break even revenue calculator",
+    ],
+  },
+  {
+    ...operatingProfitCalculator,
+    primaryCategory: "사업·생활",
+    keywords: [
+      ...operatingProfitCalculator.keywords,
+      "영업 손익 계산기",
+      "영업 마진 계산기",
+      "매출 영업이익률",
+      "operating income calculator",
+      "profit margin calculator",
+      "gross profit calculator",
     ],
   },
 ] satisfies readonly previous.DirectorySearchCalculator[];
