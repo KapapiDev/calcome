@@ -1,27 +1,27 @@
 import type { PublishedCalculator } from "./calculators";
-import * as previous from "./calculator-directory.pre-staking-reward";
+import * as previous from "./calculator-directory.pre-crypto-profit-loss";
 
-export * from "./calculator-directory.pre-staking-reward";
+export * from "./calculator-directory.pre-crypto-profit-loss";
 
-export const stakingRewardCalculator = {
-  id: "staking-reward",
-  name: "스테이킹 보상 계산기",
+export const cryptoProfitLossCalculator = {
+  id: "crypto-profit-loss",
+  name: "암호화폐 손익 계산기",
   description:
-    "스테이킹 수량·연 보상률·기간과 재투자 빈도를 바탕으로 예상 보상 수량, 최종 수량, 기간 수익률을 계산합니다.",
+    "보유 수량·평균 매수가·현재 가격과 매수·매도 수수료를 반영해 평가손익, 수익률, 손익분기 가격을 계산합니다.",
   keywords: [
-    "스테이킹 계산기",
-    "코인 스테이킹 보상",
-    "스테이킹 수익 계산기",
-    "staking reward calculator",
-    "crypto staking calculator",
+    "코인 수익률 계산기",
+    "암호화폐 손익 계산기",
+    "비트코인 수익 계산기",
+    "crypto profit loss calculator",
+    "crypto roi calculator",
   ],
   category: "금융",
-  href: "/ko/finance/staking-reward",
+  href: "/ko/finance/crypto-profit-loss",
 } as const satisfies PublishedCalculator;
 
 export const allPublishedCalculators = [
   ...previous.allPublishedCalculators,
-  stakingRewardCalculator,
+  cryptoProfitLossCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -29,7 +29,7 @@ export const calculatorDirectoryCategories =
     if (category.id === "investment") {
       return {
         ...category,
-        calculatorIds: [...category.calculatorIds, "staking-reward"],
+        calculatorIds: [...category.calculatorIds, "crypto-profit-loss"],
       };
     }
     return category;
@@ -38,16 +38,15 @@ export const calculatorDirectoryCategories =
 export const directorySearchCalculators = [
   ...previous.directorySearchCalculators,
   {
-    ...stakingRewardCalculator,
+    ...cryptoProfitLossCalculator,
     primaryCategory: "투자",
     keywords: [
-      ...stakingRewardCalculator.keywords,
-      "스테이킹 apr",
-      "스테이킹 apy",
-      "스테이킹 복리",
-      "staking apr calculator",
-      "staking apy calculator",
-      "staking compound interest",
+      ...cryptoProfitLossCalculator.keywords,
+      "코인 손익",
+      "코인 평가손익",
+      "bitcoin profit calculator",
+      "crypto return calculator",
+      "break even crypto price",
     ],
   },
 ] satisfies readonly previous.DirectorySearchCalculator[];
