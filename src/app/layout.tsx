@@ -10,51 +10,69 @@ import {
   themeInitializationScript,
 } from "@/components/theme/theme-provider";
 import { siteConfig } from "@/config/site";
+import { localizedSeoPaths, socialLocale } from "@/lib/seo/metadata";
 
 import "./globals.css";
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
-  title: {
-    default: `${siteConfig.name} - ${siteConfig.slogan}`,
-    template: `%s | ${siteConfig.name}`,
-  },
-  description: siteConfig.description,
-  applicationName: siteConfig.name,
-  category: "finance",
-  openGraph: {
-    type: "website",
-    locale: siteConfig.locale,
-    siteName: siteConfig.name,
-    title: `${siteConfig.name} - ${siteConfig.slogan}`,
+export function createRootMetadata(pathname: string): Metadata {
+  const seo = localizedSeoPaths(pathname);
+  const social = socialLocale(seo.locale);
+
+  return {
+    metadataBase: new URL(siteConfig.url),
+    title: {
+      default: `${siteConfig.name} - ${siteConfig.slogan}`,
+      template: `%s | ${siteConfig.name}`,
+    },
     description: siteConfig.description,
-    url: "/",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${siteConfig.name} - ${siteConfig.slogan}`,
-    description: siteConfig.description,
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+    applicationName: siteConfig.name,
+    category: "finance",
+    alternates: {
+      canonical: seo.canonical,
+      languages: seo.languages,
+    },
+    openGraph: {
+      type: "website",
+      locale: social.locale,
+      alternateLocale: social.alternateLocale,
+      siteName: siteConfig.name,
+      title: `${siteConfig.name} - ${siteConfig.slogan}`,
+      description: siteConfig.description,
+      url: seo.canonical,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${siteConfig.name} - ${siteConfig.slogan}`,
+      description: siteConfig.description,
+    },
+    robots: {
       index: true,
       follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
     },
-  },
-  verification: {
-    other: {
-      "naver-site-verification": [
-        "61d4b932c5e6b51be3b7221317d9f6e71ac9343a",
-        "a29b19e1e2434d8a1f3165e813e4abfbf791bf23",
-      ],
+    verification: {
+      other: {
+        "naver-site-verification": [
+          "61d4b932c5e6b51be3b7221317d9f6e71ac9343a",
+          "a29b19e1e2434d8a1f3165e813e4abfbf791bf23",
+        ],
+      },
     },
-  },
-};
+  };
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const requestHeaders = await headers();
+  const pathname = requestHeaders.get("x-calcome-pathname") ?? "/ko";
+
+  return createRootMetadata(pathname);
+}
 
 export const viewport: Viewport = {
   themeColor: [
