@@ -30,7 +30,8 @@ This file is the compact mutable execution ledger for autonomous development.
 - P-091 — DONE — MEDIUM — Break-Even Sales Calculator added with bilingual routes, contribution-margin, break-even unit and break-even sales calculations, business-life directory integration, explanatory content, and regression tests.
 - P-092 — DONE — MEDIUM — Operating Profit Calculator added with bilingual routes, gross-profit, operating-profit and operating-margin calculations, business-life directory integration, explanatory content, and regression tests.
 - P-093 — DONE — MEDIUM — Business Cash Runway Calculator added with bilingual routes, net-burn and runway calculations, non-consuming state, runway-date estimate, adjustment scenarios, explicit same-currency semantics, business-life directory integration, explanatory content, and regression tests.
-- SEO-003 — OPEN — HIGH — Technical SEO and Indexability Audit; begin the post-expansion whole-site SEO phase without duplicating already-correct redirect or canonical cleanup.
+- SEO-003 — DONE — HIGH — Technical SEO and Indexability Audit completed with repository-level sitemap/robots review and executable bilingual sitemap, canonical-origin, alternate-language, uniqueness, and robots regression gates.
+- SEO-004 — OPEN — HIGH — Calculator Content Depth and Trust Template; strengthen reusable calculator content depth and trust signals without duplicating technical indexability work.
 
 All later uncompleted catalog tasks remain ordered by `TASK_QUEUE.md` and are effectively BLOCKED until they become the single OPEN task here.
 
@@ -44,7 +45,7 @@ All later uncompleted catalog tasks remain ordered by `TASK_QUEUE.md` and are ef
 
 ## Expansion continuation
 
-REG-EXP-006 completed the required regression gate after P-083 through P-086. P-087 through P-093 are complete, with P-089 already complete before the final batch. The 100-calculator expansion milestone is complete. The single next OPEN task is SEO-003; continue the post-expansion program in `TASK_QUEUE.md` order, skipping tasks already DONE here.
+REG-EXP-006 completed the required regression gate after P-083 through P-086. P-087 through P-093 are complete, with P-089 already complete before the final batch. The 100-calculator expansion milestone is complete. SEO-003 completed the first whole-site post-expansion technical SEO audit and installed executable indexability regression guards. The single next OPEN task is SEO-004; continue the post-expansion program in `TASK_QUEUE.md` order, skipping tasks already DONE here.
 
 Each implementation PR must update this file in the same PR:
 
