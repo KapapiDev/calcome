@@ -1,35 +1,35 @@
 import type { PublishedCalculator } from "./calculators";
-import * as previous from "./calculator-directory.pre-apr-apy-conversion";
+import * as previous from "./calculator-directory.pre-bond-price";
 
-export * from "./calculator-directory.pre-apr-apy-conversion";
+export * from "./calculator-directory.pre-bond-price";
 
-export const aprApyConversionCalculator = {
-  id: "apr-apy-conversion",
-  name: "APR·APY 변환 계산기",
+export const bondPriceCalculator = {
+  id: "bond-price",
+  name: "채권 가격 계산기",
   description:
-    "명목 연이율(APR)과 복리 효과를 포함한 연환산수익률(APY)을 복리 주기에 맞춰 서로 변환합니다.",
+    "액면가, 표면금리, 시장 요구수익률, 만기와 이자 지급주기로 고정금리 채권의 이론 가격과 프리미엄·할인을 계산합니다.",
   keywords: [
-    "APR APY 계산기",
-    "APR APY 변환",
-    "유효 연이율 계산기",
-    "명목 이율 변환",
-    "apr to apy calculator",
+    "채권 가격 계산기",
+    "채권 가치 계산기",
+    "채권 할인 계산",
+    "채권 프리미엄",
+    "bond price calculator",
   ],
   category: "금융",
-  href: "/ko/finance/apr-apy-conversion",
+  href: "/ko/finance/bond-price",
 } as const satisfies PublishedCalculator;
 
 export const allPublishedCalculators = [
   ...previous.allPublishedCalculators,
-  aprApyConversionCalculator,
+  bondPriceCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
   previous.calculatorDirectoryCategories.map((category) => {
-    if (category.id === "savings") {
+    if (category.id === "investment") {
       return {
         ...category,
-        calculatorIds: [...category.calculatorIds, "apr-apy-conversion"],
+        calculatorIds: [...category.calculatorIds, "bond-price"],
       };
     }
     return category;
@@ -38,16 +38,16 @@ export const calculatorDirectoryCategories =
 export const directorySearchCalculators = [
   ...previous.directorySearchCalculators,
   {
-    ...aprApyConversionCalculator,
-    primaryCategory: "저축·연금",
+    ...bondPriceCalculator,
+    primaryCategory: "투자",
     keywords: [
-      ...aprApyConversionCalculator.keywords,
-      "APY APR 계산기",
-      "연이율 복리 계산",
-      "effective annual rate",
-      "nominal annual rate",
-      "annual percentage yield",
-      "annual percentage rate",
+      ...bondPriceCalculator.keywords,
+      "채권 현재가치",
+      "YTM 채권 가격",
+      "표면금리 채권 가격",
+      "fixed income price calculator",
+      "bond valuation calculator",
+      "coupon bond price",
     ],
   },
 ] satisfies readonly previous.DirectorySearchCalculator[];
