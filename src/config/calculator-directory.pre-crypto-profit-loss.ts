@@ -1,27 +1,27 @@
 import type { PublishedCalculator } from "./calculators";
-import * as previous from "./calculator-directory.pre-crypto-profit-loss";
+import * as previous from "./calculator-directory.pre-crypto-average-cost";
 
-export * from "./calculator-directory.pre-crypto-profit-loss";
+export * from "./calculator-directory.pre-crypto-average-cost";
 
-export const cryptoProfitLossCalculator = {
-  id: "crypto-profit-loss",
-  name: "암호화폐 손익 계산기",
+export const cryptoAverageCostCalculator = {
+  id: "crypto-average-cost",
+  name: "암호화폐 평균단가 계산기",
   description:
-    "보유 수량·평균 매수가·현재 가격과 매수·매도 수수료를 반영해 평가손익, 수익률, 손익분기 가격을 계산합니다.",
+    "기존 보유 수량·평균단가와 추가 매수 수량·가격을 합쳐 새로운 평균단가와 총 투자금액을 계산합니다.",
   keywords: [
-    "코인 수익률 계산기",
-    "암호화폐 손익 계산기",
-    "비트코인 수익 계산기",
-    "crypto profit loss calculator",
-    "crypto roi calculator",
+    "코인 물타기 계산기",
+    "암호화폐 평균단가",
+    "코인 평단 계산기",
+    "crypto average cost calculator",
+    "bitcoin average price calculator",
   ],
   category: "금융",
-  href: "/ko/finance/crypto-profit-loss",
+  href: "/ko/finance/crypto-average-cost",
 } as const satisfies PublishedCalculator;
 
 export const allPublishedCalculators = [
   ...previous.allPublishedCalculators,
-  cryptoProfitLossCalculator,
+  cryptoAverageCostCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -29,7 +29,7 @@ export const calculatorDirectoryCategories =
     if (category.id === "investment") {
       return {
         ...category,
-        calculatorIds: [...category.calculatorIds, "crypto-profit-loss"],
+        calculatorIds: [...category.calculatorIds, "crypto-average-cost"],
       };
     }
     return category;
@@ -38,15 +38,15 @@ export const calculatorDirectoryCategories =
 export const directorySearchCalculators = [
   ...previous.directorySearchCalculators,
   {
-    ...cryptoProfitLossCalculator,
+    ...cryptoAverageCostCalculator,
     primaryCategory: "투자",
     keywords: [
-      ...cryptoProfitLossCalculator.keywords,
-      "코인 손익",
-      "코인 평가손익",
-      "bitcoin profit calculator",
-      "crypto return calculator",
-      "break even crypto price",
+      ...cryptoAverageCostCalculator.keywords,
+      "비트코인 평단",
+      "이더리움 평단",
+      "코인 추가매수",
+      "crypto averaging down",
+      "average entry price",
     ],
   },
 ] satisfies readonly previous.DirectorySearchCalculator[];

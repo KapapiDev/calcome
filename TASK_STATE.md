@@ -7,11 +7,11 @@ This file is the compact mutable execution ledger for autonomous development.
 ## Reconciliation baseline
 
 - Reconciled date: 2026-08-28
-- Reconciled base `main`: post-P-086
-- Current public-calculator count derived from the 51-calculator original baseline plus 43 completed expansion tasks: **94**
+- Reconciled base `main`: post-P-087
+- Current public-calculator count derived from the 51-calculator original baseline plus 44 completed expansion tasks: **95**
 - Target: **100**
-- Completed expansion tasks: **43 / 49**
-- Remaining expansion tasks: **6**
+- Completed expansion tasks: **44 / 49**
+- Remaining expansion tasks: **5**
 - Exactly one task is OPEN below.
 
 ## Current execution state
@@ -21,10 +21,10 @@ This file is the compact mutable execution ledger for autonomous development.
 - UX-007, UX-009, UX-010, SEO-FIX-002 — DONE — shared accessibility, locale, discovery, and indexability repair gates merged.
 - SEC-001 — DONE — CRITICAL — patched dependency set and permanent production high-severity audit gate merged.
 - P-045 through P-085 — DONE except no gaps among expansion tasks already listed as complete in prior state.
-- REG-EXP-001 through REG-EXP-005 — DONE — required expansion regression gates completed through the P-079–P-082 batch.
+- REG-EXP-001 through REG-EXP-006 — DONE — required expansion regression gates completed through the P-083–P-086 batch.
 - P-086 — DONE — MEDIUM — Cryptocurrency Average Cost Calculator added with bilingual routes, shared-currency semantics, investment-directory integration, weighted average entry-price calculation, explanatory content, and regression tests.
-- REG-EXP-006 — DONE — HIGH — required four-calculator regression gate reconciled after P-083 through P-086; repository/full-suite and current Vercel evidence show no verified product blocker.
-- P-087 — OPEN — MEDIUM — Cryptocurrency Profit and Loss Calculator; next calculator after REG-EXP-006.
+- P-087 — DONE — MEDIUM — Cryptocurrency Profit and Loss Calculator added with bilingual routes, fee-aware profit/loss and return calculations, break-even price, investment-directory integration, explanatory content, and regression tests.
+- P-088 — OPEN — MEDIUM — Staking Reward Calculator; next calculator after P-087.
 - P-089 — DONE — previously merged on main.
 
 All later uncompleted catalog tasks remain ordered by `TASK_QUEUE.md` and are effectively BLOCKED until they become the single OPEN task here.
@@ -39,7 +39,7 @@ All later uncompleted catalog tasks remain ordered by `TASK_QUEUE.md` and are ef
 
 ## Expansion continuation
 
-REG-EXP-006 completed the required regression gate after P-083 through P-086. P-087 is the single next OPEN task. Continue the remaining expansion program in `TASK_QUEUE.md` order, skipping tasks already DONE here.
+REG-EXP-006 completed the required regression gate after P-083 through P-086. P-087 is complete and P-088 is the single next OPEN task. Continue the remaining expansion program in `TASK_QUEUE.md` order, skipping tasks already DONE here.
 
 Each calculator PR must update this file in the same PR:
 
