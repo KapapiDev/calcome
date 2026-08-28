@@ -51,11 +51,28 @@ export const operatingProfitCalculator = {
   href: "/ko/finance/operating-profit",
 } as const satisfies PublishedCalculator;
 
+export const businessCashRunwayCalculator = {
+  id: "business-cash-runway",
+  name: "사업 현금 런웨이 계산기",
+  description:
+    "현재 보유 현금과 월 현금 유입·유출로 월 순소진액, 예상 런웨이와 현금 소진 시점을 계산합니다.",
+  keywords: [
+    "사업 현금 런웨이 계산기",
+    "현금 소진 계산기",
+    "번레이트 계산기",
+    "business cash runway calculator",
+    "cash burn rate calculator",
+  ],
+  category: "금융",
+  href: "/ko/finance/business-cash-runway",
+} as const satisfies PublishedCalculator;
+
 export const allPublishedCalculators = [
   ...previous.allPublishedCalculators,
   foreignCurrencyAverageCostCalculator,
   breakEvenSalesCalculator,
   operatingProfitCalculator,
+  businessCashRunwayCalculator,
 ] as const satisfies readonly PublishedCalculator[];
 
 export const calculatorDirectoryCategories =
@@ -76,6 +93,7 @@ export const calculatorDirectoryCategories =
           ...category.calculatorIds,
           "break-even-sales",
           "operating-profit",
+          "business-cash-runway",
         ],
       };
     }
@@ -120,6 +138,19 @@ export const directorySearchCalculators = [
       "operating income calculator",
       "profit margin calculator",
       "gross profit calculator",
+    ],
+  },
+  {
+    ...businessCashRunwayCalculator,
+    primaryCategory: "사업·생활",
+    keywords: [
+      ...businessCashRunwayCalculator.keywords,
+      "현금 런웨이",
+      "사업자금 소진",
+      "월 순소진액",
+      "startup runway calculator",
+      "cash runway months",
+      "monthly burn calculator",
     ],
   },
 ] satisfies readonly previous.DirectorySearchCalculator[];

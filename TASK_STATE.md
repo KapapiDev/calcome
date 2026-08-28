@@ -7,11 +7,11 @@ This file is the compact mutable execution ledger for autonomous development.
 ## Reconciliation baseline
 
 - Reconciled date: 2026-08-28
-- Reconciled base `main`: post-P-092
-- Current public-calculator count derived from the 51-calculator original baseline plus 48 completed expansion tasks: **99**
+- Reconciled base `main`: post-P-093
+- Current public-calculator count derived from the 51-calculator original baseline plus 49 completed expansion tasks: **100**
 - Target: **100**
-- Completed expansion tasks: **48 / 49**
-- Remaining expansion tasks: **1**
+- Completed expansion tasks: **49 / 49**
+- Remaining expansion tasks: **0**
 - Exactly one task is OPEN below.
 
 ## Current execution state
@@ -29,7 +29,8 @@ This file is the compact mutable execution ledger for autonomous development.
 - P-090 — DONE — MEDIUM — Foreign-Currency Average Cost Calculator added with bilingual routes, user-entered FX-rate weighted average calculation, explicit currency-pair semantics, investment-directory integration, explanatory content, and regression tests.
 - P-091 — DONE — MEDIUM — Break-Even Sales Calculator added with bilingual routes, contribution-margin, break-even unit and break-even sales calculations, business-life directory integration, explanatory content, and regression tests.
 - P-092 — DONE — MEDIUM — Operating Profit Calculator added with bilingual routes, gross-profit, operating-profit and operating-margin calculations, business-life directory integration, explanatory content, and regression tests.
-- P-093 — OPEN — MEDIUM — Business Cash Runway Calculator; final uncompleted calculator in the 100-calculator expansion milestone.
+- P-093 — DONE — MEDIUM — Business Cash Runway Calculator added with bilingual routes, net-burn and runway calculations, non-consuming state, runway-date estimate, adjustment scenarios, explicit same-currency semantics, business-life directory integration, explanatory content, and regression tests.
+- SEO-003 — OPEN — HIGH — Technical SEO and Indexability Audit; begin the post-expansion whole-site SEO phase without duplicating already-correct redirect or canonical cleanup.
 
 All later uncompleted catalog tasks remain ordered by `TASK_QUEUE.md` and are effectively BLOCKED until they become the single OPEN task here.
 
@@ -43,13 +44,11 @@ All later uncompleted catalog tasks remain ordered by `TASK_QUEUE.md` and are ef
 
 ## Expansion continuation
 
-REG-EXP-006 completed the required regression gate after P-083 through P-086. P-087, P-088, P-090, P-091, and P-092 are complete; P-089 was already complete before this batch. The single next OPEN task is P-093. Continue the remaining expansion program in `TASK_QUEUE.md` order, skipping tasks already DONE here.
+REG-EXP-006 completed the required regression gate after P-083 through P-086. P-087 through P-093 are complete, with P-089 already complete before the final batch. The 100-calculator expansion milestone is complete. The single next OPEN task is SEO-003; continue the post-expansion program in `TASK_QUEUE.md` order, skipping tasks already DONE here.
 
-Each calculator PR must update this file in the same PR:
+Each implementation PR must update this file in the same PR:
 
 - mark its own task DONE
-- increment the public-calculator count by one only for a genuinely new public calculator
-- decrement the remaining expansion count accordingly
+- increment the public-calculator count only for a genuinely new public calculator
+- update remaining milestone counts when applicable
 - make exactly one next eligible task OPEN
-
-After every four additional calculator merges, insert the repository-defined Search Console, locale, directory, production, and indexability regression gate before the next calculator batch.
