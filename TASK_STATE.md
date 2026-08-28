@@ -1,6 +1,6 @@
 # CalCome Task State
 
-Last Updated: 2026-08-28
+Last Updated: 2026-08-29
 Current Calculator Count: 100
 Target Calculator Count: 100
 Remaining to Target: 0
@@ -20,5 +20,7 @@ Remaining to Target: 0
 - [x] SEO-006 DONE — Internal Linking and Topic Cluster Hubs
   - PR: #328
 - [x] SEO-007 DONE — Live SEO Monitoring, Indexation, Crawl and Discovery Checks
+  - PR: #329
+- [x] SEO-008 DONE — Search Console Query and Cannibalization Feedback Loop
   - PR: this implementation PR
-- [ ] SEO-008 OPEN — Search Console Query and Cannibalization Feedback Loop
+- [ ] ADS-001 OPEN — AdSense Policy and Site Trust Readiness Audit
