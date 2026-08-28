@@ -41,7 +41,9 @@ describe("technical SEO and indexability invariants", () => {
     const staticEntries = staticSitemapEntries();
 
     expect(staticEntries).toHaveLength(12);
-    expect(new Set(entries.map((entry) => entry.url)).size).toBe(entries.length);
+    expect(new Set(entries.map((entry) => entry.url)).size).toBe(
+      entries.length,
+    );
 
     for (const entry of entries) {
       expectCanonicalProductionUrl(entry.url);
