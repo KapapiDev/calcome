@@ -30,7 +30,8 @@ const searchCopy = {
       total > visible
         ? `${total}개 결과 중 상위 ${visible}개를 표시합니다.`
         : `${total}개 결과`,
-    refine: "더 정확한 결과가 필요하면 검색어를 구체화하거나 아래 카테고리를 이용하세요.",
+    refine:
+      "더 정확한 결과가 필요하면 검색어를 구체화하거나 아래 카테고리를 이용하세요.",
   },
   en: {
     label: "Search calculators",
@@ -43,7 +44,8 @@ const searchCopy = {
       total > visible
         ? `Showing the top ${visible} of ${total} results.`
         : `${total} ${total === 1 ? "result" : "results"}`,
-    refine: "Refine your search for a narrower match, or browse the full inventory by category below.",
+    refine:
+      "Refine your search for a narrower match, or browse the full inventory by category below.",
   },
 } as const;
 
