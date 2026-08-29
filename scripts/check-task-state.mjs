@@ -3,7 +3,8 @@ import { resolve } from "node:path";
 
 const taskStatePath = resolve(process.cwd(), "TASK_STATE.md");
 const source = readFileSync(taskStatePath, "utf8");
-const taskPattern = /^- \[[ x]\] ([A-Z][A-Z0-9-]*-\d+) (DONE|OPEN|EXTERNAL_WAIT)\b/gm;
+const taskPattern =
+  /^- \[[ x]\] ([A-Z][A-Z0-9-]*-\d+) (DONE|OPEN|EXTERNAL_WAIT)\b/gm;
 const entries = [...source.matchAll(taskPattern)].map((match) => ({
   id: match[1],
   status: match[2],
@@ -31,4 +32,6 @@ for (const entry of entries) {
   seen.set(entry.id, entry.status);
 }
 
-console.log(`TASK_STATE OK: ${entries.length} unique tasks, OPEN=${openTasks[0].id}`);
+console.log(
+  `TASK_STATE OK: ${entries.length} unique tasks, OPEN=${openTasks[0].id}`,
+);
