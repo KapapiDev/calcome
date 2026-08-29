@@ -1,3 +1,5 @@
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 import { allPublishedCalculators } from "@/config/calculator-directory";
@@ -14,6 +16,11 @@ function expectCanonicalProductionUrl(value: string) {
   expect(url.origin).toBe("https://www.calcome.com");
   expect(url.search).toBe("");
   expect(url.hash).toBe("");
+}
+
+function asList(value: string | string[] | undefined) {
+  if (!value) return [];
+  return Array.isArray(value) ? value : [value];
 }
 
 describe("technical SEO and indexability invariants", () => {
@@ -64,5 +71,37 @@ describe("technical SEO and indexability invariants", () => {
     expect(metadata.rules).toEqual({ userAgent: "*", allow: "/" });
     expect(metadata.host).toBe("https://www.calcome.com");
     expect(metadata.sitemap).toBe("https://www.calcome.com/sitemap.xml");
+  });
+
+  it("never blocks a canonical sitemap URL with robots directives", () => {
+    const metadata = robots();
+    const rules = Array.isArray(metadata.rules)
+      ? metadata.rules
+      : [metadata.rules];
+
+    for (const entry of sitemap()) {
+      const pathname = new URL(entry.url).pathname;
+
+      for (const rule of rules) {
+        for (const disallow of asList(rule.disallow)) {
+          expect(pathname.startsWith(disallow)).toBe(false);
+        }
+      }
+    }
+  });
+
+  it("keeps public metadata indexable while technical error surfaces stay out of the sitemap", () => {
+    const appRoot = join(process.cwd(), "src", "app");
+    const layoutSource = readFileSync(join(appRoot, "layout.tsx"), "utf8");
+    const sitemapPaths = sitemap().map((entry) => new URL(entry.url).pathname);
+
+    expect(layoutSource).toContain("robots: {");
+    expect(layoutSource).toContain("index: true");
+    expect(layoutSource).toContain("follow: true");
+    expect(existsSync(join(appRoot, "not-found.tsx"))).toBe(true);
+    expect(existsSync(join(appRoot, "error.tsx"))).toBe(true);
+    expect(sitemapPaths).not.toContain("/404");
+    expect(sitemapPaths).not.toContain("/not-found");
+    expect(sitemapPaths).not.toContain("/error");
   });
 });
