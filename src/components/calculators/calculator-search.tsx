@@ -5,22 +5,40 @@ import { useMemo, useState } from "react";
 import { CalculatorCard } from "@/components/calculators/calculator-card";
 import type { DirectorySearchCalculator } from "@/config/calculator-directory";
 
+type IndexedCalculator = {
+  calculator: DirectorySearchCalculator;
+  searchableText: string;
+};
+
+function normalizeSearchText(value: string) {
+  return value.toLocaleLowerCase("ko-KR");
+}
+
 export function CalculatorSearch({
   calculators,
 }: {
   calculators: readonly DirectorySearchCalculator[];
 }) {
   const [query, setQuery] = useState("");
-  const normalizedQuery = query.trim().toLocaleLowerCase("ko-KR");
+  const searchIndex = useMemo<readonly IndexedCalculator[]>(
+    () =>
+      calculators.map((calculator) => ({
+        calculator,
+        searchableText: normalizeSearchText(
+          [calculator.name, calculator.description, ...calculator.keywords].join(
+            " ",
+          ),
+        ),
+      })),
+    [calculators],
+  );
+  const normalizedQuery = normalizeSearchText(query.trim());
   const results = useMemo(() => {
     if (!normalizedQuery) return [];
-    return calculators.filter((calculator) =>
-      [calculator.name, calculator.description, ...calculator.keywords]
-        .join(" ")
-        .toLocaleLowerCase("ko-KR")
-        .includes(normalizedQuery),
-    );
-  }, [calculators, normalizedQuery]);
+    return searchIndex
+      .filter(({ searchableText }) => searchableText.includes(normalizedQuery))
+      .map(({ calculator }) => calculator);
+  }, [searchIndex, normalizedQuery]);
 
   return (
     <div className="mt-8 max-w-2xl">
