@@ -13,12 +13,16 @@ describe("static asset loading boundaries", () => {
     expect(existsSync(join(appDirectory, "favicon.ico"))).toBe(false);
     expect(iconSource).toContain("width: 32, height: 32");
     expect(iconSource).toContain('contentType = "image/png"');
-    expect(manifestSource).toContain('{ src: "/icon", sizes: "32x32", type: "image/png" }');
+    expect(manifestSource).toContain(
+      '{ src: "/icon", sizes: "32x32", type: "image/png" }',
+    );
   });
 
   it("keeps the shared font stack free of remote render-blocking font imports", () => {
     expect(globalStyles).not.toMatch(/@import\s+url\(/i);
     expect(globalStyles).not.toMatch(/https?:\/\/[^;]*(?:font|woff)/i);
-    expect(globalStyles).toContain('"Pretendard", "Apple SD Gothic Neo", "Noto Sans KR"');
+    expect(globalStyles).toContain(
+      '"Pretendard", "Apple SD Gothic Neo", "Noto Sans KR"',
+    );
   });
 });
