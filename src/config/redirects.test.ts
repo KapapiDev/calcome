@@ -17,9 +17,7 @@ describe("canonical redirects", () => {
     });
     expect(
       redirects.some(
-        (redirect) =>
-          redirect.source === "/en" &&
-          !redirect.has?.length,
+        (redirect) => redirect.source === "/en" && !redirect.has?.length,
       ),
     ).toBe(false);
   });
