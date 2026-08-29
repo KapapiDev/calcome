@@ -32,6 +32,10 @@ Remaining to Target: 0
 - [x] ADS-004 DONE — Consent and Regional Privacy Controls
   - PR: #334
 - [x] ADS-005 DONE — AdSense Integration and ads.txt
-  - PR: this implementation PR
-- [ ] OPS-ADS-001 OPEN — Production AdSense Activation Verification
-  - Scope: verify the real AdSense publisher ID/site status against Vercel Production, canonical `/ads.txt`, production HTML, Preview isolation, and ADS-004 consent boundary; do not invent or commit an account ID.
+  - PR: #335
+- [ ] OPS-ADS-001 EXTERNAL_WAIT — Production AdSense Activation Verification
+  - Verified 2026-08-29: Vercel team discovery succeeds; project deployment listing returns 403 and the current Vercel-bot deployment ID returns 404 through the direct deployment lookup. The public production site is reachable, but connected Gmail contains no AdSense account approval/site-status message or real publisher ID. The account-owner AdSense Sites/publisher-ID evidence required to safely activate Production is therefore unavailable through connected paths.
+  - Resume condition: authoritative AdSense account evidence exposes the intended `pub-################` publisher ID and `calcome.com` site status. Never infer, invent, or substitute an ID.
+  - This external account-owner wait is not a product/security failure and must not freeze unrelated repository development.
+- [ ] UX-007 OPEN — Full-Site Accessibility and Visual Consistency Regression
+  - Scope: run the whole-site post-fix accessibility and visual consistency regression defined in `TASK_QUEUE.md`, preserving calculation correctness, bilingual routing, SEO, public URLs, and the 100-calculator inventory.
