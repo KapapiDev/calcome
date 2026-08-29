@@ -56,5 +56,8 @@ Remaining to Target: 0
 - [x] SEO-013 DONE — Public Route Status and Soft-404 Regression
   - PR: #342
   - Repository route-contract coverage now proves all 100 published calculator canonicals are backed by real shared locale route modules, representative static/directory/info/not-found routes remain source-backed, and locale-less aliases only redirect to real canonical calculator pages. Public home and directory content were observable; ambiguous external fetch errors were not misclassified as product Soft 404s. See `docs/SEO_PUBLIC_ROUTE_STATUS_SOFT404_REGRESSION_2026-08-29.md`.
-- [ ] SEO-014 OPEN — Robots, Noindex and Crawl Directive Regression
-  - Scope: reconcile robots.txt, metadata robots directives, sitemap eligibility, canonical public routes, and intentional not-found/error surfaces; fix only reproducible crawl-directive contradictions and preserve legitimate non-indexable technical/error responses.
+- [x] SEO-014 DONE — Robots, Noindex and Crawl Directive Regression
+  - PR: #343
+  - Current repository sources have no crawl-directive contradiction: robots allows the canonical public surface, shared metadata opts public content into index/follow, sitemap entries stay on the canonical production host, and technical error/not-found surfaces stay out of the sitemap. Added cross-source regression coverage without changing valid crawl behavior. See `docs/SEO_ROBOTS_NOINDEX_CRAWL_DIRECTIVE_REGRESSION_2026-08-29.md`.
+- [ ] UX-009 OPEN — Global Locale Routing and English Surface Integrity
+  - Scope: audit shared locale preservation across English home, navigation, static pages, calculators, language switching, loading/fallback copy, and reciprocal route identity; fix only reproducible locale leaks while preserving canonical, hreflang, sitemap, and redirect invariants.
