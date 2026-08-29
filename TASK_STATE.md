@@ -38,7 +38,11 @@ Remaining to Target: 0
   - Resume condition: authoritative AdSense account evidence exposes the intended `pub-################` publisher ID and `calcome.com` site status. Never infer, invent, or substitute an ID.
   - This external account-owner wait is not a product/security failure and must not freeze unrelated repository development.
 - [x] UX-007 DONE — Full-Site Accessibility and Visual Consistency Regression
-  - PR: T.B.D.
+  - PR: #337
   - Final regression on latest post-AdSense UI found the newly added privacy controls below the shared 44px touch-target contract. The launcher, consent actions, reset action, and close action now preserve a 44px minimum target, with focused bilingual regression coverage. Existing calculation, routing, SEO, consent semantics, and the 100-calculator inventory are unchanged.
-- [ ] SEO-009 OPEN — Post-100 Calculator Search Performance and Coverage Review
-  - Scope: use fresh Search Console query/page/country/device and indexing evidence to identify the highest-value post-100-calculator improvements without shrinking the broad calculator strategy. Prefer shared metadata, internal-discovery, content-depth, and indexability fixes over duplicate calculators or fabricated demand estimates.
+- [ ] SEO-009 EXTERNAL_WAIT — Post-100 Calculator Search Performance and Coverage Review
+  - Verified 2026-08-29: Search Console sent current Soft 404 indexation notifications on 2026-08-23, while public Google crawl evidence on 2026-08-29 shows representative current and recently-added CalCome routes being crawled/indexed. A fresh query/page/country/device performance export is not available through connected sources, so no traffic metrics or reprioritization are inferred from stale data.
+  - Resume condition: authoritative current Search Console query×page, page, country, device, and Page Indexing evidence is available. See `docs/SEO_POST_100_REVIEW_2026-08-29.md`.
+  - This private-account evidence wait is not a confirmed product/indexability failure and must not freeze unrelated repository development.
+- [ ] SEO-010 OPEN — Public Indexability and Search Snippet Regression
+  - Scope: verify representative current calculator families through live crawl/search evidence, inspect title/description/canonical/hreflang/indexability and snippet quality for stale or duplicate discovery signals, and fix only reproducible shared defects. Preserve all 100 calculators and do not fabricate Search Console demand.
