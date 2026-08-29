@@ -170,7 +170,10 @@ export default async function LocalizedCalculatorsPage({
           <p className="mt-5 text-pretty text-lg leading-8 text-muted-foreground">
             Search for a calculator or browse by financial goal.
           </p>
-          <CalculatorSearch calculators={englishDirectoryCalculators} />
+          <CalculatorSearch
+            calculators={englishDirectoryCalculators}
+            locale="en"
+          />
         </header>
         <nav aria-label="Calculator categories" className="mt-10">
           <ul className="flex snap-x gap-2 overflow-x-auto pb-2">
