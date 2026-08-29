@@ -25,9 +25,11 @@ export function CalculatorSearch({
       calculators.map((calculator) => ({
         calculator,
         searchableText: normalizeSearchText(
-          [calculator.name, calculator.description, ...calculator.keywords].join(
-            " ",
-          ),
+          [
+            calculator.name,
+            calculator.description,
+            ...calculator.keywords,
+          ].join(" "),
         ),
       })),
     [calculators],

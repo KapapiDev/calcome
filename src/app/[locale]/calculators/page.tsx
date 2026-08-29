@@ -73,9 +73,8 @@ function englishCalculator(
   };
 }
 
-const englishDirectoryCalculators = directorySearchCalculators.map(
-  englishCalculator,
-);
+const englishDirectoryCalculators =
+  directorySearchCalculators.map(englishCalculator);
 type EnglishDirectoryCalculator = (typeof englishDirectoryCalculators)[number];
 const englishDirectoryById: ReadonlyMap<string, EnglishDirectoryCalculator> =
   new Map(
