@@ -63,7 +63,10 @@ Remaining to Target: 0
   - PR: #269
   - Actual GitHub history proves this task merged on 2026-08-24 with exact-head CI success. The stale OPEN reintroduced after SEO-014 is reconciled here instead of recreating the old implementation or branch.
 - [x] OPS-STATE-001 DONE — Unique Task Identity and State Ledger Guard
-  - PR: pending
+  - PR: #344
   - Adds a repository check requiring exactly one OPEN task and unique task IDs in TASK_STATE.md so a historically completed task cannot be reintroduced as a second ledger entry under the same ID.
-- [ ] PERF-001 OPEN — Core Web Vitals and Runtime Performance Regression
-  - Scope: audit current 100-calculator shared surfaces for reproducible performance regressions affecting Core Web Vitals, route payload, client-side rendering cost, layout stability, and interaction responsiveness; fix only measured shared regressions while preserving calculator correctness, bilingual routing, SEO, accessibility, and ad-layout invariants.
+- [x] PERF-001 DONE — Core Web Vitals and Runtime Performance Regression
+  - PR: pending
+  - At the 100-calculator scale, directory search repeated full record joins and locale-aware normalization on every keystroke, while the English directory repeatedly scanned and relocalized the registry while rendering cards. Search now memoizes an invariant normalized index and the English directory reuses one module-level localized map, removing repeated per-interaction and per-render work without changing search semantics, routes, SEO, accessibility, calculator logic, or ad layout. See `docs/PERF_001_RUNTIME_PERFORMANCE_REGRESSION_2026-08-29.md`.
+- [ ] PERF-002 OPEN — Client Hydration and Bundle Boundary Regression
+  - Scope: inspect shared 100-calculator surfaces for unnecessary client hydration and oversized shared client boundaries; reduce only reproducible client JavaScript or hydration work while preserving theme, language switching, privacy controls, calculator interaction, SEO, accessibility, and ad-consent behavior.
