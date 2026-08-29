@@ -73,6 +73,13 @@ function englishCalculator(
   };
 }
 
+const englishDirectoryCalculators = directorySearchCalculators.map(
+  englishCalculator,
+);
+const englishDirectoryById = new Map(
+  englishDirectoryCalculators.map((calculator) => [calculator.id, calculator]),
+);
+
 const directoryPath = "/en/calculators";
 const directoryDescription =
   "Browse CalCome financial calculators by category or search by topic.";
@@ -130,8 +137,6 @@ export default async function LocalizedCalculatorsPage({
   if (locale === "ko") return <CalculatorsPage />;
   if (locale !== "en") notFound();
 
-  const searchCalculators = directorySearchCalculators.map(englishCalculator);
-
   return (
     <main id="main-content" className="flex-1">
       <JsonLdScript data={englishDirectoryStructuredData} />
@@ -162,7 +167,7 @@ export default async function LocalizedCalculatorsPage({
           <p className="mt-5 text-pretty text-lg leading-8 text-muted-foreground">
             Search for a calculator or browse by financial goal.
           </p>
-          <CalculatorSearch calculators={searchCalculators} />
+          <CalculatorSearch calculators={englishDirectoryCalculators} />
         </header>
         <nav aria-label="Calculator categories" className="mt-10">
           <ul className="flex snap-x gap-2 overflow-x-auto pb-2">
@@ -208,13 +213,12 @@ export default async function LocalizedCalculatorsPage({
                 </div>
                 <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {category.calculators.map((calculator) => {
-                    const canonical = directorySearchCalculators.find(
-                      (entry) => entry.id === calculator.id,
-                    )!;
+                    const localized = englishDirectoryById.get(calculator.id);
+                    if (!localized) return null;
                     return (
                       <li key={calculator.id}>
                         <CalculatorCard
-                          calculator={englishCalculator(canonical)}
+                          calculator={localized}
                           categoryLabel={copy?.name ?? category.id}
                         />
                       </li>
