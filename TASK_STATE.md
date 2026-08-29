@@ -45,7 +45,10 @@ Remaining to Target: 0
   - Resume condition: authoritative current Search Console query×page, page, country, device, and Page Indexing evidence is available. See `docs/SEO_POST_100_REVIEW_2026-08-29.md`.
   - This private-account evidence wait is not a confirmed product/indexability failure and must not freeze unrelated repository development.
 - [x] SEO-010 DONE — Public Indexability and Search Snippet Regression
-  - PR: T.B.D.
+  - PR: #339
   - Public search-title evidence reproduced duplicate branding on the retirement-pension / IRP calculator because both its page metadata and the shared root title template appended `CalCome`. Child metadata now owns only the descriptive title while the root template owns branding once; focused tests preserve the bilingual canonical and hreflang targets. See `docs/SEO_PUBLIC_INDEXABILITY_SNIPPET_REGRESSION_2026-08-29.md`.
-- [ ] SEO-011 OPEN — Structured Data and Rich-Result Regression
-  - Scope: verify representative calculator families and shared hubs for valid, non-duplicated structured data that matches visible content and canonical routes. Fix only reproducible shared defects, preserve all 100 calculators, and do not fabricate rich-result eligibility or Search Console enhancement data.
+- [x] SEO-011 DONE — Structured Data and Rich-Result Regression
+  - PR: T.B.D.
+  - Reproduced a bilingual hub regression: `/` and `/calculators` emitted structured data, while equivalent `/en` and `/en/calculators` hubs omitted it. English home now emits the canonical WebSite entity and the English directory emits its own canonical CollectionPage with exactly 100 unique localized ListItems. Existing representative calculator-family JSON-LD guards remain intact. See `docs/SEO_STRUCTURED_DATA_RICH_RESULT_REGRESSION_2026-08-29.md`.
+- [ ] SEO-012 OPEN — Sitemap, Canonical and Hreflang Cross-Source Regression
+  - Scope: reconcile the 100-calculator public registry against sitemap output, canonical metadata, reciprocal Korean/English hreflang, x-default, and locale-less redirect targets. Fix only reproducible cross-source mismatches, preserve every public URL, and do not fabricate Search Console coverage data.

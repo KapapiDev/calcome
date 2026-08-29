@@ -17,7 +17,7 @@ import {
 } from "@/lib/seo/structured-data";
 import { cn } from "@/lib/utils";
 
-const websiteStructuredData = {
+export const englishWebsiteStructuredData = {
   "@context": "https://schema.org",
   ...createWebsiteStructuredData(),
 };
@@ -81,7 +81,7 @@ export default async function LocalizedHome({
 
   return (
     <main id="main-content" className="flex-1">
-      <JsonLdScript data={websiteStructuredData} />
+      <JsonLdScript data={englishWebsiteStructuredData} />
       <section className="mx-auto w-full max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
         <div className="max-w-3xl">
           <p className="mb-4 text-sm font-semibold tracking-wide text-primary">

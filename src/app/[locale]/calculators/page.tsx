@@ -6,9 +6,12 @@ import CalculatorsPage from "@/app/calculators/page";
 import { CalculatorCard } from "@/components/calculators/calculator-card";
 import { CalculatorSearch } from "@/components/calculators/calculator-search";
 import {
+  allPublishedCalculators,
   directorySearchCalculators,
   visibleCalculatorDirectory,
 } from "@/config/calculator-directory";
+import { absoluteUrl } from "@/config/site";
+import { JsonLdScript } from "@/lib/seo/structured-data";
 
 const categoryCopy: Record<string, { name: string; description: string }> = {
   employment: {
@@ -66,6 +69,33 @@ function englishCalculator(
   };
 }
 
+const directoryPath = "/en/calculators";
+const directoryDescription =
+  "Browse CalCome financial calculators by category or search by topic.";
+
+export const englishDirectoryStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": `${absoluteUrl(directoryPath)}#webpage`,
+  name: "CalCome Financial Calculator Directory",
+  description: directoryDescription,
+  inLanguage: "en-US",
+  url: absoluteUrl(directoryPath),
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: allPublishedCalculators.length,
+    itemListElement: allPublishedCalculators.map((calculator, index) => {
+      const localized = englishCalculator(calculator);
+      return {
+        "@type": "ListItem",
+        position: index + 1,
+        name: localized.name,
+        url: absoluteUrl(localized.href),
+      };
+    }),
+  },
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -78,13 +108,12 @@ export async function generateMetadata({
   if (locale !== "en") return {};
   return {
     title: "Financial Calculator Directory",
-    description:
-      "Browse CalCome financial calculators by category or search by topic.",
+    description: directoryDescription,
     alternates: {
-      canonical: "/en/calculators",
+      canonical: directoryPath,
       languages: {
         ko: "/calculators",
-        en: "/en/calculators",
+        en: directoryPath,
         "x-default": "/calculators",
       },
     },
@@ -104,6 +133,7 @@ export default async function LocalizedCalculatorsPage({
 
   return (
     <main id="main-content" className="flex-1">
+      <JsonLdScript data={englishDirectoryStructuredData} />
       <div className="mx-auto w-full max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
         <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground">
           <ol className="flex items-center gap-2">
