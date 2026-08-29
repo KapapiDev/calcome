@@ -1,6 +1,6 @@
 # CalCome Task State
 
-Last Updated: 2026-08-29
+Last Updated: 2026-08-30
 Current Calculator Count: 100
 Target Calculator Count: 100
 Remaining to Target: 0
@@ -72,5 +72,7 @@ Remaining to Target: 0
   - Removed the redundant root `ThemeProvider` client wrapper while preserving the pre-paint theme initializer and isolated interactive client islands. A focused source-contract test prevents the global wrapper from returning. See `docs/PERF_002_CLIENT_HYDRATION_BUNDLE_BOUNDARY_2026-08-29.md`.
 - [x] PERF-003 DONE — Third-Party Script and Consent Loading Regression
   - The shared root already kept the AdSense network script behind the validated Production runtime gate, so no third-party request is emitted while the authoritative publisher ID is absent. The reproducible remaining overhead was the privacy-control client island and regional classification hydrating on every page even when the ad runtime is disabled. The root now classifies region and mounts `PrivacyControl` only when AdSense is actually enabled; focused source-contract coverage preserves both the script gate and the consent-island gate without changing consent semantics, ad layout, or Production activation policy.
-- [ ] PERF-004 OPEN — Static Asset, Font and Image Loading Regression
-  - Scope: inspect shared fonts, images, icons, and other static asset loading for reproducible unnecessary transfer, preload, decode, or render-blocking work; reduce only verified overhead while preserving brand presentation, accessibility, responsive layout, SEO metadata, and visual stability.
+- [x] PERF-004 DONE — Static Asset, Font and Image Loading Regression
+  - The app root carried both a generated 32x32 PNG icon used by the manifest and a separate 25,931-byte legacy `favicon.ico`. The redundant favicon asset is removed while `/icon` and `/apple-icon` remain the canonical app-icon paths. Focused regression coverage also prevents remote render-blocking font imports from entering the shared stylesheet. See `docs/PERF_004_STATIC_ASSET_FONT_IMAGE_LOADING_REGRESSION_2026-08-30.md`.
+- [ ] PERF-005 OPEN — Server Rendering and Cache Boundary Regression
+  - Scope: inspect shared server-rendered routes, request-header access, data derivation, and cache boundaries for reproducible repeated server work or accidentally dynamic public surfaces; reduce only verified overhead while preserving locale routing, personalized/request-dependent behavior, SEO metadata, AdSense gating, correctness, and fresh policy-sensitive data rules.
