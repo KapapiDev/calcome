@@ -92,7 +92,7 @@ export function PrivacyControl({ locale, region }: PrivacyControlProps) {
             <h2 className="font-semibold">{text.title}</h2>
             <button
               type="button"
-              className="rounded px-2 py-1 text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="min-h-11 min-w-11 rounded px-2 py-1 text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               onClick={() => setOpen(false)}
             >
               {text.close}
@@ -105,7 +105,7 @@ export function PrivacyControl({ locale, region }: PrivacyControlProps) {
             {!cmpRequired ? (
               <button
                 type="button"
-                className="rounded-md border px-3 py-2 font-medium hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="min-h-11 rounded-md border px-3 py-2 font-medium hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 onClick={() => save("granted")}
               >
                 {text.allow}
@@ -113,7 +113,7 @@ export function PrivacyControl({ locale, region }: PrivacyControlProps) {
             ) : null}
             <button
               type="button"
-              className="rounded-md border px-3 py-2 font-medium hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="min-h-11 rounded-md border px-3 py-2 font-medium hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               onClick={() => save("denied")}
             >
               {text.deny}
@@ -121,7 +121,7 @@ export function PrivacyControl({ locale, region }: PrivacyControlProps) {
             {consent.decision !== "unknown" ? (
               <button
                 type="button"
-                className="rounded-md px-3 py-2 text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="min-h-11 rounded-md px-3 py-2 text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 onClick={reset}
               >
                 {text.reset}
@@ -133,7 +133,7 @@ export function PrivacyControl({ locale, region }: PrivacyControlProps) {
       <button
         type="button"
         aria-expanded={open}
-        className="rounded-full border bg-background px-4 py-2 text-sm font-medium text-foreground shadow-sm hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className="min-h-11 rounded-full border bg-background px-4 py-2 text-sm font-medium text-foreground shadow-sm hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         onClick={toggleOpen}
       >
         {text.button}
