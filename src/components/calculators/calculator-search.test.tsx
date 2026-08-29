@@ -75,7 +75,9 @@ describe("CalculatorSearch", () => {
     clear.focus();
     await user.keyboard("{Enter}");
     expect(search).toHaveValue("");
-    expect(screen.queryByRole("button", { name: "검색어 지우기" })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "검색어 지우기" }),
+    ).not.toBeInTheDocument();
   });
 
   it("localizes English search and zero-result recovery without Korean fallback UI", async () => {
@@ -84,16 +86,22 @@ describe("CalculatorSearch", () => {
       <CalculatorSearch calculators={directorySearchCalculators} locale="en" />,
     );
 
-    const search = screen.getByRole("searchbox", { name: "Search calculators" });
+    const search = screen.getByRole("searchbox", {
+      name: "Search calculators",
+    });
     expect(search).toHaveAttribute(
       "placeholder",
       "e.g. loan, compound interest, CAGR",
     );
 
     await user.type(search, "definitely-no-result");
-    const recovery = screen.getByText("No calculators match your search.").parentElement;
+    const recovery = screen.getByText(
+      "No calculators match your search.",
+    ).parentElement;
     expect(recovery).not.toBeNull();
-    expect(within(recovery!).getByRole("button", { name: "Clear search" })).toBeVisible();
+    expect(
+      within(recovery!).getByRole("button", { name: "Clear search" }),
+    ).toBeVisible();
     expect(screen.queryByText("계산기 검색")).not.toBeInTheDocument();
   });
 });

@@ -78,15 +78,12 @@ export function CalculatorSearch({
         score: getSearchScore(indexed, normalizedQuery),
       }))
       .filter(
-        (
-          result,
-        ): result is { indexed: IndexedCalculator; score: number } =>
+        (result): result is { indexed: IndexedCalculator; score: number } =>
           result.score !== null,
       )
       .sort(
         (a, b) =>
-          a.score - b.score ||
-          a.indexed.sourceIndex - b.indexed.sourceIndex,
+          a.score - b.score || a.indexed.sourceIndex - b.indexed.sourceIndex,
       )
       .map(({ indexed }) => indexed.calculator);
   }, [searchIndex, normalizedQuery]);
