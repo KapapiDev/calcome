@@ -59,5 +59,11 @@ Remaining to Target: 0
 - [x] SEO-014 DONE — Robots, Noindex and Crawl Directive Regression
   - PR: #343
   - Current repository sources have no crawl-directive contradiction: robots allows the canonical public surface, shared metadata opts public content into index/follow, sitemap entries stay on the canonical production host, and technical error/not-found surfaces stay out of the sitemap. Added cross-source regression coverage without changing valid crawl behavior. See `docs/SEO_ROBOTS_NOINDEX_CRAWL_DIRECTIVE_REGRESSION_2026-08-29.md`.
-- [ ] UX-009 OPEN — Global Locale Routing and English Surface Integrity
-  - Scope: audit shared locale preservation across English home, navigation, static pages, calculators, language switching, loading/fallback copy, and reciprocal route identity; fix only reproducible locale leaks while preserving canonical, hreflang, sitemap, and redirect invariants.
+- [x] UX-009 DONE — Global Locale Routing and English Surface Integrity
+  - PR: #269
+  - Actual GitHub history proves this task merged on 2026-08-24 with exact-head CI success. The stale OPEN reintroduced after SEO-014 is reconciled here instead of recreating the old implementation or branch.
+- [x] OPS-STATE-001 DONE — Unique Task Identity and State Ledger Guard
+  - PR: pending
+  - Adds a repository check requiring exactly one OPEN task and unique task IDs in TASK_STATE.md so a historically completed task cannot be reintroduced as a second ledger entry under the same ID.
+- [ ] PERF-001 OPEN — Core Web Vitals and Runtime Performance Regression
+  - Scope: audit current 100-calculator shared surfaces for reproducible performance regressions affecting Core Web Vitals, route payload, client-side rendering cost, layout stability, and interaction responsiveness; fix only measured shared regressions while preserving calculator correctness, bilingual routing, SEO, accessibility, and ad-layout invariants.
