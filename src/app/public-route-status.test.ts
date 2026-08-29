@@ -19,9 +19,9 @@ describe("public route status and soft-404 regression", () => {
     for (const calculator of allPublishedCalculators) {
       expect(calculator.href.startsWith("/ko/")).toBe(true);
       expect(existsSync(localizedRouteFile(calculator.href))).toBe(true);
-      expect(existsSync(localizedRouteFile(calculator.href.replace(/^\/ko/, "/en")))).toBe(
-        true,
-      );
+      expect(
+        existsSync(localizedRouteFile(calculator.href.replace(/^\/ko/, "/en"))),
+      ).toBe(true);
     }
   });
 
@@ -67,7 +67,9 @@ describe("public route status and soft-404 regression", () => {
       const destination = redirectBySource.get(source);
 
       expect(destination).toBe(calculator.href);
-      expect(destination && existsSync(localizedRouteFile(destination))).toBe(true);
+      expect(destination && existsSync(localizedRouteFile(destination))).toBe(
+        true,
+      );
     }
   });
 });
