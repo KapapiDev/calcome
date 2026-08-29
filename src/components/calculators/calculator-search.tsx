@@ -1,8 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
-import { CalculatorCard } from "@/components/calculators/calculator-card";
 import type { DirectorySearchCalculator } from "@/config/calculator-directory";
 
 type IndexedCalculator = {
@@ -16,6 +16,7 @@ type IndexedCalculator = {
 type SearchLocale = "ko" | "en";
 
 const DIRECTORY_SEARCH_STORAGE_KEY = "calcome:calculator-directory-search";
+const MAX_VISIBLE_SEARCH_RESULTS = 8;
 
 const searchCopy = {
   ko: {
@@ -24,6 +25,13 @@ const searchCopy = {
     empty: "검색어와 일치하는 계산기가 없습니다.",
     recovery: "검색어를 지우고 아래 카테고리에서 계산기를 찾아보세요.",
     clear: "검색어 지우기",
+    resultsLabel: "계산기 검색 결과",
+    resultCount: (total: number, visible: number) =>
+      total > visible
+        ? `${total}개 결과 중 상위 ${visible}개를 표시합니다.`
+        : `${total}개 결과`,
+    refine:
+      "더 정확한 결과가 필요하면 검색어를 구체화하거나 아래 카테고리를 이용하세요.",
   },
   en: {
     label: "Search calculators",
@@ -31,6 +39,13 @@ const searchCopy = {
     empty: "No calculators match your search.",
     recovery: "Clear the search and browse the calculator categories below.",
     clear: "Clear search",
+    resultsLabel: "Calculator search results",
+    resultCount: (total: number, visible: number) =>
+      total > visible
+        ? `Showing the top ${visible} of ${total} results.`
+        : `${total} ${total === 1 ? "result" : "results"}`,
+    refine:
+      "Refine your search for a narrower match, or browse the full inventory by category below.",
   },
 } as const;
 
@@ -128,6 +143,7 @@ export function CalculatorSearch({
       )
       .map(({ indexed }) => indexed.calculator);
   }, [searchIndex, normalizedQuery]);
+  const visibleResults = results.slice(0, MAX_VISIBLE_SEARCH_RESULTS);
 
   return (
     <div className="mt-8 max-w-2xl">
@@ -146,16 +162,38 @@ export function CalculatorSearch({
       {normalizedQuery ? (
         <div className="mt-4" aria-live="polite">
           {results.length ? (
-            <ul className="grid gap-3">
-              {results.map((calculator) => (
-                <li key={calculator.id}>
-                  <CalculatorCard
-                    calculator={calculator}
-                    categoryLabel={calculator.primaryCategory}
-                  />
-                </li>
-              ))}
-            </ul>
+            <>
+              <p className="mb-2 text-sm text-muted-foreground">
+                {copy.resultCount(results.length, visibleResults.length)}
+              </p>
+              <ul className="grid gap-2" aria-label={copy.resultsLabel}>
+                {visibleResults.map((calculator) => (
+                  <li key={calculator.id}>
+                    <Link
+                      href={calculator.href}
+                      className="flex min-h-11 items-center justify-between gap-3 rounded-xl border bg-background px-4 py-3 transition hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/30"
+                    >
+                      <span className="min-w-0">
+                        <span className="block font-medium text-foreground">
+                          {calculator.name}
+                        </span>
+                        <span className="mt-0.5 block truncate text-xs text-muted-foreground">
+                          {calculator.description}
+                        </span>
+                      </span>
+                      <span className="max-w-28 shrink-0 text-right text-xs font-medium text-muted-foreground">
+                        {calculator.primaryCategory}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              {results.length > visibleResults.length ? (
+                <p className="mt-2 text-xs leading-5 text-muted-foreground">
+                  {copy.refine}
+                </p>
+              ) : null}
+            </>
           ) : (
             <div className="rounded-xl border bg-muted/30 p-4 text-sm text-muted-foreground">
               <p>{copy.empty}</p>
