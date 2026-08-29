@@ -82,7 +82,9 @@ describe("CalculatorSearch", () => {
     await user.keyboard("{Enter}");
     expect(search).toHaveValue("");
     await waitFor(() =>
-      expect(window.sessionStorage.getItem(DIRECTORY_SEARCH_STORAGE_KEY)).toBeNull(),
+      expect(
+        window.sessionStorage.getItem(DIRECTORY_SEARCH_STORAGE_KEY),
+      ).toBeNull(),
     );
     expect(
       screen.queryByRole("button", { name: "검색어 지우기" }),
@@ -131,9 +133,9 @@ describe("CalculatorSearch", () => {
     firstRender.unmount();
     render(<CalculatorSearch calculators={directorySearchCalculators} />);
     await waitFor(() =>
-      expect(screen.getByRole("searchbox", { name: "계산기 검색" })).toHaveValue(
-        "대출",
-      ),
+      expect(
+        screen.getByRole("searchbox", { name: "계산기 검색" }),
+      ).toHaveValue("대출"),
     );
     expect(screen.getByRole("link", { name: /대출 계산기/ })).toBeVisible();
   });
@@ -146,9 +148,9 @@ describe("CalculatorSearch", () => {
     );
 
     await waitFor(() =>
-      expect(screen.getByRole("searchbox", { name: "계산기 검색" })).toHaveValue(
-        "loan",
-      ),
+      expect(
+        screen.getByRole("searchbox", { name: "계산기 검색" }),
+      ).toHaveValue("loan"),
     );
     korean.unmount();
 
