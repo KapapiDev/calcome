@@ -46,24 +46,35 @@ Remaining to Target: 0
   - This private-account evidence wait is not a confirmed product/indexability failure and must not freeze unrelated repository development.
 - [x] SEO-010 DONE — Public Indexability and Search Snippet Regression
   - PR: #339
+  - Public search-title evidence reproduced duplicate branding on the retirement-pension / IRP calculator because both its page metadata and the shared root title template appended `CalCome`. Child metadata now owns only the descriptive title while the root template owns branding once; focused tests preserve the bilingual canonical and hreflang targets. See `docs/SEO_PUBLIC_INDEXABILITY_SNIPPET_REGRESSION_2026-08-29.md`.
 - [x] SEO-011 DONE — Structured Data and Rich-Result Regression
   - PR: #340
+  - Reproduced a bilingual hub regression: `/` and `/calculators` emitted structured data, while equivalent `/en` and `/en/calculators` hubs omitted it. English home now emits the canonical WebSite entity and the English directory emits its own canonical CollectionPage with exactly 100 unique localized ListItems. Existing representative calculator-family JSON-LD guards remain intact. See `docs/SEO_STRUCTURED_DATA_RICH_RESULT_REGRESSION_2026-08-29.md`.
 - [x] SEO-012 DONE — Sitemap, Canonical and Hreflang Cross-Source Regression
   - PR: #341
+  - Reproduced a cross-source contradiction where the sitemap and English metadata exposed `/en` as an indexable English canonical while `next.config.ts` permanently redirected `/en` to `/`. Removed only that conflicting locale redirect and added registry-driven regression coverage proving no localized sitemap canonical is also a locale redirect source, while preserving all 100 locale-less calculator redirects and the `/ko` compatibility redirect.
 - [x] SEO-013 DONE — Public Route Status and Soft-404 Regression
   - PR: #342
+  - Repository route-contract coverage now proves all 100 published calculator canonicals are backed by real shared locale route modules, representative static/directory/info/not-found routes remain source-backed, and locale-less aliases only redirect to real canonical calculator pages. Public home and directory content were observable; ambiguous external fetch errors were not misclassified as product Soft 404s. See `docs/SEO_PUBLIC_ROUTE_STATUS_SOFT404_REGRESSION_2026-08-29.md`.
 - [x] SEO-014 DONE — Robots, Noindex and Crawl Directive Regression
   - PR: #343
+  - Current repository sources have no crawl-directive contradiction: robots allows the canonical public surface, shared metadata opts public content into index/follow, sitemap entries stay on the canonical production host, and technical error/not-found surfaces stay out of the sitemap. Added cross-source regression coverage without changing valid crawl behavior. See `docs/SEO_ROBOTS_NOINDEX_CRAWL_DIRECTIVE_REGRESSION_2026-08-29.md`.
 - [x] UX-009 DONE — Global Locale Routing and English Surface Integrity
   - PR: #269
+  - Actual GitHub history proves this task merged on 2026-08-24 with exact-head CI success. The stale OPEN reintroduced after SEO-014 is reconciled here instead of recreating the old implementation or branch.
 - [x] OPS-STATE-001 DONE — Unique Task Identity and State Ledger Guard
   - PR: #344
+  - Adds a repository check requiring exactly one OPEN task and unique task IDs in TASK_STATE.md so a historically completed task cannot be reintroduced as a second ledger entry under the same ID.
 - [x] PERF-001 DONE — Core Web Vitals and Runtime Performance Regression
   - PR: #345
+  - At the 100-calculator scale, directory search repeated full record joins and locale-aware normalization on every keystroke, while the English directory repeatedly scanned and relocalized the registry while rendering cards. Search now memoizes an invariant normalized index and the English directory reuses one module-level localized map, removing repeated per-interaction and per-render work without changing search semantics, routes, SEO, accessibility, calculator logic, or ad layout. See `docs/PERF_001_RUNTIME_PERFORMANCE_REGRESSION_2026-08-29.md`.
 - [x] PERF-002 DONE — Client Hydration and Bundle Boundary Regression
+  - Removed the redundant root `ThemeProvider` client wrapper while preserving the pre-paint theme initializer and isolated interactive client islands. A focused source-contract test prevents the global wrapper from returning. See `docs/PERF_002_CLIENT_HYDRATION_BUNDLE_BOUNDARY_2026-08-29.md`.
 - [x] PERF-003 DONE — Third-Party Script and Consent Loading Regression
+  - The shared root already kept the AdSense network script behind the validated Production runtime gate, so no third-party request is emitted while the authoritative publisher ID is absent. The reproducible remaining overhead was the privacy-control client island and regional classification hydrating on every page even when the ad runtime is disabled. The root now classifies region and mounts `PrivacyControl` only when AdSense is actually enabled; focused source-contract coverage preserves both the script gate and the consent-island gate without changing consent semantics, ad layout, or Production activation policy.
 - [x] PERF-004 DONE — Static Asset, Font and Image Loading Regression
+  - The app root carried both a generated 32x32 PNG icon used by the manifest and a separate 25,931-byte legacy `favicon.ico`. The redundant favicon asset is removed while `/icon` and `/apple-icon` remain the canonical app-icon paths. Focused regression coverage also prevents remote render-blocking font imports from entering the shared stylesheet. See `docs/PERF_004_STATIC_ASSET_FONT_IMAGE_LOADING_REGRESSION_2026-08-30.md`.
 - [x] PERF-005 DONE — Server Rendering and Cache Boundary Regression
-  - The root metadata pass and root layout independently read the same request headers and repeated locale/path/country derivation for every server render. A request-scoped React cache now memoizes that shared request context so both consumers reuse one header read while preserving intentional request-dependent locale routing, canonical metadata, AdSense gating, and consent-region behavior.
+  - The root metadata pass and root layout independently read the same request headers and repeated locale/path/country derivation for each server render. A request-scoped React cache now memoizes that shared request context so both consumers reuse one header read while preserving intentional request-dependent locale routing, canonical metadata, AdSense gating, correctness, and consent-region behavior.
 - [ ] UX-010 OPEN — Contextual Related Calculators and Home Category Entry
   - Scope: implement the existing TASK_QUEUE UX-010 contract using the current calculator source of truth, preserving canonical locale routes, minimal home UX, and deterministic contextual discovery.
