@@ -21,7 +21,7 @@ describe("third-party and consent loading boundaries", () => {
   it("does not hydrate privacy controls when the ad runtime is disabled", () => {
     expect(rootLayoutSource).toContain("const privacyRegion = adsense.enabled");
     expect(rootLayoutSource).toContain(
-      "? classifyGoogleConsentRegion(requestHeaders.get(\"x-vercel-ip-country\"))",
+      '? classifyGoogleConsentRegion(requestHeaders.get("x-vercel-ip-country"))',
     );
     expect(rootLayoutSource).toContain("{privacyRegion ? (");
     expect(rootLayoutSource).toContain("<PrivacyControl");
