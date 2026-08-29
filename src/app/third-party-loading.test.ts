@@ -23,7 +23,9 @@ describe("third-party and consent loading boundaries", () => {
     expect(rootLayoutSource).toContain(
       'country: requestHeaders.get("x-vercel-ip-country")',
     );
-    expect(rootLayoutSource).toContain("? classifyGoogleConsentRegion(country)");
+    expect(rootLayoutSource).toContain(
+      "? classifyGoogleConsentRegion(country)",
+    );
     expect(rootLayoutSource).toContain("{privacyRegion ? (");
     expect(rootLayoutSource).toContain("<PrivacyControl");
   });
