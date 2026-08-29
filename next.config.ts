@@ -8,11 +8,6 @@ const localeRedirects = [
     destination: "/",
     permanent: true,
   },
-  {
-    source: "/en",
-    destination: "/",
-    permanent: true,
-  },
   ...allPublishedCalculators.map((calculator) => ({
     source:
       calculator.id === "deposit"

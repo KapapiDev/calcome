@@ -5,7 +5,7 @@ import { allPublishedCalculators } from "@/config/calculator-directory";
 import nextConfig from "../../next.config";
 
 describe("canonical redirects", () => {
-  it("permanently redirects locale aliases to the canonical root", async () => {
+  it("keeps the Korean root alias while preserving the English canonical route", async () => {
     expect(nextConfig.redirects).toBeTypeOf("function");
 
     const redirects = await nextConfig.redirects!();
@@ -15,11 +15,11 @@ describe("canonical redirects", () => {
       destination: "/",
       permanent: true,
     });
-    expect(redirects).toContainEqual({
-      source: "/en",
-      destination: "/",
-      permanent: true,
-    });
+    expect(
+      redirects.some(
+        (redirect) => redirect.source === "/en" && !redirect.has?.length,
+      ),
+    ).toBe(false);
   });
 
   it("redirects the apex host directly to the final canonical host and locale", async () => {
