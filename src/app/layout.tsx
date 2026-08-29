@@ -89,10 +89,10 @@ export default async function RootLayout({
   const requestHeaders = await headers();
   const locale = requestHeaders.get("x-calcome-locale") === "en" ? "en" : "ko";
   const pathname = requestHeaders.get("x-calcome-pathname") ?? "/";
-  const privacyRegion = classifyGoogleConsentRegion(
-    requestHeaders.get("x-vercel-ip-country"),
-  );
   const adsense = getAdSenseRuntimeConfig();
+  const privacyRegion = adsense.enabled
+    ? classifyGoogleConsentRegion(requestHeaders.get("x-vercel-ip-country"))
+    : null;
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -120,7 +120,9 @@ export default async function RootLayout({
           <RelatedCalculators locale={locale} pathname={pathname} />
           <SiteFooter locale={locale} />
         </div>
-        <PrivacyControl locale={locale} region={privacyRegion} />
+        {privacyRegion ? (
+          <PrivacyControl locale={locale} region={privacyRegion} />
+        ) : null}
       </body>
     </html>
   );
