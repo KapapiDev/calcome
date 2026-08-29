@@ -44,5 +44,8 @@ Remaining to Target: 0
   - Verified 2026-08-29: Search Console sent current Soft 404 indexation notifications on 2026-08-23, while public Google crawl evidence on 2026-08-29 shows representative current and recently-added CalCome routes being crawled/indexed. A fresh query/page/country/device performance export is not available through connected sources, so no traffic metrics or reprioritization are inferred from stale data.
   - Resume condition: authoritative current Search Console query×page, page, country, device, and Page Indexing evidence is available. See `docs/SEO_POST_100_REVIEW_2026-08-29.md`.
   - This private-account evidence wait is not a confirmed product/indexability failure and must not freeze unrelated repository development.
-- [ ] SEO-010 OPEN — Public Indexability and Search Snippet Regression
-  - Scope: verify representative current calculator families through live crawl/search evidence, inspect title/description/canonical/hreflang/indexability and snippet quality for stale or duplicate discovery signals, and fix only reproducible shared defects. Preserve all 100 calculators and do not fabricate Search Console demand.
+- [x] SEO-010 DONE — Public Indexability and Search Snippet Regression
+  - PR: T.B.D.
+  - Public search-title evidence reproduced duplicate branding on the retirement-pension / IRP calculator because both its page metadata and the shared root title template appended `CalCome`. Child metadata now owns only the descriptive title while the root template owns branding once; focused tests preserve the bilingual canonical and hreflang targets. See `docs/SEO_PUBLIC_INDEXABILITY_SNIPPET_REGRESSION_2026-08-29.md`.
+- [ ] SEO-011 OPEN — Structured Data and Rich-Result Regression
+  - Scope: verify representative calculator families and shared hubs for valid, non-duplicated structured data that matches visible content and canonical routes. Fix only reproducible shared defects, preserve all 100 calculators, and do not fabricate rich-result eligibility or Search Console enhancement data.
