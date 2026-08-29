@@ -54,7 +54,7 @@ Remaining to Target: 0
   - PR: #341
   - Reproduced a cross-source contradiction where the sitemap and English metadata exposed `/en` as an indexable English canonical while `next.config.ts` permanently redirected `/en` to `/`. Removed only that conflicting locale redirect and added registry-driven regression coverage proving no localized sitemap canonical is also a locale redirect source, while preserving all 100 locale-less calculator redirects and the `/ko` compatibility redirect.
 - [x] SEO-013 DONE — Public Route Status and Soft-404 Regression
-  - PR: pending
+  - PR: #342
   - Repository route-contract coverage now proves all 100 published calculator canonicals are backed by real shared locale route modules, representative static/directory/info/not-found routes remain source-backed, and locale-less aliases only redirect to real canonical calculator pages. Public home and directory content were observable; ambiguous external fetch errors were not misclassified as product Soft 404s. See `docs/SEO_PUBLIC_ROUTE_STATUS_SOFT404_REGRESSION_2026-08-29.md`.
 - [ ] SEO-014 OPEN — Robots, Noindex and Crawl Directive Regression
   - Scope: reconcile robots.txt, metadata robots directives, sitemap eligibility, canonical public routes, and intentional not-found/error surfaces; fix only reproducible crawl-directive contradictions and preserve legitimate non-indexable technical/error responses.
