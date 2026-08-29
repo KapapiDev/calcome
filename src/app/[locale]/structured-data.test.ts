@@ -29,16 +29,21 @@ describe("localized English hub structured data", () => {
     expect(itemList["@type"]).toBe("ItemList");
     expect(itemList.numberOfItems).toBe(allPublishedCalculators.length);
     expect(itemList.numberOfItems).toBe(100);
-    expect(itemList.itemListElement).toHaveLength(allPublishedCalculators.length);
+    expect(itemList.itemListElement).toHaveLength(
+      allPublishedCalculators.length,
+    );
     expect(itemList.itemListElement.map((item) => item.position)).toEqual(
-      Array.from({ length: allPublishedCalculators.length }, (_, index) => index + 1),
+      Array.from(
+        { length: allPublishedCalculators.length },
+        (_, index) => index + 1,
+      ),
     );
 
     const urls = itemList.itemListElement.map((item) => item.url);
     expect(new Set(urls).size).toBe(urls.length);
-    expect(urls.every((url) => url.startsWith("https://www.calcome.com/en/"))).toBe(
-      true,
-    );
+    expect(
+      urls.every((url) => url.startsWith("https://www.calcome.com/en/")),
+    ).toBe(true);
     expect(JSON.stringify(englishDirectoryStructuredData)).not.toMatch(
       /localhost|127\.0\.0\.1|vercel\.app|preview/i,
     );
