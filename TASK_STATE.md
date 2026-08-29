@@ -76,5 +76,10 @@ Remaining to Target: 0
   - The app root carried both a generated 32x32 PNG icon used by the manifest and a separate 25,931-byte legacy `favicon.ico`. The redundant favicon asset is removed while `/icon` and `/apple-icon` remain the canonical app-icon paths. Focused regression coverage also prevents remote render-blocking font imports from entering the shared stylesheet. See `docs/PERF_004_STATIC_ASSET_FONT_IMAGE_LOADING_REGRESSION_2026-08-30.md`.
 - [x] PERF-005 DONE — Server Rendering and Cache Boundary Regression
   - The root metadata pass and root layout independently read the same request headers and repeated locale/path/country derivation for each server render. A request-scoped React cache now memoizes that shared request context so both consumers reuse one header read while preserving intentional request-dependent locale routing, canonical metadata, AdSense gating, correctness, and consent-region behavior.
-- [ ] UX-010 OPEN — Contextual Related Calculators and Home Category Entry
-  - Scope: implement the existing TASK_QUEUE UX-010 contract using the current calculator source of truth, preserving canonical locale routes, minimal home UX, and deterministic contextual discovery.
+- [x] UX-010 DONE — Contextual Related Calculators and Home Category Entry
+  - PR: #271
+  - Actual GitHub history proves UX-010 merged on 2026-08-25 at `faee8b3d23633c40b336424f8af78cdbe52086b5` after exact-head CI #916 succeeded. The source-driven category entry and localized related-calculator graph remain present on current main, so the stale OPEN state is reconciled without duplicate implementation work.
+- [x] OPS-STATE-002 DONE — Prevent Already-Merged Tasks From Reopening
+  - Extends the ledger guard after the same stale-reopen root cause recurred for UX-010: CI now runs task-state validation with full base history, and the validator rejects an OPEN task whose ID already begins a merged main-history task commit.
+- [ ] UX-011 OPEN — Calculator Search Relevance and Zero-Result Recovery
+  - Scope: at the 100-calculator scale, audit and improve Korean/English calculator search ranking so exact names and abbreviations outrank aliases and broader keyword/category matches; provide useful accessible recovery for zero-result queries; keep results deterministic and source-driven; preserve canonical locale routes, directory discovery, current category architecture, and the minimal home experience; add focused bilingual relevance and keyboard-accessibility regression coverage.

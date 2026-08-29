@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { execFileSync } from "node:child_process";
 
 const taskStatePath = resolve(process.cwd(), "TASK_STATE.md");
 const source = readFileSync(taskStatePath, "utf8");
@@ -30,6 +31,59 @@ for (const entry of entries) {
     );
   }
   seen.set(entry.id, entry.status);
+}
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function resolveBaseHistoryRef() {
+  const candidates = [
+    process.env.GITHUB_BASE_REF
+      ? `origin/${process.env.GITHUB_BASE_REF}`
+      : null,
+    "origin/main",
+    "main",
+  ].filter(Boolean);
+
+  for (const candidate of candidates) {
+    try {
+      execFileSync("git", ["rev-parse", "--verify", candidate], {
+        stdio: "ignore",
+      });
+      return candidate;
+    } catch {
+      // Continue to the next locally available base-history ref.
+    }
+  }
+
+  return null;
+}
+
+const baseHistoryRef = resolveBaseHistoryRef();
+if (baseHistoryRef) {
+  const subjects = execFileSync(
+    "git",
+    ["log", "--first-parent", "--format=%s", baseHistoryRef],
+    { encoding: "utf8" },
+  )
+    .split("\n")
+    .filter(Boolean);
+  const openTaskId = openTasks[0].id;
+  const escapedTaskId = escapeRegExp(openTaskId);
+  const mergedTaskPattern = new RegExp(
+    `^(?:\\[${escapedTaskId}\\]|${escapedTaskId})(?:\\b|:)`,
+    "i",
+  );
+  const priorMergedSubject = subjects.find((subject) =>
+    mergedTaskPattern.test(subject),
+  );
+
+  if (priorMergedSubject) {
+    throw new Error(
+      `TASK_STATE.md marks ${openTaskId} OPEN, but base history already contains a merged task commit: ${priorMergedSubject}`,
+    );
+  }
 }
 
 console.log(
