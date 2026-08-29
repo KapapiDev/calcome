@@ -37,5 +37,8 @@ Remaining to Target: 0
   - Verified 2026-08-29: Vercel team discovery succeeds; project deployment listing returns 403 and the current Vercel-bot deployment ID returns 404 through the direct deployment lookup. The public production site is reachable, but connected Gmail contains no AdSense account approval/site-status message or real publisher ID. The account-owner AdSense Sites/publisher-ID evidence required to safely activate Production is therefore unavailable through connected paths.
   - Resume condition: authoritative AdSense account evidence exposes the intended `pub-################` publisher ID and `calcome.com` site status. Never infer, invent, or substitute an ID.
   - This external account-owner wait is not a product/security failure and must not freeze unrelated repository development.
-- [ ] UX-007 OPEN — Full-Site Accessibility and Visual Consistency Regression
-  - Scope: run the whole-site post-fix accessibility and visual consistency regression defined in `TASK_QUEUE.md`, preserving calculation correctness, bilingual routing, SEO, public URLs, and the 100-calculator inventory.
+- [x] UX-007 DONE — Full-Site Accessibility and Visual Consistency Regression
+  - PR: T.B.D.
+  - Final regression on latest post-AdSense UI found the newly added privacy controls below the shared 44px touch-target contract. The launcher, consent actions, reset action, and close action now preserve a 44px minimum target, with focused bilingual regression coverage. Existing calculation, routing, SEO, consent semantics, and the 100-calculator inventory are unchanged.
+- [ ] SEO-009 OPEN — Post-100 Calculator Search Performance and Coverage Review
+  - Scope: use fresh Search Console query/page/country/device and indexing evidence to identify the highest-value post-100-calculator improvements without shrinking the broad calculator strategy. Prefer shared metadata, internal-discovery, content-depth, and indexability fixes over duplicate calculators or fabricated demand estimates.
