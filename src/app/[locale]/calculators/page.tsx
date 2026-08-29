@@ -47,10 +47,8 @@ const categoryCopy: Record<string, { name: string; description: string }> = {
   },
 };
 
-function englishCalculator(
-  calculator: (typeof directorySearchCalculators)[number],
-) {
-  const name = `${calculator.id
+function englishCalculatorName(id: string) {
+  return `${id
     .split("-")
     .map((part) =>
       part.toUpperCase() === part
@@ -58,6 +56,12 @@ function englishCalculator(
         : part.charAt(0).toUpperCase() + part.slice(1),
     )
     .join(" ")} Calculator`;
+}
+
+function englishCalculator(
+  calculator: (typeof directorySearchCalculators)[number],
+) {
+  const name = englishCalculatorName(calculator.id);
   return {
     ...calculator,
     name,
@@ -84,15 +88,12 @@ export const englishDirectoryStructuredData = {
   mainEntity: {
     "@type": "ItemList",
     numberOfItems: allPublishedCalculators.length,
-    itemListElement: allPublishedCalculators.map((calculator, index) => {
-      const localized = englishCalculator(calculator);
-      return {
-        "@type": "ListItem",
-        position: index + 1,
-        name: localized.name,
-        url: absoluteUrl(localized.href),
-      };
-    }),
+    itemListElement: allPublishedCalculators.map((calculator, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: englishCalculatorName(calculator.id),
+      url: absoluteUrl(calculator.href.replace(/^\/ko\//, "/en/")),
+    })),
   },
 };
 
