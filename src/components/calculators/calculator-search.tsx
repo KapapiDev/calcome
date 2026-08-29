@@ -63,13 +63,26 @@ export function CalculatorSearch({
   const copy = searchCopy[locale];
 
   useEffect(() => {
-    try {
-      setQuery(window.sessionStorage.getItem(DIRECTORY_SEARCH_STORAGE_KEY) ?? "");
-    } catch {
-      // Search remains usable when browser storage is unavailable.
-    } finally {
+    let cancelled = false;
+
+    queueMicrotask(() => {
+      if (cancelled) return;
+
+      let restoredQuery = "";
+      try {
+        restoredQuery =
+          window.sessionStorage.getItem(DIRECTORY_SEARCH_STORAGE_KEY) ?? "";
+      } catch {
+        // Search remains usable when browser storage is unavailable.
+      }
+
+      setQuery(restoredQuery);
       setHasRestoredQuery(true);
-    }
+    });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
