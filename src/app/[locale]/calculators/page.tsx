@@ -6,9 +6,12 @@ import CalculatorsPage from "@/app/calculators/page";
 import { CalculatorCard } from "@/components/calculators/calculator-card";
 import { CalculatorSearch } from "@/components/calculators/calculator-search";
 import {
+  allPublishedCalculators,
   directorySearchCalculators,
   visibleCalculatorDirectory,
 } from "@/config/calculator-directory";
+import { absoluteUrl } from "@/config/site";
+import { JsonLdScript } from "@/lib/seo/structured-data";
 
 const categoryCopy: Record<string, { name: string; description: string }> = {
   employment: {
@@ -44,10 +47,8 @@ const categoryCopy: Record<string, { name: string; description: string }> = {
   },
 };
 
-function englishCalculator(
-  calculator: (typeof directorySearchCalculators)[number],
-) {
-  const name = `${calculator.id
+function englishCalculatorName(id: string) {
+  return `${id
     .split("-")
     .map((part) =>
       part.toUpperCase() === part
@@ -55,6 +56,12 @@ function englishCalculator(
         : part.charAt(0).toUpperCase() + part.slice(1),
     )
     .join(" ")} Calculator`;
+}
+
+function englishCalculator(
+  calculator: (typeof directorySearchCalculators)[number],
+) {
+  const name = englishCalculatorName(calculator.id);
   return {
     ...calculator,
     name,
@@ -65,6 +72,30 @@ function englishCalculator(
     href: calculator.href.replace(/^\/ko\//, "/en/") as typeof calculator.href,
   };
 }
+
+const directoryPath = "/en/calculators";
+const directoryDescription =
+  "Browse CalCome financial calculators by category or search by topic.";
+
+export const englishDirectoryStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": `${absoluteUrl(directoryPath)}#webpage`,
+  name: "CalCome Financial Calculator Directory",
+  description: directoryDescription,
+  inLanguage: "en-US",
+  url: absoluteUrl(directoryPath),
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: allPublishedCalculators.length,
+    itemListElement: allPublishedCalculators.map((calculator, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: englishCalculatorName(calculator.id),
+      url: absoluteUrl(calculator.href.replace(/^\/ko\//, "/en/")),
+    })),
+  },
+};
 
 export async function generateMetadata({
   params,
@@ -78,13 +109,12 @@ export async function generateMetadata({
   if (locale !== "en") return {};
   return {
     title: "Financial Calculator Directory",
-    description:
-      "Browse CalCome financial calculators by category or search by topic.",
+    description: directoryDescription,
     alternates: {
-      canonical: "/en/calculators",
+      canonical: directoryPath,
       languages: {
         ko: "/calculators",
-        en: "/en/calculators",
+        en: directoryPath,
         "x-default": "/calculators",
       },
     },
@@ -104,6 +134,7 @@ export default async function LocalizedCalculatorsPage({
 
   return (
     <main id="main-content" className="flex-1">
+      <JsonLdScript data={englishDirectoryStructuredData} />
       <div className="mx-auto w-full max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
         <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground">
           <ol className="flex items-center gap-2">
