@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
+import { cache } from "react";
 
 import { PrivacyControl } from "@/components/ads/privacy-control";
 import { classifyGoogleConsentRegion } from "@/components/ads/privacy-region";
@@ -13,6 +14,16 @@ import { siteConfig } from "@/config/site";
 import { localizedSeoPaths, socialLocale } from "@/lib/seo/metadata";
 
 import "./globals.css";
+
+const getRequestContext = cache(async () => {
+  const requestHeaders = await headers();
+
+  return {
+    locale: requestHeaders.get("x-calcome-locale") === "en" ? "en" : "ko",
+    pathname: requestHeaders.get("x-calcome-pathname") ?? "/",
+    country: requestHeaders.get("x-vercel-ip-country"),
+  } as const;
+});
 
 export function createRootMetadata(pathname: string): Metadata {
   const seo = localizedSeoPaths(pathname);
@@ -68,10 +79,8 @@ export function createRootMetadata(pathname: string): Metadata {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const requestHeaders = await headers();
-  const pathname = requestHeaders.get("x-calcome-pathname") ?? "/ko";
-
-  return createRootMetadata(pathname);
+  const { pathname } = await getRequestContext();
+  return createRootMetadata(pathname === "/" ? "/ko" : pathname);
 }
 
 export const viewport: Viewport = {
@@ -86,12 +95,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const requestHeaders = await headers();
-  const locale = requestHeaders.get("x-calcome-locale") === "en" ? "en" : "ko";
-  const pathname = requestHeaders.get("x-calcome-pathname") ?? "/";
+  const { locale, pathname, country } = await getRequestContext();
   const adsense = getAdSenseRuntimeConfig();
   const privacyRegion = adsense.enabled
-    ? classifyGoogleConsentRegion(requestHeaders.get("x-vercel-ip-country"))
+    ? classifyGoogleConsentRegion(country)
     : null;
 
   return (
