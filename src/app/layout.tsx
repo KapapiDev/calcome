@@ -8,10 +8,7 @@ import { RelatedCalculators } from "@/components/calculators/related-calculators
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SkipLink } from "@/components/layout/skip-link";
-import {
-  ThemeProvider,
-  themeInitializationScript,
-} from "@/components/theme/theme-provider";
+import { themeInitializationScript } from "@/components/theme/theme-provider";
 import { siteConfig } from "@/config/site";
 import { localizedSeoPaths, socialLocale } from "@/lib/seo/metadata";
 
@@ -116,16 +113,14 @@ export default async function RootLayout({
         className="min-h-screen bg-background font-sans text-foreground antialiased"
         data-ad-runtime-status={adsense.status}
       >
-        <ThemeProvider>
-          <SkipLink locale={locale} />
-          <div className="flex min-h-screen flex-col">
-            <SiteHeader locale={locale} pathname={pathname} />
-            {children}
-            <RelatedCalculators locale={locale} pathname={pathname} />
-            <SiteFooter locale={locale} />
-          </div>
-          <PrivacyControl locale={locale} region={privacyRegion} />
-        </ThemeProvider>
+        <SkipLink locale={locale} />
+        <div className="flex min-h-screen flex-col">
+          <SiteHeader locale={locale} pathname={pathname} />
+          {children}
+          <RelatedCalculators locale={locale} pathname={pathname} />
+          <SiteFooter locale={locale} />
+        </div>
+        <PrivacyControl locale={locale} region={privacyRegion} />
       </body>
     </html>
   );

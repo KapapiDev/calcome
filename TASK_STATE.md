@@ -66,7 +66,9 @@ Remaining to Target: 0
   - PR: #344
   - Adds a repository check requiring exactly one OPEN task and unique task IDs in TASK_STATE.md so a historically completed task cannot be reintroduced as a second ledger entry under the same ID.
 - [x] PERF-001 DONE — Core Web Vitals and Runtime Performance Regression
-  - PR: pending
+  - PR: #345
   - At the 100-calculator scale, directory search repeated full record joins and locale-aware normalization on every keystroke, while the English directory repeatedly scanned and relocalized the registry while rendering cards. Search now memoizes an invariant normalized index and the English directory reuses one module-level localized map, removing repeated per-interaction and per-render work without changing search semantics, routes, SEO, accessibility, calculator logic, or ad layout. See `docs/PERF_001_RUNTIME_PERFORMANCE_REGRESSION_2026-08-29.md`.
-- [ ] PERF-002 OPEN — Client Hydration and Bundle Boundary Regression
-  - Scope: inspect shared 100-calculator surfaces for unnecessary client hydration and oversized shared client boundaries; reduce only reproducible client JavaScript or hydration work while preserving theme, language switching, privacy controls, calculator interaction, SEO, accessibility, and ad-consent behavior.
+- [x] PERF-002 DONE — Client Hydration and Bundle Boundary Regression
+  - Removed the redundant root `ThemeProvider` client wrapper while preserving the pre-paint theme initializer and isolated interactive client islands. A focused source-contract test prevents the global wrapper from returning. See `docs/PERF_002_CLIENT_HYDRATION_BUNDLE_BOUNDARY_2026-08-29.md`.
+- [ ] PERF-003 OPEN — Third-Party Script and Consent Loading Regression
+  - Scope: inspect shared AdSense and privacy-control loading paths for reproducible unnecessary third-party script or client work; reduce only verified overhead while preserving consent semantics, regional privacy behavior, layout stability, and the rule that Production AdSense stays disabled until an authoritative publisher ID and site status are available.
