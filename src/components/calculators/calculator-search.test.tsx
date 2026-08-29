@@ -1,12 +1,18 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 
 import { directorySearchCalculators } from "@/config/calculator-directory";
 
 import { CalculatorSearch } from "./calculator-search";
 
+const DIRECTORY_SEARCH_STORAGE_KEY = "calcome:calculator-directory-search";
+
 describe("CalculatorSearch", () => {
+  beforeEach(() => {
+    window.sessionStorage.clear();
+  });
+
   it("matches Korean partial words, aliases, and case-insensitive Latin text", async () => {
     const user = userEvent.setup();
     render(<CalculatorSearch calculators={directorySearchCalculators} />);
@@ -75,6 +81,11 @@ describe("CalculatorSearch", () => {
     clear.focus();
     await user.keyboard("{Enter}");
     expect(search).toHaveValue("");
+    await waitFor(() =>
+      expect(
+        window.sessionStorage.getItem(DIRECTORY_SEARCH_STORAGE_KEY),
+      ).toBeNull(),
+    );
     expect(
       screen.queryByRole("button", { name: "검색어 지우기" }),
     ).not.toBeInTheDocument();
@@ -103,5 +114,54 @@ describe("CalculatorSearch", () => {
       within(recovery!).getByRole("button", { name: "Clear search" }),
     ).toBeVisible();
     expect(screen.queryByText("계산기 검색")).not.toBeInTheDocument();
+  });
+
+  it("restores directory search after navigation-style remount and refresh-style remount", async () => {
+    const user = userEvent.setup();
+    const firstRender = render(
+      <CalculatorSearch calculators={directorySearchCalculators} />,
+    );
+    const search = screen.getByRole("searchbox", { name: "계산기 검색" });
+
+    await user.type(search, "대출");
+    await waitFor(() =>
+      expect(window.sessionStorage.getItem(DIRECTORY_SEARCH_STORAGE_KEY)).toBe(
+        "대출",
+      ),
+    );
+
+    firstRender.unmount();
+    render(<CalculatorSearch calculators={directorySearchCalculators} />);
+    await waitFor(() =>
+      expect(
+        screen.getByRole("searchbox", { name: "계산기 검색" }),
+      ).toHaveValue("대출"),
+    );
+    expect(screen.getByRole("link", { name: /대출 계산기/ })).toBeVisible();
+  });
+
+  it("keeps the same search across locale switching without creating query URLs", async () => {
+    window.sessionStorage.setItem(DIRECTORY_SEARCH_STORAGE_KEY, "loan");
+    const originalSearch = window.location.search;
+    const korean = render(
+      <CalculatorSearch calculators={directorySearchCalculators} />,
+    );
+
+    await waitFor(() =>
+      expect(
+        screen.getByRole("searchbox", { name: "계산기 검색" }),
+      ).toHaveValue("loan"),
+    );
+    korean.unmount();
+
+    render(
+      <CalculatorSearch calculators={directorySearchCalculators} locale="en" />,
+    );
+    await waitFor(() =>
+      expect(
+        screen.getByRole("searchbox", { name: "Search calculators" }),
+      ).toHaveValue("loan"),
+    );
+    expect(window.location.search).toBe(originalSearch);
   });
 });

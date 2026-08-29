@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { CalculatorCard } from "@/components/calculators/calculator-card";
 import type { DirectorySearchCalculator } from "@/config/calculator-directory";
@@ -14,6 +14,8 @@ type IndexedCalculator = {
 };
 
 type SearchLocale = "ko" | "en";
+
+const DIRECTORY_SEARCH_STORAGE_KEY = "calcome:calculator-directory-search";
 
 const searchCopy = {
   ko: {
@@ -57,7 +59,46 @@ export function CalculatorSearch({
   locale?: SearchLocale;
 }) {
   const [query, setQuery] = useState("");
+  const [hasRestoredQuery, setHasRestoredQuery] = useState(false);
   const copy = searchCopy[locale];
+
+  useEffect(() => {
+    let cancelled = false;
+
+    queueMicrotask(() => {
+      if (cancelled) return;
+
+      let restoredQuery = "";
+      try {
+        restoredQuery =
+          window.sessionStorage.getItem(DIRECTORY_SEARCH_STORAGE_KEY) ?? "";
+      } catch {
+        // Search remains usable when browser storage is unavailable.
+      }
+
+      setQuery(restoredQuery);
+      setHasRestoredQuery(true);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!hasRestoredQuery) return;
+
+    try {
+      if (query) {
+        window.sessionStorage.setItem(DIRECTORY_SEARCH_STORAGE_KEY, query);
+      } else {
+        window.sessionStorage.removeItem(DIRECTORY_SEARCH_STORAGE_KEY);
+      }
+    } catch {
+      // Search remains usable when browser storage is unavailable.
+    }
+  }, [hasRestoredQuery, query]);
+
   const searchIndex = useMemo<readonly IndexedCalculator[]>(
     () =>
       calculators.map((calculator, sourceIndex) => ({

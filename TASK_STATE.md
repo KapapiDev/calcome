@@ -83,5 +83,7 @@ Remaining to Target: 0
   - Extends the ledger guard after the same stale-reopen root cause recurred for UX-010: CI now runs task-state validation with full base history, and the validator rejects an OPEN task whose ID already begins a merged main-history task commit.
 - [x] UX-011 DONE — Calculator Search Relevance and Zero-Result Recovery
   - Directory search now applies deterministic relevance tiers so exact calculator names rank first, exact abbreviations/keywords rank ahead of partial alias and description matches, and ties preserve canonical source order. Korean and English search chrome and zero-result recovery are localized, with a keyboard-operable clear action and focused bilingual regression coverage.
-- [ ] UX-012 OPEN — Directory Search State and Navigation Continuity Regression
-  - Scope: verify search input/result state behaves predictably across result navigation, browser back/forward, refresh, locale switching, and mobile/keyboard use without introducing duplicate indexable query URLs or storing sensitive calculator inputs.
+- [x] UX-012 DONE — Directory Search State and Navigation Continuity Regression
+  - Directory search now restores the last in-tab query after result navigation, browser back/forward restoration, refresh-style remounts, and Korean/English directory switching through session-scoped search-only state. Search state never enters the URL, so it does not create duplicate indexable query URLs, and calculator input values are never persisted. Storage failure is non-fatal and the existing keyboard-accessible clear action removes persisted search state.
+- [ ] UX-013 OPEN — Directory Category and Search Interaction Regression
+  - Scope: verify category navigation, search results, mobile scrolling, focus order, and calculator-card entry coexist predictably at the 100-calculator scale in Korean and English without hidden inventory, duplicate cards, route drift, or accessibility regressions.
