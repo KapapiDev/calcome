@@ -69,20 +69,22 @@ describe("CalculatorSearch", () => {
 
   it("keeps broad searches compact while preserving canonical result entry", async () => {
     const user = userEvent.setup();
-    const broadMatches = directorySearchCalculators.slice(0, 12).map((calculator) => ({
-      ...calculator,
-      keywords: [...calculator.keywords, "공통검색"],
-    }));
+    const broadMatches = directorySearchCalculators
+      .slice(0, 12)
+      .map((calculator) => ({
+        ...calculator,
+        keywords: [...calculator.keywords, "공통검색"],
+      }));
 
     render(<CalculatorSearch calculators={broadMatches} />);
     await user.type(screen.getByRole("searchbox"), "공통검색");
 
     const resultList = screen.getByRole("list", { name: "계산기 검색 결과" });
     expect(within(resultList).getAllByRole("link")).toHaveLength(8);
-    expect(screen.getByText("12개 결과 중 상위 8개를 표시합니다.")).toBeVisible();
     expect(
-      screen.getByText(/아래 카테고리를 이용하세요/),
+      screen.getByText("12개 결과 중 상위 8개를 표시합니다."),
     ).toBeVisible();
+    expect(screen.getByText(/아래 카테고리를 이용하세요/)).toBeVisible();
 
     const firstResult = within(resultList).getAllByRole("link")[0];
     expect(firstResult).toHaveAttribute("href", broadMatches[0].href);
