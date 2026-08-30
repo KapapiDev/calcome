@@ -199,7 +199,8 @@ export default async function LocalizedCalculatorsPage({
             Popular calculators
           </h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            Open frequently used calculators without scanning the full directory.
+            Open frequently used calculators without scanning the full
+            directory.
           </p>
           <ul className="mt-5 flex flex-wrap gap-2">
             {englishPopularCalculators.map((calculator) => (
