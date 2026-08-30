@@ -113,5 +113,7 @@ Remaining to Target: 0
   - Replaced mechanically generated English directory calculator names with an explicit source-driven localization contract covering all 100 published calculator IDs. Acronyms and punctuation now remain stable across visible cards, search, popular shortcuts, and structured data without changing routes, inventory, search semantics, or Korean copy.
 - [x] UX-026 DONE — Directory English Calculator Description Localization Regression
   - Replaced the generic mechanically generated English directory descriptions with explicit calculator-specific copy covering all 100 published calculator IDs. The shared localization contract now feeds directory cards and search records while preserving category parity, canonical routes, the single 100-calculator inventory, Korean copy, and existing structured-data item identity.
-- [ ] UX-027 OPEN — Directory English Calculator Copy Coverage Guard
-  - Scope: strengthen source-contract regression so future published calculators cannot ship with missing, blank, non-ASCII, or fallback English directory name/description copy while preserving routes, search semantics, and the 100-calculator inventory.
+- [x] UX-027 DONE — Directory English Calculator Copy Coverage Guard
+  - Source-contract regression now requires every published calculator to have exactly one explicit, non-blank, ASCII English directory name and description and rejects raw-ID, mechanical-name, and former generic-description fallbacks. Routes, search ranking semantics, calculator logic, Korean copy, and the 100-calculator inventory remain unchanged.
+- [ ] UX-028 OPEN — Directory English Calculator Search Keyword Localization Regression
+  - Scope: replace locale-filtered English search keywords with explicit source-driven English aliases for published calculators where needed, preserving deterministic search ranking, canonical routes, Korean search behavior, and the 100-calculator inventory.
