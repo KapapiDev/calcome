@@ -17,7 +17,9 @@ describe("DirectoryCategoryNavigation", () => {
     );
 
     for (const category of visibleCalculatorDirectory) {
-      const link = screen.getByRole("link", { name: new RegExp(category.name) });
+      const link = screen.getByRole("link", {
+        name: new RegExp(category.name),
+      });
       expect(link).toHaveAttribute("href", `#${category.id}`);
       expect(link).toHaveAttribute("aria-controls", category.id);
       expect(link).toHaveClass("min-h-11");
@@ -30,13 +32,11 @@ describe("DirectoryCategoryNavigation", () => {
     expect(
       screen.getByRole("link", { name: /Pay & Employment/ }),
     ).toHaveAttribute("href", "#employment");
-    expect(screen.getByRole("link", { name: /Loans & Credit/ })).toHaveAttribute(
-      "href",
-      "#loan",
-    );
-    expect(screen.getByRole("link", { name: /Business & Everyday/ })).toHaveAttribute(
-      "href",
-      "#business-life",
-    );
+    expect(
+      screen.getByRole("link", { name: /Loans & Credit/ }),
+    ).toHaveAttribute("href", "#loan");
+    expect(
+      screen.getByRole("link", { name: /Business & Everyday/ }),
+    ).toHaveAttribute("href", "#business-life");
   });
 });
