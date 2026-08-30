@@ -38,7 +38,7 @@ describe("directory category description locale parity", () => {
 
     for (const source of [koreanSource, englishSource]) {
       expect(source).toContain("id={category.id}");
-      expect(source).toContain('aria-labelledby={`${category.id}-heading`}');
+      expect(source).toContain("aria-labelledby={`${category.id}-heading`}");
       expect(source).toContain(
         'className="flex flex-wrap items-end justify-between gap-3 border-b pb-4"',
       );
