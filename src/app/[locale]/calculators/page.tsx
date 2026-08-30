@@ -6,7 +6,10 @@ import CalculatorsPage from "@/app/calculators/page";
 import { CalculatorCard } from "@/components/calculators/calculator-card";
 import { CalculatorSearch } from "@/components/calculators/calculator-search";
 import { DirectoryCategoryNavigation } from "@/components/calculators/directory-category-navigation";
-import { getEnglishCalculatorName } from "@/config/calculator-directory-calculator-copy";
+import {
+  getEnglishCalculatorDescription,
+  getEnglishCalculatorName,
+} from "@/config/calculator-directory-calculator-copy";
 import {
   allPublishedCalculators,
   directorySearchCalculators,
@@ -38,7 +41,7 @@ function englishCalculator<
   return {
     ...calculator,
     name,
-    description: `Use the ${name} with clear inputs and results.`,
+    description: getEnglishCalculatorDescription(calculator.id),
     keywords: calculator.keywords.filter((keyword) =>
       /^[\x00-\x7F]+$/.test(keyword),
     ),

@@ -2,14 +2,21 @@ import { describe, expect, it } from "vitest";
 
 import { allPublishedCalculators } from "./calculator-directory";
 import {
+  englishCalculatorDescriptions,
   englishCalculatorNames,
+  getEnglishCalculatorDescription,
   getEnglishCalculatorName,
 } from "./calculator-directory-calculator-copy";
 
-describe("English calculator directory names", () => {
-  it("covers every published calculator exactly once", () => {
-    expect(Object.keys(englishCalculatorNames).sort()).toEqual(
-      allPublishedCalculators.map((calculator) => calculator.id).sort(),
+describe("English calculator directory copy", () => {
+  it("covers every published calculator exactly once for names and descriptions", () => {
+    const publishedIds = allPublishedCalculators
+      .map((calculator) => calculator.id)
+      .sort();
+
+    expect(Object.keys(englishCalculatorNames).sort()).toEqual(publishedIds);
+    expect(Object.keys(englishCalculatorDescriptions).sort()).toEqual(
+      publishedIds,
     );
   });
 
@@ -23,5 +30,25 @@ describe("English calculator directory names", () => {
     expect(getEnglishCalculatorName("freelancer-3-3-tax")).toBe(
       "Freelancer 3.3% Tax Calculator",
     );
+  });
+
+  it("uses explicit calculator-specific English descriptions", () => {
+    expect(getEnglishCalculatorDescription("compound-interest")).toBe(
+      "Project how principal grows when interest compounds over time.",
+    );
+    expect(getEnglishCalculatorDescription("ltv")).toContain(
+      "loan-to-value ratio",
+    );
+    expect(getEnglishCalculatorDescription("business-cash-runway")).toContain(
+      "cash burn",
+    );
+
+    for (const calculator of allPublishedCalculators) {
+      const description = getEnglishCalculatorDescription(calculator.id);
+      expect(description).not.toBe(
+        `Use the ${getEnglishCalculatorName(calculator.id)} with clear inputs and results.`,
+      );
+      expect(description).toMatch(/^[\x00-\x7F]+$/);
+    }
   });
 });

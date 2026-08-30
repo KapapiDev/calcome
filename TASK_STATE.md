@@ -1,6 +1,6 @@
 # CalCome Task State
 
-Last Updated: 2026-08-30
+Last Updated: 2026-08-31
 Current Calculator Count: 100
 Target Calculator Count: 100
 Remaining to Target: 0
@@ -111,5 +111,7 @@ Remaining to Target: 0
   - The shared English category-copy module now validates itself against the source directory category order at module load. Missing, extra, reordered, blank-name, or blank-description entries fail immediately during repository validation, so future categories cannot silently ship without explicit English copy. Existing category names, descriptions, routes, counts, anchors, inventory, and accessibility behavior are unchanged.
 - [x] UX-025 DONE — Directory English Calculator Name Localization Regression
   - Replaced mechanically generated English directory calculator names with an explicit source-driven localization contract covering all 100 published calculator IDs. Acronyms and punctuation now remain stable across visible cards, search, popular shortcuts, and structured data without changing routes, inventory, search semantics, or Korean copy.
-- [ ] UX-026 OPEN — Directory English Calculator Description Localization Regression
-  - Scope: replace mechanically generated English calculator descriptions with explicit source-driven localized copy while preserving source/category parity, search behavior, structured-data consistency, canonical routes, and the 100-calculator inventory.
+- [x] UX-026 DONE — Directory English Calculator Description Localization Regression
+  - Replaced the generic mechanically generated English directory descriptions with explicit calculator-specific copy covering all 100 published calculator IDs. The shared localization contract now feeds directory cards and search records while preserving category parity, canonical routes, the single 100-calculator inventory, Korean copy, and existing structured-data item identity.
+- [ ] UX-027 OPEN — Directory English Calculator Copy Coverage Guard
+  - Scope: strengthen source-contract regression so future published calculators cannot ship with missing, blank, non-ASCII, or fallback English directory name/description copy while preserving routes, search semantics, and the 100-calculator inventory.
