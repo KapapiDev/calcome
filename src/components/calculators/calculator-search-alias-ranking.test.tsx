@@ -60,10 +60,7 @@ describe("English calculator search alias ranking", () => {
     expect(broaderAlias.keywords).toContain("mortgage borrowing capacity");
 
     render(
-      <CalculatorSearch
-        calculators={[broaderAlias, exactAlias]}
-        locale="en"
-      />,
+      <CalculatorSearch calculators={[broaderAlias, exactAlias]} locale="en" />,
     );
     await user.type(
       screen.getByRole("searchbox", { name: "Search calculators" }),
@@ -89,9 +86,7 @@ describe("English calculator search alias ranking", () => {
       keywords: [sharedAlias],
     };
 
-    render(
-      <CalculatorSearch calculators={[first, second]} locale="en" />,
-    );
+    render(<CalculatorSearch calculators={[first, second]} locale="en" />);
     await user.type(
       screen.getByRole("searchbox", { name: "Search calculators" }),
       sharedAlias,
