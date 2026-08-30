@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
 
-import { allPublishedCalculators } from "./calculator-directory";
 import {
   englishCalculatorDescriptions,
-  englishCalculatorNames,
   getEnglishCalculatorDescription,
+} from "./calculator-description-copy";
+import { allPublishedCalculators } from "./calculator-directory";
+import {
+  englishCalculatorNames,
   getEnglishCalculatorName,
 } from "./calculator-directory-calculator-copy";
 
@@ -34,7 +36,7 @@ describe("English calculator directory copy", () => {
 
   it("uses explicit calculator-specific English descriptions", () => {
     expect(getEnglishCalculatorDescription("compound-interest")).toBe(
-      "Project how principal grows when interest compounds over time.",
+      "Project growth with compound interest.",
     );
     expect(getEnglishCalculatorDescription("ltv")).toContain(
       "loan-to-value ratio",
