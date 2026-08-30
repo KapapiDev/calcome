@@ -8,7 +8,10 @@ export const englishCalculatorSearchAliases: Readonly<
   "unemployment-benefits": ["unemployment insurance", "jobless benefits"],
   "net-salary": ["take home pay", "after tax salary"],
   "hourly-wage": ["hourly rate", "wage per hour"],
-  "social-insurance": ["social security contributions", "insurance contributions"],
+  "social-insurance": [
+    "social security contributions",
+    "insurance contributions",
+  ],
   "average-wage": ["average pay"],
   "salary-raise": ["pay raise", "salary increase"],
   "salary-conversion": ["salary period conversion", "pay period conversion"],
@@ -22,7 +25,10 @@ export const englishCalculatorSearchAliases: Readonly<
   "part-time-monthly-pay": ["part time monthly salary"],
   "daily-worker-pay": ["daily wage"],
   "work-hours-converter": ["work time converter"],
-  "total-compensation-comparison": ["compensation comparison", "offer comparison"],
+  "total-compensation-comparison": [
+    "compensation comparison",
+    "offer comparison",
+  ],
   "salary-negotiation-target": ["salary target", "negotiation target"],
   "parental-leave-benefit": ["parental leave pay"],
   "maternity-leave-benefit": ["maternity pay"],
@@ -64,7 +70,10 @@ export const englishCalculatorSearchAliases: Readonly<
   "home-purchase-total-cost": ["closing costs", "home buying costs"],
   "home-sale-net-proceeds": ["seller proceeds", "home sale proceeds"],
   "rental-yield": ["rental return", "cap rate"],
-  "apartment-management-fee-budget": ["apartment fees", "maintenance fee budget"],
+  "apartment-management-fee-budget": [
+    "apartment fees",
+    "maintenance fee budget",
+  ],
   deposit: ["fixed deposit", "term deposit"],
   savings: ["recurring savings"],
   "compound-interest": ["compound growth", "interest compounding"],
@@ -131,7 +140,9 @@ for (const [id, aliases] of Object.entries(englishCalculatorSearchAliases)) {
   }
 }
 
-export function getEnglishCalculatorSearchAliases(id: string): readonly string[] {
+export function getEnglishCalculatorSearchAliases(
+  id: string,
+): readonly string[] {
   if (!publishedIdSet.has(id)) {
     throw new Error(`Unknown English calculator search alias id: ${id}`);
   }

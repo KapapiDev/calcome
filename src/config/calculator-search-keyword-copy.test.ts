@@ -45,15 +45,13 @@ describe("English calculator search keyword copy", () => {
     expect(getEnglishCalculatorSearchAliases("net-salary")).toContain(
       "take home pay",
     );
-    expect(getEnglishCalculatorSearchAliases("ltv")).toContain(
-      "loan to value",
-    );
+    expect(getEnglishCalculatorSearchAliases("ltv")).toContain("loan to value");
     expect(getEnglishCalculatorSearchAliases("value-added-tax")).toContain(
       "vat",
     );
-    expect(getEnglishCalculatorSearchAliases("dollar-cost-averaging")).toContain(
-      "dca",
-    );
+    expect(
+      getEnglishCalculatorSearchAliases("dollar-cost-averaging"),
+    ).toContain("dca");
     expect(getEnglishCalculatorSearchAliases("business-cash-runway")).toContain(
       "burn rate",
     );
