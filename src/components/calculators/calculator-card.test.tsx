@@ -22,7 +22,9 @@ describe("CalculatorCard", () => {
       />,
     );
 
-    const link = screen.getByRole("link", { name: /매우 긴 다국어 계산기 이름/ });
+    const link = screen.getByRole("link", {
+      name: /매우 긴 다국어 계산기 이름/,
+    });
     expect(link).toHaveAttribute("href", calculator.href);
     expect(link).toHaveClass("min-h-11", "min-w-0", "overflow-hidden");
     expect(screen.getByRole("heading")).toHaveClass("break-words");
