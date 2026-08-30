@@ -93,5 +93,7 @@ Remaining to Target: 0
   - Korean and English directory category navigation now share one source-driven horizontal scroller with mandatory snap points, contained horizontal overscroll, 44px category targets, and identical fragment IDs. Every category section is programmatically focusable with the existing scroll margin so fragment entry and keyboard/screen-reader focus land on the same section without changing calculator canonicals.
 - [x] UX-016 DONE — Directory Popular Calculator Locale Parity Regression
   - Korean and English directories now expose the same source-driven popular-calculator shortcut set in the same pre-inventory position. English shortcuts are localized onto stable `/en/` calculator canonicals, preserve 44px minimum entry targets, and remain outside the published-calculator inventory region so the 100-calculator directory is not duplicated.
-- [ ] UX-017 OPEN — Directory Category Count Locale Parity Regression
-  - Scope: verify category headings expose equivalent localized calculator counts in Korean and English without duplicating inventory, changing canonical routes, or degrading small-screen layout.
+- [x] UX-017 DONE — Directory Category Count Locale Parity Regression
+  - Korean and English category headings now expose the same source-driven calculator count beside each localized category description. The English heading layout mirrors the Korean flex-wrap structure so counts remain readable on narrow screens without changing category anchors, calculator canonicals, or the single 100-calculator inventory.
+- [ ] UX-018 OPEN — Directory Category Description Locale Parity Regression
+  - Scope: verify every Korean directory category description has an equivalent English localized description with stable category ordering, anchors, and compact small-screen presentation.
