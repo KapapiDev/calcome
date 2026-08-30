@@ -24,21 +24,35 @@ describe("English calculator search keyword copy", () => {
     );
   });
 
-  it("keeps English aliases source-driven, non-blank, ASCII, and published-only", () => {
-    const publishedIds = new Set<string>(
-      allPublishedCalculators.map((calculator) => calculator.id),
+  it("covers every published calculator exactly once with deliberate aliases", () => {
+    const publishedIds = allPublishedCalculators.map(
+      (calculator) => calculator.id,
     );
+    const aliasIds = Object.keys(englishCalculatorSearchAliases);
 
-    for (const [id, aliases] of Object.entries(
-      englishCalculatorSearchAliases,
-    )) {
-      expect(publishedIds.has(id)).toBe(true);
+    expect(aliasIds).toHaveLength(publishedIds.length);
+    expect(new Set(aliasIds)).toEqual(new Set(publishedIds));
+
+    for (const id of publishedIds) {
+      const aliases = getEnglishCalculatorSearchAliases(id);
       expect(aliases.length).toBeGreaterThan(0);
+
+      const normalized = aliases.map((alias) =>
+        alias.trim().toLocaleLowerCase("en-US"),
+      );
+      expect(new Set(normalized).size).toBe(normalized.length);
+
       for (const alias of aliases) {
         expect(alias.trim()).not.toBe("");
         expect(alias).toMatch(asciiOnly);
       }
     }
+  });
+
+  it("rejects unknown calculator ids instead of silently returning no aliases", () => {
+    expect(() => getEnglishCalculatorSearchAliases("not-published")).toThrow(
+      "Unknown English calculator search alias id: not-published",
+    );
   });
 
   it("provides useful English aliases for representative search intents", () => {

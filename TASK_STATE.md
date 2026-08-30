@@ -117,5 +117,7 @@ Remaining to Target: 0
   - Source-contract regression now requires every published calculator to have exactly one explicit, non-blank, ASCII English directory name and description and rejects raw-ID, mechanical-name, and former generic-description fallbacks. Routes, search ranking semantics, calculator logic, Korean copy, and the 100-calculator inventory remain unchanged.
 - [x] UX-028 DONE — Directory English Calculator Search Keyword Localization Regression
   - English directory search now uses an explicit source-driven English alias map instead of filtering ASCII fragments out of Korean source keywords. Search names, descriptions, canonical routes, deterministic ranking rules, Korean search data, and the 100-calculator inventory remain unchanged.
-- [ ] UX-029 OPEN — Directory English Calculator Search Alias Coverage Guard
-  - Scope: require future published calculators to receive deliberate English search-alias coverage and reject missing, blank, non-ASCII, duplicate, or unknown alias entries without changing ranking semantics, Korean search behavior, canonical routes, or inventory.
+- [x] UX-029 DONE — Directory English Calculator Search Alias Coverage Guard
+  - English search aliases now have compile-time exact published-calculator coverage plus runtime validation for missing, blank, non-ASCII, duplicate, and unknown entries. Focused regression coverage verifies all 100 published calculators receive at least one deliberate English alias without changing ranking semantics, Korean search behavior, canonical routes, or inventory.
+- [ ] UX-030 OPEN — Directory English Calculator Search Alias Ranking Regression
+  - Scope: prove explicit English aliases preserve deterministic search ranking, keep exact calculator-name matches ahead of alias matches, and do not change Korean search behavior, canonical routes, or the 100-calculator inventory.
