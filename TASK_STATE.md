@@ -123,5 +123,7 @@ Remaining to Target: 0
   - Focused search regression coverage now proves exact calculator-name matches stay ahead of explicit English alias matches, exact aliases outrank broader alias matches, tied alias scores preserve source order, and Korean records, canonical locale routes, and the 100-calculator inventory remain unchanged.
 - [x] UX-031 DONE — Directory English Calculator Search Alias Collision Guard
   - English alias regression now rejects cross-calculator exact alias collisions and aliases that exactly shadow another published English calculator name. The guard keeps the current collision-free alias set deterministic without changing Korean search behavior, canonical routes, ranking semantics, or the 100-calculator inventory.
-- [ ] UX-032 OPEN — Directory English Calculator Search Alias Normalization Consistency Regression
-  - Scope: verify English calculator names and aliases use the same case/whitespace normalization path as directory search and preserve deterministic matching without changing Korean search behavior, canonical routes, ranking semantics, or inventory.
+- [x] UX-032 DONE — Directory English Calculator Search Alias Normalization Consistency Regression
+  - English calculator names and aliases now have focused regression coverage against the directory search normalization contract: NFKC compatibility normalization, shared case-folding, and surrounding-whitespace trimming. Representative full-width, uppercase, and padded aliases normalize identically without changing Korean search behavior, canonical routes, ranking semantics, or the 100-calculator inventory.
+- [ ] UX-033 OPEN — Directory English Calculator Search Alias Route Integrity Regression
+  - Scope: verify every English alias result keeps the owning calculator's canonical `/en/` route and cannot resolve through another calculator or a locale-less alias, without changing ranking semantics, Korean search behavior, or inventory.
