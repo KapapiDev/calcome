@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { CalculatorCard } from "@/components/calculators/calculator-card";
 import { CalculatorSearch } from "@/components/calculators/calculator-search";
+import { DirectoryCategoryNavigation } from "@/components/calculators/directory-category-navigation";
 import {
   allPublishedCalculators,
   directorySearchCalculators,
@@ -79,23 +80,7 @@ export default function CalculatorsPage() {
           <CalculatorSearch calculators={directorySearchCalculators} />
         </header>
 
-        <nav aria-label="계산기 카테고리" className="mt-10">
-          <ul className="flex snap-x gap-2 overflow-x-auto pb-2">
-            {visibleCalculatorDirectory.map((category) => (
-              <li key={category.id} className="shrink-0 snap-start">
-                <a
-                  href={`#${category.id}`}
-                  className="inline-flex min-h-11 items-center rounded-lg border bg-background px-4 text-sm font-medium transition hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/30"
-                >
-                  {category.name}
-                  <span className="ml-2 text-muted-foreground">
-                    {category.calculators.length}
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <DirectoryCategoryNavigation />
 
         <section className="mt-12" aria-labelledby="popular-calculators">
           <h2
@@ -130,8 +115,9 @@ export default function CalculatorsPage() {
             <section
               key={category.id}
               id={category.id}
+              tabIndex={-1}
               aria-labelledby={`${category.id}-heading`}
-              className="scroll-mt-24"
+              className="scroll-mt-24 focus:outline-none"
             >
               <div className="flex flex-wrap items-end justify-between gap-3 border-b pb-4">
                 <div>
