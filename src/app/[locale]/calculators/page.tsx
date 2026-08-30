@@ -64,9 +64,15 @@ function compactEnglishName(name: string) {
   return name.replace(/ Calculator$/, "");
 }
 
-function englishCalculator(
-  calculator: (typeof directorySearchCalculators)[number],
-) {
+function englishCalculator<
+  T extends {
+    id: string;
+    name: string;
+    description: string;
+    keywords: readonly string[];
+    href: string;
+  },
+>(calculator: T) {
   const name = englishCalculatorName(calculator.id);
   return {
     ...calculator,
@@ -75,7 +81,7 @@ function englishCalculator(
     keywords: calculator.keywords.filter((keyword) =>
       /^[\x00-\x7F]+$/.test(keyword),
     ),
-    href: calculator.href.replace(/^\/ko\//, "/en/") as typeof calculator.href,
+    href: calculator.href.replace(/^\/ko\//, "/en/") as T["href"],
   };
 }
 
