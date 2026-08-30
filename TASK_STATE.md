@@ -121,5 +121,7 @@ Remaining to Target: 0
   - English search aliases now have compile-time exact published-calculator coverage plus runtime validation for missing, blank, non-ASCII, duplicate, and unknown entries. Focused regression coverage verifies all 100 published calculators receive at least one deliberate English alias without changing ranking semantics, Korean search behavior, canonical routes, or inventory.
 - [x] UX-030 DONE — Directory English Calculator Search Alias Ranking Regression
   - Focused search regression coverage now proves exact calculator-name matches stay ahead of explicit English alias matches, exact aliases outrank broader alias matches, tied alias scores preserve source order, and Korean records, canonical locale routes, and the 100-calculator inventory remain unchanged.
-- [ ] UX-031 OPEN — Directory English Calculator Search Alias Collision Guard
-  - Scope: detect cross-calculator English alias collisions and aliases that exactly shadow another published calculator name, then preserve only intentional ambiguity with deterministic source-order evidence without changing Korean search behavior, canonical routes, or inventory.
+- [x] UX-031 DONE — Directory English Calculator Search Alias Collision Guard
+  - English alias regression now rejects cross-calculator exact alias collisions and aliases that exactly shadow another published English calculator name. The guard keeps the current collision-free alias set deterministic without changing Korean search behavior, canonical routes, ranking semantics, or the 100-calculator inventory.
+- [ ] UX-032 OPEN — Directory English Calculator Search Alias Normalization Consistency Regression
+  - Scope: verify English calculator names and aliases use the same case/whitespace normalization path as directory search and preserve deterministic matching without changing Korean search behavior, canonical routes, ranking semantics, or inventory.
