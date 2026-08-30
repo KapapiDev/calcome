@@ -12,42 +12,9 @@ import {
   popularCalculators,
   visibleCalculatorDirectory,
 } from "@/config/calculator-directory";
+import { englishDirectoryCategoryCopy } from "@/config/calculator-directory-copy";
 import { absoluteUrl } from "@/config/site";
 import { JsonLdScript } from "@/lib/seo/structured-data";
-
-const categoryCopy: Record<string, { name: string; description: string }> = {
-  employment: {
-    name: "Pay & Employment",
-    description:
-      "Pay, benefits, insurance, leave, and working-time calculators.",
-  },
-  loan: {
-    name: "Loans & Credit",
-    description:
-      "Loan payments, affordability, refinancing, and credit calculators.",
-  },
-  tax: {
-    name: "Tax",
-    description: "Tax and filing calculators with clearly stated assumptions.",
-  },
-  housing: {
-    name: "Housing & Property",
-    description: "Housing, rent, property, and transaction-cost calculators.",
-  },
-  savings: {
-    name: "Savings & Retirement",
-    description: "Savings, deposits, goals, and retirement calculators.",
-  },
-  investment: {
-    name: "Investing",
-    description: "Returns, stocks, dividends, fees, and investing calculators.",
-  },
-  "business-life": {
-    name: "Business & Everyday",
-    description:
-      "Practical calculators for business and everyday money decisions.",
-  },
-};
 
 function englishCalculatorName(id: string) {
   return `${id
@@ -222,7 +189,7 @@ export default async function LocalizedCalculatorsPage({
           className="mt-16 space-y-16"
         >
           {visibleCalculatorDirectory.map((category) => {
-            const copy = categoryCopy[category.id];
+            const copy = englishDirectoryCategoryCopy[category.id];
             return (
               <section
                 key={category.id}
@@ -237,10 +204,10 @@ export default async function LocalizedCalculatorsPage({
                       id={`${category.id}-heading`}
                       className="text-2xl font-semibold tracking-tight"
                     >
-                      {copy?.name ?? category.id}
+                      {copy.name}
                     </h2>
                     <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                      {copy?.description}
+                      {copy.description}
                     </p>
                   </div>
                   <p className="text-sm text-muted-foreground">
@@ -248,7 +215,7 @@ export default async function LocalizedCalculatorsPage({
                   </p>
                 </div>
                 <ul
-                  aria-label={`${copy?.name ?? category.id} calculators`}
+                  aria-label={`${copy.name} calculators`}
                   className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
                 >
                   {category.calculators.map((calculator) => {
@@ -258,7 +225,7 @@ export default async function LocalizedCalculatorsPage({
                       <li key={calculator.id}>
                         <CalculatorCard
                           calculator={localized}
-                          categoryLabel={copy?.name ?? category.id}
+                          categoryLabel={copy.name}
                         />
                       </li>
                     );
