@@ -9,6 +9,7 @@ import { DirectoryCategoryNavigation } from "@/components/calculators/directory-
 import {
   allPublishedCalculators,
   directorySearchCalculators,
+  popularCalculators,
   visibleCalculatorDirectory,
 } from "@/config/calculator-directory";
 import { absoluteUrl } from "@/config/site";
@@ -59,6 +60,10 @@ function englishCalculatorName(id: string) {
     .join(" ")} Calculator`;
 }
 
+function compactEnglishName(name: string) {
+  return name.replace(/ Calculator$/, "");
+}
+
 function englishCalculator(
   calculator: (typeof directorySearchCalculators)[number],
 ) {
@@ -76,6 +81,7 @@ function englishCalculator(
 
 const englishDirectoryCalculators =
   directorySearchCalculators.map(englishCalculator);
+const englishPopularCalculators = popularCalculators.map(englishCalculator);
 type EnglishDirectoryCalculator = (typeof englishDirectoryCalculators)[number];
 const englishDirectoryById: ReadonlyMap<string, EnglishDirectoryCalculator> =
   new Map(
@@ -178,6 +184,30 @@ export default async function LocalizedCalculatorsPage({
         </header>
 
         <DirectoryCategoryNavigation locale="en" />
+
+        <section className="mt-12" aria-labelledby="popular-calculators-en">
+          <h2
+            id="popular-calculators-en"
+            className="text-2xl font-semibold tracking-tight"
+          >
+            Popular calculators
+          </h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Open frequently used calculators without scanning the full directory.
+          </p>
+          <ul className="mt-5 flex flex-wrap gap-2">
+            {englishPopularCalculators.map((calculator) => (
+              <li key={calculator.id}>
+                <Link
+                  href={calculator.href}
+                  className="inline-flex min-h-11 items-center rounded-lg border bg-background px-4 text-sm font-medium transition hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/30"
+                >
+                  {compactEnglishName(calculator.name)}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
 
         <div
           role="region"
