@@ -231,15 +231,20 @@ export default async function LocalizedCalculatorsPage({
                 aria-labelledby={`${category.id}-heading`}
                 className="scroll-mt-24 focus:outline-none"
               >
-                <div className="border-b pb-4">
-                  <h2
-                    id={`${category.id}-heading`}
-                    className="text-2xl font-semibold tracking-tight"
-                  >
-                    {copy?.name ?? category.id}
-                  </h2>
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                    {copy?.description}
+                <div className="flex flex-wrap items-end justify-between gap-3 border-b pb-4">
+                  <div>
+                    <h2
+                      id={`${category.id}-heading`}
+                      className="text-2xl font-semibold tracking-tight"
+                    >
+                      {copy?.name ?? category.id}
+                    </h2>
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                      {copy?.description}
+                    </p>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    {category.calculators.length} calculators
                   </p>
                 </div>
                 <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
