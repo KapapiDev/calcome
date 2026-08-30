@@ -64,9 +64,7 @@ describe("directory category navigation locale parity", () => {
 
     const countExpression = "{category.calculators.length}";
     expect(source.split(countExpression)).toHaveLength(2);
-    expect(source).toContain(
-      "englishDirectoryCategoryCopy[category.id].name",
-    );
+    expect(source).toContain("englishDirectoryCategoryCopy[category.id].name");
     expect(source).not.toMatch(/isEnglish[\s\S]{0,120}calculators\.length/);
     expect(source).not.toMatch(/calculators\.length[\s\S]{0,120}isEnglish/);
 
