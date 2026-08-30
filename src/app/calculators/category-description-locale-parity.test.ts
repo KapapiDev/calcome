@@ -24,15 +24,20 @@ describe("directory category description locale parity", () => {
     expect(copyEnd).toBeGreaterThan(copyStart);
     expect(visibleCalculatorDirectory.length).toBeGreaterThan(0);
     expect(koreanSource).toContain("{category.description}");
-    expect((englishCopy.match(/description:/g) ?? []).length).toBe(
-      visibleCalculatorDirectory.length,
-    );
 
     let previousPosition = -1;
-    for (const category of visibleCalculatorDirectory) {
+    for (const [index, category] of visibleCalculatorDirectory.entries()) {
       expect(category.description.trim().length).toBeGreaterThan(0);
       const position = englishCopy.indexOf(`${category.id}:`);
       expect(position).toBeGreaterThan(previousPosition);
+
+      const nextCategory = visibleCalculatorDirectory[index + 1];
+      const blockEnd = nextCategory
+        ? englishCopy.indexOf(`${nextCategory.id}:`, position)
+        : englishCopy.length;
+      const categoryBlock = englishCopy.slice(position, blockEnd);
+
+      expect(categoryBlock).toMatch(/description:\s*\n?\s*"[^"]+"/);
       previousPosition = position;
     }
 
