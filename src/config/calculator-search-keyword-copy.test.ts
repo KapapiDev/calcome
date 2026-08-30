@@ -54,6 +54,36 @@ describe("English calculator search keyword copy", () => {
     }
   });
 
+  it("keeps every English alias result on its owning canonical /en/ route", () => {
+    expect(englishDirectoryPageSource).toContain(
+      'href: calculator.href.replace(/^\\/ko\\//, "/en/") as T["href"]',
+    );
+    expect(calculatorSearchSource).toContain("href={calculator.href}");
+
+    const localizedRouteOwners = new Map<string, string>();
+
+    for (const calculator of allPublishedCalculators) {
+      const expectedRoute = calculator.href.replace(/^\/ko\//, "/en/");
+
+      expect(expectedRoute).toMatch(/^\/en\//);
+      expect(expectedRoute).not.toBe(calculator.href.replace(/^\/ko\//, "/"));
+
+      const existingOwner = localizedRouteOwners.get(expectedRoute);
+      expect(
+        existingOwner,
+        `English canonical route ${expectedRoute} must belong to exactly one calculator`,
+      ).toBeUndefined();
+      localizedRouteOwners.set(expectedRoute, calculator.id);
+
+      for (const alias of getEnglishCalculatorSearchAliases(calculator.id)) {
+        expect(
+          localizedRouteOwners.get(expectedRoute),
+          `English alias "${alias}" must resolve through ${calculator.id}'s canonical route`,
+        ).toBe(calculator.id);
+      }
+    }
+  });
+
   it("covers every published calculator exactly once with deliberate aliases", () => {
     const publishedIds = allPublishedCalculators.map(
       (calculator) => calculator.id,
