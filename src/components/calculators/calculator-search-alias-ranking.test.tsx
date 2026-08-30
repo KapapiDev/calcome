@@ -1,6 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 
 import { CalculatorSearch } from "@/components/calculators/calculator-search";
 import { getEnglishCalculatorName } from "@/config/calculator-directory-calculator-copy";
@@ -24,6 +24,10 @@ function englishCalculator(id: string) {
 }
 
 describe("English calculator search alias ranking", () => {
+  beforeEach(() => {
+    window.sessionStorage.clear();
+  });
+
   it("keeps an exact calculator-name match ahead of an explicit alias match", async () => {
     const user = userEvent.setup();
     const aliasMatch = englishCalculator("loan");
