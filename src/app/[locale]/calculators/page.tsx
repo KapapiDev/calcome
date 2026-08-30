@@ -15,6 +15,7 @@ import {
   visibleCalculatorDirectory,
 } from "@/config/calculator-directory";
 import { englishDirectoryCategoryCopy } from "@/config/calculator-directory-copy";
+import { getEnglishCalculatorSearchAliases } from "@/config/calculator-search-keyword-copy";
 import { absoluteUrl } from "@/config/site";
 import { JsonLdScript } from "@/lib/seo/structured-data";
 
@@ -40,14 +41,12 @@ function englishCalculator<
     ...calculator,
     name,
     description: getEnglishCalculatorDescription(calculator.id),
-    keywords: calculator.keywords.filter((keyword) =>
-      /^[\x00-\x7F]+$/.test(keyword),
-    ),
+    keywords: getEnglishCalculatorSearchAliases(calculator.id),
     href: calculator.href.replace(/^\/ko\//, "/en/") as T["href"],
   };
 }
 
-const englishDirectoryCalculators =
+export const englishDirectoryCalculators =
   directorySearchCalculators.map(englishCalculator);
 const englishPopularCalculators = popularCalculators.map(englishCalculator);
 type EnglishDirectoryCalculator = (typeof englishDirectoryCalculators)[number];
