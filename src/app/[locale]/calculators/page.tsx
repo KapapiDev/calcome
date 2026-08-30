@@ -6,6 +6,7 @@ import CalculatorsPage from "@/app/calculators/page";
 import { CalculatorCard } from "@/components/calculators/calculator-card";
 import { CalculatorSearch } from "@/components/calculators/calculator-search";
 import { DirectoryCategoryNavigation } from "@/components/calculators/directory-category-navigation";
+import { getEnglishCalculatorName } from "@/config/calculator-directory-calculator-copy";
 import {
   allPublishedCalculators,
   directorySearchCalculators,
@@ -17,14 +18,7 @@ import { absoluteUrl } from "@/config/site";
 import { JsonLdScript } from "@/lib/seo/structured-data";
 
 function englishCalculatorName(id: string) {
-  return `${id
-    .split("-")
-    .map((part) =>
-      part.toUpperCase() === part
-        ? part
-        : part.charAt(0).toUpperCase() + part.slice(1),
-    )
-    .join(" ")} Calculator`;
+  return getEnglishCalculatorName(id);
 }
 
 function compactEnglishName(name: string) {
