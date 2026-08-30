@@ -105,5 +105,7 @@ Remaining to Target: 0
   - Shared Korean and English category navigation now has focused regression coverage proving every category count comes from the same `category.calculators.length` source expression, without locale-specific or hard-coded count paths. Existing source order, localized names, fragment anchors, ARIA controls, and 44px touch targets remain unchanged.
 - [x] UX-022 DONE — Directory Category Navigation Accessibility Locale Parity Regression
   - Korean and English category navigation preserve localized nav labels, shared fragment/ARIA-control linkage, visible keyboard focus, and programmatically focusable category targets. English category calculator lists now also expose localized accessible names, matching the Korean directory semantics without changing category names, counts, order, anchors, routes, or touch targets.
-- [ ] UX-023 OPEN — Directory English Category Copy Single-Source Regression
-  - Scope: eliminate duplicated English category-name sources between category navigation and the English directory so navigation labels and section headings cannot drift, while preserving descriptions, counts, source order, anchors, and accessibility semantics.
+- [x] UX-023 DONE — Directory English Category Copy Single-Source Regression
+  - English category names and descriptions now live in one shared directory-copy source consumed by both the category navigation and English directory sections. Focused regression coverage requires exact source-category coverage and prevents local duplicate name maps while preserving descriptions, counts, order, anchors, routes, and accessibility semantics.
+- [ ] UX-024 OPEN — Directory English Category Copy Coverage Guard
+  - Scope: strengthen the shared English category-copy contract so future directory categories cannot ship without explicit localized name and description coverage, while preserving current category order, routes, counts, anchors, and accessibility behavior.

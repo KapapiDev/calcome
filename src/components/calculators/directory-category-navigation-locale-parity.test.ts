@@ -4,63 +4,53 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 
 import { visibleCalculatorDirectory } from "@/config/calculator-directory";
-
-function categoryKeyPosition(source: string, id: string, fromIndex = 0) {
-  const positions = [`${id}:`, `"${id}":`, `'${id}':`]
-    .map((needle) => source.indexOf(needle, fromIndex))
-    .filter((position) => position >= 0);
-
-  return positions.length > 0 ? Math.min(...positions) : -1;
-}
+import { englishDirectoryCategoryCopy } from "@/config/calculator-directory-copy";
 
 describe("directory category navigation locale parity", () => {
-  it("keeps every English navigation label explicit, ordered, and source-driven", () => {
-    const source = fs.readFileSync(
+  it("keeps every English navigation label explicit, ordered, and single-sourced", () => {
+    const navigationSource = fs.readFileSync(
       path.join(
         process.cwd(),
         "src/components/calculators/directory-category-navigation.tsx",
       ),
       "utf8",
     );
+    const englishPageSource = fs.readFileSync(
+      path.join(process.cwd(), "src/app/[locale]/calculators/page.tsx"),
+      "utf8",
+    );
 
-    const namesStart = source.indexOf("const englishCategoryNames");
-    const namesEnd = source.indexOf("\n};", namesStart);
-    const englishNames = source.slice(namesStart, namesEnd);
-
-    expect(namesStart).toBeGreaterThanOrEqual(0);
-    expect(namesEnd).toBeGreaterThan(namesStart);
     expect(visibleCalculatorDirectory.length).toBeGreaterThan(0);
+    expect(Object.keys(englishDirectoryCategoryCopy)).toEqual(
+      visibleCalculatorDirectory.map((category) => category.id),
+    );
 
-    let previousPosition = -1;
     for (const category of visibleCalculatorDirectory) {
-      const position = categoryKeyPosition(
-        englishNames,
-        category.id,
-        previousPosition + 1,
-      );
-      expect(position).toBeGreaterThan(previousPosition);
-
-      const categoryBlock = englishNames.slice(position);
-      const nameMatch = categoryBlock.match(/:\s*"([^"]+)"/);
-      expect(nameMatch).not.toBeNull();
-
-      const englishName = nameMatch?.[1] ?? "";
-      expect(englishName.trim().length).toBeGreaterThan(0);
-      expect(englishName).not.toBe(category.id);
-      expect(englishName).toMatch(/^[\x00-\x7F]+$/);
-      previousPosition = position;
+      const copy = englishDirectoryCategoryCopy[category.id];
+      expect(copy.name.trim().length).toBeGreaterThan(0);
+      expect(copy.name).not.toBe(category.id);
+      expect(copy.name).toMatch(/^[\x00-\x7F]+$/);
+      expect(copy.description.trim().length).toBeGreaterThan(0);
     }
 
-    expect(source).toContain(
-      "{isEnglish ? englishCategoryNames[category.id] : category.name}",
+    expect(navigationSource).toContain(
+      'import { englishDirectoryCategoryCopy } from "@/config/calculator-directory-copy";',
     );
-    expect(source).not.toContain(
-      "englishCategoryNames[category.id] ?? category.id",
+    expect(englishPageSource).toContain(
+      'import { englishDirectoryCategoryCopy } from "@/config/calculator-directory-copy";',
     );
-    expect(source).toContain("href={`#${category.id}`}");
-    expect(source).toContain("aria-controls={category.id}");
-    expect(source).toContain("min-h-11");
-    expect(source).toContain("{category.calculators.length}");
+    expect(navigationSource).toContain(
+      "englishDirectoryCategoryCopy[category.id].name",
+    );
+    expect(englishPageSource).toContain(
+      "const copy = englishDirectoryCategoryCopy[category.id];",
+    );
+    expect(navigationSource).not.toContain("const englishCategoryNames");
+    expect(englishPageSource).not.toContain("const categoryCopy");
+    expect(navigationSource).toContain("href={`#${category.id}`}");
+    expect(navigationSource).toContain("aria-controls={category.id}");
+    expect(navigationSource).toContain("min-h-11");
+    expect(navigationSource).toContain("{category.calculators.length}");
   });
 
   it("renders one source-derived calculator count for both locale labels", () => {
@@ -74,9 +64,7 @@ describe("directory category navigation locale parity", () => {
 
     const countExpression = "{category.calculators.length}";
     expect(source.split(countExpression)).toHaveLength(2);
-    expect(source).toContain(
-      "{isEnglish ? englishCategoryNames[category.id] : category.name}",
-    );
+    expect(source).toContain("englishDirectoryCategoryCopy[category.id].name");
     expect(source).not.toMatch(/isEnglish[\s\S]{0,120}calculators\.length/);
     expect(source).not.toMatch(/calculators\.length[\s\S]{0,120}isEnglish/);
 
@@ -134,7 +122,7 @@ describe("directory category navigation locale parity", () => {
       "aria-label={`${category.name} 계산기`}",
     );
     expect(englishPageSource).toContain(
-      "aria-label={`${copy?.name ?? category.id} calculators`}",
+      "aria-label={`${copy.name} calculators`}",
     );
   });
 });
