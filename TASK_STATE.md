@@ -95,5 +95,7 @@ Remaining to Target: 0
   - Korean and English directories now expose the same source-driven popular-calculator shortcut set in the same pre-inventory position. English shortcuts are localized onto stable `/en/` calculator canonicals, preserve 44px minimum entry targets, and remain outside the published-calculator inventory region so the 100-calculator directory is not duplicated.
 - [x] UX-017 DONE — Directory Category Count Locale Parity Regression
   - Korean and English category headings now expose the same source-driven calculator count beside each localized category description. The English heading layout mirrors the Korean flex-wrap structure so counts remain readable on narrow screens without changing category anchors, calculator canonicals, or the single 100-calculator inventory.
-- [ ] UX-018 OPEN — Directory Category Description Locale Parity Regression
-  - Scope: verify every Korean directory category description has an equivalent English localized description with stable category ordering, anchors, and compact small-screen presentation.
+- [x] UX-018 DONE — Directory Category Description Locale Parity Regression
+  - Every visible Korean directory category has non-empty source description coverage and a corresponding ordered English category-copy entry. Focused regression coverage preserves source order, identical category anchors/ARIA relationships, and the same compact wrapping/description layout across Korean and English without changing routes, calculator inventory, or calculation behavior.
+- [ ] UX-019 OPEN — Directory Category Name Locale Parity Regression
+  - Scope: verify every Korean directory category heading has an explicit English localized name in the same source order, with no raw category-id fallback leaking into the English UI and no change to anchors or calculator inventory.
