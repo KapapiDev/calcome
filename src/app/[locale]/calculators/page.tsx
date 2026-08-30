@@ -6,12 +6,8 @@ import CalculatorsPage from "@/app/calculators/page";
 import { CalculatorCard } from "@/components/calculators/calculator-card";
 import { CalculatorSearch } from "@/components/calculators/calculator-search";
 import { DirectoryCategoryNavigation } from "@/components/calculators/directory-category-navigation";
-import {
-  getEnglishCalculatorDescription,
-} from "@/config/calculator-description-copy";
-import {
-  getEnglishCalculatorName,
-} from "@/config/calculator-directory-calculator-copy";
+import { getEnglishCalculatorDescription } from "@/config/calculator-description-copy";
+import { getEnglishCalculatorName } from "@/config/calculator-directory-calculator-copy";
 import {
   allPublishedCalculators,
   directorySearchCalculators,
