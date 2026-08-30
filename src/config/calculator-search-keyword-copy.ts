@@ -136,7 +136,8 @@ for (const id of aliasIds) {
 }
 
 for (const id of publishedIds) {
-  const aliases = englishCalculatorSearchAliases[id];
+  const aliases: readonly string[] | undefined =
+    englishCalculatorSearchAliases[id];
   if (!aliases || aliases.length === 0) {
     throw new Error(`Missing English calculator search aliases for: ${id}`);
   }
