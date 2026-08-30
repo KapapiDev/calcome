@@ -25,7 +25,7 @@ describe("English calculator search keyword copy", () => {
   });
 
   it("keeps English aliases source-driven, non-blank, ASCII, and published-only", () => {
-    const publishedIds = new Set(
+    const publishedIds = new Set<string>(
       allPublishedCalculators.map((calculator) => calculator.id),
     );
 

@@ -1,7 +1,7 @@
 import { allPublishedCalculators } from "./calculator-directory";
 
 export const englishCalculatorSearchAliases: Readonly<
-  Partial<Record<string, readonly string[]>>
+  Record<string, readonly string[]>
 > = {
   "weekly-holiday-pay": ["weekly holiday allowance", "paid weekly holiday"],
   "severance-pay": ["severance", "termination pay"],
@@ -109,7 +109,7 @@ export const englishCalculatorSearchAliases: Readonly<
   "business-cash-runway": ["cash runway", "burn rate", "startup runway"],
 };
 
-const publishedIdSet = new Set(
+const publishedIdSet = new Set<string>(
   allPublishedCalculators.map((calculator) => calculator.id),
 );
 
