@@ -5,6 +5,14 @@ import { describe, expect, it } from "vitest";
 
 import { visibleCalculatorDirectory } from "@/config/calculator-directory";
 
+function categoryKeyPosition(source: string, id: string, fromIndex = 0) {
+  const positions = [`${id}:`, `"${id}":`, `'${id}':`]
+    .map((needle) => source.indexOf(needle, fromIndex))
+    .filter((position) => position >= 0);
+
+  return positions.length > 0 ? Math.min(...positions) : -1;
+}
+
 describe("directory category description locale parity", () => {
   it("keeps every Korean category description paired with ordered English copy and stable compact anchors", () => {
     const koreanSource = fs.readFileSync(
@@ -28,12 +36,16 @@ describe("directory category description locale parity", () => {
     let previousPosition = -1;
     for (const [index, category] of visibleCalculatorDirectory.entries()) {
       expect(category.description.trim().length).toBeGreaterThan(0);
-      const position = englishCopy.indexOf(`${category.id}:`);
+      const position = categoryKeyPosition(
+        englishCopy,
+        category.id,
+        previousPosition + 1,
+      );
       expect(position).toBeGreaterThan(previousPosition);
 
       const nextCategory = visibleCalculatorDirectory[index + 1];
       const blockEnd = nextCategory
-        ? englishCopy.indexOf(`${nextCategory.id}:`, position)
+        ? categoryKeyPosition(englishCopy, nextCategory.id, position + 1)
         : englishCopy.length;
       const categoryBlock = englishCopy.slice(position, blockEnd);
 
