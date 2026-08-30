@@ -10,6 +10,15 @@ import {
   getEnglishCalculatorName,
 } from "./calculator-directory-calculator-copy";
 
+const asciiOnly = /^[\x00-\x7F]+$/;
+
+function mechanicalNameFallback(id: string) {
+  return `${id
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ")} Calculator`;
+}
+
 describe("English calculator directory copy", () => {
   it("covers every published calculator exactly once for names and descriptions", () => {
     const publishedIds = allPublishedCalculators
@@ -20,6 +29,23 @@ describe("English calculator directory copy", () => {
     expect(Object.keys(englishCalculatorDescriptions).sort()).toEqual(
       publishedIds,
     );
+  });
+
+  it("requires explicit non-blank ASCII copy without raw or mechanical fallbacks", () => {
+    for (const calculator of allPublishedCalculators) {
+      const name = getEnglishCalculatorName(calculator.id);
+      const description = getEnglishCalculatorDescription(calculator.id);
+
+      expect(name.trim()).not.toBe("");
+      expect(description.trim()).not.toBe("");
+      expect(name).toMatch(asciiOnly);
+      expect(description).toMatch(asciiOnly);
+      expect(name).not.toBe(calculator.id);
+      expect(name).not.toBe(mechanicalNameFallback(calculator.id));
+      expect(description).not.toBe(
+        `Use the ${name} with clear inputs and results.`,
+      );
+    }
   });
 
   it("preserves acronym and punctuation localization", () => {
@@ -44,13 +70,5 @@ describe("English calculator directory copy", () => {
     expect(getEnglishCalculatorDescription("business-cash-runway")).toContain(
       "cash burn",
     );
-
-    for (const calculator of allPublishedCalculators) {
-      const description = getEnglishCalculatorDescription(calculator.id);
-      expect(description).not.toBe(
-        `Use the ${getEnglishCalculatorName(calculator.id)} with clear inputs and results.`,
-      );
-      expect(description).toMatch(/^[\x00-\x7F]+$/);
-    }
   });
 });
