@@ -19,7 +19,7 @@ function englishCalculator(id: string) {
     ...calculator,
     name: getEnglishCalculatorName(id),
     keywords: getEnglishCalculatorSearchAliases(id),
-    href: calculator.href.replace(/^\/ko\//, "/en/"),
+    href: calculator.href.replace(/^\/ko\//, "/en/") as typeof calculator.href,
   };
 }
 
