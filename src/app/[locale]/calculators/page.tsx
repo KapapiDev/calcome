@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import CalculatorsPage from "@/app/calculators/page";
 import { CalculatorCard } from "@/components/calculators/calculator-card";
 import { CalculatorSearch } from "@/components/calculators/calculator-search";
+import { DirectoryCategoryNavigation } from "@/components/calculators/directory-category-navigation";
 import {
   allPublishedCalculators,
   directorySearchCalculators,
@@ -175,23 +176,9 @@ export default async function LocalizedCalculatorsPage({
             locale="en"
           />
         </header>
-        <nav aria-label="Calculator categories" className="mt-10">
-          <ul className="flex snap-x gap-2 overflow-x-auto pb-2">
-            {visibleCalculatorDirectory.map((category) => (
-              <li key={category.id} className="shrink-0 snap-start">
-                <a
-                  href={`#${category.id}`}
-                  className="inline-flex min-h-11 items-center rounded-lg border bg-background px-4 text-sm font-medium"
-                >
-                  {categoryCopy[category.id]?.name ?? category.id}
-                  <span className="ml-2 text-muted-foreground">
-                    {category.calculators.length}
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+
+        <DirectoryCategoryNavigation locale="en" />
+
         <div
           role="region"
           aria-label="Published calculators"
@@ -203,8 +190,9 @@ export default async function LocalizedCalculatorsPage({
               <section
                 key={category.id}
                 id={category.id}
+                tabIndex={-1}
                 aria-labelledby={`${category.id}-heading`}
-                className="scroll-mt-24"
+                className="scroll-mt-24 focus:outline-none"
               >
                 <div className="border-b pb-4">
                   <h2
