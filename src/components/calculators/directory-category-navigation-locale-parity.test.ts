@@ -62,4 +62,36 @@ describe("directory category navigation locale parity", () => {
     expect(source).toContain("min-h-11");
     expect(source).toContain("{category.calculators.length}");
   });
+
+  it("renders one source-derived calculator count for both locale labels", () => {
+    const source = fs.readFileSync(
+      path.join(
+        process.cwd(),
+        "src/components/calculators/directory-category-navigation.tsx",
+      ),
+      "utf8",
+    );
+
+    const countExpression = "{category.calculators.length}";
+    expect(source.split(countExpression)).toHaveLength(2);
+    expect(source).toContain(
+      "{isEnglish ? englishCategoryNames[category.id] : category.name}",
+    );
+    expect(source).not.toMatch(/isEnglish[\s\S]{0,120}calculators\.length/);
+    expect(source).not.toMatch(/calculators\.length[\s\S]{0,120}isEnglish/);
+
+    const expectedCounts = visibleCalculatorDirectory.map((category) => ({
+      id: category.id,
+      count: category.calculators.length,
+    }));
+
+    expect(expectedCounts.length).toBeGreaterThan(0);
+    expect(expectedCounts.every(({ count }) => count > 0)).toBe(true);
+    expect(new Set(expectedCounts.map(({ id }) => id)).size).toBe(
+      expectedCounts.length,
+    );
+    expect(source).toContain("href={`#${category.id}`}");
+    expect(source).toContain("aria-controls={category.id}");
+    expect(source).toContain("min-h-11");
+  });
 });
