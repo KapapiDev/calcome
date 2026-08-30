@@ -18,7 +18,9 @@ describe("directory popular calculator locale parity", () => {
 
     expect(popularCalculators.length).toBeGreaterThan(0);
     expect(koreanSource).toContain("popularCalculators.map");
-    expect(englishSource).toContain("popularCalculators.map(englishCalculator)");
+    expect(englishSource).toContain(
+      "popularCalculators.map(englishCalculator)",
+    );
     expect(koreanSource).toContain("min-h-11");
     expect(englishSource).toContain("min-h-11");
     expect(englishSource).toContain('replace(/^\\/ko\\//, "/en/")');
