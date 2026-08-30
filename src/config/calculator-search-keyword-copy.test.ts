@@ -14,9 +14,13 @@ const englishDirectoryPageSource = readFileSync(
   "src/app/[locale]/calculators/page.tsx",
   "utf8",
 );
+const calculatorSearchSource = readFileSync(
+  "src/components/calculators/calculator-search.tsx",
+  "utf8",
+);
 
 const normalizeEnglishSearchCopy = (value: string) =>
-  value.trim().toLocaleLowerCase("en-US");
+  value.normalize("NFKC").toLocaleLowerCase("ko-KR").trim();
 
 describe("English calculator search keyword copy", () => {
   it("uses explicit English aliases instead of filtering Korean source keywords", () => {
@@ -26,6 +30,28 @@ describe("English calculator search keyword copy", () => {
     expect(englishDirectoryPageSource).not.toContain(
       "calculator.keywords.filter",
     );
+  });
+
+  it("uses the same normalization contract as directory search for English names and aliases", () => {
+    expect(calculatorSearchSource).toContain(
+      'return value.normalize("NFKC").toLocaleLowerCase("ko-KR").trim();',
+    );
+
+    expect(normalizeEnglishSearchCopy("  CAGR  ")).toBe("cagr");
+    expect(normalizeEnglishSearchCopy("ＶＡＴ")).toBe("vat");
+
+    for (const calculator of allPublishedCalculators) {
+      const normalizedName = normalizeEnglishSearchCopy(
+        englishCalculatorNames[calculator.id],
+      );
+      expect(normalizedName).not.toBe("");
+
+      for (const alias of getEnglishCalculatorSearchAliases(calculator.id)) {
+        expect(normalizeEnglishSearchCopy(`  ${alias.toUpperCase()}  `)).toBe(
+          normalizeEnglishSearchCopy(alias),
+        );
+      }
+    }
   });
 
   it("covers every published calculator exactly once with deliberate aliases", () => {
