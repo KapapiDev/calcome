@@ -97,5 +97,7 @@ Remaining to Target: 0
   - Korean and English category headings now expose the same source-driven calculator count beside each localized category description. The English heading layout mirrors the Korean flex-wrap structure so counts remain readable on narrow screens without changing category anchors, calculator canonicals, or the single 100-calculator inventory.
 - [x] UX-018 DONE — Directory Category Description Locale Parity Regression
   - Every visible Korean directory category has non-empty source description coverage and a corresponding ordered English category-copy entry. Focused regression coverage preserves source order, identical category anchors/ARIA relationships, and the same compact wrapping/description layout across Korean and English without changing routes, calculator inventory, or calculation behavior.
-- [ ] UX-019 OPEN — Directory Category Name Locale Parity Regression
-  - Scope: verify every Korean directory category heading has an explicit English localized name in the same source order, with no raw category-id fallback leaking into the English UI and no change to anchors or calculator inventory.
+- [x] UX-019 DONE — Directory Category Name Locale Parity Regression
+  - Every visible Korean directory category heading now has a non-empty, explicit ASCII English category name in the same source order. Focused regression coverage proves every source category is covered by English copy and keeps the existing category anchors and single calculator inventory unchanged, so the existing fallback cannot leak a raw category ID for any published category.
+- [ ] UX-020 OPEN — Directory Category Navigation Name Locale Parity Regression
+  - Scope: verify the shared English category navigation exposes an explicit localized name for every source category in the same order, with no raw category-id fallback and no change to fragment anchors, category counts, or touch-target behavior.
