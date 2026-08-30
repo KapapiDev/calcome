@@ -1,6 +1,42 @@
-export const englishDirectoryCategoryCopy: Record<
+import { calculatorDirectoryCategories } from "./calculator-directory";
+
+type EnglishDirectoryCategoryCopy = {
+  name: string;
+  description: string;
+};
+
+function assertEnglishDirectoryCategoryCopyCoverage(
+  categoryIds: readonly string[],
+  copy: Record<string, EnglishDirectoryCategoryCopy>,
+) {
+  const copyIds = Object.keys(copy);
+
+  if (
+    copyIds.length !== categoryIds.length ||
+    copyIds.some((id, index) => id !== categoryIds[index])
+  ) {
+    throw new Error(
+      "English directory category copy must exactly match calculator directory category order.",
+    );
+  }
+
+  for (const categoryId of categoryIds) {
+    const categoryCopy = copy[categoryId];
+    if (
+      !categoryCopy ||
+      categoryCopy.name.trim().length === 0 ||
+      categoryCopy.description.trim().length === 0
+    ) {
+      throw new Error(
+        `Missing explicit English directory category copy for: ${categoryId}`,
+      );
+    }
+  }
+}
+
+const englishDirectoryCategoryCopySource: Record<
   string,
-  { name: string; description: string }
+  EnglishDirectoryCategoryCopy
 > = {
   employment: {
     name: "Pay & Employment",
@@ -34,3 +70,10 @@ export const englishDirectoryCategoryCopy: Record<
       "Practical calculators for business and everyday money decisions.",
   },
 };
+
+assertEnglishDirectoryCategoryCopyCoverage(
+  calculatorDirectoryCategories.map((category) => category.id),
+  englishDirectoryCategoryCopySource,
+);
+
+export const englishDirectoryCategoryCopy = englishDirectoryCategoryCopySource;
