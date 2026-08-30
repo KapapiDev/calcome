@@ -94,4 +94,47 @@ describe("directory category navigation locale parity", () => {
     expect(source).toContain("aria-controls={category.id}");
     expect(source).toContain("min-h-11");
   });
+
+  it("keeps localized navigation semantics linked to keyboard-focusable category targets", () => {
+    const navigationSource = fs.readFileSync(
+      path.join(
+        process.cwd(),
+        "src/components/calculators/directory-category-navigation.tsx",
+      ),
+      "utf8",
+    );
+    const koreanPageSource = fs.readFileSync(
+      path.join(process.cwd(), "src/app/calculators/page.tsx"),
+      "utf8",
+    );
+    const englishPageSource = fs.readFileSync(
+      path.join(process.cwd(), "src/app/[locale]/calculators/page.tsx"),
+      "utf8",
+    );
+
+    expect(navigationSource).toContain(
+      'aria-label={isEnglish ? "Calculator categories" : "계산기 카테고리"}',
+    );
+    expect(navigationSource).toContain("href={`#${category.id}`}");
+    expect(navigationSource).toContain("aria-controls={category.id}");
+    expect(navigationSource).toContain("focus-visible:outline-none");
+    expect(navigationSource).toContain("focus-visible:ring-3");
+
+    for (const pageSource of [koreanPageSource, englishPageSource]) {
+      expect(pageSource).toContain("id={category.id}");
+      expect(pageSource).toContain("tabIndex={-1}");
+      expect(pageSource).toContain(
+        "aria-labelledby={`${category.id}-heading`}",
+      );
+      expect(pageSource).toContain("id={`${category.id}-heading`}");
+      expect(pageSource).toContain("scroll-mt-24 focus:outline-none");
+    }
+
+    expect(koreanPageSource).toContain(
+      "aria-label={`${category.name} 계산기`}",
+    );
+    expect(englishPageSource).toContain(
+      "aria-label={`${copy?.name ?? category.id} calculators`}",
+    );
+  });
 });

@@ -247,7 +247,10 @@ export default async function LocalizedCalculatorsPage({
                     {category.calculators.length} calculators
                   </p>
                 </div>
-                <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <ul
+                  aria-label={`${copy?.name ?? category.id} calculators`}
+                  className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+                >
                   {category.calculators.map((calculator) => {
                     const localized = englishDirectoryById.get(calculator.id);
                     if (!localized) return null;
