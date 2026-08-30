@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 import { allPublishedCalculators } from "./calculator-directory";
+import { englishCalculatorNames } from "./calculator-directory-calculator-copy";
 import {
   englishCalculatorSearchAliases,
   getEnglishCalculatorSearchAliases,
@@ -13,6 +14,9 @@ const englishDirectoryPageSource = readFileSync(
   "src/app/[locale]/calculators/page.tsx",
   "utf8",
 );
+
+const normalizeEnglishSearchCopy = (value: string) =>
+  value.trim().toLocaleLowerCase("en-US");
 
 describe("English calculator search keyword copy", () => {
   it("uses explicit English aliases instead of filtering Korean source keywords", () => {
@@ -37,9 +41,7 @@ describe("English calculator search keyword copy", () => {
       const aliases = getEnglishCalculatorSearchAliases(id);
       expect(aliases.length).toBeGreaterThan(0);
 
-      const normalized = aliases.map((alias) =>
-        alias.trim().toLocaleLowerCase("en-US"),
-      );
+      const normalized = aliases.map(normalizeEnglishSearchCopy);
       expect(new Set(normalized).size).toBe(normalized.length);
 
       for (const alias of aliases) {
@@ -47,6 +49,42 @@ describe("English calculator search keyword copy", () => {
         expect(alias).toMatch(asciiOnly);
       }
     }
+  });
+
+  it("prevents cross-calculator alias collisions and name shadowing", () => {
+    const aliasOwners = new Map<string, string[]>();
+    const publishedNameOwners = new Map(
+      Object.entries(englishCalculatorNames).map(([id, name]) => [
+        normalizeEnglishSearchCopy(name),
+        id,
+      ]),
+    );
+
+    for (const calculator of allPublishedCalculators) {
+      for (const alias of getEnglishCalculatorSearchAliases(calculator.id)) {
+        const normalizedAlias = normalizeEnglishSearchCopy(alias);
+        const owners = aliasOwners.get(normalizedAlias) ?? [];
+        owners.push(calculator.id);
+        aliasOwners.set(normalizedAlias, owners);
+
+        const shadowedNameOwner = publishedNameOwners.get(normalizedAlias);
+        expect(
+          shadowedNameOwner,
+          `English alias "${alias}" for ${calculator.id} shadows the published name of ${shadowedNameOwner}`,
+        ).toSatisfy(
+          (owner: string | undefined) =>
+            owner === undefined || owner === calculator.id,
+        );
+      }
+    }
+
+    const collisions = [...aliasOwners.entries()].filter(
+      ([, owners]) => new Set(owners).size > 1,
+    );
+    expect(
+      collisions,
+      "Cross-calculator English aliases must be unique unless an intentional ambiguity is documented with deterministic source-order evidence.",
+    ).toEqual([]);
   });
 
   it("rejects unknown calculator ids instead of silently returning no aliases", () => {
