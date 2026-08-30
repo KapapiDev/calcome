@@ -107,12 +107,13 @@ export const englishCalculatorNames: Readonly<Record<string, string>> = {
 };
 
 const publishedIds = allPublishedCalculators.map((calculator) => calculator.id);
+const publishedIdSet = new Set<string>(publishedIds);
 const localizedIds = Object.keys(englishCalculatorNames);
 
 if (
   publishedIds.length !== localizedIds.length ||
   publishedIds.some((id) => !(id in englishCalculatorNames)) ||
-  localizedIds.some((id) => !publishedIds.includes(id))
+  localizedIds.some((id) => !publishedIdSet.has(id))
 ) {
   throw new Error(
     "English calculator names must exactly cover the published calculator directory.",
