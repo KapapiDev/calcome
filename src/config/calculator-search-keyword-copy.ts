@@ -1,8 +1,11 @@
 import { allPublishedCalculators } from "./calculator-directory";
 
-export const englishCalculatorSearchAliases: Readonly<
-  Record<string, readonly string[]>
-> = {
+type PublishedCalculatorId = (typeof allPublishedCalculators)[number]["id"];
+type EnglishCalculatorSearchAliasMap = Readonly<
+  Record<PublishedCalculatorId, readonly [string, ...string[]]>
+>;
+
+export const englishCalculatorSearchAliases = {
   "weekly-holiday-pay": ["weekly holiday allowance", "paid weekly holiday"],
   "severance-pay": ["severance", "termination pay"],
   "unemployment-benefits": ["unemployment insurance", "jobless benefits"],
@@ -116,15 +119,26 @@ export const englishCalculatorSearchAliases: Readonly<
   "break-even-sales": ["break even point", "contribution margin"],
   "operating-profit": ["operating income", "operating margin"],
   "business-cash-runway": ["cash runway", "burn rate", "startup runway"],
-};
+} as const satisfies EnglishCalculatorSearchAliasMap;
 
-const publishedIdSet = new Set<string>(
-  allPublishedCalculators.map((calculator) => calculator.id),
-);
+const publishedIds = allPublishedCalculators.map((calculator) => calculator.id);
+const publishedIdSet = new Set<string>(publishedIds);
+const aliasIds = Object.keys(englishCalculatorSearchAliases);
 
-for (const [id, aliases] of Object.entries(englishCalculatorSearchAliases)) {
+if (aliasIds.length !== publishedIds.length) {
+  throw new Error("English calculator search alias coverage mismatch");
+}
+
+for (const id of aliasIds) {
   if (!publishedIdSet.has(id)) {
     throw new Error(`Unknown English calculator search alias id: ${id}`);
+  }
+}
+
+for (const id of publishedIds) {
+  const aliases = englishCalculatorSearchAliases[id];
+  if (!aliases || aliases.length === 0) {
+    throw new Error(`Missing English calculator search aliases for: ${id}`);
   }
 
   const normalized = new Set<string>();
@@ -146,5 +160,5 @@ export function getEnglishCalculatorSearchAliases(
   if (!publishedIdSet.has(id)) {
     throw new Error(`Unknown English calculator search alias id: ${id}`);
   }
-  return englishCalculatorSearchAliases[id] ?? [];
+  return englishCalculatorSearchAliases[id as PublishedCalculatorId];
 }
