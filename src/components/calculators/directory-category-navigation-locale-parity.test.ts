@@ -54,8 +54,10 @@ describe("directory category navigation locale parity", () => {
     expect(source).toContain(
       "{isEnglish ? englishCategoryNames[category.id] : category.name}",
     );
-    expect(source).not.toContain("englishCategoryNames[category.id] ?? category.id");
-    expect(source).toContain('href={`#${category.id}`}');
+    expect(source).not.toContain(
+      "englishCategoryNames[category.id] ?? category.id",
+    );
+    expect(source).toContain("href={`#${category.id}`}");
     expect(source).toContain("aria-controls={category.id}");
     expect(source).toContain("min-h-11");
     expect(source).toContain("{category.calculators.length}");
