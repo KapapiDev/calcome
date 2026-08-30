@@ -99,5 +99,7 @@ Remaining to Target: 0
   - Every visible Korean directory category has non-empty source description coverage and a corresponding ordered English category-copy entry. Focused regression coverage preserves source order, identical category anchors/ARIA relationships, and the same compact wrapping/description layout across Korean and English without changing routes, calculator inventory, or calculation behavior.
 - [x] UX-019 DONE — Directory Category Name Locale Parity Regression
   - Every visible Korean directory category heading now has a non-empty, explicit ASCII English category name in the same source order. Focused regression coverage proves every source category is covered by English copy and keeps the existing category anchors and single calculator inventory unchanged, so the existing fallback cannot leak a raw category ID for any published category.
-- [ ] UX-020 OPEN — Directory Category Navigation Name Locale Parity Regression
-  - Scope: verify the shared English category navigation exposes an explicit localized name for every source category in the same order, with no raw category-id fallback and no change to fragment anchors, category counts, or touch-target behavior.
+- [x] UX-020 DONE — Directory Category Navigation Name Locale Parity Regression
+  - Shared English category navigation now uses an explicit ordered localized name for every source category and no longer falls back to a raw category ID. Focused regression coverage preserves the existing fragment anchors, category counts, source order, and 44px touch-target contract.
+- [ ] UX-021 OPEN — Directory Category Navigation Count Locale Parity Regression
+  - Scope: verify Korean and English category navigation expose the same source-derived calculator count for every category in the same order, with no hard-coded or duplicated count and no change to fragment anchors, localized names, or touch-target behavior.

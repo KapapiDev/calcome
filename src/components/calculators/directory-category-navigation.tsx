@@ -30,9 +30,7 @@ export function DirectoryCategoryNavigation({
               aria-controls={category.id}
               className="inline-flex min-h-11 items-center rounded-lg border bg-background px-4 text-sm font-medium transition hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/30"
             >
-              {isEnglish
-                ? (englishCategoryNames[category.id] ?? category.id)
-                : category.name}
+              {isEnglish ? englishCategoryNames[category.id] : category.name}
               <span className="ml-2 text-muted-foreground">
                 {category.calculators.length}
               </span>
