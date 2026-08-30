@@ -69,12 +69,10 @@ describe("English calculator search keyword copy", () => {
 
         const shadowedNameOwner = publishedNameOwners.get(normalizedAlias);
         expect(
-          shadowedNameOwner,
+          shadowedNameOwner === undefined ||
+            shadowedNameOwner === calculator.id,
           `English alias "${alias}" for ${calculator.id} shadows the published name of ${shadowedNameOwner}`,
-        ).toSatisfy(
-          (owner: string | undefined) =>
-            owner === undefined || owner === calculator.id,
-        );
+        ).toBe(true);
       }
     }
 
