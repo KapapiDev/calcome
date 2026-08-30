@@ -103,5 +103,7 @@ Remaining to Target: 0
   - Shared English category navigation now uses an explicit ordered localized name for every source category and no longer falls back to a raw category ID. Focused regression coverage preserves the existing fragment anchors, category counts, source order, and 44px touch-target contract.
 - [x] UX-021 DONE — Directory Category Navigation Count Locale Parity Regression
   - Shared Korean and English category navigation now has focused regression coverage proving every category count comes from the same `category.calculators.length` source expression, without locale-specific or hard-coded count paths. Existing source order, localized names, fragment anchors, ARIA controls, and 44px touch targets remain unchanged.
-- [ ] UX-022 OPEN — Directory Category Navigation Accessibility Locale Parity Regression
-  - Scope: verify Korean and English category navigation preserve equivalent accessible navigation semantics, fragment/ARIA-control linkage, keyboard-focus targets, and localized navigation labels without changing category names, counts, order, or touch-target behavior.
+- [x] UX-022 DONE — Directory Category Navigation Accessibility Locale Parity Regression
+  - Korean and English category navigation preserve localized nav labels, shared fragment/ARIA-control linkage, visible keyboard focus, and programmatically focusable category targets. English category calculator lists now also expose localized accessible names, matching the Korean directory semantics without changing category names, counts, order, anchors, routes, or touch targets.
+- [ ] UX-023 OPEN — Directory English Category Copy Single-Source Regression
+  - Scope: eliminate duplicated English category-name sources between category navigation and the English directory so navigation labels and section headings cannot drift, while preserving descriptions, counts, source order, anchors, and accessibility semantics.
