@@ -138,5 +138,8 @@ Remaining to Target: 0
 - [x] UX-038 DONE — Directory Search Normalization Single-Source Regression
   - PR: #378
   - Focused source-contract coverage proves calculator names, descriptions, aliases/keywords, localized English categories, and user queries all flow through the same NFKC/case-fold/trim normalizer, with exactly one direct normalization implementation remaining. Existing ranking tiers, Korean/English locale behavior, canonical routes, and the 100-calculator inventory are unchanged.
-- [ ] UX-039 OPEN — Directory Search Ranking Tier Single-Source Regression
-  - Scope: harden the directory search scoring contract so exact, prefix, contains, alias, category, and description relevance tiers cannot drift across duplicated or locale-specific scoring paths while preserving source-order ties, canonical routes, Korean/English behavior, and the 100-calculator inventory.
+- [x] UX-039 DONE — Directory Search Ranking Tier Single-Source Regression
+  - PR: #379
+  - Focused source-contract regression coverage requires one shared search-scoring path, preserves the existing 0–9 relevance tiers and source-order tie-breaker, and closes the current directory-search micro-regression sequence without changing search behavior, routes, locale behavior, calculator logic, or the 100-calculator inventory.
+- [ ] UX-040 OPEN — Shared Calculator Result Actions and Repeat-Use Upgrade
+  - Scope: deliver one meaningful product increment across the reusable calculator experience by improving post-calculation actions such as reset/recalculate, copy/share where result data is safe to expose, and contextual next-calculator discovery through shared components where architecture permits. Preserve calculator accuracy, policy disclosures, privacy, canonical routes, locale identity, accessibility, and existing result hierarchy. Bundle related regression coverage into this same task instead of spawning one PR per action, locale, or calculator family.
