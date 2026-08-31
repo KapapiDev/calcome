@@ -123,10 +123,11 @@ export function CalculatorRepeatUseShortcuts({
   }, []);
 
   useEffect(() => {
-    refresh();
+    const initialRefresh = window.setTimeout(refresh, 0);
     window.addEventListener(REPEAT_USE_EVENT, refresh);
     window.addEventListener("storage", refresh);
     return () => {
+      window.clearTimeout(initialRefresh);
       window.removeEventListener(REPEAT_USE_EVENT, refresh);
       window.removeEventListener("storage", refresh);
     };

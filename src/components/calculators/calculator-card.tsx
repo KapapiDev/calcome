@@ -26,10 +26,11 @@ export function CalculatorCard({
   );
 
   useEffect(() => {
-    refreshFavorite();
+    const initialRefresh = window.setTimeout(refreshFavorite, 0);
     window.addEventListener("calcome:repeat-use", refreshFavorite);
     window.addEventListener("storage", refreshFavorite);
     return () => {
+      window.clearTimeout(initialRefresh);
       window.removeEventListener("calcome:repeat-use", refreshFavorite);
       window.removeEventListener("storage", refreshFavorite);
     };
