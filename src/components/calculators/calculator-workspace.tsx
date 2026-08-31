@@ -24,17 +24,21 @@ type CalculatorActionCopy = {
 const CALCULATOR_ACTION_COPY: Record<"ko" | "en", CalculatorActionCopy> = {
   ko: {
     reset: "초기화",
-    firstRun: "처음이라면 예시 값으로 입력 형식을 확인한 뒤 내 값으로 바꿔 계산해 보세요.",
+    firstRun:
+      "처음이라면 예시 값으로 입력 형식을 확인한 뒤 내 값으로 바꿔 계산해 보세요.",
     example: "예시 입력",
     exampleApplied: "빈 입력칸에 예시 값을 채웠습니다.",
-    exampleUnavailable: "이 계산기에는 자동으로 채울 수 있는 예시 값이 없습니다.",
+    exampleUnavailable:
+      "이 계산기에는 자동으로 채울 수 있는 예시 값이 없습니다.",
   },
   en: {
     reset: "Reset",
-    firstRun: "New here? Fill the example values to see the expected input format, then replace them with your own.",
+    firstRun:
+      "New here? Fill the example values to see the expected input format, then replace them with your own.",
     example: "Fill example",
     exampleApplied: "Example values filled into empty inputs.",
-    exampleUnavailable: "This calculator has no example values that can be filled automatically.",
+    exampleUnavailable:
+      "This calculator has no example values that can be filled automatically.",
   },
 };
 
@@ -73,7 +77,8 @@ function fillExampleValues(form: HTMLFormElement | null) {
       isSafeExamplePlaceholder(input.placeholder),
   );
 
-  for (const input of candidates) setInputValue(input, input.placeholder.trim());
+  for (const input of candidates)
+    setInputValue(input, input.placeholder.trim());
   candidates[0]?.focus();
 
   return candidates.length;
@@ -125,7 +130,12 @@ export function CalculatorActions({
           {copy.reset}
         </Button>
       </div>
-      <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+      <p
+        className="sr-only"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         {exampleStatus}
       </p>
     </div>

@@ -47,7 +47,9 @@ describe("calculator workspace", () => {
     );
 
     expect(screen.getByText(/New here\?/)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Fill example" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Fill example" }),
+    ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Reset" })).toBeInTheDocument();
   });
 
