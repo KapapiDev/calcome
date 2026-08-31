@@ -28,11 +28,13 @@ Remaining to Target: 0
   - PR: #383. Added stale-result detection, bilingual warning, and stale-copy blocking without changing formulas or stored inputs.
 - [x] UX-044 DONE — Calculator Favorites and Recent-Use Shortcuts
   - Shared directory cards now let users explicitly favorite calculators and record recently opened calculator IDs. Korean and English routes share the same calculator identity, repeat-use shortcuts are restored on the directory without storing calculator inputs or financial data, and storage/private-browsing failures remain non-fatal. The same task localizes the English card action and adds focused storage regression coverage.
+- [x] UX-045 DONE — Shared Calculator Mobile Completion and Result Navigation Upgrade
+  - Successful narrow-screen calculation now moves directly from the shared submit action to the calculated primary results and focuses the result region without adding URL state or storing calculator inputs. Existing invalid-input recovery remains in place, desktop behavior is unchanged, and shared recalculation still returns users to the nearest calculator form.
 
 ## Active queue
 
-- [ ] UX-045 OPEN — Shared Calculator Mobile Completion and Result Navigation Upgrade
-  - Scope: improve end-to-end completion on long calculator forms at narrow widths by reducing avoidable scrolling between inputs, submit actions, validation recovery, results, and recalculation. Consolidate representative calculator families into one user-visible mobile workflow task; preserve calculation logic, accessibility, routes, SEO, and stored-data boundaries.
+- [ ] UX-046 OPEN — Shared Calculator Result Explanation and Assumption Clarity Upgrade
+  - Scope: improve result comprehension across representative calculator families by pairing the primary result hierarchy with concise bilingual interpretation and assumption/context guidance where the existing shared result surface can do so safely. Do not invent policy assumptions or duplicate long-form page content; preserve formulas, routes, SEO, accessibility, and stored-data boundaries.
 
 ## Security gate
 
