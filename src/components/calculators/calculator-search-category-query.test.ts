@@ -28,7 +28,9 @@ describe("English directory category query matching", () => {
     expect(source).toContain(
       "? normalizeSearchText(calculator.primaryCategory)",
     );
-    expect(source).toContain("const normalizedQuery = normalizeSearchText(query);");
+    expect(source).toContain(
+      "const normalizedQuery = normalizeSearchText(query);",
+    );
 
     expect(normalizeSearchText("  ＴＡＸ  ")).toBe("tax");
     expect(normalizeSearchText("  LOANS & CREDIT  ")).toBe("loans & credit");
