@@ -113,6 +113,25 @@ A pending Production observation is not a second implementation task and must no
 
 ---
 
+## Task granularity and product-progress rule
+
+`one execution = one implementation task` remains a safety boundary, but a task must represent a meaningful product increment rather than the smallest test or file change that can be named.
+
+When planning, extending, or advancing the queue:
+
+- Do not create a separate follow-up task whose only independent value is one additional regression assertion, source-contract assertion, locale-parity assertion, alias guard, normalization guard, ranking guard, route guard, or similarly narrow test for the same feature area.
+- Bundle closely related regression coverage and safe fixes for the same user-facing feature into one bounded task and one PR whenever they can be validated together without weakening safety.
+- If 2 or more consecutive queued tasks touch the same feature area and primarily add tests or guards rather than distinct user-visible value, consolidate the remaining unstarted work into one larger hardening task before implementation.
+- Prefer tasks that produce a measurable user or business outcome: improved calculator usefulness, discoverability, search/navigation UX, SEO/indexability, performance, accessibility, monetization readiness, or a confirmed defect repair.
+- A test-only task is eligible only when it closes a concrete high-value regression risk that is not reasonably part of an adjacent implementation task, or when required to prevent recurrence of a proven defect.
+- Do not manufacture future tasks merely to keep the queue non-empty. After a feature area is sufficiently guarded, move to the next highest-value product area.
+- Queue detail may contain subtasks or checklists, but those subtasks do not each require their own branch or PR.
+- When consolidation changes future task IDs or scopes, update `TASK_STATE.md` and the relevant `TASK_QUEUE.md` scope in the same implementation PR so exactly one next OPEN task remains.
+
+This rule reduces CI/Preview churn and PR inflation while preserving the exact-head CI, security, calculation, route, data, and critical-UX gates below.
+
+---
+
 ## Branch and implementation discipline
 
 For a new task, create one task-specific branch from latest `origin/main`. For recoverable work, resume the existing branch.
