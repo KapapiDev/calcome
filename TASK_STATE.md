@@ -135,5 +135,8 @@ Remaining to Target: 0
   - English directory search now matches localized English category names at lower relevance tiers than calculator names and explicit aliases, while category matching is disabled for Korean search so its existing semantics remain unchanged. Exact/prefix/contains category matches stay deterministic by source order, canonical routes and the 100-calculator inventory are unchanged.
 - [x] UX-037 DONE — Directory English Calculator Search Category Normalization Consistency Regression
   - Focused regression coverage now proves localized English category indexing and user queries pass through the same NFKC compatibility normalization, case-folding, and trim contract, including representative full-width, uppercase, and padded category queries. Existing category ranking tiers, Korean search behavior, canonical routes, and the 100-calculator inventory remain unchanged.
-- [ ] UX-038 OPEN — Directory Search Normalization Single-Source Regression
-  - Scope: harden the directory search normalization contract so names, aliases, English categories, descriptions, and user queries cannot drift onto separate normalization paths while preserving current ranking tiers, locale behavior, canonical routes, and inventory.
+- [x] UX-038 DONE — Directory Search Normalization Single-Source Regression
+  - PR: #378
+  - Focused source-contract coverage proves calculator names, descriptions, aliases/keywords, localized English categories, and user queries all flow through the same NFKC/case-fold/trim normalizer, with exactly one direct normalization implementation remaining. Existing ranking tiers, Korean/English locale behavior, canonical routes, and the 100-calculator inventory are unchanged.
+- [ ] UX-039 OPEN — Directory Search Ranking Tier Single-Source Regression
+  - Scope: harden the directory search scoring contract so exact, prefix, contains, alias, category, and description relevance tiers cannot drift across duplicated or locale-specific scoring paths while preserving source-order ties, canonical routes, Korean/English behavior, and the 100-calculator inventory.
