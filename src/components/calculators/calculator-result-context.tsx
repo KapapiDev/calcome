@@ -50,7 +50,11 @@ function inferLocale(metrics: readonly { label: string }[]): "ko" | "en" {
 }
 
 function getNodeText(node: ReactNode): string | null {
-  if (typeof node === "string" || typeof node === "number" || typeof node === "bigint")
+  if (
+    typeof node === "string" ||
+    typeof node === "number" ||
+    typeof node === "bigint"
+  )
     return String(node).trim();
 
   if (Array.isArray(node)) {
@@ -102,7 +106,8 @@ export function CalculatorResultContext({
   if ((snapshotState.current?.key ?? null) !== (currentSnapshot?.key ?? null)) {
     setSnapshotState({
       current: currentSnapshot,
-      previous: currentSnapshot && snapshotState.current ? snapshotState.current : null,
+      previous:
+        currentSnapshot && snapshotState.current ? snapshotState.current : null,
     });
   }
 
@@ -159,13 +164,13 @@ export function CalculatorResultContext({
                 >
                   <p className="font-medium">{currentPair.label}</p>
                   <p className="text-muted-foreground">
-                    {copy.previous}: {" "}
+                    {copy.previous}:{" "}
                     <span className="font-medium text-foreground">
                       {previousPair.value}
                     </span>
                   </p>
                   <p className="text-muted-foreground">
-                    {copy.current}: {" "}
+                    {copy.current}:{" "}
                     <span className="font-medium text-foreground">
                       {currentPair.value}
                     </span>
