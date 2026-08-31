@@ -13,6 +13,72 @@ export const calculatorSettingsClass =
 export const compactCalculatorSettingsClass =
   "rounded-xl border bg-card p-4 shadow-sm lg:sticky lg:top-6";
 
+type CalculatorActionCopy = {
+  reset: string;
+  firstRun: string;
+  example: string;
+  exampleApplied: string;
+  exampleUnavailable: string;
+};
+
+const CALCULATOR_ACTION_COPY: Record<"ko" | "en", CalculatorActionCopy> = {
+  ko: {
+    reset: "초기화",
+    firstRun: "처음이라면 예시 값으로 입력 형식을 확인한 뒤 내 값으로 바꿔 계산해 보세요.",
+    example: "예시 입력",
+    exampleApplied: "빈 입력칸에 예시 값을 채웠습니다.",
+    exampleUnavailable: "이 계산기에는 자동으로 채울 수 있는 예시 값이 없습니다.",
+  },
+  en: {
+    reset: "Reset",
+    firstRun: "New here? Fill the example values to see the expected input format, then replace them with your own.",
+    example: "Fill example",
+    exampleApplied: "Example values filled into empty inputs.",
+    exampleUnavailable: "This calculator has no example values that can be filled automatically.",
+  },
+};
+
+function inferCalculatorActionLocale(label: string): "ko" | "en" {
+  return /[가-힣]/.test(label) ? "ko" : "en";
+}
+
+function isSafeExamplePlaceholder(value: string) {
+  return /^-?\d+(?:[,.]\d+)*$/.test(value.trim());
+}
+
+function setInputValue(input: HTMLInputElement, value: string) {
+  const setter = Object.getOwnPropertyDescriptor(
+    HTMLInputElement.prototype,
+    "value",
+  )?.set;
+
+  setter?.call(input, value);
+  input.dispatchEvent(new Event("input", { bubbles: true }));
+  input.dispatchEvent(new Event("change", { bubbles: true }));
+}
+
+function fillExampleValues(form: HTMLFormElement | null) {
+  if (!form) return 0;
+
+  const inputs = Array.from(
+    form.querySelectorAll<HTMLInputElement>(
+      "input:not([disabled]):not([type='checkbox']):not([type='radio']):not([type='date']):not([type='file'])",
+    ),
+  );
+
+  const candidates = inputs.filter(
+    (input) =>
+      input.value.trim() === "" &&
+      Boolean(input.placeholder) &&
+      isSafeExamplePlaceholder(input.placeholder),
+  );
+
+  for (const input of candidates) setInputValue(input, input.placeholder.trim());
+  candidates[0]?.focus();
+
+  return candidates.length;
+}
+
 export function CalculatorActions({
   submitLabel,
   onReset,
@@ -22,22 +88,46 @@ export function CalculatorActions({
   onReset: () => void;
   compact?: boolean;
 }) {
+  const locale = inferCalculatorActionLocale(submitLabel);
+  const copy = CALCULATOR_ACTION_COPY[locale];
+  const [exampleStatus, setExampleStatus] = useState("");
+
   return (
-    <div
-      className={`${compact ? "mt-3" : "mt-6"} grid grid-cols-[minmax(0,1fr)_auto] gap-2`}
-    >
-      <Button type="submit" size="lg" className="h-11 px-5">
-        {submitLabel}
-      </Button>
-      <Button
-        type="button"
-        variant="outline"
-        size="lg"
-        className="h-11 px-4"
-        onClick={onReset}
-      >
-        초기화
-      </Button>
+    <div className={compact ? "mt-3" : "mt-6"}>
+      <p className="mb-2 text-xs leading-5 text-muted-foreground">
+        {copy.firstRun}
+      </p>
+      <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto_auto]">
+        <Button type="submit" size="lg" className="h-11 px-5">
+          {submitLabel}
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          size="lg"
+          className="h-11 px-4"
+          onClick={(event) => {
+            const filled = fillExampleValues(event.currentTarget.form);
+            setExampleStatus(
+              filled ? copy.exampleApplied : copy.exampleUnavailable,
+            );
+          }}
+        >
+          {copy.example}
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          size="lg"
+          className="h-11 px-4"
+          onClick={onReset}
+        >
+          {copy.reset}
+        </Button>
+      </div>
+      <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+        {exampleStatus}
+      </p>
     </div>
   );
 }
