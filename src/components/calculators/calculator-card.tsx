@@ -49,7 +49,7 @@ export function CalculatorCard({
       <Link
         href={calculator.href}
         onClick={() => recordRecentCalculator(calculator.id)}
-        className="flex min-h-11 h-full min-w-0 flex-col p-4 pr-14 focus-visible:outline-none"
+        className="flex min-h-11 h-full min-w-0 overflow-hidden flex-col p-4 pr-14 focus-visible:outline-none"
       >
         <span className="max-w-full break-words text-xs font-semibold leading-5 tracking-wide text-primary">
           {categoryLabel ?? calculator.category}
