@@ -2,6 +2,7 @@
 
 import { type ReactNode, useEffect, useRef, useState } from "react";
 
+import { CalculatorResultContext } from "@/components/calculators/calculator-result-context";
 import { Button } from "@/components/ui/button";
 
 export const calculatorWorkspaceClass =
@@ -479,6 +480,8 @@ export function PrimaryResults({
           </div>
         ))}
       </dl>
+
+      <CalculatorResultContext metrics={metrics} />
 
       {isStale ? (
         <div

@@ -1,6 +1,6 @@
 # CalCome Task State
 
-Last Updated: 2026-08-31
+Last Updated: 2026-09-01
 Current Calculator Count: 100
 Target Calculator Count: 100
 Remaining to Target: 0
@@ -30,11 +30,13 @@ Remaining to Target: 0
   - Shared directory cards now let users explicitly favorite calculators and record recently opened calculator IDs. Korean and English routes share the same calculator identity, repeat-use shortcuts are restored on the directory without storing calculator inputs or financial data, and storage/private-browsing failures remain non-fatal. The same task localizes the English card action and adds focused storage regression coverage.
 - [x] UX-045 DONE — Shared Calculator Mobile Completion and Result Navigation Upgrade
   - Successful narrow-screen calculation now moves directly from the shared submit action to the calculated primary results and focuses the result region without adding URL state or storing calculator inputs. Existing invalid-input recovery remains in place, desktop behavior is unchanged, and shared recalculation still returns users to the nearest calculator form.
+- [x] UX-046 DONE — Shared Calculator Result Explanation and Assumption Clarity Upgrade
+  - Shared primary results now include bilingual interpretation guidance that identifies the featured result hierarchy and reminds users to verify calculator-specific units, assumptions, and included scope without inventing policy rules or duplicating long-form content.
 
 ## Active queue
 
-- [ ] UX-046 OPEN — Shared Calculator Result Explanation and Assumption Clarity Upgrade
-  - Scope: improve result comprehension across representative calculator families by pairing the primary result hierarchy with concise bilingual interpretation and assumption/context guidance where the existing shared result surface can do so safely. Do not invent policy assumptions or duplicate long-form page content; preserve formulas, routes, SEO, accessibility, and stored-data boundaries.
+- [ ] UX-047 OPEN — Shared Calculator Result Comparison and Decision Support Upgrade
+  - Scope: improve repeat-use decision support by helping users compare a recalculated result with the immediately previous result in-session where the shared result surface can do so without persisting calculator inputs or sensitive financial data. Keep the comparison ephemeral, bilingual, accessible, and formula-agnostic; preserve routes, SEO, calculation logic, and stored-data boundaries.
 
 ## Security gate
 
