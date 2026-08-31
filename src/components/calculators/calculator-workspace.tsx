@@ -2,9 +2,9 @@
 
 import {
   type ReactNode,
-  useEffect,
   useRef,
   useState,
+  useSyncExternalStore,
 } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -78,6 +78,20 @@ const RESULT_ACTION_COPY: Record<"ko" | "en", ResultActionCopy> = {
   },
 };
 
+function subscribeToDocumentLocale() {
+  return () => {};
+}
+
+function getDocumentLocale(): "ko" | "en" {
+  return document.documentElement.lang.toLowerCase().startsWith("en")
+    ? "en"
+    : "ko";
+}
+
+function getServerLocale(): "ko" | "en" {
+  return "ko";
+}
+
 function getResultText(list: HTMLDListElement) {
   const rows = Array.from(list.children);
   const pairs = rows
@@ -116,13 +130,13 @@ export function PrimaryResults({
   metrics: readonly { label: string; value: ReactNode; featured?: boolean }[];
 }) {
   const resultsRef = useRef<HTMLDListElement>(null);
-  const [locale, setLocale] = useState<"ko" | "en">("ko");
   const [actionStatus, setActionStatus] = useState("");
+  const locale = useSyncExternalStore(
+    subscribeToDocumentLocale,
+    getDocumentLocale,
+    getServerLocale,
+  );
   const copy = RESULT_ACTION_COPY[locale];
-
-  useEffect(() => {
-    setLocale(document.documentElement.lang.toLowerCase().startsWith("en") ? "en" : "ko");
-  }, []);
 
   async function copyResult() {
     const list = resultsRef.current;
