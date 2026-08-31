@@ -39,8 +39,8 @@ Remaining to Target: 0
 
 ## Active queue
 
-- [ ] UX-007 OPEN — Full-Site Accessibility and Visual Consistency Regression
-  - Scope: run the existing full-site accessibility and visual-consistency regression across shared navigation, directory/search, related-calculator paths, and published calculator families; standardize only proven inconsistencies without weakening routes, formulas, SEO, or accessibility gates.
+- [ ] PERF-006 OPEN — Post-100 Shared Calculator Interaction Performance Regression
+  - Scope: measure the current shared calculator interaction path after the recent result-guidance, comparison, favorites, and mobile-completion upgrades; identify only reproducible runtime, render, bundle, or interaction regressions and apply bounded shared fixes where evidence supports them, preserving formulas, routes, SEO, accessibility, and user-data boundaries.
 
 ## Security gate
 
