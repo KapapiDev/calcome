@@ -110,7 +110,9 @@ function createSnapshot(metrics: readonly Metric[]): ResultSnapshot | null {
 function parseComparableValue(text: string): ComparableValue | null {
   const match = text
     .trim()
-    .match(/^([^\d+\-−–]*)([+\-−–]?(?:\d{1,3}(?:,\d{3})*|\d+)(?:\.\d+)?)([^\d]*)$/);
+    .match(
+      /^([^\d+\-−–]*)([+\-−–]?(?:\d{1,3}(?:,\d{3})*|\d+)(?:\.\d+)?)([^\d]*)$/,
+    );
   if (!match) return null;
 
   const [, prefix, numericText, suffix] = match;
