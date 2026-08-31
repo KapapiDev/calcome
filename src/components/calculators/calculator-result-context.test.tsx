@@ -72,6 +72,9 @@ describe("CalculatorResultContext", () => {
     expect(screen.getByTestId("result-comparison")).toHaveTextContent(
       "현재: 120",
     );
+    expect(screen.getByTestId("result-comparison")).toHaveTextContent(
+      "증가 · 변화량: 20",
+    );
 
     rerender(
       <CalculatorResultContext
@@ -88,6 +91,54 @@ describe("CalculatorResultContext", () => {
     expect(screen.getByTestId("result-comparison")).not.toHaveTextContent(
       "직전: 100",
     );
+  });
+
+  it("shows deterministic direction and formatted delta only for safely comparable values", () => {
+    const { rerender } = render(
+      <CalculatorResultContext
+        metrics={[
+          { label: "Payment", value: "$1,200.50", featured: true },
+          { label: "Duration", value: "10 years 2 months" },
+          { label: "Rate", value: "3.5%" },
+        ]}
+      />,
+    );
+
+    rerender(
+      <CalculatorResultContext
+        metrics={[
+          { label: "Payment", value: "$1,050.25", featured: true },
+          { label: "Duration", value: "9 years 11 months" },
+          { label: "Rate", value: "3.5%" },
+        ]}
+      />,
+    );
+
+    const comparison = screen.getByTestId("result-comparison");
+    expect(comparison).toHaveTextContent("Decreased · Delta: $150.25");
+    expect(comparison).toHaveTextContent("No change · Delta: 0.0%");
+    expect(comparison).toHaveTextContent("Previous: 10 years 2 months");
+    expect(comparison).toHaveTextContent("Current: 9 years 11 months");
+    expect(comparison).not.toHaveTextContent("Delta: 0 years");
+  });
+
+  it("keeps differently formatted units side by side instead of inferring a delta", () => {
+    const { rerender } = render(
+      <CalculatorResultContext
+        metrics={[{ label: "Amount", value: "$100", featured: true }]}
+      />,
+    );
+
+    rerender(
+      <CalculatorResultContext
+        metrics={[{ label: "Amount", value: "€120", featured: true }]}
+      />,
+    );
+
+    const comparison = screen.getByTestId("result-comparison");
+    expect(comparison).toHaveTextContent("Previous: $100");
+    expect(comparison).toHaveTextContent("Current: €120");
+    expect(comparison).not.toHaveTextContent("Delta:");
   });
 
   it("localizes comparison guidance and clears ephemeral history when results reset", () => {
@@ -114,6 +165,9 @@ describe("CalculatorResultContext", () => {
     );
     expect(screen.getByTestId("result-comparison")).toHaveTextContent(
       "does not store your inputs",
+    );
+    expect(screen.getByTestId("result-comparison")).toHaveTextContent(
+      "Increased · Delta: $25",
     );
 
     rerender(

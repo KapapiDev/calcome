@@ -11,9 +11,13 @@ const COPY = {
     context: "함께 확인할 값",
     comparisonTitle: "직전 계산과 비교",
     comparisonDescription:
-      "이번 결과와 바로 직전 계산 결과를 같은 항목끼리 비교할 수 있습니다. 이 비교는 현재 페이지 세션에서만 유지되며 입력값은 저장하지 않습니다.",
+      "이번 결과와 바로 직전 계산 결과를 같은 항목끼리 비교할 수 있습니다. 안전하게 해석 가능한 숫자 값은 방향과 변화량도 표시하며, 이 비교는 현재 페이지 세션에서만 유지되고 입력값은 저장하지 않습니다.",
     previous: "직전",
     current: "현재",
+    increased: "증가",
+    decreased: "감소",
+    unchanged: "변화 없음",
+    delta: "변화량",
   },
   en: {
     title: "How to read these results",
@@ -23,9 +27,13 @@ const COPY = {
     context: "Supporting value",
     comparisonTitle: "Compare with the previous calculation",
     comparisonDescription:
-      "Compare this result with the immediately previous calculation using the same result labels. This comparison stays only in the current page session and does not store your inputs.",
+      "Compare this result with the immediately previous calculation using the same result labels. Safely interpretable numeric values also show direction and delta. This comparison stays only in the current page session and does not store your inputs.",
     previous: "Previous",
     current: "Current",
+    increased: "Increased",
+    decreased: "Decreased",
+    unchanged: "No change",
+    delta: "Delta",
   },
 } as const;
 
@@ -43,6 +51,14 @@ type ResultSnapshot = {
 type SnapshotState = {
   current: ResultSnapshot | null;
   previous: ResultSnapshot | null;
+};
+
+type ComparableValue = {
+  value: number;
+  prefix: string;
+  suffix: string;
+  decimals: number;
+  grouped: boolean;
 };
 
 function inferLocale(metrics: readonly { label: string }[]): "ko" | "en" {
@@ -89,6 +105,63 @@ function createSnapshot(metrics: readonly Metric[]): ResultSnapshot | null {
       .join("\u0001"),
     pairs,
   };
+}
+
+function parseComparableValue(text: string): ComparableValue | null {
+  const match = text
+    .trim()
+    .match(
+      /^([^\d+\-−–]*)([+\-−–]?(?:\d{1,3}(?:,\d{3})*|\d+)(?:\.\d+)?)([^\d]*)$/,
+    );
+  if (!match) return null;
+
+  const [, prefix, numericText, suffix] = match;
+  const normalized = numericText.replace(/[−–]/g, "-").replace(/,/g, "");
+  const value = Number(normalized);
+  if (!Number.isFinite(value)) return null;
+
+  return {
+    value,
+    prefix,
+    suffix,
+    decimals: normalized.split(".")[1]?.length ?? 0,
+    grouped: numericText.includes(","),
+  };
+}
+
+function formatDelta(
+  delta: number,
+  previous: ComparableValue,
+  current: ComparableValue,
+): string {
+  const decimals = Math.max(previous.decimals, current.decimals);
+  const fixed = Math.abs(delta).toFixed(decimals);
+  const [integer, fraction] = fixed.split(".");
+  const groupedInteger =
+    previous.grouped || current.grouped
+      ? integer.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+      : integer;
+  const numeric = fraction ? `${groupedInteger}.${fraction}` : groupedInteger;
+  return `${current.prefix}${numeric}${current.suffix}`;
+}
+
+function compareDisplayedValues(previousText: string, currentText: string) {
+  const previous = parseComparableValue(previousText);
+  const current = parseComparableValue(currentText);
+
+  if (
+    !previous ||
+    !current ||
+    previous.prefix !== current.prefix ||
+    previous.suffix !== current.suffix
+  )
+    return null;
+
+  const delta = current.value - previous.value;
+  return {
+    direction: delta > 0 ? "increased" : delta < 0 ? "decreased" : "unchanged",
+    delta: formatDelta(delta, previous, current),
+  } as const;
 }
 
 export function CalculatorResultContext({
@@ -161,6 +234,11 @@ export function CalculatorResultContext({
               );
               if (!previousPair) return null;
 
+              const comparison = compareDisplayedValues(
+                previousPair.value,
+                currentPair.value,
+              );
+
               return (
                 <div
                   key={currentPair.label}
@@ -179,6 +257,14 @@ export function CalculatorResultContext({
                       {currentPair.value}
                     </span>
                   </p>
+                  {comparison ? (
+                    <p className="text-muted-foreground sm:col-start-2 sm:col-span-2">
+                      <span className="font-medium text-foreground">
+                        {copy[comparison.direction]}
+                      </span>{" "}
+                      · {copy.delta}: {comparison.delta}
+                    </p>
+                  ) : null}
                 </div>
               );
             })}
