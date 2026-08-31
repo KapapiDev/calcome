@@ -150,6 +150,32 @@ function findFirstInvalidControl(form: HTMLFormElement | null) {
   );
 }
 
+function findNearestPrimaryResults(form: HTMLFormElement) {
+  let current: HTMLElement | null = form.parentElement;
+
+  while (current) {
+    const results = current.querySelector<HTMLDListElement>(
+      "[data-testid='primary-results']",
+    );
+    if (results) return results;
+    current = current.parentElement;
+  }
+
+  return null;
+}
+
+function moveMobileCompletionToResults(form: HTMLFormElement) {
+  if (!window.matchMedia?.("(max-width: 767px)").matches) return;
+
+  window.setTimeout(() => {
+    const results = findNearestPrimaryResults(form);
+    if (!results || !getResultText(results).hasCalculatedValue) return;
+
+    results.scrollIntoView({ block: "start", behavior: "smooth" });
+    results.focus({ preventScroll: true });
+  }, 0);
+}
+
 export function CalculatorActions({
   submitLabel,
   onReset,
@@ -196,8 +222,12 @@ export function CalculatorActions({
           size="lg"
           className="h-11 px-5"
           onClick={(event) => {
-            if (!validateBeforeSubmit(event.currentTarget.form))
+            const form = event.currentTarget.form;
+            if (!validateBeforeSubmit(form)) {
               event.preventDefault();
+              return;
+            }
+            if (form) moveMobileCompletionToResults(form);
           }}
         >
           {submitLabel}
@@ -431,8 +461,9 @@ export function PrimaryResults({
     <>
       <dl
         ref={resultsRef}
-        className="mt-4 grid gap-2 sm:grid-cols-3"
+        className="mt-4 grid scroll-mt-4 gap-2 outline-none sm:grid-cols-3"
         data-testid="primary-results"
+        tabIndex={-1}
       >
         {metrics.map((metric) => (
           <div
