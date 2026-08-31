@@ -5,6 +5,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   getRepeatUseSnapshot,
   recordRecentCalculator,
+  subscribeRepeatUse,
   toggleCalculatorFavorite,
 } from "@/components/calculators/calculator-repeat-use";
 
@@ -39,5 +40,36 @@ describe("calculator repeat-use storage", () => {
 
     expect(() => recordRecentCalculator("compound-interest")).not.toThrow();
     expect(() => toggleCalculatorFavorite("compound-interest")).not.toThrow();
+  });
+
+  it("shares one pair of global listeners across repeat-use subscribers", () => {
+    const addEventListener = vi.spyOn(window, "addEventListener");
+    const removeEventListener = vi.spyOn(window, "removeEventListener");
+
+    const unsubscribeFirst = subscribeRepeatUse(vi.fn());
+    const unsubscribeSecond = subscribeRepeatUse(vi.fn());
+    const unsubscribeThird = subscribeRepeatUse(vi.fn());
+
+    expect(
+      addEventListener.mock.calls.filter(
+        ([type]) => type === "calcome:repeat-use",
+      ),
+    ).toHaveLength(1);
+    expect(
+      addEventListener.mock.calls.filter(([type]) => type === "storage"),
+    ).toHaveLength(1);
+
+    unsubscribeFirst();
+    unsubscribeSecond();
+    unsubscribeThird();
+
+    expect(
+      removeEventListener.mock.calls.filter(
+        ([type]) => type === "calcome:repeat-use",
+      ),
+    ).toHaveLength(1);
+    expect(
+      removeEventListener.mock.calls.filter(([type]) => type === "storage"),
+    ).toHaveLength(1);
   });
 });

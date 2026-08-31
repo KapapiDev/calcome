@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useMemo, useSyncExternalStore } from "react";
 
 export type RepeatUseCalculator = {
   id: string;
@@ -18,6 +18,12 @@ const FAVORITES_KEY = "calcome:favorite-calculators:v1";
 const RECENT_KEY = "calcome:recent-calculators:v1";
 const REPEAT_USE_EVENT = "calcome:repeat-use";
 const MAX_RECENT_CALCULATORS = 6;
+const EMPTY_SNAPSHOT: RepeatUseSnapshot = { favorites: [], recent: [] };
+
+let cachedSnapshot: RepeatUseSnapshot = EMPTY_SNAPSHOT;
+let hasCachedSnapshot = false;
+let listening = false;
+const subscribers = new Set<() => void>();
 
 function normalizeIds(value: unknown, limit = Number.POSITIVE_INFINITY) {
   if (!Array.isArray(value)) return [];
@@ -57,17 +63,77 @@ function writeIds(key: string, ids: readonly string[]) {
   }
 }
 
-function notifyRepeatUseChange() {
-  if (typeof window !== "undefined") {
-    window.dispatchEvent(new Event(REPEAT_USE_EVENT));
-  }
-}
-
-export function getRepeatUseSnapshot(): RepeatUseSnapshot {
+function readRepeatUseSnapshot(): RepeatUseSnapshot {
   return {
     favorites: readIds(FAVORITES_KEY),
     recent: readIds(RECENT_KEY, MAX_RECENT_CALCULATORS),
   };
+}
+
+function snapshotsEqual(a: RepeatUseSnapshot, b: RepeatUseSnapshot) {
+  return (
+    a.favorites.length === b.favorites.length &&
+    a.recent.length === b.recent.length &&
+    a.favorites.every((id, index) => id === b.favorites[index]) &&
+    a.recent.every((id, index) => id === b.recent[index])
+  );
+}
+
+function refreshRepeatUseSnapshot() {
+  const next = readRepeatUseSnapshot();
+  const changed = !hasCachedSnapshot || !snapshotsEqual(cachedSnapshot, next);
+  cachedSnapshot = next;
+  hasCachedSnapshot = true;
+
+  if (changed) {
+    subscribers.forEach((subscriber) => subscriber());
+  }
+}
+
+function handleRepeatUseEvent() {
+  refreshRepeatUseSnapshot();
+}
+
+function startListening() {
+  if (listening || typeof window === "undefined") return;
+  window.addEventListener(REPEAT_USE_EVENT, handleRepeatUseEvent);
+  window.addEventListener("storage", handleRepeatUseEvent);
+  listening = true;
+}
+
+function stopListening() {
+  if (!listening || typeof window === "undefined") return;
+  window.removeEventListener(REPEAT_USE_EVENT, handleRepeatUseEvent);
+  window.removeEventListener("storage", handleRepeatUseEvent);
+  listening = false;
+}
+
+function notifyRepeatUseChange() {
+  if (typeof window === "undefined") return;
+  refreshRepeatUseSnapshot();
+  window.dispatchEvent(new Event(REPEAT_USE_EVENT));
+}
+
+export function subscribeRepeatUse(subscriber: () => void) {
+  subscribers.add(subscriber);
+  startListening();
+  return () => {
+    subscribers.delete(subscriber);
+    if (subscribers.size === 0) stopListening();
+  };
+}
+
+export function getRepeatUseSnapshot(): RepeatUseSnapshot {
+  if (typeof window === "undefined") return EMPTY_SNAPSHOT;
+  cachedSnapshot = readRepeatUseSnapshot();
+  hasCachedSnapshot = true;
+  return cachedSnapshot;
+}
+
+export function getCachedRepeatUseSnapshot(): RepeatUseSnapshot {
+  if (typeof window === "undefined") return EMPTY_SNAPSHOT;
+  if (!hasCachedSnapshot) refreshRepeatUseSnapshot();
+  return cachedSnapshot;
 }
 
 export function isCalculatorFavorite(id: string) {
@@ -112,31 +178,16 @@ export function CalculatorRepeatUseShortcuts({
   calculators: readonly RepeatUseCalculator[];
   locale?: "ko" | "en";
 }) {
-  const [snapshot, setSnapshot] = useState<RepeatUseSnapshot>({
-    favorites: [],
-    recent: [],
-  });
-  const [hydrated, setHydrated] = useState(false);
+  const snapshot = useSyncExternalStore(
+    subscribeRepeatUse,
+    getCachedRepeatUseSnapshot,
+    () => EMPTY_SNAPSHOT,
+  );
   const isEnglish = locale === "en";
   const byId = useMemo(
     () => new Map(calculators.map((calculator) => [calculator.id, calculator])),
     [calculators],
   );
-  const refresh = useCallback(() => {
-    setSnapshot(getRepeatUseSnapshot());
-    setHydrated(true);
-  }, []);
-
-  useEffect(() => {
-    const initialRefresh = window.setTimeout(refresh, 0);
-    window.addEventListener(REPEAT_USE_EVENT, refresh);
-    window.addEventListener("storage", refresh);
-    return () => {
-      window.clearTimeout(initialRefresh);
-      window.removeEventListener(REPEAT_USE_EVENT, refresh);
-      window.removeEventListener("storage", refresh);
-    };
-  }, [refresh]);
 
   const favorites = resolveCalculators(snapshot.favorites, byId);
   const favoriteIds = new Set(favorites.map((calculator) => calculator.id));
@@ -144,7 +195,7 @@ export function CalculatorRepeatUseShortcuts({
     (calculator) => !favoriteIds.has(calculator.id),
   );
 
-  if (!hydrated || (favorites.length === 0 && recent.length === 0)) return null;
+  if (favorites.length === 0 && recent.length === 0) return null;
 
   const groups = [
     {
