@@ -6,11 +6,13 @@ import {
 } from "@/config/calculator-directory";
 import { englishDirectoryCategoryCopy } from "@/config/calculator-directory-copy";
 
-const koreanRepeatUseCalculators = allPublishedCalculators.map((calculator) => ({
-  id: calculator.id,
-  name: calculator.name,
-  href: calculator.href,
-}));
+const koreanRepeatUseCalculators = allPublishedCalculators.map(
+  (calculator) => ({
+    id: calculator.id,
+    name: calculator.name,
+    href: calculator.href,
+  }),
+);
 
 const englishRepeatUseCalculators = allPublishedCalculators.map(
   (calculator) => ({
