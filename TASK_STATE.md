@@ -36,11 +36,13 @@ Remaining to Target: 0
   - Shared result guidance now compares the current calculation with the immediately previous calculated result in the same page session, using matching result labels only. The comparison is bilingual, accessible, formula-agnostic, resets with uncalculated results, and does not persist calculator inputs or result history.
 - [x] UX-048 DONE — Shared Calculator Comparison Delta and Change-Summary Upgrade
   - Previous-versus-current result comparison now adds deterministic increase/decrease/no-change direction and formatted absolute delta only when both displayed values contain one safely parseable numeric value with matching unit/currency decoration. Compound or differently formatted values remain side-by-side text, with no calculator-policy assumptions and no persisted input/result history.
+- [x] PERF-006 DONE — Post-100 Shared Calculator Interaction Performance Regression
+  - Replaced per-card global repeat-use/storage listeners and repeated localStorage parsing with one shared external-store subscription path. Repeat-use state is parsed once per change, subscribers share one pair of global listeners, cross-tab updates remain supported, storage failures remain non-fatal, and focused regression coverage prevents listener fanout from scaling with the 100-card directory.
 
 ## Active queue
 
-- [ ] PERF-006 OPEN — Post-100 Shared Calculator Interaction Performance Regression
-  - Scope: measure the current shared calculator interaction path after the recent result-guidance, comparison, favorites, and mobile-completion upgrades; identify only reproducible runtime, render, bundle, or interaction regressions and apply bounded shared fixes where evidence supports them, preserving formulas, routes, SEO, accessibility, and user-data boundaries.
+- [ ] UX-007 OPEN — Full-Site Accessibility and Visual Consistency Regression
+  - Scope: run keyboard, focus-order, accessible-name, contrast, zoom, reduced-motion, touch-target, mobile-overflow, light/dark-mode, and shared visual-consistency regression checks across the post-100 calculator site; standardize only reproducible shared inconsistencies while preserving formulas, routes, SEO, performance, and user-data boundaries.
 
 ## Security gate
 
