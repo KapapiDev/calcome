@@ -34,11 +34,13 @@ Remaining to Target: 0
   - Shared primary results now include bilingual interpretation guidance that identifies the featured result hierarchy and reminds users to verify calculator-specific units, assumptions, and included scope without inventing policy rules or duplicating long-form content.
 - [x] UX-047 DONE — Shared Calculator Result Comparison and Decision Support Upgrade
   - Shared result guidance now compares the current calculation with the immediately previous calculated result in the same page session, using matching result labels only. The comparison is bilingual, accessible, formula-agnostic, resets with uncalculated results, and does not persist calculator inputs or result history.
+- [x] UX-048 DONE — Shared Calculator Comparison Delta and Change-Summary Upgrade
+  - Previous-versus-current result comparison now adds deterministic increase/decrease/no-change direction and formatted absolute delta only when both displayed values contain one safely parseable numeric value with matching unit/currency decoration. Compound or differently formatted values remain side-by-side text, with no calculator-policy assumptions and no persisted input/result history.
 
 ## Active queue
 
-- [ ] UX-048 OPEN — Shared Calculator Comparison Delta and Change-Summary Upgrade
-  - Scope: turn the existing previous-versus-current result comparison into clearer decision support by showing deterministic per-metric change direction and delta only where both displayed result values can be safely interpreted without calculator-specific policy assumptions; keep non-comparable formatted values as side-by-side text, preserve formulas/routes/SEO, and persist no calculator inputs or result history.
+- [ ] UX-007 OPEN — Full-Site Accessibility and Visual Consistency Regression
+  - Scope: run the existing full-site accessibility and visual-consistency regression across shared navigation, directory/search, related-calculator paths, and published calculator families; standardize only proven inconsistencies without weakening routes, formulas, SEO, or accessibility gates.
 
 ## Security gate
 
