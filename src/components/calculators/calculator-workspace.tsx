@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  type ReactNode,
-  useRef,
-  useState,
-  useSyncExternalStore,
-} from "react";
+import { type ReactNode, useRef, useState, useSyncExternalStore } from "react";
 
 import { Button } from "@/components/ui/button";
 
@@ -149,7 +144,8 @@ export function PrimaryResults({
     }
 
     try {
-      if (!navigator.clipboard?.writeText) throw new Error("Clipboard unavailable");
+      if (!navigator.clipboard?.writeText)
+        throw new Error("Clipboard unavailable");
       await navigator.clipboard.writeText(resultText.text);
       setActionStatus(copy.copied);
     } catch {
@@ -222,7 +218,12 @@ export function PrimaryResults({
           {copy.anotherCalculator}
         </a>
       </div>
-      <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+      <p
+        className="sr-only"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         {actionStatus}
       </p>
     </>

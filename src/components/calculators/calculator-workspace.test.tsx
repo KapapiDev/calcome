@@ -29,8 +29,12 @@ describe("calculator workspace", () => {
     );
 
     expect(screen.getByTestId("primary-results").children).toHaveLength(3);
-    expect(screen.getByRole("button", { name: "다시 계산" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "결과 복사" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "다시 계산" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "결과 복사" }),
+    ).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "다른 계산기" })).toHaveAttribute(
       "href",
       "/calculators",
@@ -56,7 +60,9 @@ describe("calculator workspace", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "결과 복사" }));
 
-    expect(writeText).toHaveBeenCalledWith("결과: 10%\n원금: 100원\n수익: 10원");
+    expect(writeText).toHaveBeenCalledWith(
+      "결과: 10%\n원금: 100원\n수익: 10원",
+    );
     expect(await screen.findByRole("status")).toHaveTextContent(
       "결과를 복사했습니다.",
     );
