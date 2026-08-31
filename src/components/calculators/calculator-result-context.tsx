@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  isValidElement,
-  type ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { isValidElement, type ReactNode, useState } from "react";
 
 const COPY = {
   ko: {
@@ -44,6 +38,11 @@ type Metric = {
 type ResultSnapshot = {
   key: string;
   pairs: { label: string; value: string }[];
+};
+
+type SnapshotState = {
+  current: ResultSnapshot | null;
+  previous: ResultSnapshot | null;
 };
 
 function inferLocale(metrics: readonly { label: string }[]): "ko" | "en" {
@@ -94,26 +93,20 @@ export function CalculatorResultContext({
   const copy = COPY[inferLocale(metrics)];
   const featured = metrics.find((metric) => metric.featured) ?? metrics[0];
   const supporting = metrics.find((metric) => metric !== featured);
-  const lastSnapshotRef = useRef<ResultSnapshot | null>(null);
-  const [previousSnapshot, setPreviousSnapshot] =
-    useState<ResultSnapshot | null>(null);
   const currentSnapshot = createSnapshot(metrics);
+  const [snapshotState, setSnapshotState] = useState<SnapshotState>(() => ({
+    current: currentSnapshot,
+    previous: null,
+  }));
 
-  useEffect(() => {
-    const nextSnapshot = createSnapshot(metrics);
+  if ((snapshotState.current?.key ?? null) !== (currentSnapshot?.key ?? null)) {
+    setSnapshotState({
+      current: currentSnapshot,
+      previous: currentSnapshot && snapshotState.current ? snapshotState.current : null,
+    });
+  }
 
-    if (!nextSnapshot) {
-      lastSnapshotRef.current = null;
-      setPreviousSnapshot(null);
-      return;
-    }
-
-    const lastSnapshot = lastSnapshotRef.current;
-    if (lastSnapshot && lastSnapshot.key !== nextSnapshot.key)
-      setPreviousSnapshot(lastSnapshot);
-
-    lastSnapshotRef.current = nextSnapshot;
-  }, [metrics]);
+  const previousSnapshot = snapshotState.previous;
 
   return (
     <>
@@ -166,10 +159,16 @@ export function CalculatorResultContext({
                 >
                   <p className="font-medium">{currentPair.label}</p>
                   <p className="text-muted-foreground">
-                    {copy.previous}: <span className="font-medium text-foreground">{previousPair.value}</span>
+                    {copy.previous}: {" "}
+                    <span className="font-medium text-foreground">
+                      {previousPair.value}
+                    </span>
                   </p>
                   <p className="text-muted-foreground">
-                    {copy.current}: <span className="font-medium text-foreground">{currentPair.value}</span>
+                    {copy.current}: {" "}
+                    <span className="font-medium text-foreground">
+                      {currentPair.value}
+                    </span>
                   </p>
                 </div>
               );
