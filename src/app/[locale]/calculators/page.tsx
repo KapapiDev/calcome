@@ -10,6 +10,7 @@ import { getEnglishCalculatorDescription } from "@/config/calculator-description
 import { getEnglishCalculatorName } from "@/config/calculator-directory-calculator-copy";
 import {
   allPublishedCalculators,
+  calculatorDirectoryCategories,
   directorySearchCalculators,
   popularCalculators,
   visibleCalculatorDirectory,
@@ -27,6 +28,34 @@ function compactEnglishName(name: string) {
   return name.replace(/ Calculator$/, "");
 }
 
+const englishDirectoryCategoryByCalculatorId = new Map<string, string>();
+
+for (const category of calculatorDirectoryCategories) {
+  const categoryName = englishDirectoryCategoryCopy[category.id]?.name;
+  if (!categoryName) {
+    throw new Error(
+      `Missing English directory category copy for: ${category.id}`,
+    );
+  }
+
+  for (const calculatorId of category.calculatorIds) {
+    if (englishDirectoryCategoryByCalculatorId.has(calculatorId)) {
+      throw new Error(`Duplicate calculator directory category: ${calculatorId}`);
+    }
+    englishDirectoryCategoryByCalculatorId.set(calculatorId, categoryName);
+  }
+}
+
+function getEnglishDirectoryPrimaryCategory(calculatorId: string) {
+  const categoryName = englishDirectoryCategoryByCalculatorId.get(calculatorId);
+  if (!categoryName) {
+    throw new Error(
+      `Missing English directory category for calculator: ${calculatorId}`,
+    );
+  }
+  return categoryName;
+}
+
 function englishCalculator<
   T extends {
     id: string;
@@ -42,6 +71,7 @@ function englishCalculator<
     name,
     description: getEnglishCalculatorDescription(calculator.id),
     keywords: getEnglishCalculatorSearchAliases(calculator.id),
+    primaryCategory: getEnglishDirectoryPrimaryCategory(calculator.id),
     href: calculator.href.replace(/^\/ko\//, "/en/") as T["href"],
   };
 }

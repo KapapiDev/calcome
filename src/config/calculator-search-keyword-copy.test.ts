@@ -2,8 +2,12 @@ import { readFileSync } from "node:fs";
 
 import { describe, expect, it } from "vitest";
 
-import { allPublishedCalculators } from "./calculator-directory";
+import {
+  allPublishedCalculators,
+  calculatorDirectoryCategories,
+} from "./calculator-directory";
 import { englishCalculatorNames } from "./calculator-directory-calculator-copy";
+import { englishDirectoryCategoryCopy } from "./calculator-directory-copy";
 import {
   englishCalculatorSearchAliases,
   getEnglishCalculatorSearchAliases,
@@ -30,6 +34,39 @@ describe("English calculator search keyword copy", () => {
     expect(englishDirectoryPageSource).not.toContain(
       "calculator.keywords.filter",
     );
+  });
+
+  it("localizes English search result category labels from the shared category copy", () => {
+    expect(englishDirectoryPageSource).toContain(
+      "primaryCategory: getEnglishDirectoryPrimaryCategory(calculator.id)",
+    );
+    expect(calculatorSearchSource).toContain("{calculator.primaryCategory}");
+
+    const categoryOwners = new Map<string, string>();
+
+    for (const category of calculatorDirectoryCategories) {
+      const categoryName = englishDirectoryCategoryCopy[category.id]?.name;
+      expect(categoryName).toBeDefined();
+      if (!categoryName) {
+        throw new Error(`Missing English category copy for ${category.id}`);
+      }
+      expect(categoryName).toMatch(asciiOnly);
+
+      for (const calculatorId of category.calculatorIds) {
+        expect(
+          categoryOwners.has(calculatorId),
+          `Calculator ${calculatorId} must belong to exactly one directory category`,
+        ).toBe(false);
+        categoryOwners.set(calculatorId, categoryName);
+      }
+    }
+
+    for (const calculator of allPublishedCalculators) {
+      expect(
+        categoryOwners.get(calculator.id),
+        `Calculator ${calculator.id} must have an explicit English search category label`,
+      ).toBeDefined();
+    }
   });
 
   it("uses the same normalization contract as directory search for English names and aliases", () => {
