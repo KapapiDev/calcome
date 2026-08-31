@@ -33,6 +33,8 @@ describe("CalculatorResultContext", () => {
     expect(screen.getByText("How to read these results")).toBeInTheDocument();
     expect(screen.getByText("Primary result")).toBeInTheDocument();
     expect(screen.getByText("Monthly payment")).toBeInTheDocument();
-    expect(screen.getByText(/stated assumptions or included scope/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/stated assumptions or included scope/),
+    ).toBeInTheDocument();
   });
 });
