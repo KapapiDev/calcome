@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useRef, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 
@@ -269,6 +269,9 @@ type ResultActionCopy = {
   recalculate: string;
   recalculateReady: string;
   anotherCalculator: string;
+  staleTitle: string;
+  staleDescription: string;
+  staleCopyBlocked: string;
 };
 
 const RESULT_ACTION_COPY: Record<"ko" | "en", ResultActionCopy> = {
@@ -280,6 +283,10 @@ const RESULT_ACTION_COPY: Record<"ko" | "en", ResultActionCopy> = {
     recalculate: "다시 계산",
     recalculateReady: "입력 영역으로 이동했습니다.",
     anotherCalculator: "다른 계산기",
+    staleTitle: "입력값이 변경되었습니다.",
+    staleDescription:
+      "표시된 결과는 이전 입력 기준입니다. 다시 계산하면 최신 값으로 갱신됩니다.",
+    staleCopyBlocked: "입력값이 바뀌었습니다. 최신 결과를 계산한 뒤 복사해 주세요.",
   },
   en: {
     copy: "Copy result",
@@ -289,6 +296,10 @@ const RESULT_ACTION_COPY: Record<"ko" | "en", ResultActionCopy> = {
     recalculate: "Recalculate",
     recalculateReady: "Moved to the calculator inputs.",
     anotherCalculator: "Another calculator",
+    staleTitle: "Inputs have changed.",
+    staleDescription:
+      "These results use your previous inputs. Recalculate to refresh them.",
+    staleCopyBlocked: "Inputs changed. Recalculate before copying the result.",
   },
 };
 
@@ -335,12 +346,53 @@ export function PrimaryResults({
 }) {
   const resultsRef = useRef<HTMLDListElement>(null);
   const [actionStatus, setActionStatus] = useState("");
+  const [isStale, setIsStale] = useState(false);
   const locale = inferResultLocale(metrics);
   const copy = RESULT_ACTION_COPY[locale];
+
+  useEffect(() => {
+    const list = resultsRef.current;
+    if (!list) return;
+
+    const form = findNearestCalculatorForm(list);
+    if (!form) return;
+
+    const markStale = (event: Event) => {
+      if (
+        !(event.target instanceof HTMLInputElement) &&
+        !(event.target instanceof HTMLSelectElement) &&
+        !(event.target instanceof HTMLTextAreaElement)
+      )
+        return;
+
+      if (getResultText(list).hasCalculatedValue) setIsStale(true);
+    };
+
+    form.addEventListener("input", markStale);
+    form.addEventListener("change", markStale);
+
+    const observer = new MutationObserver(() => setIsStale(false));
+    observer.observe(list, {
+      childList: true,
+      characterData: true,
+      subtree: true,
+    });
+
+    return () => {
+      form.removeEventListener("input", markStale);
+      form.removeEventListener("change", markStale);
+      observer.disconnect();
+    };
+  }, []);
 
   async function copyResult() {
     const list = resultsRef.current;
     if (!list) return;
+
+    if (isStale) {
+      setActionStatus(copy.staleCopyBlocked);
+      return;
+    }
 
     const resultText = getResultText(list);
     if (!resultText.hasCalculatedValue) {
@@ -395,6 +447,21 @@ export function PrimaryResults({
           </div>
         ))}
       </dl>
+
+      {isStale ? (
+        <div
+          className="mt-3 rounded-lg border bg-muted/50 p-3 text-sm"
+          data-testid="stale-result-notice"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <p className="font-medium">{copy.staleTitle}</p>
+          <p className="mt-1 leading-5 text-muted-foreground">
+            {copy.staleDescription}
+          </p>
+        </div>
+      ) : null}
 
       <div
         className="mt-3 grid gap-2 sm:grid-cols-3"
