@@ -84,7 +84,9 @@ function createSnapshot(metrics: readonly Metric[]): ResultSnapshot | null {
     return null;
 
   return {
-    key: pairs.map(({ label, value }) => `${label}\u0000${value}`).join("\u0001"),
+    key: pairs
+      .map(({ label, value }) => `${label}\u0000${value}`)
+      .join("\u0001"),
     pairs,
   };
 }
@@ -123,7 +125,9 @@ export function CalculatorResultContext({
         <p id="result-context-title" className="font-medium">
           {copy.title}
         </p>
-        <p className="mt-1 leading-5 text-muted-foreground">{copy.description}</p>
+        <p className="mt-1 leading-5 text-muted-foreground">
+          {copy.description}
+        </p>
         <div className="mt-2 grid gap-2 sm:grid-cols-2">
           {featured ? (
             <p className="rounded-md bg-background px-3 py-2 font-medium">
