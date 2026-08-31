@@ -53,6 +53,37 @@ describe("calculator workspace", () => {
     expect(screen.getByRole("button", { name: "Reset" })).toBeInTheDocument();
   });
 
+  it("focuses the first invalid input, preserves other values, and offers recovery", () => {
+    render(
+      <form>
+        <label htmlFor="amount">Amount</label>
+        <input id="amount" required />
+        <label htmlFor="rate">Rate</label>
+        <input id="rate" type="number" min="0" defaultValue="-1" />
+        <input aria-label="Already entered" defaultValue="250" />
+        <CalculatorActions submitLabel="Calculate" onReset={() => undefined} />
+      </form>,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Calculate" }));
+
+    expect(screen.getByLabelText("Amount")).toHaveFocus();
+    expect(screen.getByRole("alert")).toHaveTextContent("Amount");
+    expect(screen.getByLabelText("Already entered")).toHaveValue("250");
+    expect(
+      screen.getByRole("button", { name: "Go to problem" }),
+    ).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText("Amount"), {
+      target: { value: "100" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Calculate" }));
+
+    expect(screen.getByLabelText("Rate")).toHaveFocus();
+    expect(screen.getByRole("alert")).toHaveTextContent("Rate");
+    expect(screen.getByLabelText("Already entered")).toHaveValue("250");
+  });
+
   it("renders three prioritized metrics plus shared repeat-use actions", () => {
     render(
       <PrimaryResults

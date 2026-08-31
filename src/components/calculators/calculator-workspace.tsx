@@ -19,6 +19,11 @@ type CalculatorActionCopy = {
   example: string;
   exampleApplied: string;
   exampleUnavailable: string;
+  validationTitle: string;
+  validationPrefix: string;
+  validationSuffix: string;
+  validationFallback: string;
+  fixProblem: string;
 };
 
 const CALCULATOR_ACTION_COPY: Record<"ko" | "en", CalculatorActionCopy> = {
@@ -30,6 +35,13 @@ const CALCULATOR_ACTION_COPY: Record<"ko" | "en", CalculatorActionCopy> = {
     exampleApplied: "빈 입력칸에 예시 값을 채웠습니다.",
     exampleUnavailable:
       "이 계산기에는 자동으로 채울 수 있는 예시 값이 없습니다.",
+    validationTitle: "입력값을 확인해 주세요.",
+    validationPrefix: "‘",
+    validationSuffix:
+      "’ 항목을 수정한 뒤 다시 계산해 주세요. 입력한 다른 값은 그대로 유지됩니다.",
+    validationFallback:
+      "첫 번째 잘못된 입력을 수정한 뒤 다시 계산해 주세요. 입력한 다른 값은 그대로 유지됩니다.",
+    fixProblem: "문제 입력으로 이동",
   },
   en: {
     reset: "Reset",
@@ -39,6 +51,13 @@ const CALCULATOR_ACTION_COPY: Record<"ko" | "en", CalculatorActionCopy> = {
     exampleApplied: "Example values filled into empty inputs.",
     exampleUnavailable:
       "This calculator has no example values that can be filled automatically.",
+    validationTitle: "Check the highlighted input.",
+    validationPrefix: "Fix “",
+    validationSuffix:
+      "” and calculate again. Your other entered values are preserved.",
+    validationFallback:
+      "Fix the first invalid input and calculate again. Your other entered values are preserved.",
+    fixProblem: "Go to problem",
   },
 };
 
@@ -84,6 +103,53 @@ function fillExampleValues(form: HTMLFormElement | null) {
   return candidates.length;
 }
 
+type ValidatableControl =
+  HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+
+type ValidationIssue = {
+  control: ValidatableControl;
+  label: string;
+};
+
+function isValidatableControl(element: Element): element is ValidatableControl {
+  return (
+    element instanceof HTMLInputElement ||
+    element instanceof HTMLSelectElement ||
+    element instanceof HTMLTextAreaElement
+  );
+}
+
+function getControlLabel(control: ValidatableControl) {
+  const ariaLabel = control.getAttribute("aria-label")?.trim();
+  if (ariaLabel) return ariaLabel;
+
+  const associatedLabel = control.labels?.[0]?.textContent?.trim();
+  if (associatedLabel) return associatedLabel;
+
+  const labelledBy = control.getAttribute("aria-labelledby")?.trim();
+  if (labelledBy) {
+    const label = labelledBy
+      .split(/\s+/)
+      .map((id) => document.getElementById(id)?.textContent?.trim() ?? "")
+      .filter(Boolean)
+      .join(" ");
+    if (label) return label;
+  }
+
+  return control.getAttribute("name")?.trim() ?? "";
+}
+
+function findFirstInvalidControl(form: HTMLFormElement | null) {
+  if (!form) return null;
+
+  return (
+    Array.from(form.querySelectorAll("input, select, textarea"))
+      .filter(isValidatableControl)
+      .find((control) => control.willValidate && !control.validity.valid) ??
+    null
+  );
+}
+
 export function CalculatorActions({
   submitLabel,
   onReset,
@@ -96,6 +162,28 @@ export function CalculatorActions({
   const locale = inferCalculatorActionLocale(submitLabel);
   const copy = CALCULATOR_ACTION_COPY[locale];
   const [exampleStatus, setExampleStatus] = useState("");
+  const [validationIssue, setValidationIssue] =
+    useState<ValidationIssue | null>(null);
+
+  function validateBeforeSubmit(form: HTMLFormElement | null) {
+    const invalidControl = findFirstInvalidControl(form);
+    if (!invalidControl) {
+      setValidationIssue(null);
+      return true;
+    }
+
+    const issue = {
+      control: invalidControl,
+      label: getControlLabel(invalidControl),
+    };
+    setValidationIssue(issue);
+    invalidControl.focus();
+    return false;
+  }
+
+  const validationMessage = validationIssue?.label
+    ? `${copy.validationPrefix}${validationIssue.label}${copy.validationSuffix}`
+    : copy.validationFallback;
 
   return (
     <div className={compact ? "mt-3" : "mt-6"}>
@@ -103,7 +191,15 @@ export function CalculatorActions({
         {copy.firstRun}
       </p>
       <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto_auto]">
-        <Button type="submit" size="lg" className="h-11 px-5">
+        <Button
+          type="submit"
+          size="lg"
+          className="h-11 px-5"
+          onClick={(event) => {
+            if (!validateBeforeSubmit(event.currentTarget.form))
+              event.preventDefault();
+          }}
+        >
           {submitLabel}
         </Button>
         <Button
@@ -125,11 +221,34 @@ export function CalculatorActions({
           variant="outline"
           size="lg"
           className="h-11 px-4"
-          onClick={onReset}
+          onClick={() => {
+            setValidationIssue(null);
+            onReset();
+          }}
         >
           {copy.reset}
         </Button>
       </div>
+      {validationIssue ? (
+        <div
+          className="mt-3 rounded-lg border border-destructive/30 bg-destructive/5 p-3 text-sm"
+          role="alert"
+        >
+          <p className="font-medium text-destructive">{copy.validationTitle}</p>
+          <p className="mt-1 leading-5 text-muted-foreground">
+            {validationMessage}
+          </p>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className="mt-2 min-h-11"
+            onClick={() => validationIssue.control.focus()}
+          >
+            {copy.fixProblem}
+          </Button>
+        </div>
+      ) : null}
       <p
         className="sr-only"
         role="status"
