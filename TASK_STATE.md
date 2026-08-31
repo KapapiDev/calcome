@@ -37,8 +37,8 @@ Remaining to Target: 0
 
 ## Active queue
 
-- [ ] UX-007 OPEN — Full-Site Accessibility and Visual Consistency Regression
-  - Scope: run the documented keyboard, focus-order, accessible-name, contrast, zoom, reduced-motion, touch-target, mobile-overflow, light/dark-mode, and shared visual-consistency regression across the current 100-calculator product; standardize only proven shared inconsistencies and preserve routes, calculation logic, SEO, and stored-data boundaries.
+- [ ] UX-048 OPEN — Shared Calculator Comparison Delta and Change-Summary Upgrade
+  - Scope: turn the existing previous-versus-current result comparison into clearer decision support by showing deterministic per-metric change direction and delta only where both displayed result values can be safely interpreted without calculator-specific policy assumptions; keep non-comparable formatted values as side-by-side text, preserve formulas/routes/SEO, and persist no calculator inputs or result history.
 
 ## Security gate
 
