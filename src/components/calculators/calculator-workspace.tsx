@@ -105,9 +105,7 @@ function findNearestCalculatorForm(node: HTMLElement) {
   return null;
 }
 
-function inferResultLocale(
-  metrics: readonly { label: string }[],
-): "ko" | "en" {
+function inferResultLocale(metrics: readonly { label: string }[]): "ko" | "en" {
   return metrics.some(({ label }) => /[가-힣]/.test(label)) ? "ko" : "en";
 }
 
