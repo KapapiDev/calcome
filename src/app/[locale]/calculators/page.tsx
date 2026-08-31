@@ -40,7 +40,9 @@ for (const category of calculatorDirectoryCategories) {
 
   for (const calculatorId of category.calculatorIds) {
     if (englishDirectoryCategoryByCalculatorId.has(calculatorId)) {
-      throw new Error(`Duplicate calculator directory category: ${calculatorId}`);
+      throw new Error(
+        `Duplicate calculator directory category: ${calculatorId}`,
+      );
     }
     englishDirectoryCategoryByCalculatorId.set(calculatorId, categoryName);
   }
