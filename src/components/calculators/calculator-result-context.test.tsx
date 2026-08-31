@@ -15,8 +15,8 @@ describe("CalculatorResultContext", () => {
     );
 
     expect(screen.getByText("결과를 이렇게 읽어보세요")).toBeInTheDocument();
-    expect(screen.getByText("가장 중요한 결과")).toBeInTheDocument();
-    expect(screen.getByText("월 납입액")).toBeInTheDocument();
+    expect(screen.getByText("가장 중요한 결과: 월 납입액")).toBeInTheDocument();
+    expect(screen.getByText("함께 확인할 값: 총 납입액")).toBeInTheDocument();
     expect(screen.getByText(/계산기별 가정·포함 범위/)).toBeInTheDocument();
   });
 
@@ -31,8 +31,8 @@ describe("CalculatorResultContext", () => {
     );
 
     expect(screen.getByText("How to read these results")).toBeInTheDocument();
-    expect(screen.getByText("Primary result")).toBeInTheDocument();
-    expect(screen.getByText("Monthly payment")).toBeInTheDocument();
+    expect(screen.getByText("Primary result: Monthly payment")).toBeInTheDocument();
+    expect(screen.getByText("Supporting value: Total paid")).toBeInTheDocument();
     expect(
       screen.getByText(/stated assumptions or included scope/),
     ).toBeInTheDocument();

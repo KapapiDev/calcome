@@ -42,19 +42,13 @@ export function CalculatorResultContext({
       <p className="mt-1 leading-5 text-muted-foreground">{copy.description}</p>
       <div className="mt-2 grid gap-2 sm:grid-cols-2">
         {featured ? (
-          <p className="rounded-md bg-background px-3 py-2">
-            <span className="block text-xs text-muted-foreground">
-              {copy.primary}
-            </span>
-            <span className="mt-0.5 block font-medium">{featured.label}</span>
+          <p className="rounded-md bg-background px-3 py-2 font-medium">
+            {copy.primary}: {featured.label}
           </p>
         ) : null}
         {supporting ? (
-          <p className="rounded-md bg-background px-3 py-2">
-            <span className="block text-xs text-muted-foreground">
-              {copy.context}
-            </span>
-            <span className="mt-0.5 block font-medium">{supporting.label}</span>
+          <p className="rounded-md bg-background px-3 py-2 font-medium">
+            {copy.context}: {supporting.label}
           </p>
         ) : null}
       </div>
