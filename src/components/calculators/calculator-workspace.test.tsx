@@ -84,6 +84,37 @@ describe("calculator workspace", () => {
     expect(screen.getByLabelText("Already entered")).toHaveValue("250");
   });
 
+  it("moves successful mobile completion directly to calculated results", async () => {
+    Element.prototype.scrollIntoView = vi.fn();
+    Object.defineProperty(window, "matchMedia", {
+      configurable: true,
+      value: vi.fn().mockReturnValue({ matches: true }),
+    });
+
+    render(
+      <div>
+        <form onSubmit={(event) => event.preventDefault()}>
+          <input aria-label="Amount" defaultValue="100" />
+          <CalculatorActions submitLabel="Calculate" onReset={() => undefined} />
+        </form>
+        <section>
+          <PrimaryResults
+            metrics={[
+              { label: "Result", value: "$10" },
+              { label: "Principal", value: "$100" },
+              { label: "Return", value: "$10" },
+            ]}
+          />
+        </section>
+      </div>,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Calculate" }));
+
+    await waitFor(() => expect(screen.getByTestId("primary-results")).toHaveFocus());
+    expect(Element.prototype.scrollIntoView).toHaveBeenCalled();
+  });
+
   it("renders three prioritized metrics plus shared repeat-use actions", () => {
     render(
       <PrimaryResults
