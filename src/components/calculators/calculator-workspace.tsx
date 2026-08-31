@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useRef, useState, useSyncExternalStore } from "react";
+import { type ReactNode, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 
@@ -73,20 +73,6 @@ const RESULT_ACTION_COPY: Record<"ko" | "en", ResultActionCopy> = {
   },
 };
 
-function subscribeToDocumentLocale() {
-  return () => {};
-}
-
-function getDocumentLocale(): "ko" | "en" {
-  return document.documentElement.lang.toLowerCase().startsWith("en")
-    ? "en"
-    : "ko";
-}
-
-function getServerLocale(): "ko" | "en" {
-  return "ko";
-}
-
 function getResultText(list: HTMLDListElement) {
   const rows = Array.from(list.children);
   const pairs = rows
@@ -119,6 +105,12 @@ function findNearestCalculatorForm(node: HTMLElement) {
   return null;
 }
 
+function inferResultLocale(
+  metrics: readonly { label: string }[],
+): "ko" | "en" {
+  return metrics.some(({ label }) => /[가-힣]/.test(label)) ? "ko" : "en";
+}
+
 export function PrimaryResults({
   metrics,
 }: {
@@ -126,11 +118,7 @@ export function PrimaryResults({
 }) {
   const resultsRef = useRef<HTMLDListElement>(null);
   const [actionStatus, setActionStatus] = useState("");
-  const locale = useSyncExternalStore(
-    subscribeToDocumentLocale,
-    getDocumentLocale,
-    getServerLocale,
-  );
+  const locale = inferResultLocale(metrics);
   const copy = RESULT_ACTION_COPY[locale];
 
   async function copyResult() {
