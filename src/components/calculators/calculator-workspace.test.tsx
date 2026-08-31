@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import {
+  CalculatorActions,
   PrimaryResults,
   compactCalculatorSettingsClass,
   calculatorSettingsClass,
@@ -15,6 +16,41 @@ describe("calculator workspace", () => {
     expect(calculatorWorkspaceClass).not.toContain("grid-cols-2");
     expect(calculatorSettingsClass).toContain("lg:sticky");
     expect(calculatorSettingsClass).not.toContain("md:sticky");
+  });
+
+  it("fills only empty numeric example placeholders and preserves user input", () => {
+    render(
+      <form>
+        <input aria-label="원금" value="500" readOnly />
+        <input aria-label="수익" placeholder="1,000" />
+        <input aria-label="설명" placeholder="직접 입력" />
+        <CalculatorActions submitLabel="계산하기" onReset={() => undefined} />
+      </form>,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "예시 입력" }));
+
+    expect(screen.getByRole("textbox", { name: "원금" })).toHaveValue("500");
+    expect(screen.getByRole("textbox", { name: "수익" })).toHaveValue("1,000");
+    expect(screen.getByRole("textbox", { name: "설명" })).toHaveValue("");
+    expect(screen.getByRole("status")).toHaveTextContent(
+      "빈 입력칸에 예시 값을 채웠습니다.",
+    );
+  });
+
+  it("localizes first-run, example, and reset actions for English forms", () => {
+    render(
+      <form>
+        <input aria-label="Amount" placeholder="1000" />
+        <CalculatorActions submitLabel="Calculate" onReset={() => undefined} />
+      </form>,
+    );
+
+    expect(screen.getByText(/New here\?/)).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Fill example" }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Reset" })).toBeInTheDocument();
   });
 
   it("renders three prioritized metrics plus shared repeat-use actions", () => {
