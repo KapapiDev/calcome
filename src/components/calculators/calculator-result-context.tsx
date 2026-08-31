@@ -39,9 +39,7 @@ export function CalculatorResultContext({
       <p id="result-context-title" className="font-medium">
         {copy.title}
       </p>
-      <p className="mt-1 leading-5 text-muted-foreground">
-        {copy.description}
-      </p>
+      <p className="mt-1 leading-5 text-muted-foreground">{copy.description}</p>
       <div className="mt-2 grid gap-2 sm:grid-cols-2">
         {featured ? (
           <p className="rounded-md bg-background px-3 py-2">
