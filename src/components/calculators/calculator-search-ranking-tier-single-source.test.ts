@@ -10,7 +10,9 @@ const source = readFileSync(
 describe("directory search ranking tier single-source contract", () => {
   it("keeps one shared scoring implementation", () => {
     expect(source.match(/function getSearchScore/g)).toHaveLength(1);
-    expect(source.match(/getSearchScore\(indexed, normalizedQuery\)/g)).toHaveLength(1);
+    expect(
+      source.match(/getSearchScore\(indexed, normalizedQuery\)/g),
+    ).toHaveLength(1);
   });
 
   it("preserves canonical tier scores and source-order ties", () => {
