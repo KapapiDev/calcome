@@ -3,8 +3,11 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
+  clearRecentCalculators,
   getRepeatUseSnapshot,
   recordRecentCalculator,
+  removeCalculatorFavorite,
+  removeRecentCalculator,
   subscribeRepeatUse,
   toggleCalculatorFavorite,
 } from "@/components/calculators/calculator-repeat-use";
@@ -33,6 +36,38 @@ describe("calculator repeat-use storage", () => {
     expect(getRepeatUseSnapshot().favorites).toEqual([]);
   });
 
+  it("removes favorites directly without changing recent history", () => {
+    toggleCalculatorFavorite("compound-interest");
+    toggleCalculatorFavorite("vat");
+    recordRecentCalculator("compound-interest");
+
+    removeCalculatorFavorite("compound-interest");
+
+    expect(getRepeatUseSnapshot()).toEqual({
+      favorites: ["vat"],
+      recent: ["compound-interest"],
+    });
+  });
+
+  it("removes one recent calculator or clears recent history without touching favorites", () => {
+    toggleCalculatorFavorite("compound-interest");
+    recordRecentCalculator("compound-interest");
+    recordRecentCalculator("vat");
+    recordRecentCalculator("salary");
+
+    removeRecentCalculator("vat");
+    expect(getRepeatUseSnapshot()).toEqual({
+      favorites: ["compound-interest"],
+      recent: ["salary", "compound-interest"],
+    });
+
+    clearRecentCalculators();
+    expect(getRepeatUseSnapshot()).toEqual({
+      favorites: ["compound-interest"],
+      recent: [],
+    });
+  });
+
   it("keeps storage failures non-fatal", () => {
     vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
       throw new Error("storage unavailable");
@@ -40,6 +75,9 @@ describe("calculator repeat-use storage", () => {
 
     expect(() => recordRecentCalculator("compound-interest")).not.toThrow();
     expect(() => toggleCalculatorFavorite("compound-interest")).not.toThrow();
+    expect(() => removeRecentCalculator("compound-interest")).not.toThrow();
+    expect(() => removeCalculatorFavorite("compound-interest")).not.toThrow();
+    expect(() => clearRecentCalculators()).not.toThrow();
   });
 
   it("shares one pair of global listeners across repeat-use subscribers", () => {

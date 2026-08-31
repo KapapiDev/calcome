@@ -152,11 +152,34 @@ export function toggleCalculatorFavorite(id: string) {
   return !isFavorite;
 }
 
+export function removeCalculatorFavorite(id: string) {
+  const current = getRepeatUseSnapshot().favorites;
+  writeIds(
+    FAVORITES_KEY,
+    current.filter((favoriteId) => favoriteId !== id),
+  );
+  notifyRepeatUseChange();
+}
+
 export function recordRecentCalculator(id: string) {
   const recent = getRepeatUseSnapshot().recent.filter(
     (recentId) => recentId !== id,
   );
   writeIds(RECENT_KEY, [id, ...recent].slice(0, MAX_RECENT_CALCULATORS));
+  notifyRepeatUseChange();
+}
+
+export function removeRecentCalculator(id: string) {
+  const recent = getRepeatUseSnapshot().recent;
+  writeIds(
+    RECENT_KEY,
+    recent.filter((recentId) => recentId !== id),
+  );
+  notifyRepeatUseChange();
+}
+
+export function clearRecentCalculators() {
+  writeIds(RECENT_KEY, []);
   notifyRepeatUseChange();
 }
 
@@ -197,19 +220,6 @@ export function CalculatorRepeatUseShortcuts({
 
   if (favorites.length === 0 && recent.length === 0) return null;
 
-  const groups = [
-    {
-      key: "favorites",
-      label: isEnglish ? "Favorites" : "즐겨찾기",
-      calculators: favorites,
-    },
-    {
-      key: "recent",
-      label: isEnglish ? "Recently used" : "최근 사용",
-      calculators: recent,
-    },
-  ].filter((group) => group.calculators.length > 0);
-
   return (
     <section
       className="mt-10 rounded-xl border bg-muted/30 p-4 sm:p-5"
@@ -227,26 +237,86 @@ export function CalculatorRepeatUseShortcuts({
         </p>
       </div>
       <div className="mt-4 space-y-4">
-        {groups.map((group) => (
-          <div key={group.key}>
+        {favorites.length > 0 ? (
+          <div>
             <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-              {group.label}
+              {isEnglish ? "Favorites" : "즐겨찾기"}
             </h3>
             <ul className="mt-2 flex flex-wrap gap-2">
-              {group.calculators.map((calculator) => (
-                <li key={calculator.id}>
+              {favorites.map((calculator) => (
+                <li
+                  key={calculator.id}
+                  className="flex min-h-11 items-stretch overflow-hidden rounded-lg border bg-background"
+                >
                   <Link
                     href={calculator.href}
                     onClick={() => recordRecentCalculator(calculator.id)}
-                    className="inline-flex min-h-11 items-center rounded-lg border bg-background px-3 text-sm font-medium transition hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/30 motion-reduce:transition-none"
+                    className="inline-flex items-center px-3 text-sm font-medium transition hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/30 motion-reduce:transition-none"
                   >
                     {calculator.name}
                   </Link>
+                  <button
+                    type="button"
+                    onClick={() => removeCalculatorFavorite(calculator.id)}
+                    aria-label={
+                      isEnglish
+                        ? `Remove ${calculator.name} from favorites`
+                        : `${calculator.name} 즐겨찾기에서 제거`
+                    }
+                    className="inline-flex min-h-11 min-w-11 items-center justify-center border-l text-base text-muted-foreground transition hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/30 motion-reduce:transition-none"
+                  >
+                    ×
+                  </button>
                 </li>
               ))}
             </ul>
           </div>
-        ))}
+        ) : null}
+
+        {recent.length > 0 ? (
+          <div>
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                {isEnglish ? "Recently used" : "최근 사용"}
+              </h3>
+              <button
+                type="button"
+                onClick={clearRecentCalculators}
+                className="inline-flex min-h-11 items-center rounded-lg px-2 text-xs font-medium text-muted-foreground transition hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/30 motion-reduce:transition-none"
+              >
+                {isEnglish ? "Clear recent" : "최근 사용 지우기"}
+              </button>
+            </div>
+            <ul className="mt-2 flex flex-wrap gap-2">
+              {recent.map((calculator) => (
+                <li
+                  key={calculator.id}
+                  className="flex min-h-11 items-stretch overflow-hidden rounded-lg border bg-background"
+                >
+                  <Link
+                    href={calculator.href}
+                    onClick={() => recordRecentCalculator(calculator.id)}
+                    className="inline-flex items-center px-3 text-sm font-medium transition hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/30 motion-reduce:transition-none"
+                  >
+                    {calculator.name}
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => removeRecentCalculator(calculator.id)}
+                    aria-label={
+                      isEnglish
+                        ? `Remove ${calculator.name} from recent calculators`
+                        : `${calculator.name} 최근 사용에서 제거`
+                    }
+                    className="inline-flex min-h-11 min-w-11 items-center justify-center border-l text-base text-muted-foreground transition hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/30 motion-reduce:transition-none"
+                  >
+                    ×
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
       </div>
     </section>
   );

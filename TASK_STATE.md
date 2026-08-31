@@ -38,11 +38,13 @@ Remaining to Target: 0
   - Previous-versus-current result comparison now adds deterministic increase/decrease/no-change direction and formatted absolute delta only when both displayed values contain one safely parseable numeric value with matching unit/currency decoration. Compound or differently formatted values remain side-by-side text, with no calculator-policy assumptions and no persisted input/result history.
 - [x] PERF-006 DONE — Post-100 Shared Calculator Interaction Performance Regression
   - Replaced per-card global repeat-use/storage listeners and repeated localStorage parsing with one shared external-store subscription path. Repeat-use state is parsed once per change, subscribers share one pair of global listeners, cross-tab updates remain supported, storage failures remain non-fatal, and focused regression coverage prevents listener fanout from scaling with the 100-card directory.
+- [x] UX-049 DONE — Calculator Favorites and Recent-Use Management Upgrade
+  - Repeat-use shortcuts now support removing individual recent items, clearing recent history, and removing favorites directly from the shortcut area with bilingual accessible controls. Favorite and recent state remains device-local by shared calculator ID only, storage failures remain non-fatal, and calculator inputs and financial results are never persisted by this feature.
 
 ## Active queue
 
-- [ ] UX-049 OPEN — Calculator Favorites and Recent-Use Management Upgrade
-  - Scope: turn the existing repeat-use shortcuts into a complete lightweight management flow by letting users remove individual recent items, clear recent history, and manage favorites directly from the shortcut area with bilingual accessible controls and deterministic empty-state behavior. Preserve shared calculator identity across locales, keep storage device-local, store no calculator inputs or financial results, and avoid adding accounts or server persistence.
+- [ ] UX-050 OPEN — Calculator Directory Return-Context and Navigation Continuity Upgrade
+  - Scope: preserve useful calculator-directory navigation context when users open a calculator and return, so repeat exploration does not force them to rediscover their prior category or search position. Keep Korean/English identity handling deterministic, avoid persisting calculator inputs or results, and preserve existing routes, SEO, accessibility, and privacy behavior.
 
 ## Security gate
 
