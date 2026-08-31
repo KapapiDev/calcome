@@ -95,7 +95,10 @@ describe("calculator workspace", () => {
       <div>
         <form onSubmit={(event) => event.preventDefault()}>
           <input aria-label="Amount" defaultValue="100" />
-          <CalculatorActions submitLabel="Calculate" onReset={() => undefined} />
+          <CalculatorActions
+            submitLabel="Calculate"
+            onReset={() => undefined}
+          />
         </form>
         <section>
           <PrimaryResults
@@ -111,7 +114,9 @@ describe("calculator workspace", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Calculate" }));
 
-    await waitFor(() => expect(screen.getByTestId("primary-results")).toHaveFocus());
+    await waitFor(() =>
+      expect(screen.getByTestId("primary-results")).toHaveFocus(),
+    );
     expect(Element.prototype.scrollIntoView).toHaveBeenCalled();
   });
 
