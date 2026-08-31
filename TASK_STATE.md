@@ -41,8 +41,8 @@ Remaining to Target: 0
 
 ## Active queue
 
-- [ ] UX-007 OPEN — Full-Site Accessibility and Visual Consistency Regression
-  - Scope: run keyboard, focus-order, accessible-name, contrast, zoom, reduced-motion, touch-target, mobile-overflow, light/dark-mode, and shared visual-consistency regression checks across the post-100 calculator site; standardize only reproducible shared inconsistencies while preserving formulas, routes, SEO, performance, and user-data boundaries.
+- [ ] UX-049 OPEN — Calculator Favorites and Recent-Use Management Upgrade
+  - Scope: turn the existing repeat-use shortcuts into a complete lightweight management flow by letting users remove individual recent items, clear recent history, and manage favorites directly from the shortcut area with bilingual accessible controls and deterministic empty-state behavior. Preserve shared calculator identity across locales, keep storage device-local, store no calculator inputs or financial results, and avoid adding accounts or server persistence.
 
 ## Security gate
 
