@@ -166,9 +166,11 @@ describe("calculator workspace", () => {
     expect(writeText).toHaveBeenCalledWith(
       "결과: 10%\n원금: 100원\n수익: 10원",
     );
-    expect(await screen.findByRole("status")).toHaveTextContent(
-      "결과를 복사했습니다.",
-    );
+    await waitFor(() => {
+      expect(screen.getByRole("status")).toHaveTextContent(
+        "결과를 복사했습니다.",
+      );
+    });
   });
 
   it("marks calculated results stale after input changes and clears the notice when results refresh", async () => {
