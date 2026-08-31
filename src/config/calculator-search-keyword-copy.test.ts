@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import {
   allPublishedCalculators,
   calculatorDirectoryCategories,
+  directorySearchCalculators,
 } from "./calculator-directory";
 import { englishCalculatorNames } from "./calculator-directory-calculator-copy";
 import { englishDirectoryCategoryCopy } from "./calculator-directory-copy";
@@ -67,6 +68,32 @@ describe("English calculator search keyword copy", () => {
         `Calculator ${calculator.id} must have an explicit English search category label`,
       ).toBeDefined();
     }
+  });
+
+  it("keeps English search category coverage exact for every searchable calculator", () => {
+    const searchableIds = directorySearchCalculators.map(
+      (calculator) => calculator.id,
+    );
+    const searchableIdSet = new Set(searchableIds);
+    const categorizedIds: string[] = [];
+
+    expect(searchableIdSet.size).toBe(searchableIds.length);
+
+    for (const category of calculatorDirectoryCategories) {
+      const categoryName = englishDirectoryCategoryCopy[category.id]?.name;
+      expect(
+        categoryName,
+        `Directory category ${category.id} must have explicit English copy before its calculators become searchable`,
+      ).toBeDefined();
+      expect(categoryName).toMatch(asciiOnly);
+
+      for (const calculatorId of category.calculatorIds) {
+        categorizedIds.push(calculatorId);
+      }
+    }
+
+    expect(new Set(categorizedIds).size).toBe(categorizedIds.length);
+    expect(new Set(categorizedIds)).toEqual(searchableIdSet);
   });
 
   it("uses the same normalization contract as directory search for English names and aliases", () => {
