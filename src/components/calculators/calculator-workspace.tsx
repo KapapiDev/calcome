@@ -104,9 +104,7 @@ function fillExampleValues(form: HTMLFormElement | null) {
 }
 
 type ValidatableControl =
-  | HTMLInputElement
-  | HTMLSelectElement
-  | HTMLTextAreaElement;
+  HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 
 type ValidationIssue = {
   control: ValidatableControl;
@@ -147,7 +145,8 @@ function findFirstInvalidControl(form: HTMLFormElement | null) {
   return (
     Array.from(form.querySelectorAll("input, select, textarea"))
       .filter(isValidatableControl)
-      .find((control) => control.willValidate && !control.validity.valid) ?? null
+      .find((control) => control.willValidate && !control.validity.valid) ??
+    null
   );
 }
 
