@@ -26,7 +26,7 @@ describe("SalaryRaiseCalculator", () => {
 
     await user.selectOptions(currency, "GBP");
     expect(window.localStorage.getItem("calcome.currency")).toBe("GBP");
-    expect(screen.getByText("£126,000.00")).toBeVisible();
+    expect(screen.getAllByText("£126,000.00")[0]).toBeVisible();
   });
 
   it("starts empty, calculates, and resets", () => {

@@ -21,7 +21,7 @@ describe("SalaryConversionCalculator", () => {
 
     await user.selectOptions(currency, "GBP");
     expect(window.localStorage.getItem("calcome.currency")).toBe("GBP");
-    expect(screen.getByText("£120,000.00")).toBeVisible();
+    expect(screen.getAllByText("£120,000.00")[0]).toBeVisible();
   });
 
   it("associates invalid salary with the alert and clears a stale result", async () => {
