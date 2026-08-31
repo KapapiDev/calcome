@@ -32,11 +32,13 @@ Remaining to Target: 0
   - Successful narrow-screen calculation now moves directly from the shared submit action to the calculated primary results and focuses the result region without adding URL state or storing calculator inputs. Existing invalid-input recovery remains in place, desktop behavior is unchanged, and shared recalculation still returns users to the nearest calculator form.
 - [x] UX-046 DONE — Shared Calculator Result Explanation and Assumption Clarity Upgrade
   - Shared primary results now include bilingual interpretation guidance that identifies the featured result hierarchy and reminds users to verify calculator-specific units, assumptions, and included scope without inventing policy rules or duplicating long-form content.
+- [x] UX-047 DONE — Shared Calculator Result Comparison and Decision Support Upgrade
+  - Shared result guidance now compares the current calculation with the immediately previous calculated result in the same page session, using matching result labels only. The comparison is bilingual, accessible, formula-agnostic, resets with uncalculated results, and does not persist calculator inputs or result history.
 
 ## Active queue
 
-- [ ] UX-047 OPEN — Shared Calculator Result Comparison and Decision Support Upgrade
-  - Scope: improve repeat-use decision support by helping users compare a recalculated result with the immediately previous result in-session where the shared result surface can do so without persisting calculator inputs or sensitive financial data. Keep the comparison ephemeral, bilingual, accessible, and formula-agnostic; preserve routes, SEO, calculation logic, and stored-data boundaries.
+- [ ] UX-048 OPEN — Shared Calculator Comparison Delta and Change-Summary Upgrade
+  - Scope: turn the existing previous-versus-current result comparison into clearer decision support by showing deterministic per-metric change direction and delta only where both displayed result values can be safely interpreted without calculator-specific policy assumptions; keep non-comparable formatted values as side-by-side text, preserve formulas/routes/SEO, and persist no calculator inputs or result history.
 
 ## Security gate
 

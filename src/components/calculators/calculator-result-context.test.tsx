@@ -41,4 +41,90 @@ describe("CalculatorResultContext", () => {
       screen.getByText(/stated assumptions or included scope/),
     ).toBeInTheDocument();
   });
+
+  it("compares only the immediately previous calculated result in-session", () => {
+    const { rerender } = render(
+      <CalculatorResultContext
+        metrics={[
+          { label: "결과", value: "100", featured: true },
+          { label: "총액", value: "1,000" },
+        ]}
+      />,
+    );
+
+    expect(screen.queryByTestId("result-comparison")).not.toBeInTheDocument();
+
+    rerender(
+      <CalculatorResultContext
+        metrics={[
+          { label: "결과", value: "120", featured: true },
+          { label: "총액", value: "1,200" },
+        ]}
+      />,
+    );
+
+    expect(screen.getByTestId("result-comparison")).toHaveTextContent(
+      "직전 계산과 비교",
+    );
+    expect(screen.getByTestId("result-comparison")).toHaveTextContent(
+      "직전: 100",
+    );
+    expect(screen.getByTestId("result-comparison")).toHaveTextContent(
+      "현재: 120",
+    );
+
+    rerender(
+      <CalculatorResultContext
+        metrics={[
+          { label: "결과", value: "150", featured: true },
+          { label: "총액", value: "1,500" },
+        ]}
+      />,
+    );
+
+    expect(screen.getByTestId("result-comparison")).toHaveTextContent(
+      "직전: 120",
+    );
+    expect(screen.getByTestId("result-comparison")).not.toHaveTextContent(
+      "직전: 100",
+    );
+  });
+
+  it("localizes comparison guidance and clears ephemeral history when results reset", () => {
+    const { rerender } = render(
+      <CalculatorResultContext
+        metrics={[
+          { label: "Result", value: "$100", featured: true },
+          { label: "Total", value: "$1,000" },
+        ]}
+      />,
+    );
+
+    rerender(
+      <CalculatorResultContext
+        metrics={[
+          { label: "Result", value: "$125", featured: true },
+          { label: "Total", value: "$1,250" },
+        ]}
+      />,
+    );
+
+    expect(screen.getByTestId("result-comparison")).toHaveTextContent(
+      "Compare with the previous calculation",
+    );
+    expect(screen.getByTestId("result-comparison")).toHaveTextContent(
+      "does not store your inputs",
+    );
+
+    rerender(
+      <CalculatorResultContext
+        metrics={[
+          { label: "Result", value: "-", featured: true },
+          { label: "Total", value: "-" },
+        ]}
+      />,
+    );
+
+    expect(screen.queryByTestId("result-comparison")).not.toBeInTheDocument();
+  });
 });
