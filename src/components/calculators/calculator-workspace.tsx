@@ -286,7 +286,8 @@ const RESULT_ACTION_COPY: Record<"ko" | "en", ResultActionCopy> = {
     staleTitle: "입력값이 변경되었습니다.",
     staleDescription:
       "표시된 결과는 이전 입력 기준입니다. 다시 계산하면 최신 값으로 갱신됩니다.",
-    staleCopyBlocked: "입력값이 바뀌었습니다. 최신 결과를 계산한 뒤 복사해 주세요.",
+    staleCopyBlocked:
+      "입력값이 바뀌었습니다. 최신 결과를 계산한 뒤 복사해 주세요.",
   },
   en: {
     copy: "Copy result",

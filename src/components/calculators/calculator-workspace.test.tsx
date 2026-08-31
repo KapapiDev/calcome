@@ -179,7 +179,9 @@ describe("calculator workspace", () => {
     );
 
     await waitFor(() =>
-      expect(screen.queryByTestId("stale-result-notice")).not.toBeInTheDocument(),
+      expect(
+        screen.queryByTestId("stale-result-notice"),
+      ).not.toBeInTheDocument(),
     );
   });
 
@@ -218,9 +220,11 @@ describe("calculator workspace", () => {
     fireEvent.click(screen.getByRole("button", { name: "Copy result" }));
     expect(writeText).not.toHaveBeenCalled();
     expect(
-      screen.getAllByRole("status").some((status) =>
-        status.textContent?.includes("Recalculate before copying"),
-      ),
+      screen
+        .getAllByRole("status")
+        .some((status) =>
+          status.textContent?.includes("Recalculate before copying"),
+        ),
     ).toBe(true);
   });
 
