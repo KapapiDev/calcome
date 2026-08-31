@@ -10,6 +10,7 @@ type IndexedCalculator = {
   normalizedName: string;
   normalizedDescription: string;
   normalizedKeywords: readonly string[];
+  normalizedPrimaryCategory: string | null;
   sourceIndex: number;
 };
 
@@ -62,7 +63,10 @@ function getSearchScore(indexed: IndexedCalculator, query: string) {
     return 4;
   if (indexed.normalizedKeywords.some((keyword) => keyword.includes(query)))
     return 5;
-  if (indexed.normalizedDescription.includes(query)) return 6;
+  if (indexed.normalizedPrimaryCategory === query) return 6;
+  if (indexed.normalizedPrimaryCategory?.startsWith(query)) return 7;
+  if (indexed.normalizedPrimaryCategory?.includes(query)) return 8;
+  if (indexed.normalizedDescription.includes(query)) return 9;
   return null;
 }
 
@@ -121,9 +125,13 @@ export function CalculatorSearch({
         normalizedName: normalizeSearchText(calculator.name),
         normalizedDescription: normalizeSearchText(calculator.description),
         normalizedKeywords: calculator.keywords.map(normalizeSearchText),
+        normalizedPrimaryCategory:
+          locale === "en"
+            ? normalizeSearchText(calculator.primaryCategory)
+            : null,
         sourceIndex,
       })),
-    [calculators],
+    [calculators, locale],
   );
   const normalizedQuery = normalizeSearchText(query);
   const results = useMemo(() => {
