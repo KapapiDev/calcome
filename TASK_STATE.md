@@ -5,149 +5,39 @@ Current Calculator Count: 100
 Target Calculator Count: 100
 Remaining to Target: 0
 
-## Active Queue
+## External waits
 
-- [x] SEO-001 DONE — Internal Linking Structure
-  - PR: T.B.D.
-- [x] SEO-002 DONE — Category Hub and Navigation SEO
-  - PR: #314
-- [x] SEO-003 DONE — Technical SEO and Indexability Audit
-  - PR: #325
-- [x] SEO-004 DONE — Calculator Content Depth and Trust Template
-  - PR: #326
-- [x] SEO-005 DONE — Search Intent and Metadata Optimization
-  - PR: #327
-- [x] SEO-006 DONE — Internal Linking and Topic Cluster Hubs
-  - PR: #328
-- [x] SEO-007 DONE — Live SEO Monitoring, Indexation, Crawl and Discovery Checks
-  - PR: #329
-- [x] SEO-008 DONE — Search Console Query and Cannibalization Feedback Loop
-  - PR: #330
-- [x] ADS-001 DONE — AdSense Policy and Site Trust Readiness Audit
-  - PR: #331
-- [x] ADS-002 DONE — Original Guide and Decision-Support Content Program
-  - PR: #332
-- [x] ADS-003 DONE — Ad Placement Architecture Without Layout Shift
-  - PR: #333
-- [x] ADS-004 DONE — Consent and Regional Privacy Controls
-  - PR: #334
-- [x] ADS-005 DONE — AdSense Integration and ads.txt
-  - PR: #335
 - [ ] OPS-ADS-001 EXTERNAL_WAIT — Production AdSense Activation Verification
-  - Verified 2026-08-29: Vercel team discovery succeeds; project deployment listing returns 403 and the current Vercel-bot deployment ID returns 404 through the direct deployment lookup. The public production site is reachable, but connected Gmail contains no AdSense account approval/site-status message or real publisher ID. The account-owner AdSense Sites/publisher-ID evidence required to safely activate Production is therefore unavailable through connected paths.
-  - Resume condition: authoritative AdSense account evidence exposes the intended `pub-################` publisher ID and `calcome.com` site status. Never infer, invent, or substitute an ID.
-  - This external account-owner wait is not a product/security failure and must not freeze unrelated repository development.
-- [x] UX-007 DONE — Full-Site Accessibility and Visual Consistency Regression
-  - PR: #337
-  - Final regression on latest post-AdSense UI found the newly added privacy controls below the shared 44px touch-target contract. The launcher, consent actions, reset action, and close action now preserve a 44px minimum target, with focused bilingual regression coverage. Existing calculation, routing, SEO, consent semantics, and the 100-calculator inventory are unchanged.
+  - Verified 2026-08-29: Vercel team discovery succeeds; project deployment listing returns 403 and the current Vercel-bot deployment ID returns 404 through the direct deployment lookup. The public production site is reachable, but connected Gmail contains no AdSense account approval/site-status message or real publisher ID.
+  - Resume condition: authoritative AdSense account evidence exposes the intended publisher ID and `calcome.com` site status. This account-owner wait is not a product/security failure and must not freeze unrelated repository development.
 - [ ] SEO-009 EXTERNAL_WAIT — Post-100 Calculator Search Performance and Coverage Review
-  - Verified 2026-08-29: Search Console sent current Soft 404 indexation notifications on 2026-08-23, while public Google crawl evidence on 2026-08-29 shows representative current and recently-added CalCome routes being crawled/indexed. A fresh query/page/country/device performance export is not available through connected sources, so no traffic metrics or reprioritization are inferred from stale data.
-  - Resume condition: authoritative current Search Console query×page, page, country, device, and Page Indexing evidence is available. See `docs/SEO_POST_100_REVIEW_2026-08-29.md`.
-  - This private-account evidence wait is not a confirmed product/indexability failure and must not freeze unrelated repository development.
-- [x] SEO-010 DONE — Public Indexability and Search Snippet Regression
-  - PR: #339
-  - Public search-title evidence reproduced duplicate branding on the retirement-pension / IRP calculator because both its page metadata and the shared root title template appended `CalCome`. Child metadata now owns only the descriptive title while the root template owns branding once; focused tests preserve the bilingual canonical and hreflang targets. See `docs/SEO_PUBLIC_INDEXABILITY_SNIPPET_REGRESSION_2026-08-29.md`.
-- [x] SEO-011 DONE — Structured Data and Rich-Result Regression
-  - PR: #340
-  - Reproduced a bilingual hub regression: `/` and `/calculators` emitted structured data, while equivalent `/en` and `/en/calculators` hubs omitted it. English home now emits the canonical WebSite entity and the English directory emits its own canonical CollectionPage with exactly 100 unique localized ListItems. Existing representative calculator-family JSON-LD guards remain intact. See `docs/SEO_STRUCTURED_DATA_RICH_RESULT_REGRESSION_2026-08-29.md`.
-- [x] SEO-012 DONE — Sitemap, Canonical and Hreflang Cross-Source Regression
-  - PR: #341
-  - Reproduced a cross-source contradiction where the sitemap and English metadata exposed `/en` as an indexable English canonical while `next.config.ts` permanently redirected `/en` to `/`. Removed only that conflicting locale redirect and added registry-driven regression coverage proving no localized sitemap canonical is also a locale redirect source, while preserving all 100 locale-less calculator redirects and the `/ko` compatibility redirect.
-- [x] SEO-013 DONE — Public Route Status and Soft-404 Regression
-  - PR: #342
-  - Repository route-contract coverage now proves all 100 published calculator canonicals are backed by real shared locale route modules, representative static/directory/info/not-found routes remain source-backed, and locale-less aliases only redirect to real canonical calculator pages. Public home and directory content were observable; ambiguous external fetch errors were not misclassified as product Soft 404s. See `docs/SEO_PUBLIC_ROUTE_STATUS_SOFT404_REGRESSION_2026-08-29.md`.
-- [x] SEO-014 DONE — Robots, Noindex and Crawl Directive Regression
-  - PR: #343
-  - Current repository sources have no crawl-directive contradiction: robots allows the canonical public surface, shared metadata opts public content into index/follow, sitemap entries stay on the canonical production host, and technical error/not-found surfaces stay out of the sitemap. Added cross-source regression coverage without changing valid crawl behavior. See `docs/SEO_ROBOTS_NOINDEX_CRAWL_DIRECTIVE_REGRESSION_2026-08-29.md`.
-- [x] UX-009 DONE — Global Locale Routing and English Surface Integrity
-  - PR: #269
-  - Actual GitHub history proves this task merged on 2026-08-24 with exact-head CI success. The stale OPEN reintroduced after SEO-014 is reconciled here instead of recreating the old implementation or branch.
-- [x] OPS-STATE-001 DONE — Unique Task Identity and State Ledger Guard
-  - PR: #344
-  - Adds a repository check requiring exactly one OPEN task and unique task IDs in TASK_STATE.md so a historically completed task cannot be reintroduced as a second ledger entry under the same ID.
-- [x] PERF-001 DONE — Core Web Vitals and Runtime Performance Regression
-  - PR: #345
-  - At the 100-calculator scale, directory search repeated full record joins and locale-aware normalization on every keystroke, while the English directory repeatedly scanned and relocalized the registry while rendering cards. Search now memoizes an invariant normalized index and the English directory reuses one module-level localized map, removing repeated per-interaction and per-render work without changing search semantics, routes, SEO, accessibility, calculator logic, or ad layout. See `docs/PERF_001_RUNTIME_PERFORMANCE_REGRESSION_2026-08-29.md`.
-- [x] PERF-002 DONE — Client Hydration and Bundle Boundary Regression
-  - Removed the redundant root `ThemeProvider` client wrapper while preserving the pre-paint theme initializer and isolated interactive client islands. A focused source-contract test prevents the global wrapper from returning. See `docs/PERF_002_CLIENT_HYDRATION_BUNDLE_BOUNDARY_2026-08-29.md`.
-- [x] PERF-003 DONE — Third-Party Script and Consent Loading Regression
-  - The shared root already kept the AdSense network script behind the validated Production runtime gate, so no third-party request is emitted while the authoritative publisher ID is absent. The reproducible remaining overhead was the privacy-control client island and regional classification hydrating on every page even when the ad runtime is disabled. The root now classifies region and mounts `PrivacyControl` only when AdSense is actually enabled; focused source-contract coverage preserves both the script gate and the consent-island gate without changing consent semantics, ad layout, or Production activation policy.
-- [x] PERF-004 DONE — Static Asset, Font and Image Loading Regression
-  - The app root carried both a generated 32x32 PNG icon used by the manifest and a separate 25,931-byte legacy `favicon.ico`. The redundant favicon asset is removed while `/icon` and `/apple-icon` remain the canonical app-icon paths. Focused regression coverage also prevents remote render-blocking font imports from entering the shared stylesheet. See `docs/PERF_004_STATIC_ASSET_FONT_IMAGE_LOADING_REGRESSION_2026-08-30.md`.
-- [x] PERF-005 DONE — Server Rendering and Cache Boundary Regression
-  - The root metadata pass and root layout independently read the same request headers and repeated locale/path/country derivation for each server render. A request-scoped React cache now memoizes that shared request context so both consumers reuse one header read while preserving intentional request-dependent locale routing, canonical metadata, AdSense gating, correctness, and consent-region behavior.
-- [x] UX-010 DONE — Contextual Related Calculators and Home Category Entry
-  - PR: #271
-  - Actual GitHub history proves UX-010 merged on 2026-08-25 at `faee8b3d23633c40b336424f8af78cdbe52086b5` after exact-head CI #916 succeeded. The source-driven category entry and localized related-calculator graph remain present on current main, so the stale OPEN state is reconciled without duplicate implementation work.
-- [x] OPS-STATE-002 DONE — Prevent Already-Merged Tasks From Reopening
-  - Extends the ledger guard after the same stale-reopen root cause recurred for UX-010: CI now runs task-state validation with full base history, and the validator rejects an OPEN task whose ID already begins a merged main-history task commit.
-- [x] UX-011 DONE — Calculator Search Relevance and Zero-Result Recovery
-  - Directory search now applies deterministic relevance tiers so exact calculator names rank first, exact abbreviations/keywords rank ahead of partial alias and description matches, and ties preserve canonical source order. Korean and English search chrome and zero-result recovery are localized, with a keyboard-operable clear action and focused bilingual regression coverage.
-- [x] UX-012 DONE — Directory Search State and Navigation Continuity Regression
-  - Directory search now restores the last in-tab query after result navigation, browser back/forward restoration, refresh-style remounts, and Korean/English directory switching through session-scoped search-only state. Search state never enters the URL, so it does not create duplicate indexable query URLs, and calculator input values are never persisted. Storage failure is non-fatal and the existing keyboard-accessible clear action removes persisted search state.
-- [x] UX-013 DONE — Directory Category and Search Interaction Regression
-  - At the 100-calculator scale, broad search terms could render an unbounded second wall of full calculator cards ahead of category navigation, duplicating directory cards and pushing category discovery far down the page. Search results now remain a compact, ranked, keyboard-accessible list capped at eight direct canonical entries with a localized total-count/refinement hint, while the complete 100-calculator inventory remains available exactly once in its category sections. Existing search persistence, bilingual routes, category labels, and zero-result recovery are preserved.
-- [x] UX-014 DONE — Directory Calculator Card Density and Entry Regression
-  - Shared directory cards now use a full-card 44px minimum entry target, constrained flex layout, explicit long-word wrapping, and a three-line description clamp so long Korean/English names, category labels, and descriptions stay scannable at small widths and 200% zoom. The shared card preserves each calculator's existing canonical href, and focused regression coverage guards the containment and route contract without duplicating inventory.
-- [x] UX-015 DONE — Directory Category Navigation and Anchor Continuity Regression
-  - Korean and English directory category navigation now share one source-driven horizontal scroller with mandatory snap points, contained horizontal overscroll, 44px category targets, and identical fragment IDs. Every category section is programmatically focusable with the existing scroll margin so fragment entry and keyboard/screen-reader focus land on the same section without changing calculator canonicals.
-- [x] UX-016 DONE — Directory Popular Calculator Locale Parity Regression
-  - Korean and English directories now expose the same source-driven popular-calculator shortcut set in the same pre-inventory position. English shortcuts are localized onto stable `/en/` calculator canonicals, preserve 44px minimum entry targets, and remain outside the published-calculator inventory region so the 100-calculator directory is not duplicated.
-- [x] UX-017 DONE — Directory Category Count Locale Parity Regression
-  - Korean and English category headings now expose the same source-driven calculator count beside each localized category description. The English heading layout mirrors the Korean flex-wrap structure so counts remain readable on narrow screens without changing category anchors, calculator canonicals, or the single 100-calculator inventory.
-- [x] UX-018 DONE — Directory Category Description Locale Parity Regression
-  - Every visible Korean directory category has non-empty source description coverage and a corresponding ordered English category-copy entry. Focused regression coverage preserves source order, identical category anchors/ARIA relationships, and the same compact wrapping/description layout across Korean and English without changing routes, calculator inventory, or calculation behavior.
-- [x] UX-019 DONE — Directory Category Name Locale Parity Regression
-  - Every visible Korean directory category heading now has a non-empty, explicit ASCII English category name in the same source order. Focused regression coverage proves every source category is covered by English copy and keeps the existing category anchors and single calculator inventory unchanged, so the existing fallback cannot leak a raw category ID for any published category.
-- [x] UX-020 DONE — Directory Category Navigation Name Locale Parity Regression
-  - Shared English category navigation now uses an explicit ordered localized name for every source category and no longer falls back to a raw category ID. Focused regression coverage preserves the existing fragment anchors, category counts, source order, and 44px touch-target contract.
-- [x] UX-021 DONE — Directory Category Navigation Count Locale Parity Regression
-  - Shared Korean and English category navigation now has focused regression coverage proving every category count comes from the same `category.calculators.length` source expression, without locale-specific or hard-coded count paths. Existing source order, localized names, fragment anchors, ARIA controls, and 44px touch targets remain unchanged.
-- [x] UX-022 DONE — Directory Category Navigation Accessibility Locale Parity Regression
-  - Korean and English category navigation preserve localized nav labels, shared fragment/ARIA-control linkage, visible keyboard focus, and programmatically focusable category targets. English category calculator lists now also expose localized accessible names, matching the Korean directory semantics without changing category names, counts, order, anchors, routes, or touch targets.
-- [x] UX-023 DONE — Directory English Category Copy Single-Source Regression
-  - English category names and descriptions now live in one shared directory-copy source consumed by both the category navigation and English directory sections. Focused regression coverage requires exact source-category coverage and prevents local duplicate name maps while preserving descriptions, counts, order, anchors, routes, and accessibility semantics.
-- [x] UX-024 DONE — Directory English Category Copy Coverage Guard
-  - The shared English category-copy module now validates itself against the source directory category order at module load. Missing, extra, reordered, blank-name, or blank-description entries fail immediately during repository validation, so future categories cannot silently ship without explicit English copy. Existing category names, descriptions, routes, counts, anchors, inventory, and accessibility behavior are unchanged.
-- [x] UX-025 DONE — Directory English Calculator Name Localization Regression
-  - Replaced mechanically generated English directory calculator names with an explicit source-driven localization contract covering all 100 published calculator IDs. Acronyms and punctuation now remain stable across visible cards, search, popular shortcuts, and structured data without changing routes, inventory, search semantics, or Korean copy.
-- [x] UX-026 DONE — Directory English Calculator Description Localization Regression
-  - Replaced the generic mechanically generated English directory descriptions with explicit calculator-specific copy covering all 100 published calculator IDs. The shared localization contract now feeds directory cards and search records while preserving category parity, canonical routes, the single 100-calculator inventory, Korean copy, and existing structured-data item identity.
-- [x] UX-027 DONE — Directory English Calculator Copy Coverage Guard
-  - Source-contract regression now requires every published calculator to have exactly one explicit, non-blank, ASCII English directory name and description and rejects raw-ID, mechanical-name, and former generic-description fallbacks. Routes, search ranking semantics, calculator logic, Korean copy, and the 100-calculator inventory remain unchanged.
-- [x] UX-028 DONE — Directory English Calculator Search Keyword Localization Regression
-  - English directory search now uses an explicit source-driven English alias map instead of filtering ASCII fragments out of Korean source keywords. Search names, descriptions, canonical routes, deterministic ranking rules, Korean search data, and the 100-calculator inventory remain unchanged.
-- [x] UX-029 DONE — Directory English Calculator Search Alias Coverage Guard
-  - English search aliases now have compile-time exact published-calculator coverage plus runtime validation for missing, blank, non-ASCII, duplicate, and unknown entries. Focused regression coverage verifies all 100 published calculators receive at least one deliberate English alias without changing ranking semantics, Korean search behavior, canonical routes, or inventory.
-- [x] UX-030 DONE — Directory English Calculator Search Alias Ranking Regression
-  - Focused search regression coverage now proves exact calculator-name matches stay ahead of explicit English alias matches, exact aliases outrank broader alias matches, tied alias scores preserve source order, and Korean records, canonical locale routes, and the 100-calculator inventory remain unchanged.
-- [x] UX-031 DONE — Directory English Calculator Search Alias Collision Guard
-  - English alias regression now rejects cross-calculator exact alias collisions and aliases that exactly shadow another published English calculator name. The guard keeps the current collision-free alias set deterministic without changing Korean search behavior, canonical routes, ranking semantics, or the 100-calculator inventory.
-- [x] UX-032 DONE — Directory English Calculator Search Alias Normalization Consistency Regression
-  - English calculator names and aliases now have focused regression coverage against the directory search normalization contract: NFKC compatibility normalization, shared case-folding, and surrounding-whitespace trimming. Representative full-width, uppercase, and padded aliases normalize identically without changing Korean search behavior, canonical routes, ranking semantics, or the 100-calculator inventory.
-- [x] UX-033 DONE — Directory English Calculator Search Alias Route Integrity Regression
-  - Focused regression coverage now proves every published calculator derives exactly one canonical `/en/` route from its owning Korean canonical, every English alias stays attached to that owning route, locale-less aliases are never used as search-result destinations, and the shared search component renders the calculator's localized `href` unchanged.
-- [x] UX-034 DONE — Directory English Calculator Search Category Localization Regression
-  - English directory search records now derive `primaryCategory` from the shared English directory category copy rather than inheriting Korean primary-category text. Module-level guards reject missing or duplicate category ownership, and focused coverage proves all 100 published calculators receive an explicit ASCII English category label while preserving canonical routes, ranking semantics, Korean search behavior, and inventory.
-- [x] UX-035 DONE — Directory English Calculator Search Category Coverage Guard
-  - Focused regression coverage now requires the searchable calculator ID set to exactly match the single-owner directory category assignment set, while the shared English category-copy guard still requires explicit non-blank copy for every category. Future searchable calculators or categories therefore cannot silently ship without an English category label; routes, ranking semantics, Korean search behavior, and the 100-calculator inventory remain unchanged.
-- [x] UX-036 DONE — Directory English Calculator Search Category Query Regression
-  - English directory search now matches localized English category names at lower relevance tiers than calculator names and explicit aliases, while category matching is disabled for Korean search so its existing semantics remain unchanged. Exact/prefix/contains category matches stay deterministic by source order, canonical routes and the 100-calculator inventory are unchanged.
-- [x] UX-037 DONE — Directory English Calculator Search Category Normalization Consistency Regression
-  - Focused regression coverage now proves localized English category indexing and user queries pass through the same NFKC compatibility normalization, case-folding, and trim contract, including representative full-width, uppercase, and padded category queries. Existing category ranking tiers, Korean search behavior, canonical routes, and the 100-calculator inventory remain unchanged.
-- [x] UX-038 DONE — Directory Search Normalization Single-Source Regression
-  - PR: #378
-  - Focused source-contract coverage proves calculator names, descriptions, aliases/keywords, localized English categories, and user queries all flow through the same NFKC/case-fold/trim normalizer, with exactly one direct normalization implementation remaining. Existing ranking tiers, Korean/English locale behavior, canonical routes, and the 100-calculator inventory are unchanged.
+  - Verified 2026-08-29: current Search Console notifications exist, but a fresh query/page/country/device performance export is unavailable through connected sources.
+  - Resume condition: authoritative current Search Console performance and Page Indexing evidence becomes available. This private-account wait is not a confirmed product/indexability failure.
+
+## Recent completed work
+
 - [x] UX-039 DONE — Directory Search Ranking Tier Single-Source Regression
-  - PR: #379
-  - Focused source-contract regression coverage requires one shared search-scoring path, preserves the existing 0–9 relevance tiers and source-order tie-breaker, and closes the current directory-search micro-regression sequence without changing search behavior, routes, locale behavior, calculator logic, or the 100-calculator inventory.
+  - PR: #379. Closed the directory-search micro-regression sequence and added the permanent task-granularity/product-progress rule.
 - [x] UX-040 DONE — Shared Calculator Result Actions and Repeat-Use Upgrade
-  - Shared `PrimaryResults` now adds bilingual recalculate, copy-result with accessible success/failure feedback, and localized calculator-directory continuation actions across every calculator family that uses the shared result layer. Calculation logic, result hierarchy, policy disclosures, routes, SEO, structured data, and persistence boundaries remain unchanged; focused regression coverage ships in this task.
+  - PR: #380. Added bilingual recalculate, copy-result feedback, and calculator-directory continuation actions.
 - [x] UX-041 DONE — Shared Calculator First-Run Guidance and Example Entry Upgrade
-  - Shared calculator actions now provide concise Korean/English first-run guidance and a safe example-entry action that fills only empty controls from existing numeric placeholders, never overwrites user-entered values, and never invents policy-sensitive data. Reset localization and accessible status feedback are included in the same shared product increment.
+  - PR: #381. Added bilingual first-run guidance, safe example filling, reset localization, and accessible feedback.
 - [x] UX-042 DONE — Shared Calculator Input Validation and Error Recovery Upgrade
-  - Shared calculator actions now detect the browser's existing reusable form constraints before submission, focus the first actionable invalid control, preserve every other entered value, and show visible bilingual recovery guidance with a direct return-to-problem action. Calculation formulas and policy values are unchanged; focused coverage includes required and numeric-bound failures.
+  - PR: #382. Added shared native-constraint recovery, first-invalid focus, and preservation of other entered values.
 - [x] UX-043 DONE — Shared Calculator Stale-Result and Recalculation Clarity Upgrade
-  - Shared results now detect calculator input changes after a calculated value is present, show a visible bilingual stale-result notice, and block copying outdated results until the displayed result refreshes. Result refreshes clear the stale state automatically through the shared result layer without changing formulas, stored user data, routes, SEO, or policy values; focused Korean/English accessibility coverage is included.
-- [ ] UX-044 OPEN — Calculator Favorites and Recent-Use Shortcuts
-  - Scope: improve repeat use by letting users deliberately favorite calculators and quickly return to recently used calculator routes from shared discovery surfaces. Persist only calculator identifiers and route-level recency locally, never calculator inputs or financial data; preserve bilingual canonical identity, accessibility, SEO, and private-browsing/storage-failure behavior.
+  - PR: #383. Added stale-result detection, bilingual warning, and stale-copy blocking without changing formulas or stored inputs.
+- [x] UX-044 DONE — Calculator Favorites and Recent-Use Shortcuts
+  - Shared directory cards now let users explicitly favorite calculators and record recently opened calculator IDs. Korean and English routes share the same calculator identity, repeat-use shortcuts are restored on the directory without storing calculator inputs or financial data, and storage/private-browsing failures remain non-fatal. The same task localizes the English card action and adds focused storage regression coverage.
+
+## Active queue
+
+- [ ] UX-045 OPEN — Shared Calculator Mobile Completion and Result Navigation Upgrade
+  - Scope: improve end-to-end completion on long calculator forms at narrow widths by reducing avoidable scrolling between inputs, submit actions, validation recovery, results, and recalculation. Consolidate representative calculator families into one user-visible mobile workflow task; preserve calculation logic, accessibility, routes, SEO, and stored-data boundaries.
+
+## Security gate
+
+- No confirmed unresolved production-impact high/critical dependency blocker is recorded on current `main`. New audit signals must still be classified under `AUTOMATION.md` before merge.
+
+## Ledger policy
+
+`TASK_STATE.md` intentionally keeps current waits, recent completed work, milestone counts, security state, and exactly one next OPEN task. Detailed historical task scope remains in `TASK_QUEUE.md` and Git history.
