@@ -2,11 +2,12 @@
 
 import { Star } from "lucide-react";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 import {
-  isCalculatorFavorite,
+  getCachedRepeatUseSnapshot,
   recordRecentCalculator,
+  subscribeRepeatUse,
   toggleCalculatorFavorite,
 } from "@/components/calculators/calculator-repeat-use";
 import type { PublishedCalculator } from "@/config/calculators";
@@ -19,22 +20,11 @@ export function CalculatorCard({
   categoryLabel?: string;
 }) {
   const isEnglish = calculator.href.startsWith("/en/");
-  const [favorite, setFavorite] = useState(false);
-  const refreshFavorite = useCallback(
-    () => setFavorite(isCalculatorFavorite(calculator.id)),
-    [calculator.id],
+  const favorite = useSyncExternalStore(
+    subscribeRepeatUse,
+    () => getCachedRepeatUseSnapshot().favorites.includes(calculator.id),
+    () => false,
   );
-
-  useEffect(() => {
-    const initialRefresh = window.setTimeout(refreshFavorite, 0);
-    window.addEventListener("calcome:repeat-use", refreshFavorite);
-    window.addEventListener("storage", refreshFavorite);
-    return () => {
-      window.clearTimeout(initialRefresh);
-      window.removeEventListener("calcome:repeat-use", refreshFavorite);
-      window.removeEventListener("storage", refreshFavorite);
-    };
-  }, [refreshFavorite]);
 
   const favoriteLabel = favorite
     ? isEnglish
@@ -70,7 +60,7 @@ export function CalculatorCard({
         aria-pressed={favorite}
         title={favoriteLabel}
         className="absolute right-2 top-2 inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg text-muted-foreground transition hover:bg-muted hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none"
-        onClick={() => setFavorite(toggleCalculatorFavorite(calculator.id))}
+        onClick={() => toggleCalculatorFavorite(calculator.id)}
       >
         <Star
           aria-hidden="true"
