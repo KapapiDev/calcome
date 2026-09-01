@@ -58,11 +58,13 @@ Remaining to Target: 0
   - Audited all 100 published calculator routes against the shared result path, added bilingual next-step decision guidance to calculated results and printable summaries, and added executable coverage preventing a published calculator from silently losing shared interpretation, assumption, or next-step guidance.
 - [x] SEO-020 DONE — Post-100 Content Trust Template Coverage Regression
   - Audited published calculator sources against the reusable content trust template, preserved deliberate calculator-specific adoption rather than blanket boilerplate, and added executable coverage for method, example, assumptions, limitations, semantic review dates, and complete future adoption.
+- [x] UX-053 DONE — Shared Calculator Scenario Presets and Side-by-Side Comparison Upgrade
+  - Shared result guidance can now capture up to three privacy-safe result-only scenarios in the current page session, compare each with the current result using matching labels and safe deltas, reject stale/duplicate capture, and clear the ephemeral scenarios on result reset without local storage, URL state, or formula changes.
 
 ## Active queue
 
-- [ ] UX-053 OPEN — Shared Calculator Scenario Presets and Side-by-Side Comparison Upgrade
-  - Scope: make repeated what-if calculations easier by adding privacy-safe in-session scenario capture and side-by-side comparison through the shared calculator result path, without persisting sensitive inputs, changing calculator formulas, or creating URL state.
+- [ ] UX-007 OPEN — Full-Site Accessibility and Visual Consistency Regression
+  - Scope: run the whole-site keyboard, focus, accessible-name, zoom, reduced-motion, touch-target, overflow, light/dark-mode, and shared visual consistency regression described in `TASK_QUEUE.md`, fixing only reproduced shared defects.
 
 ## Security gate
 

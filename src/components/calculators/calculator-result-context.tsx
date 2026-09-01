@@ -5,6 +5,8 @@ import { flushSync } from "react-dom";
 
 import { Button } from "@/components/ui/button";
 
+const MAX_SCENARIOS = 3;
+
 const COPY = {
   ko: {
     title: "결과를 이렇게 읽어보세요",
@@ -24,6 +26,19 @@ const COPY = {
     decreased: "감소",
     unchanged: "변화 없음",
     delta: "변화량",
+    scenarioAction: "현재 결과를 시나리오로 저장",
+    scenarioTitle: "시나리오 나란히 비교",
+    scenarioDescription:
+      "최대 3개의 계산 결과만 현재 페이지 세션에 임시로 보관해 현재 결과와 나란히 비교합니다. 입력값, URL, 브라우저 저장소에는 기록하지 않습니다.",
+    scenarioLabel: "시나리오",
+    scenarioSaved: "현재 결과를 시나리오로 저장했습니다.",
+    scenarioDuplicate: "같은 결과가 이미 시나리오에 있습니다.",
+    scenarioLimit: "시나리오는 최대 3개까지 저장할 수 있습니다.",
+    scenarioUnavailable: "먼저 계산을 완료한 뒤 시나리오로 저장해 주세요.",
+    scenarioStale:
+      "입력값이 변경되었습니다. 최신 결과를 다시 계산한 뒤 시나리오로 저장해 주세요.",
+    removeScenario: "시나리오 삭제",
+    clearScenarios: "모든 시나리오 지우기",
     printAction: "결과 인쇄·PDF 저장",
     printTitle: "CalCome 계산 결과 요약",
     printCalculator: "계산기",
@@ -52,6 +67,18 @@ const COPY = {
     decreased: "Decreased",
     unchanged: "No change",
     delta: "Delta",
+    scenarioAction: "Save current result as scenario",
+    scenarioTitle: "Compare scenarios side by side",
+    scenarioDescription:
+      "Keep up to three calculated result snapshots only for this page session and compare them with the current result. Inputs, URLs, and browser storage are not used.",
+    scenarioLabel: "Scenario",
+    scenarioSaved: "Current result saved as a scenario.",
+    scenarioDuplicate: "This result is already saved as a scenario.",
+    scenarioLimit: "You can keep up to three scenarios.",
+    scenarioUnavailable: "Complete a calculation before saving a scenario.",
+    scenarioStale: "Inputs changed. Recalculate before saving this scenario.",
+    removeScenario: "Remove scenario",
+    clearScenarios: "Clear all scenarios",
     printAction: "Print / Save PDF",
     printTitle: "CalCome result summary",
     printCalculator: "Calculator",
@@ -73,6 +100,8 @@ type ResultSnapshot = {
   key: string;
   pairs: { label: string; value: string }[];
 };
+
+type SavedScenario = ResultSnapshot & { id: number };
 
 type SnapshotState = {
   current: ResultSnapshot | null;
@@ -210,8 +239,11 @@ export function CalculatorResultContext({
   const currentSnapshot = createSnapshot(metrics);
   const contextRef = useRef<HTMLElement>(null);
   const printIdentityRef = useRef<HTMLSpanElement>(null);
+  const nextScenarioIdRef = useRef(1);
   const [printStatus, setPrintStatus] = useState("");
+  const [scenarioStatus, setScenarioStatus] = useState("");
   const [printPrepared, setPrintPrepared] = useState(false);
+  const [savedScenarios, setSavedScenarios] = useState<SavedScenario[]>([]);
   const [snapshotState, setSnapshotState] = useState<SnapshotState>(() => ({
     current: currentSnapshot,
     previous: null,
@@ -223,9 +255,43 @@ export function CalculatorResultContext({
       previous:
         currentSnapshot && snapshotState.current ? snapshotState.current : null,
     });
+    if (!currentSnapshot && savedScenarios.length > 0) setSavedScenarios([]);
   }
 
   const previousSnapshot = snapshotState.previous;
+
+  function hasStaleResult() {
+    return Boolean(
+      contextRef.current?.parentElement?.querySelector(
+        "[data-testid='stale-result-notice']",
+      ),
+    );
+  }
+
+  function saveScenario() {
+    if (!currentSnapshot) {
+      setScenarioStatus(copy.scenarioUnavailable);
+      return;
+    }
+    if (hasStaleResult()) {
+      setScenarioStatus(copy.scenarioStale);
+      return;
+    }
+    if (savedScenarios.some(({ key }) => key === currentSnapshot.key)) {
+      setScenarioStatus(copy.scenarioDuplicate);
+      return;
+    }
+    if (savedScenarios.length >= MAX_SCENARIOS) {
+      setScenarioStatus(copy.scenarioLimit);
+      return;
+    }
+
+    setSavedScenarios((scenarios) => [
+      ...scenarios,
+      { ...currentSnapshot, id: nextScenarioIdRef.current++ },
+    ]);
+    setScenarioStatus(copy.scenarioSaved);
+  }
 
   function printSummary() {
     if (!currentSnapshot) {
@@ -233,10 +299,7 @@ export function CalculatorResultContext({
       return;
     }
 
-    const staleNotice = contextRef.current?.parentElement?.querySelector(
-      "[data-testid='stale-result-notice']",
-    );
-    if (staleNotice) {
+    if (hasStaleResult()) {
       setPrintStatus(copy.printStale);
       return;
     }
@@ -323,6 +386,19 @@ export function CalculatorResultContext({
         </div>
         <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs leading-5 text-muted-foreground">
+            {copy.scenarioDescription}
+          </p>
+          <Button
+            type="button"
+            variant="outline"
+            className="min-h-11 shrink-0"
+            onClick={saveScenario}
+          >
+            {copy.scenarioAction}
+          </Button>
+        </div>
+        <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs leading-5 text-muted-foreground">
             {copy.printPrivacy}
           </p>
           <Button
@@ -334,13 +410,13 @@ export function CalculatorResultContext({
             {copy.printAction}
           </Button>
         </div>
+        {scenarioStatus ? (
+          <p role="status" aria-live="polite" className="mt-2 text-xs text-muted-foreground">
+            {scenarioStatus}
+          </p>
+        ) : null}
         {printStatus ? (
-          <p
-            className="sr-only"
-            role="status"
-            aria-live="polite"
-            aria-atomic="true"
-          >
+          <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
             {printStatus}
           </p>
         ) : null}
@@ -373,6 +449,95 @@ export function CalculatorResultContext({
               <strong>{copy.nextStepTitle}:</strong> {copy.nextStepDescription}
             </p>
             <p className="mt-2 text-xs leading-5">{copy.printPrivacy}</p>
+          </div>
+        </section>
+      ) : null}
+
+      {savedScenarios.length > 0 && currentSnapshot ? (
+        <section
+          className="mt-3 rounded-lg border bg-muted/30 p-3 text-sm"
+          data-testid="scenario-comparison"
+          aria-labelledby="scenario-comparison-title"
+        >
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <p id="scenario-comparison-title" className="font-medium">
+                {copy.scenarioTitle}
+              </p>
+              <p className="mt-1 leading-5 text-muted-foreground">
+                {copy.scenarioDescription}
+              </p>
+            </div>
+            <Button
+              type="button"
+              variant="ghost"
+              className="min-h-11 shrink-0"
+              onClick={() => {
+                setSavedScenarios([]);
+                setScenarioStatus("");
+              }}
+            >
+              {copy.clearScenarios}
+            </Button>
+          </div>
+          <div className="mt-3 grid gap-3">
+            {savedScenarios.map((scenario, index) => (
+              <div key={scenario.id} className="rounded-md bg-background p-3">
+                <div className="flex items-center justify-between gap-2">
+                  <p className="font-medium">
+                    {copy.scenarioLabel} {index + 1}
+                  </p>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    className="min-h-11"
+                    aria-label={`${copy.removeScenario} ${index + 1}`}
+                    onClick={() =>
+                      setSavedScenarios((scenarios) =>
+                        scenarios.filter(({ id }) => id !== scenario.id),
+                      )
+                    }
+                  >
+                    {copy.removeScenario}
+                  </Button>
+                </div>
+                <div className="mt-2 grid gap-2">
+                  {currentSnapshot.pairs.map((currentPair) => {
+                    const savedPair = scenario.pairs.find(
+                      ({ label }) => label === currentPair.label,
+                    );
+                    if (!savedPair) return null;
+                    const comparison = compareDisplayedValues(
+                      savedPair.value,
+                      currentPair.value,
+                    );
+
+                    return (
+                      <div
+                        key={currentPair.label}
+                        className="grid gap-2 rounded-md border px-3 py-2 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)]"
+                      >
+                        <p className="font-medium">{currentPair.label}</p>
+                        <p className="text-muted-foreground">
+                          {copy.scenarioLabel}: {savedPair.value}
+                        </p>
+                        <p className="text-muted-foreground">
+                          {copy.current}: {currentPair.value}
+                        </p>
+                        {comparison ? (
+                          <p className="text-muted-foreground sm:col-start-2 sm:col-span-2">
+                            <span className="font-medium text-foreground">
+                              {copy[comparison.direction]}
+                            </span>{" "}
+                            · {copy.delta}: {comparison.delta}
+                          </p>
+                        ) : null}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
           </div>
         </section>
       ) : null}
