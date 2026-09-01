@@ -1,6 +1,6 @@
 # CalCome Task State
 
-Last Updated: 2026-09-01
+Last Updated: 2026-09-02
 Current Calculator Count: 100
 Target Calculator Count: 100
 Remaining to Target: 0
@@ -36,11 +36,13 @@ Remaining to Target: 0
   - Current Next.js build output now reports shared and aggregate emitted client JavaScript sizes, largest chunks, and enforces deterministic gzip budgets for the root shared client runtime after every CI build without changing routes, calculations, hydration behavior, or public UX.
 - [x] PERF-008 DONE — Post-100 Route-Level Client Chunk and Heavy Dependency Regression
   - Build-time bundle auditing now separates non-shared route/feature JavaScript from the shared runtime, reports the largest non-shared chunks, and rejects any single route/feature chunk above a bounded 350 KiB gzip ceiling so unexpectedly eager heavy dependencies become an executable CI regression instead of silently expanding page cost.
+- [x] UX-055 DONE — Shared Favorites and Recent Calculator Navigation Upgrade
+  - Local favorites and bounded recent-calculator shortcuts retain deterministic calculator identity/order, direct stable routes, explicit removal semantics, and now remain discoverable with bilingual empty-state guidance back to the full calculator directory without storing financial inputs.
 
 ## Active queue
 
-- [ ] UX-055 OPEN — Shared Favorites and Recent Calculator Navigation Upgrade
-  - Scope: improve repeat use across the 100-calculator directory by letting users locally favorite calculators and revisit a bounded recent-calculator list without accounts or financial-input persistence. Keep only calculator identity/order in browser storage, preserve bilingual route identity, keyboard and screen-reader usability, mobile layout, SEO/indexability, and existing directory/search behavior.
+- [ ] UX-056 OPEN — Shared Favorites/Recent Management and Discoverability Upgrade
+  - Scope: strengthen favorites/recent management and discovery cues across shared calculator surfaces, including stale-storage recovery and clear management actions, without cluttering routes, changing calculator math, or weakening accessibility/SEO behavior.
 
 ## Security gate
 
