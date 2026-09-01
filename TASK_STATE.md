@@ -50,11 +50,13 @@ Remaining to Target: 0
   - Audited all 100 published calculator IDs against category discovery, shared directory/search hrefs, and bilingual sitemap entries. No source-level orphan was found; regression coverage now prevents future published calculators from silently losing those direct discovery paths.
 - [x] SEO-016 DONE — Post-100 Metadata and Structured-Data Coverage Regression
   - Added catalog-driven regression coverage requiring every published calculator route to retain deterministic title/description metadata, canonical plus ko/en/x-default alternates, and calculator JSON-LD through its route or feature contract.
+- [x] SEO-017 DONE — Post-100 Metadata Uniqueness and Search-Snippet Regression
+  - Added executable bilingual metadata regression coverage across all 100 published calculator routes so duplicate titles/descriptions and placeholder snippet copy fail CI while preserving existing canonical, hreflang, structured-data, and calculation behavior.
 
 ## Active queue
 
-- [ ] SEO-017 OPEN — Post-100 Metadata Uniqueness and Search-Snippet Regression
-  - Scope: audit published calculator metadata for duplicated or placeholder titles/descriptions across Korean and English routes, preserve canonical/hreflang behavior, and add deterministic regression coverage without rewriting policy-sensitive calculation content.
+- [ ] SEO-005 OPEN — Search Intent and Metadata Optimization
+  - Scope: use the 100-calculator metadata baseline to improve user-facing search intent alignment and snippet quality where evidence supports it, without fabricating search volume or changing policy-sensitive calculation rules.
 
 ## Security gate
 
