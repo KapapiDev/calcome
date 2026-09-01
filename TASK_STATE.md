@@ -25,26 +25,28 @@ Remaining to Target: 0
 - [x] UX-042 DONE — Shared Calculator Input Validation and Error Recovery Upgrade
   - PR: #382. Added shared native-constraint recovery, first-invalid focus, and preservation of other entered values.
 - [x] UX-043 DONE — Shared Calculator Stale-Result and Recalculation Clarity Upgrade
-  - PR: #383. Added stale-result detection, bilingual warning, and stale-copy blocking without changing formulas or stored inputs.
+  - PR: #383. Added stale-result detection, first-invalid recovery, and stale-copy blocking without changing formulas or stored inputs.
 - [x] UX-044 DONE — Calculator Favorites and Recent-Use Shortcuts
-  - Shared directory cards now let users explicitly favorite calculators and record recently opened calculator IDs. Korean and English routes share the same calculator identity, repeat-use shortcuts are restored on the directory without storing calculator inputs or financial data, and storage/private-browsing failures remain non-fatal. The same task localizes the English card action and adds focused storage regression coverage.
+  - Shared directory cards now let users explicitly favorite calculators and record recently opened calculator IDs. Korean and English routes share the same calculator identity, repeat-use shortcuts are restored on the directory without storing calculator inputs or financial data, and storage/private-browsing failures remain non-fatal.
 - [x] UX-045 DONE — Shared Calculator Mobile Completion and Result Navigation Upgrade
-  - Successful narrow-screen calculation now moves directly from the shared submit action to the calculated primary results and focuses the result region without adding URL state or storing calculator inputs. Existing invalid-input recovery remains in place, desktop behavior is unchanged, and shared recalculation still returns users to the nearest calculator form.
+  - Successful narrow-screen calculation now moves directly from the shared submit action to the calculated primary results and focuses the result region without adding URL state or storing calculator inputs.
 - [x] UX-046 DONE — Shared Calculator Result Explanation and Assumption Clarity Upgrade
-  - Shared primary results now include bilingual interpretation guidance that identifies the featured result hierarchy and reminds users to verify calculator-specific units, assumptions, and included scope without inventing policy rules or duplicating long-form content.
+  - Shared primary results now include bilingual interpretation guidance that identifies the featured result hierarchy and reminds users to verify calculator-specific units, assumptions, and included scope.
 - [x] UX-047 DONE — Shared Calculator Result Comparison and Decision Support Upgrade
-  - Shared result guidance now compares the current calculation with the immediately previous calculated result in the same page session, using matching result labels only. The comparison is bilingual, accessible, formula-agnostic, resets with uncalculated results, and does not persist calculator inputs or result history.
+  - Shared result guidance now compares the current calculation with the immediately previous calculated result in the same page session, using matching result labels only, without persisting calculator inputs or result history.
 - [x] UX-048 DONE — Shared Calculator Comparison Delta and Change-Summary Upgrade
-  - Previous-versus-current result comparison now adds deterministic increase/decrease/no-change direction and formatted absolute delta only when both displayed values contain one safely parseable numeric value with matching unit/currency decoration. Compound or differently formatted values remain side-by-side text, with no calculator-policy assumptions and no persisted input/result history.
+  - Previous-versus-current result comparison now adds deterministic increase/decrease/no-change direction and formatted absolute delta only when both displayed values contain one safely parseable numeric value with matching unit/currency decoration.
 - [x] PERF-006 DONE — Post-100 Shared Calculator Interaction Performance Regression
-  - Replaced per-card global repeat-use/storage listeners and repeated localStorage parsing with one shared external-store subscription path. Repeat-use state is parsed once per change, subscribers share one pair of global listeners, cross-tab updates remain supported, storage failures remain non-fatal, and focused regression coverage prevents listener fanout from scaling with the 100-card directory.
+  - Replaced per-card global repeat-use/storage listeners and repeated localStorage parsing with one shared external-store subscription path while preserving cross-tab updates and non-fatal storage behavior.
 - [x] UX-049 DONE — Calculator Favorites and Recent-Use Management Upgrade
-  - Repeat-use shortcuts now support removing individual recent items, clearing recent history, and removing favorites directly from the shortcut area with bilingual accessible controls. Favorite and recent state remains device-local by shared calculator ID only, storage failures remain non-fatal, and calculator inputs and financial results are never persisted by this feature.
+  - Repeat-use shortcuts now support removing individual recent items, clearing recent history, and removing favorites directly from the shortcut area with bilingual accessible controls.
+- [x] UX-050 DONE — Calculator Directory Return-Context and Navigation Continuity Upgrade
+  - Calculator-directory search text remains session-restored, and opening a calculator from either a directory card or search result now records only the current directory scroll position plus locale for a one-time same-locale return. Returning restores the prior category/search position without storing calculator inputs or results, and malformed, unavailable-storage, or cross-locale context fails safely.
 
 ## Active queue
 
-- [ ] UX-050 OPEN — Calculator Directory Return-Context and Navigation Continuity Upgrade
-  - Scope: preserve useful calculator-directory navigation context when users open a calculator and return, so repeat exploration does not force them to rediscover their prior category or search position. Keep Korean/English identity handling deterministic, avoid persisting calculator inputs or results, and preserve existing routes, SEO, accessibility, and privacy behavior.
+- [ ] UX-007 OPEN — Full-Site Accessibility and Visual Consistency Regression
+  - Scope: run whole-site keyboard, focus, accessible-name, contrast, zoom, reduced-motion, touch-target, mobile overflow, light/dark-mode, and shared visual-consistency regression checks; fix only proven inconsistencies and preserve current routes, SEO, calculations, data, and accessibility safety lines.
 
 ## Security gate
 

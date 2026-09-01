@@ -4,6 +4,7 @@ import { Star } from "lucide-react";
 import Link from "next/link";
 import { useSyncExternalStore } from "react";
 
+import { saveDirectoryReturnContext } from "@/components/calculators/calculator-directory-context";
 import {
   getCachedRepeatUseSnapshot,
   recordRecentCalculator,
@@ -38,7 +39,10 @@ export function CalculatorCard({
     <div className="group relative h-full min-w-0 overflow-hidden rounded-xl border bg-card transition-colors hover:border-primary/40 focus-within:ring-2 focus-within:ring-ring motion-reduce:transition-none">
       <Link
         href={calculator.href}
-        onClick={() => recordRecentCalculator(calculator.id)}
+        onClick={() => {
+          saveDirectoryReturnContext(isEnglish ? "en" : "ko");
+          recordRecentCalculator(calculator.id);
+        }}
         className="flex min-h-11 h-full min-w-0 overflow-hidden flex-col p-4 pr-14 focus-visible:outline-none"
       >
         <span className="max-w-full break-words text-xs font-semibold leading-5 tracking-wide text-primary">
