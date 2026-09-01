@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CalculatorCard } from "@/components/calculators/calculator-card";
 import { CalculatorSearch } from "@/components/calculators/calculator-search";
 import { DirectoryCategoryNavigation } from "@/components/calculators/directory-category-navigation";
+import { DirectoryFavorites } from "@/components/calculators/directory-favorites";
 import {
   allPublishedCalculators,
   directorySearchCalculators,
@@ -81,6 +82,7 @@ export default function CalculatorsPage() {
         </header>
 
         <DirectoryCategoryNavigation />
+        <DirectoryFavorites calculators={directorySearchCalculators} />
 
         <section className="mt-12" aria-labelledby="popular-calculators">
           <h2
