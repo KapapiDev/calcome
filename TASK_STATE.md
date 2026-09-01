@@ -55,8 +55,8 @@ Remaining to Target: 0
 
 ## Active queue
 
-- [ ] SEO-005 OPEN — Search Intent and Metadata Optimization
-  - Scope: use the 100-calculator metadata baseline to improve user-facing search intent alignment and snippet quality where evidence supports it, without fabricating search volume or changing policy-sensitive calculation rules.
+- [ ] SEO-018 OPEN — Post-100 Search Discovery Quality and Snippet Optimization
+  - Scope: use the completed 100-calculator metadata, structured-data, uniqueness, and internal-link baselines to improve clearly weak search-discovery copy and snippet usefulness as one bounded product-growth pass, preserving canonical/hreflang behavior and policy-sensitive calculation rules without fabricating search volume.
 
 ## Security gate
 
