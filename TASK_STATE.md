@@ -46,11 +46,13 @@ Remaining to Target: 0
   - Directory search now exposes deterministic full-directory recovery for zero or weak matches, preserves alias/category result ranking, supports Escape-to-clear without losing keyboard focus, and keeps the complete bilingual server-rendered directory as the recovery target instead of introducing client-only routes or duplicate URLs.
 - [x] UX-059 DONE — Shared Calculator Result Copy and Share Upgrade
   - Shared result context now offers bilingual result reuse through native sharing when available and clipboard fallback otherwise, sharing only the calculator identity and currently displayed result summary without persisting inputs or adding result URLs; stale results remain blocked until recalculation.
+- [x] UX-060 DONE — Shared Result Actions Accessibility and Mobile Regression
+  - Shared scenario, copy/share, print/PDF, and previous-result behavior now has one integrated regression covering deterministic keyboard order, 44px mobile action targets, narrow-screen stacking, polite status announcements, stale-result blocking, bilingual copy, and result-only privacy boundaries without changing formulas, storage, or routes.
 
 ## Active queue
 
-- [ ] UX-060 OPEN — Shared Result Actions Accessibility and Mobile Regression
-  - Scope: regression-test shared scenario, copy/share, print/PDF, and previous-result actions together for keyboard order, accessible status announcements, mobile touch targets and overflow, stale-result blocking, bilingual copy, and privacy-safe result-only behavior without changing formulas, persistent input storage, or public routes.
+- [ ] UX-061 OPEN — Favorite Ordering and Repeat-Use Shortcut Personalization Upgrade
+  - Scope: let users deliberately reorder device-local favorite calculator shortcuts with keyboard-accessible controls while preserving stable calculator IDs, localized canonical routes, bounded browser storage, recent-use independence, mobile touch targets, and zero persistence of calculator inputs or results. Keep the complete server-rendered directory and structured data unchanged, and bundle bilingual management/accessibility regression coverage into the same product task.
 
 ## Security gate
 
