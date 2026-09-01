@@ -109,9 +109,11 @@ export default function CalculatorsPage() {
         </section>
 
         <div
+          id="calculator-directory"
           role="region"
           aria-label="공개 계산기"
-          className="mt-16 space-y-16"
+          tabIndex={-1}
+          className="mt-16 scroll-mt-24 space-y-16 focus:outline-none"
         >
           {visibleCalculatorDirectory.map((category) => (
             <section
