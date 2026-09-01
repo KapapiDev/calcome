@@ -48,11 +48,13 @@ Remaining to Target: 0
   - Shared calculated-result guidance now offers a bilingual browser print/PDF summary containing calculator identity, current output labels and values, and existing interpretation/assumption guidance. Printing is blocked for missing or stale results, uses a print-only browser surface, and does not upload or automatically persist calculator inputs or results.
 - [x] SEO-015 DONE — Post-100 Internal-Link Reachability and Orphan-Route Regression
   - Audited all 100 published calculator IDs against category discovery, shared directory/search hrefs, and bilingual sitemap entries. No source-level orphan was found; regression coverage now prevents future published calculators from silently losing those direct discovery paths.
+- [x] SEO-016 DONE — Post-100 Metadata and Structured-Data Coverage Regression
+  - Added catalog-driven regression coverage requiring every published calculator route to retain deterministic title/description metadata, canonical plus ko/en/x-default alternates, and calculator JSON-LD through its route or feature contract.
 
 ## Active queue
 
-- [ ] SEO-016 OPEN — Post-100 Metadata and Structured-Data Coverage Regression
-  - Scope: audit all 100 bilingual calculator routes for deterministic title/description, canonical and hreflang coverage, and calculator structured-data presence from shared source contracts. Fix only proven coverage gaps, preserve route identity and policy-sensitive calculation logic, and avoid duplicating already-merged SEO-003 through SEO-014 work.
+- [ ] SEO-017 OPEN — Post-100 Metadata Uniqueness and Search-Snippet Regression
+  - Scope: audit published calculator metadata for duplicated or placeholder titles/descriptions across Korean and English routes, preserve canonical/hreflang behavior, and add deterministic regression coverage without rewriting policy-sensitive calculation content.
 
 ## Security gate
 
