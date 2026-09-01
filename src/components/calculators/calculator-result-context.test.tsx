@@ -254,4 +254,87 @@ describe("CalculatorResultContext", () => {
 
     expect(screen.queryByTestId("result-comparison")).not.toBeInTheDocument();
   });
+
+  it("captures privacy-safe in-session scenarios and compares them side by side", () => {
+    const { rerender } = render(
+      <CalculatorResultContext
+        metrics={[
+          { label: "Payment", value: "$100", featured: true },
+          { label: "Total", value: "$1,000" },
+        ]}
+      />,
+    );
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Save current result as scenario" }),
+    );
+    expect(screen.getByTestId("scenario-comparison")).toHaveTextContent(
+      "Scenario 1",
+    );
+    expect(screen.getByTestId("scenario-comparison")).toHaveTextContent(
+      "Inputs, URLs, and browser storage are not used",
+    );
+
+    rerender(
+      <CalculatorResultContext
+        metrics={[
+          { label: "Payment", value: "$125", featured: true },
+          { label: "Total", value: "$1,250" },
+        ]}
+      />,
+    );
+    const scenarios = screen.getByTestId("scenario-comparison");
+    expect(scenarios).toHaveTextContent("Scenario: $100");
+    expect(scenarios).toHaveTextContent("Current: $125");
+    expect(scenarios).toHaveTextContent("Increased · Delta: $25");
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Save current result as scenario" }),
+    );
+    expect(scenarios).toHaveTextContent("Scenario 2");
+  });
+
+  it("blocks stale or duplicate scenario capture and clears scenarios with reset", () => {
+    const { rerender } = render(
+      <div>
+        <CalculatorResultContext
+          metrics={[{ label: "Result", value: "$100", featured: true }]}
+        />
+      </div>,
+    );
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Save current result as scenario" }),
+    );
+    fireEvent.click(
+      screen.getByRole("button", { name: "Save current result as scenario" }),
+    );
+    expect(
+      screen.getByText("This result is already saved as a scenario."),
+    ).toBeInTheDocument();
+
+    rerender(
+      <div>
+        <CalculatorResultContext
+          metrics={[{ label: "Result", value: "$120", featured: true }]}
+        />
+        <div data-testid="stale-result-notice">Inputs changed.</div>
+      </div>,
+    );
+    fireEvent.click(
+      screen.getByRole("button", { name: "Save current result as scenario" }),
+    );
+    expect(
+      screen.getByText(/Recalculate before saving this scenario/),
+    ).toBeInTheDocument();
+
+    rerender(
+      <div>
+        <CalculatorResultContext
+          metrics={[{ label: "Result", value: "-", featured: true }]}
+        />
+      </div>,
+    );
+    expect(screen.queryByTestId("scenario-comparison")).not.toBeInTheDocument();
+  });
 });
