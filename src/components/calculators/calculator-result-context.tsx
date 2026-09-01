@@ -6,6 +6,7 @@ import { flushSync } from "react-dom";
 import { Button } from "@/components/ui/button";
 
 const MAX_SCENARIOS = 3;
+const MAX_SCENARIO_LABEL_LENGTH = 24;
 
 const COPY = {
   ko: {
@@ -31,6 +32,7 @@ const COPY = {
     scenarioDescription:
       "최대 3개의 계산 결과만 현재 페이지 세션에 임시로 보관해 현재 결과와 나란히 비교합니다. 입력값, URL, 브라우저 저장소에는 기록하지 않습니다.",
     scenarioLabel: "시나리오",
+    scenarioName: "시나리오 이름",
     scenarioSaved: "현재 결과를 시나리오로 저장했습니다.",
     scenarioDuplicate: "같은 결과가 이미 시나리오에 있습니다.",
     scenarioLimit: "시나리오는 최대 3개까지 저장할 수 있습니다.",
@@ -39,6 +41,11 @@ const COPY = {
       "입력값이 변경되었습니다. 최신 결과를 다시 계산한 뒤 시나리오로 저장해 주세요.",
     removeScenario: "시나리오 삭제",
     clearScenarios: "모든 시나리오 지우기",
+    useAsBaseline: "기준으로 선택",
+    baselineSelected: "비교 기준",
+    baselineTitle: "선택한 기준 시나리오와 비교",
+    baselineDescription:
+      "선택한 시나리오를 기준으로 현재 결과의 같은 항목을 비교합니다. 기준과 이름은 이 페이지를 벗어나면 사라지며 입력값은 저장하지 않습니다.",
     printAction: "결과 인쇄·PDF 저장",
     printTitle: "CalCome 계산 결과 요약",
     printCalculator: "계산기",
@@ -72,6 +79,7 @@ const COPY = {
     scenarioDescription:
       "Keep up to three calculated result snapshots only for this page session and compare them with the current result. Inputs, URLs, and browser storage are not used.",
     scenarioLabel: "Scenario",
+    scenarioName: "Scenario name",
     scenarioSaved: "Current result saved as a scenario.",
     scenarioDuplicate: "This result is already saved as a scenario.",
     scenarioLimit: "You can keep up to three scenarios.",
@@ -79,6 +87,11 @@ const COPY = {
     scenarioStale: "Inputs changed. Recalculate before saving this scenario.",
     removeScenario: "Remove scenario",
     clearScenarios: "Clear all scenarios",
+    useAsBaseline: "Use as baseline",
+    baselineSelected: "Comparison baseline",
+    baselineTitle: "Compare with the selected baseline scenario",
+    baselineDescription:
+      "Use the selected saved scenario as the baseline for the current result. The baseline and local label disappear when you leave this page, and inputs are not stored.",
     printAction: "Print / Save PDF",
     printTitle: "CalCome result summary",
     printCalculator: "Calculator",
@@ -101,7 +114,7 @@ type ResultSnapshot = {
   pairs: { label: string; value: string }[];
 };
 
-type SavedScenario = ResultSnapshot & { id: number };
+type SavedScenario = ResultSnapshot & { id: number; label: string };
 
 type SnapshotState = {
   current: ResultSnapshot | null;
@@ -244,6 +257,9 @@ export function CalculatorResultContext({
   const [scenarioStatus, setScenarioStatus] = useState("");
   const [printPrepared, setPrintPrepared] = useState(false);
   const [savedScenarios, setSavedScenarios] = useState<SavedScenario[]>([]);
+  const [baselineScenarioId, setBaselineScenarioId] = useState<number | null>(
+    null,
+  );
   const [snapshotState, setSnapshotState] = useState<SnapshotState>(() => ({
     current: currentSnapshot,
     previous: null,
@@ -255,10 +271,15 @@ export function CalculatorResultContext({
       previous:
         currentSnapshot && snapshotState.current ? snapshotState.current : null,
     });
-    if (!currentSnapshot && savedScenarios.length > 0) setSavedScenarios([]);
+    if (!currentSnapshot && savedScenarios.length > 0) {
+      setSavedScenarios([]);
+      setBaselineScenarioId(null);
+    }
   }
 
   const previousSnapshot = snapshotState.previous;
+  const baselineScenario =
+    savedScenarios.find(({ id }) => id === baselineScenarioId) ?? null;
 
   function hasStaleResult() {
     return Boolean(
@@ -286,11 +307,51 @@ export function CalculatorResultContext({
       return;
     }
 
+    const scenarioNumber = savedScenarios.length + 1;
     setSavedScenarios((scenarios) => [
       ...scenarios,
-      { ...currentSnapshot, id: nextScenarioIdRef.current++ },
+      {
+        ...currentSnapshot,
+        id: nextScenarioIdRef.current++,
+        label: `${copy.scenarioLabel} ${scenarioNumber}`,
+      },
     ]);
     setScenarioStatus(copy.scenarioSaved);
+  }
+
+  function updateScenarioLabel(id: number, label: string) {
+    const boundedLabel = label.slice(0, MAX_SCENARIO_LABEL_LENGTH);
+    setSavedScenarios((scenarios) =>
+      scenarios.map((scenario) =>
+        scenario.id === id ? { ...scenario, label: boundedLabel } : scenario,
+      ),
+    );
+  }
+
+  function selectBaseline(id: number) {
+    if (!currentSnapshot) {
+      setScenarioStatus(copy.scenarioUnavailable);
+      return;
+    }
+    if (hasStaleResult()) {
+      setScenarioStatus(copy.scenarioStale);
+      return;
+    }
+    setBaselineScenarioId(id);
+    setScenarioStatus("");
+  }
+
+  function removeScenario(id: number) {
+    setSavedScenarios((scenarios) =>
+      scenarios.filter((scenario) => scenario.id !== id),
+    );
+    if (baselineScenarioId === id) setBaselineScenarioId(null);
+  }
+
+  function clearScenarios() {
+    setSavedScenarios([]);
+    setBaselineScenarioId(null);
+    setScenarioStatus("");
   }
 
   function printSummary() {
@@ -326,6 +387,10 @@ export function CalculatorResultContext({
       cleanup();
       setPrintStatus(copy.printUnavailable);
     }
+  }
+
+  function scenarioDisplayLabel(scenario: SavedScenario, index: number) {
+    return scenario.label.trim() || `${copy.scenarioLabel} ${index + 1}`;
   }
 
   return (
@@ -481,72 +546,146 @@ export function CalculatorResultContext({
               type="button"
               variant="ghost"
               className="min-h-11 shrink-0"
-              onClick={() => {
-                setSavedScenarios([]);
-                setScenarioStatus("");
-              }}
+              onClick={clearScenarios}
             >
               {copy.clearScenarios}
             </Button>
           </div>
           <div className="mt-3 grid gap-3">
-            {savedScenarios.map((scenario, index) => (
-              <div key={scenario.id} className="rounded-md bg-background p-3">
-                <div className="flex items-center justify-between gap-2">
-                  <p className="font-medium">
-                    {copy.scenarioLabel} {index + 1}
-                  </p>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    className="min-h-11"
-                    aria-label={`${copy.removeScenario} ${index + 1}`}
-                    onClick={() =>
-                      setSavedScenarios((scenarios) =>
-                        scenarios.filter(({ id }) => id !== scenario.id),
-                      )
-                    }
-                  >
-                    {copy.removeScenario}
-                  </Button>
-                </div>
-                <div className="mt-2 grid gap-2">
-                  {currentSnapshot.pairs.map((currentPair) => {
-                    const savedPair = scenario.pairs.find(
-                      ({ label }) => label === currentPair.label,
-                    );
-                    if (!savedPair) return null;
-                    const comparison = compareDisplayedValues(
-                      savedPair.value,
-                      currentPair.value,
-                    );
+            {savedScenarios.map((scenario, index) => {
+              const displayLabel = scenarioDisplayLabel(scenario, index);
+              const isBaseline = scenario.id === baselineScenarioId;
 
-                    return (
-                      <div
-                        key={currentPair.label}
-                        className="grid gap-2 rounded-md border px-3 py-2 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)]"
+              return (
+                <div key={scenario.id} className="rounded-md bg-background p-3">
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                    <label className="min-w-0 flex-1">
+                      <span className="sr-only">
+                        {copy.scenarioName} {index + 1}
+                      </span>
+                      <input
+                        type="text"
+                        value={scenario.label}
+                        maxLength={MAX_SCENARIO_LABEL_LENGTH}
+                        aria-label={`${copy.scenarioName} ${index + 1}`}
+                        className="min-h-11 w-full rounded-md border bg-background px-3 py-2 font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        onChange={(event) =>
+                          updateScenarioLabel(scenario.id, event.target.value)
+                        }
+                      />
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      <Button
+                        type="button"
+                        variant={isBaseline ? "secondary" : "outline"}
+                        className="min-h-11"
+                        aria-pressed={isBaseline}
+                        onClick={() => selectBaseline(scenario.id)}
                       >
-                        <p className="font-medium">{currentPair.label}</p>
-                        <p className="text-muted-foreground">
-                          {copy.scenarioLabel}: {savedPair.value}
-                        </p>
-                        <p className="text-muted-foreground">
-                          {copy.current}: {currentPair.value}
-                        </p>
-                        {comparison ? (
-                          <p className="text-muted-foreground sm:col-start-2 sm:col-span-2">
-                            <span className="font-medium text-foreground">
-                              {copy[comparison.direction]}
-                            </span>{" "}
-                            · {copy.delta}: {comparison.delta}
+                        {isBaseline
+                          ? copy.baselineSelected
+                          : copy.useAsBaseline}
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        className="min-h-11"
+                        aria-label={`${copy.removeScenario} ${displayLabel}`}
+                        onClick={() => removeScenario(scenario.id)}
+                      >
+                        {copy.removeScenario}
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="mt-2 grid gap-2">
+                    {currentSnapshot.pairs.map((currentPair) => {
+                      const savedPair = scenario.pairs.find(
+                        ({ label }) => label === currentPair.label,
+                      );
+                      if (!savedPair) return null;
+                      const comparison = compareDisplayedValues(
+                        savedPair.value,
+                        currentPair.value,
+                      );
+
+                      return (
+                        <div
+                          key={currentPair.label}
+                          className="grid gap-2 rounded-md border px-3 py-2 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)]"
+                        >
+                          <p className="font-medium">{currentPair.label}</p>
+                          <p className="text-muted-foreground">
+                            {displayLabel}: {savedPair.value}
                           </p>
-                        ) : null}
-                      </div>
-                    );
-                  })}
+                          <p className="text-muted-foreground">
+                            {copy.current}: {currentPair.value}
+                          </p>
+                          {comparison ? (
+                            <p className="text-muted-foreground sm:col-start-2 sm:col-span-2">
+                              <span className="font-medium text-foreground">
+                                {copy[comparison.direction]}
+                              </span>{" "}
+                              · {copy.delta}: {comparison.delta}
+                            </p>
+                          ) : null}
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
+          </div>
+        </section>
+      ) : null}
+
+      {baselineScenario && currentSnapshot ? (
+        <section
+          className="mt-3 rounded-lg border bg-muted/30 p-3 text-sm"
+          data-testid="scenario-baseline-comparison"
+          aria-labelledby="scenario-baseline-title"
+        >
+          <p id="scenario-baseline-title" className="font-medium">
+            {copy.baselineTitle}:{" "}
+            {baselineScenario.label.trim() || copy.scenarioLabel}
+          </p>
+          <p className="mt-1 leading-5 text-muted-foreground">
+            {copy.baselineDescription}
+          </p>
+          <div className="mt-3 grid gap-2">
+            {currentSnapshot.pairs.map((currentPair) => {
+              const baselinePair = baselineScenario.pairs.find(
+                ({ label }) => label === currentPair.label,
+              );
+              if (!baselinePair) return null;
+              const comparison = compareDisplayedValues(
+                baselinePair.value,
+                currentPair.value,
+              );
+
+              return (
+                <div
+                  key={currentPair.label}
+                  className="grid gap-2 rounded-md bg-background px-3 py-2 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)] sm:items-center"
+                >
+                  <p className="font-medium">{currentPair.label}</p>
+                  <p className="text-muted-foreground">
+                    {copy.baselineSelected}: {baselinePair.value}
+                  </p>
+                  <p className="text-muted-foreground">
+                    {copy.current}: {currentPair.value}
+                  </p>
+                  {comparison ? (
+                    <p className="text-muted-foreground sm:col-start-2 sm:col-span-2">
+                      <span className="font-medium text-foreground">
+                        {copy[comparison.direction]}
+                      </span>{" "}
+                      · {copy.delta}: {comparison.delta}
+                    </p>
+                  ) : null}
+                </div>
+              );
+            })}
           </div>
         </section>
       ) : null}
