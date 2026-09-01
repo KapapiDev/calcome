@@ -44,11 +44,13 @@ Remaining to Target: 0
   - Calculator-directory search text remains session-restored, and opening a calculator from either a directory card or search result now records only the current directory scroll position plus locale for a one-time same-locale return. Returning restores the prior category/search position without storing calculator inputs or results, and malformed, unavailable-storage, or cross-locale context fails safely.
 - [x] UX-051 DONE — Calculator Directory Search Result Expansion and Long-List Discovery Upgrade
   - Broad directory searches keep the initial eight-result render but can now reveal deterministically ranked matches in bounded, bilingual, keyboard-accessible batches. Changing the query resets the visible cap without persisting calculator inputs or results.
+- [x] UX-052 DONE — Shared Calculator Printable Result Summary Upgrade
+  - Shared calculated-result guidance now offers a bilingual browser print/PDF summary containing calculator identity, current output labels and values, and existing interpretation/assumption guidance. Printing is blocked for missing or stale results, uses a print-only browser surface, and does not upload or automatically persist calculator inputs or results.
 
 ## Active queue
 
-- [ ] UX-052 OPEN — Shared Calculator Printable Result Summary Upgrade
-  - Scope: add a shared bilingual print/save-friendly result summary that makes calculated outputs, calculator identity, and existing assumption/context guidance usable outside the live page without uploading or automatically persisting calculator inputs or results. Preserve calculator formulas, policy-source boundaries, canonical routes, accessibility, and mobile behavior.
+- [ ] UX-007 OPEN — Full-Site Accessibility and Visual Consistency Regression
+  - Scope: run the existing cataloged full-site keyboard, focus, accessible-name, contrast, zoom, reduced-motion, touch-target, mobile-overflow, light/dark-mode, shared-component, directory, navigation, and representative calculator-family regression. Standardize only proven inconsistencies and preserve formulas, routes, SEO, policy-source boundaries, and stored-data safety.
 
 ## Security gate
 

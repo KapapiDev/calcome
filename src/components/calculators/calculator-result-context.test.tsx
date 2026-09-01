@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
 
 import { CalculatorResultContext } from "./calculator-result-context";
 
@@ -40,6 +40,68 @@ describe("CalculatorResultContext", () => {
     expect(
       screen.getByText(/stated assumptions or included scope/),
     ).toBeInTheDocument();
+  });
+
+  it("offers a bilingual browser-print summary with calculator identity and no persistence", () => {
+    const print = vi.fn();
+    Object.defineProperty(window, "print", {
+      configurable: true,
+      value: print,
+    });
+
+    render(
+      <main>
+        <h1>Compound Interest Calculator</h1>
+        <CalculatorResultContext
+          metrics={[
+            { label: "Final balance", value: "$1,250", featured: true },
+            { label: "Interest earned", value: "$250" },
+          ]}
+        />
+      </main>,
+    );
+
+    const summary = screen.getByTestId("print-result-summary");
+    expect(summary).toHaveTextContent("CalCome result summary");
+    expect(summary).toHaveTextContent(
+      "Calculator: Compound Interest Calculator",
+    );
+    expect(summary).toHaveTextContent("Final balance");
+    expect(summary).toHaveTextContent("$1,250");
+    expect(summary).toHaveTextContent("Interpretation and assumptions");
+    expect(summary).toHaveTextContent("without uploading or automatically saving");
+
+    fireEvent.click(screen.getByRole("button", { name: "Print / Save PDF" }));
+
+    expect(document.body.dataset.calcomeResultPrinting).toBe("true");
+    expect(print).toHaveBeenCalledTimes(1);
+
+    window.dispatchEvent(new Event("afterprint"));
+    expect(document.body.dataset.calcomeResultPrinting).toBeUndefined();
+  });
+
+  it("blocks printing when the displayed result is stale", () => {
+    const print = vi.fn();
+    Object.defineProperty(window, "print", {
+      configurable: true,
+      value: print,
+    });
+
+    render(
+      <div>
+        <CalculatorResultContext
+          metrics={[{ label: "Result", value: "$100", featured: true }]}
+        />
+        <div data-testid="stale-result-notice">Inputs changed.</div>
+      </div>,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Print / Save PDF" }));
+
+    expect(print).not.toHaveBeenCalled();
+    expect(screen.getByRole("status")).toHaveTextContent(
+      "Recalculate before printing this summary.",
+    );
   });
 
   it("compares only the immediately previous calculated result in-session", () => {
