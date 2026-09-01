@@ -1,12 +1,16 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 
 import { directorySearchCalculators } from "@/config/calculator-directory";
 
 import { CalculatorSearch } from "./calculator-search";
 
 describe("CalculatorSearch recovery", () => {
+  beforeEach(() => {
+    window.sessionStorage.clear();
+  });
+
   it("offers a deterministic full-directory target when no result matches", async () => {
     const user = userEvent.setup();
     render(<CalculatorSearch calculators={directorySearchCalculators} />);
