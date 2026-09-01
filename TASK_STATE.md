@@ -57,8 +57,8 @@ Remaining to Target: 0
 
 ## Active queue
 
-- [ ] UX-007 OPEN — Full-Site Accessibility and Visual Consistency Regression
-  - Scope: run the existing cataloged full-site keyboard, focus, accessible-name, zoom, reduced-motion, touch-target, mobile-overflow, light/dark-mode, and shared visual-consistency regression after the 100-calculator and post-100 SEO baselines, fixing only proven shared defects without changing calculator formulas or policy-sensitive values.
+- [ ] SEO-019 OPEN — Post-100 Calculator Content Helpfulness and Explanation Coverage Regression
+  - Scope: audit all published calculator detail pages for deterministic bilingual explanatory content that tells users what the result means, key assumptions or limits, and how to use the output without duplicating metadata boilerplate or changing calculator formulas and policy-sensitive values.
 
 ## Security gate
 
