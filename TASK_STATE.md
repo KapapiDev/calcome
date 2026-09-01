@@ -49,8 +49,8 @@ Remaining to Target: 0
 
 ## Active queue
 
-- [ ] UX-007 OPEN — Full-Site Accessibility and Visual Consistency Regression
-  - Scope: run the existing cataloged full-site keyboard, focus, accessible-name, contrast, zoom, reduced-motion, touch-target, mobile-overflow, light/dark-mode, shared-component, directory, navigation, and representative calculator-family regression. Standardize only proven inconsistencies and preserve formulas, routes, SEO, policy-source boundaries, and stored-data safety.
+- [ ] SEO-015 OPEN — Post-100 Internal-Link Reachability and Orphan-Route Regression
+  - Scope: audit deterministic internal-link reachability across the 100-calculator bilingual inventory from home, directory/category discovery, and shared calculator continuation surfaces. Fix only proven orphaned or unnecessarily deep calculator routes while preserving canonical URLs, sitemap/hreflang behavior, formulas, policy-source boundaries, and stored-data safety.
 
 ## Security gate
 
