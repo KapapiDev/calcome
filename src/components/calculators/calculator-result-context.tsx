@@ -245,7 +245,9 @@ export function CalculatorResultContext({
 
     const cleanup = () => {
       delete document.body.dataset.calcomeResultPrinting;
-      setPrintPrepared(false);
+      flushSync(() => {
+        setPrintPrepared(false);
+      });
     };
     window.addEventListener("afterprint", cleanup, { once: true });
 
@@ -317,14 +319,16 @@ export function CalculatorResultContext({
             {copy.printAction}
           </Button>
         </div>
-        <p
-          className="sr-only"
-          role="status"
-          aria-live="polite"
-          aria-atomic="true"
-        >
-          {printStatus}
-        </p>
+        {printStatus ? (
+          <p
+            className="sr-only"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            {printStatus}
+          </p>
+        ) : null}
       </section>
 
       {printPrepared ? (
