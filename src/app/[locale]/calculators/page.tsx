@@ -6,6 +6,7 @@ import CalculatorsPage from "@/app/calculators/page";
 import { CalculatorCard } from "@/components/calculators/calculator-card";
 import { CalculatorSearch } from "@/components/calculators/calculator-search";
 import { DirectoryCategoryNavigation } from "@/components/calculators/directory-category-navigation";
+import { DirectoryFavorites } from "@/components/calculators/directory-favorites";
 import { getEnglishCalculatorDescription } from "@/config/calculator-description-copy";
 import { getEnglishCalculatorName } from "@/config/calculator-directory-calculator-copy";
 import {
@@ -183,6 +184,10 @@ export default async function LocalizedCalculatorsPage({
         </header>
 
         <DirectoryCategoryNavigation locale="en" />
+        <DirectoryFavorites
+          calculators={englishDirectoryCalculators}
+          locale="en"
+        />
 
         <section className="mt-12" aria-labelledby="popular-calculators-en">
           <h2
