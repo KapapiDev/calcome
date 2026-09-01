@@ -40,11 +40,13 @@ Remaining to Target: 0
   - Local favorites and bounded recent-calculator shortcuts retain deterministic calculator identity/order, direct stable routes, explicit removal semantics, and now remain discoverable with bilingual empty-state guidance back to the full calculator directory without storing financial inputs.
 - [x] UX-056 DONE — Shared Favorites/Recent Management and Discoverability Upgrade
   - Repeat-use shortcuts now self-heal retired or malformed stored calculator IDs against the current public registry, expose clear favorites/recent/all management actions, and show a compact shortcut count while continuing to store only calculator identity/order on the device.
+- [x] UX-057 DONE — Favorites-First Directory Discovery Upgrade
+  - The bilingual calculator directory now surfaces device-local favorites ahead of popular/category sections when favorites exist, preserves favorite order and stable localized routes, records recent use on shortcut navigation, and leaves the complete server-rendered 100-calculator directory and structured data unchanged.
 
 ## Active queue
 
-- [ ] UX-057 OPEN — Favorites-First Directory Discovery Upgrade
-  - Scope: make locally favorited calculators easier to rediscover from the shared 100-calculator directory without accounts or financial-input persistence. Reuse the existing calculator-ID-only browser state, keep search/category ordering deterministic for non-favorites, preserve bilingual route identity and server-rendered indexable directory content, and add only compact discovery cues or filtering that remain keyboard, screen-reader, mobile, and empty-state friendly.
+- [ ] UX-058 OPEN — Directory Search Recovery and Keyboard Discovery Upgrade
+  - Scope: improve recovery when directory search has no or weak matches, keep alias/category discovery clear, and ensure keyboard and screen-reader users can move from search results back into the deterministic full directory without introducing client-only indexability or route duplication.
 
 ## Security gate
 
