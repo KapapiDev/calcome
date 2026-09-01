@@ -3,8 +3,11 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
+  clearCalculatorFavorites,
   clearRecentCalculators,
+  clearRepeatUseShortcuts,
   getRepeatUseSnapshot,
+  reconcileRepeatUseCalculators,
   recordRecentCalculator,
   removeCalculatorFavorite,
   removeRecentCalculator,
@@ -49,6 +52,19 @@ describe("calculator repeat-use storage", () => {
     });
   });
 
+  it("clears favorites independently from recent history", () => {
+    toggleCalculatorFavorite("compound-interest");
+    toggleCalculatorFavorite("vat");
+    recordRecentCalculator("salary");
+
+    clearCalculatorFavorites();
+
+    expect(getRepeatUseSnapshot()).toEqual({
+      favorites: [],
+      recent: ["salary"],
+    });
+  });
+
   it("removes one recent calculator or clears recent history without touching favorites", () => {
     toggleCalculatorFavorite("compound-interest");
     recordRecentCalculator("compound-interest");
@@ -68,6 +84,53 @@ describe("calculator repeat-use storage", () => {
     });
   });
 
+  it("clears all repeat-use shortcuts in one management action", () => {
+    toggleCalculatorFavorite("compound-interest");
+    recordRecentCalculator("vat");
+
+    clearRepeatUseShortcuts();
+
+    expect(getRepeatUseSnapshot()).toEqual({ favorites: [], recent: [] });
+  });
+
+  it("removes stale calculator ids while preserving valid order", () => {
+    window.localStorage.setItem(
+      "calcome:favorite-calculators:v1",
+      JSON.stringify(["retired", "compound-interest", "vat"]),
+    );
+    window.localStorage.setItem(
+      "calcome:recent-calculators:v1",
+      JSON.stringify(["salary", "retired", "vat"]),
+    );
+
+    expect(
+      reconcileRepeatUseCalculators(["compound-interest", "vat", "salary"]),
+    ).toBe(true);
+    expect(getRepeatUseSnapshot()).toEqual({
+      favorites: ["compound-interest", "vat"],
+      recent: ["salary", "vat"],
+    });
+    expect(
+      reconcileRepeatUseCalculators(["compound-interest", "vat", "salary"]),
+    ).toBe(false);
+  });
+
+  it("keeps malformed stale storage non-fatal and recoverable", () => {
+    window.localStorage.setItem("calcome:favorite-calculators:v1", "{broken");
+    window.localStorage.setItem(
+      "calcome:recent-calculators:v1",
+      JSON.stringify([null, "", "salary", "salary", 42]),
+    );
+
+    expect(() =>
+      reconcileRepeatUseCalculators(["compound-interest", "salary"]),
+    ).not.toThrow();
+    expect(getRepeatUseSnapshot()).toEqual({
+      favorites: [],
+      recent: ["salary"],
+    });
+  });
+
   it("keeps storage failures non-fatal", () => {
     vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
       throw new Error("storage unavailable");
@@ -78,6 +141,8 @@ describe("calculator repeat-use storage", () => {
     expect(() => removeRecentCalculator("compound-interest")).not.toThrow();
     expect(() => removeCalculatorFavorite("compound-interest")).not.toThrow();
     expect(() => clearRecentCalculators()).not.toThrow();
+    expect(() => clearCalculatorFavorites()).not.toThrow();
+    expect(() => clearRepeatUseShortcuts()).not.toThrow();
   });
 
   it("shares one pair of global listeners across repeat-use subscribers", () => {
