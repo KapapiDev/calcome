@@ -47,8 +47,8 @@ Remaining to Target: 0
 
 ## Active queue
 
-- [ ] UX-007 OPEN — Full-Site Accessibility and Visual Consistency Regression
-  - Scope: run the post-100 keyboard, focus-order, accessible-name, contrast, zoom, reduced-motion, touch-target, mobile-overflow, light/dark-mode, and shared visual-consistency regression across the directory, bilingual navigation, related-calculator paths, and published calculator families. Fix only proven shared regressions and preserve canonical/public-route integrity.
+- [ ] UX-052 OPEN — Shared Calculator Printable Result Summary Upgrade
+  - Scope: add a shared bilingual print/save-friendly result summary that makes calculated outputs, calculator identity, and existing assumption/context guidance usable outside the live page without uploading or automatically persisting calculator inputs or results. Preserve calculator formulas, policy-source boundaries, canonical routes, accessibility, and mobile behavior.
 
 ## Security gate
 
