@@ -48,11 +48,13 @@ Remaining to Target: 0
   - Shared result context now offers bilingual result reuse through native sharing when available and clipboard fallback otherwise, sharing only the calculator identity and currently displayed result summary without persisting inputs or adding result URLs; stale results remain blocked until recalculation.
 - [x] UX-060 DONE — Shared Result Actions Accessibility and Mobile Regression
   - Shared scenario, copy/share, print/PDF, and previous-result behavior now has one integrated regression covering deterministic keyboard order, 44px mobile action targets, narrow-screen stacking, polite status announcements, stale-result blocking, bilingual copy, and result-only privacy boundaries without changing formulas, storage, or routes.
+- [x] UX-061 DONE — Favorite Ordering and Repeat-Use Shortcut Personalization Upgrade
+  - Device-local favorite shortcuts now support deliberate earlier/later ordering with bilingual keyboard-accessible 44px controls, preserve stable calculator-ID-only storage and localized routes, leave recent history independent, and retain the complete server-rendered directory and structured data unchanged.
 
 ## Active queue
 
-- [ ] UX-061 OPEN — Favorite Ordering and Repeat-Use Shortcut Personalization Upgrade
-  - Scope: let users deliberately reorder device-local favorite calculator shortcuts with keyboard-accessible controls while preserving stable calculator IDs, localized canonical routes, bounded browser storage, recent-use independence, mobile touch targets, and zero persistence of calculator inputs or results. Keep the complete server-rendered directory and structured data unchanged, and bundle bilingual management/accessibility regression coverage into the same product task.
+- [ ] UX-062 OPEN — Repeat-Use Personalization Cross-Surface Consistency Regression
+  - Scope: regression-test that device-local favorite ordering stays consistent between repeat-use shortcuts and favorites-first directory discovery across bilingual routes, stale-ID reconciliation, removal/clear actions, keyboard interaction, and mobile layouts without persisting calculator inputs/results or changing server-rendered directory/structured-data coverage.
 
 ## Security gate
 
