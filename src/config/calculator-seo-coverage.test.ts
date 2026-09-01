@@ -142,8 +142,8 @@ function snippetQualityIssue(
   const minimumLength = locale === "ko" ? 24 : 48;
   const purposePattern =
     locale === "ko"
-      ? /(?:계산|확인|비교|추정|예상|환산|분석|구합니다|알아봅니다)/
-      : /\b(?:calculate|calculates|check|compare|compares|convert|converts|estimate|estimates|find|forecast|project|projects|see|show|shows)\b/i;
+      ? /(?:계산|확인|비교|추정|예상|환산|분석|구합니다|알아봅니다|더하거나|역산합니다)/
+      : /\b(?:add|calculate|calculates|check|compare|compares|convert|converts|estimate|estimates|extract|find|forecast|project|projects|see|show|shows|turn)\b/i;
 
   if (normalizedDescription.length < minimumLength) {
     return `description shorter than ${minimumLength} characters`;
