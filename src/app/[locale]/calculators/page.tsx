@@ -215,9 +215,11 @@ export default async function LocalizedCalculatorsPage({
         </section>
 
         <div
+          id="calculator-directory"
           role="region"
           aria-label="Published calculators"
-          className="mt-16 space-y-16"
+          tabIndex={-1}
+          className="mt-16 scroll-mt-24 space-y-16 focus:outline-none"
         >
           {visibleCalculatorDirectory.map((category) => {
             const copy = englishDirectoryCategoryCopy[category.id];

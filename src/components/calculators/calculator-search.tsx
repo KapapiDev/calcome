@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import {
   consumeDirectoryReturnContext,
@@ -18,18 +18,28 @@ type IndexedCalculator = {
   sourceIndex: number;
 };
 
+type RankedSearchResult = {
+  calculator: DirectorySearchCalculator;
+  score: number;
+};
+
 type SearchLocale = "ko" | "en";
 
 const DIRECTORY_SEARCH_STORAGE_KEY = "calcome:calculator-directory-search";
 const MAX_VISIBLE_SEARCH_RESULTS = 8;
+const WEAK_MATCH_SCORE = 6;
 
 const searchCopy = {
   ko: {
     label: "계산기 검색",
     placeholder: "예: 대출, 복리, CAGR",
     empty: "검색어와 일치하는 계산기가 없습니다.",
-    recovery: "검색어를 지우고 아래 카테고리에서 계산기를 찾아보세요.",
+    recovery: "검색어를 지우거나 전체 카테고리에서 계산기를 찾아보세요.",
+    weakMatch:
+      "정확한 이름·별칭 일치가 적습니다. 결과와 함께 전체 카테고리도 확인해 보세요.",
     clear: "검색어 지우기",
+    browseAll: "전체 계산기 보기",
+    escapeHint: "Esc 키로 검색어를 지울 수 있습니다.",
     resultsLabel: "계산기 검색 결과",
     resultCount: (total: number, visible: number) =>
       total > visible
@@ -43,8 +53,12 @@ const searchCopy = {
     label: "Search calculators",
     placeholder: "e.g. loan, compound interest, CAGR",
     empty: "No calculators match your search.",
-    recovery: "Clear the search and browse the calculator categories below.",
+    recovery: "Clear the search or browse every calculator category below.",
+    weakMatch:
+      "There are few strong name or alias matches. Check these results or browse the full directory.",
     clear: "Clear search",
+    browseAll: "Browse all calculators",
+    escapeHint: "Press Escape to clear the search.",
     resultsLabel: "Calculator search results",
     resultCount: (total: number, visible: number) =>
       total > visible
@@ -89,6 +103,7 @@ export function CalculatorSearch({
     query: "",
     count: MAX_VISIBLE_SEARCH_RESULTS,
   });
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const copy = searchCopy[locale];
 
   useEffect(() => {
@@ -157,7 +172,7 @@ export function CalculatorSearch({
     [calculators, locale],
   );
   const normalizedQuery = normalizeSearchText(query);
-  const results = useMemo(() => {
+  const rankedResults = useMemo<readonly RankedSearchResult[]>(() => {
     if (!normalizedQuery) return [];
     return searchIndex
       .map((indexed) => ({
@@ -172,8 +187,14 @@ export function CalculatorSearch({
         (a, b) =>
           a.score - b.score || a.indexed.sourceIndex - b.indexed.sourceIndex,
       )
-      .map(({ indexed }) => indexed.calculator);
+      .map(({ indexed, score }) => ({
+        calculator: indexed.calculator,
+        score,
+      }));
   }, [searchIndex, normalizedQuery]);
+  const results = rankedResults.map((result) => result.calculator);
+  const hasWeakMatches =
+    rankedResults.length > 0 && rankedResults[0].score >= WEAK_MATCH_SCORE;
   const visibleResultLimit =
     resultExpansion.query === normalizedQuery
       ? resultExpansion.count
@@ -184,6 +205,11 @@ export function CalculatorSearch({
     MAX_VISIBLE_SEARCH_RESULTS,
     hiddenResultCount,
   );
+
+  const clearSearch = () => {
+    setQuery("");
+    searchInputRef.current?.focus();
+  };
 
   const showMoreResults = () => {
     setResultExpansion((current) => ({
@@ -203,16 +229,31 @@ export function CalculatorSearch({
         {copy.label}
       </label>
       <input
+        ref={searchInputRef}
         id="calculator-search"
         type="search"
         value={query}
         onChange={(event) => setQuery(event.target.value)}
+        onKeyDown={(event) => {
+          if (event.key === "Escape" && normalizedQuery) {
+            event.preventDefault();
+            clearSearch();
+          }
+        }}
         placeholder={copy.placeholder}
         autoComplete="off"
+        aria-controls={normalizedQuery ? "calculator-search-results" : undefined}
+        aria-describedby={normalizedQuery ? "calculator-search-hint" : undefined}
         className="mt-2 h-12 w-full rounded-xl border bg-background px-4 text-base shadow-sm outline-none transition focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30"
       />
       {normalizedQuery ? (
         <div className="mt-4">
+          <p
+            id="calculator-search-hint"
+            className="mb-2 text-xs text-muted-foreground"
+          >
+            {copy.escapeHint}
+          </p>
           {results.length ? (
             <>
               <p
@@ -263,21 +304,50 @@ export function CalculatorSearch({
                   </p>
                 </div>
               ) : null}
+              {hasWeakMatches ? (
+                <div className="mt-4 rounded-xl border bg-muted/30 p-4 text-sm text-muted-foreground">
+                  <p>{copy.weakMatch}</p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      onClick={clearSearch}
+                      className="inline-flex min-h-11 items-center rounded-lg border bg-background px-4 font-medium text-foreground transition hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/30"
+                    >
+                      {copy.clear}
+                    </button>
+                    <a
+                      href="#calculator-directory"
+                      className="inline-flex min-h-11 items-center rounded-lg border bg-background px-4 font-medium text-foreground transition hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/30"
+                    >
+                      {copy.browseAll}
+                    </a>
+                  </div>
+                </div>
+              ) : null}
             </>
           ) : (
             <div
+              id="calculator-search-results"
               className="rounded-xl border bg-muted/30 p-4 text-sm text-muted-foreground"
               aria-live="polite"
             >
               <p>{copy.empty}</p>
               <p className="mt-1">{copy.recovery}</p>
-              <button
-                type="button"
-                onClick={() => setQuery("")}
-                className="mt-3 inline-flex min-h-11 items-center rounded-lg border bg-background px-4 font-medium text-foreground transition hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/30"
-              >
-                {copy.clear}
-              </button>
+              <div className="mt-3 flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={clearSearch}
+                  className="inline-flex min-h-11 items-center rounded-lg border bg-background px-4 font-medium text-foreground transition hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/30"
+                >
+                  {copy.clear}
+                </button>
+                <a
+                  href="#calculator-directory"
+                  className="inline-flex min-h-11 items-center rounded-lg border bg-background px-4 font-medium text-foreground transition hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/30"
+                >
+                  {copy.browseAll}
+                </a>
+              </div>
             </div>
           )}
         </div>
