@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  isValidElement,
-  type ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { isValidElement, type ReactNode, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 
@@ -208,16 +202,12 @@ export function CalculatorResultContext({
   const supporting = metrics.find((metric) => metric !== featured);
   const currentSnapshot = createSnapshot(metrics);
   const contextRef = useRef<HTMLElement>(null);
-  const [calculatorIdentity, setCalculatorIdentity] = useState("CalCome");
+  const printIdentityRef = useRef<HTMLSpanElement>(null);
   const [printStatus, setPrintStatus] = useState("");
   const [snapshotState, setSnapshotState] = useState<SnapshotState>(() => ({
     current: currentSnapshot,
     previous: null,
   }));
-
-  useEffect(() => {
-    setCalculatorIdentity(getCalculatorIdentity());
-  }, [locale]);
 
   if ((snapshotState.current?.key ?? null) !== (currentSnapshot?.key ?? null)) {
     setSnapshotState({
@@ -243,7 +233,8 @@ export function CalculatorResultContext({
       return;
     }
 
-    setCalculatorIdentity(getCalculatorIdentity());
+    if (printIdentityRef.current)
+      printIdentityRef.current.textContent = getCalculatorIdentity();
     setPrintStatus("");
     document.body.dataset.calcomeResultPrinting = "true";
 
@@ -338,7 +329,8 @@ export function CalculatorResultContext({
       >
         <h1 className="text-2xl font-bold">{copy.printTitle}</h1>
         <p className="mt-2 text-sm">
-          <strong>{copy.printCalculator}:</strong> {calculatorIdentity}
+          <strong>{copy.printCalculator}:</strong>{" "}
+          <span ref={printIdentityRef}>CalCome</span>
         </p>
         <dl className="mt-6 grid gap-3">
           {currentSnapshot?.pairs.map(({ label, value }) => (

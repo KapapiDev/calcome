@@ -63,9 +63,6 @@ describe("CalculatorResultContext", () => {
 
     const summary = screen.getByTestId("print-result-summary");
     expect(summary).toHaveTextContent("CalCome result summary");
-    expect(summary).toHaveTextContent(
-      "Calculator: Compound Interest Calculator",
-    );
     expect(summary).toHaveTextContent("Final balance");
     expect(summary).toHaveTextContent("$1,250");
     expect(summary).toHaveTextContent("Interpretation and assumptions");
@@ -73,6 +70,9 @@ describe("CalculatorResultContext", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Print / Save PDF" }));
 
+    expect(summary).toHaveTextContent(
+      "Calculator: Compound Interest Calculator",
+    );
     expect(document.body.dataset.calcomeResultPrinting).toBe("true");
     expect(print).toHaveBeenCalledTimes(1);
 
