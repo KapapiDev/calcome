@@ -58,7 +58,9 @@ describe("CalculatorResultContext scenario labels and baseline", () => {
     expect(nameInput).toHaveValue("123456789012345678901234");
 
     fireEvent.click(screen.getByRole("button", { name: "Use as baseline" }));
-    expect(screen.getByTestId("scenario-baseline-comparison")).toBeInTheDocument();
+    expect(
+      screen.getByTestId("scenario-baseline-comparison"),
+    ).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: /Remove scenario/ }));
     expect(
