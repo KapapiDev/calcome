@@ -10,6 +10,9 @@ const COPY = {
     title: "결과를 이렇게 읽어보세요",
     description:
       "표시된 값은 현재 입력값을 기준으로 계산한 결과입니다. 단위와 계산기별 가정·포함 범위는 입력 항목과 페이지 설명을 함께 확인하세요.",
+    nextStepTitle: "결과를 다음 판단에 활용하기",
+    nextStepDescription:
+      "가장 중요한 결과를 목표값이나 다른 선택지와 비교한 뒤, 바꾸고 싶은 조건만 조정해 다시 계산해 보세요. 실제 결정 전에는 계산기별 안내와 적용 조건도 함께 확인하세요.",
     primary: "가장 중요한 결과",
     context: "함께 확인할 값",
     comparisonTitle: "직전 계산과 비교",
@@ -35,6 +38,9 @@ const COPY = {
     title: "How to read these results",
     description:
       "These values are calculated from your current inputs. Check the input units and this calculator’s stated assumptions or included scope alongside the results.",
+    nextStepTitle: "Use the result for your next decision",
+    nextStepDescription:
+      "Compare the primary result with your target or another option, then change only the conditions you want to test and recalculate. Before acting, also check the calculator-specific guidance and applicable conditions.",
     primary: "Primary result",
     context: "Supporting value",
     comparisonTitle: "Compare with the previous calculation",
@@ -306,6 +312,15 @@ export function CalculatorResultContext({
             </p>
           ) : null}
         </div>
+        <div
+          className="mt-3 rounded-md bg-background px-3 py-2"
+          data-testid="result-next-step"
+        >
+          <p className="font-medium">{copy.nextStepTitle}</p>
+          <p className="mt-1 leading-5 text-muted-foreground">
+            {copy.nextStepDescription}
+          </p>
+        </div>
         <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs leading-5 text-muted-foreground">
             {copy.printPrivacy}
@@ -354,6 +369,9 @@ export function CalculatorResultContext({
           <div className="mt-6 border-t pt-4">
             <h2 className="font-semibold">{copy.printGuidance}</h2>
             <p className="mt-2 text-sm leading-6">{copy.description}</p>
+            <p className="mt-2 text-sm leading-6">
+              <strong>{copy.nextStepTitle}:</strong> {copy.nextStepDescription}
+            </p>
             <p className="mt-2 text-xs leading-5">{copy.printPrivacy}</p>
           </div>
         </section>

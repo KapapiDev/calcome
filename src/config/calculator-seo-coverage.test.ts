@@ -7,6 +7,13 @@ import { allPublishedCalculators } from "@/config/calculator-directory";
 const ROOT = process.cwd();
 const APP_ROOT = path.join(ROOT, "src", "app", "[locale]");
 const FEATURES_ROOT = path.join(ROOT, "src", "features");
+const RESULT_CONTEXT_FILE = path.join(
+  ROOT,
+  "src",
+  "components",
+  "calculators",
+  "calculator-result-context.tsx",
+);
 
 type RouteMetadata = {
   title?: string | { absolute?: string; default?: string } | null;
@@ -92,6 +99,20 @@ function hasStructuredDataContract(source: string): boolean {
     source.includes("JSON.stringify");
 
   return sharedStructuredData || directJsonLd;
+}
+
+function hasHelpfulResultGuidanceContract(source: string): boolean {
+  const requiredTokens = [
+    "ko:",
+    "en:",
+    "description:",
+    "nextStepTitle:",
+    "nextStepDescription:",
+    'data-testid="result-context"',
+    'data-testid="result-next-step"',
+  ];
+
+  return requiredTokens.every((token) => source.includes(token));
 }
 
 function titleText(title: RouteMetadata["title"]): string {
@@ -209,6 +230,39 @@ describe("published calculator SEO coverage", () => {
     expect(
       missingStructuredData,
       "published calculator routes missing JSON-LD coverage",
+    ).toEqual([]);
+  });
+
+  it("keeps shared bilingual result interpretation, assumptions, and next-step guidance on every published calculator", () => {
+    const missingResultGuidance: string[] = [];
+    const sharedContextSource = readSource(RESULT_CONTEXT_FILE);
+
+    expect(
+      hasHelpfulResultGuidanceContract(sharedContextSource),
+      "shared result context must retain bilingual interpretation, assumption, and next-step guidance",
+    ).toBe(true);
+
+    for (const calculator of allPublishedCalculators) {
+      const relativeRoute = routePathFromHref(calculator.href);
+      const routeFile = path.join(APP_ROOT, relativeRoute, "page.tsx");
+      if (!existsSync(routeFile)) continue;
+
+      const routeSource = readSource(routeFile);
+      const featureSources = importedFeatureNames(routeSource).flatMap(
+        (featureName) =>
+          collectSourceFiles(path.join(FEATURES_ROOT, featureName)).map(
+            readSource,
+          ),
+      );
+
+      if (![routeSource, ...featureSources].some((source) => source.includes("PrimaryResults"))) {
+        missingResultGuidance.push(`${calculator.id}: ${relativeRoute}`);
+      }
+    }
+
+    expect(
+      missingResultGuidance,
+      "published calculators must render results through the shared PrimaryResults guidance path",
     ).toEqual([]);
   });
 
