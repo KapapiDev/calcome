@@ -46,6 +46,15 @@ const COPY = {
     baselineTitle: "선택한 기준 시나리오와 비교",
     baselineDescription:
       "선택한 시나리오를 기준으로 현재 결과의 같은 항목을 비교합니다. 기준과 이름은 이 페이지를 벗어나면 사라지며 입력값은 저장하지 않습니다.",
+    shareAction: "결과 복사·공유",
+    sharePrivacy:
+      "현재 화면의 계산기 이름과 표시된 결과 요약만 공유합니다. 입력값이나 URL은 포함하거나 저장하지 않습니다.",
+    shareCopied: "결과 요약을 클립보드에 복사했습니다.",
+    shareShared: "결과 요약을 공유했습니다.",
+    shareUnavailable: "먼저 계산을 완료한 뒤 결과를 공유해 주세요.",
+    shareStale:
+      "입력값이 변경되었습니다. 최신 결과를 다시 계산한 뒤 공유해 주세요.",
+    shareFailed: "결과 요약을 복사하거나 공유하지 못했습니다.",
     printAction: "결과 인쇄·PDF 저장",
     printTitle: "CalCome 계산 결과 요약",
     printCalculator: "계산기",
@@ -92,6 +101,14 @@ const COPY = {
     baselineTitle: "Compare with the selected baseline scenario",
     baselineDescription:
       "Use the selected saved scenario as the baseline for the current result. The baseline and local label disappear when you leave this page, and inputs are not stored.",
+    shareAction: "Copy / Share result",
+    sharePrivacy:
+      "Shares only the calculator name and displayed result summary. Inputs and URLs are not included or stored.",
+    shareCopied: "Result summary copied to the clipboard.",
+    shareShared: "Result summary shared.",
+    shareUnavailable: "Complete a calculation before sharing the result.",
+    shareStale: "Inputs changed. Recalculate before sharing this result.",
+    shareFailed: "Could not copy or share the result summary.",
     printAction: "Print / Save PDF",
     printTitle: "CalCome result summary",
     printCalculator: "Calculator",
@@ -240,6 +257,13 @@ function getCalculatorIdentity() {
   return title || "CalCome";
 }
 
+function createShareText(snapshot: ResultSnapshot, calculatorIdentity: string) {
+  return [
+    `CalCome · ${calculatorIdentity}`,
+    ...snapshot.pairs.map(({ label, value }) => `${label}: ${value}`),
+  ].join("\n");
+}
+
 export function CalculatorResultContext({
   metrics,
 }: {
@@ -254,6 +278,7 @@ export function CalculatorResultContext({
   const printIdentityRef = useRef<HTMLSpanElement>(null);
   const nextScenarioIdRef = useRef(1);
   const [printStatus, setPrintStatus] = useState("");
+  const [shareStatus, setShareStatus] = useState("");
   const [scenarioStatus, setScenarioStatus] = useState("");
   const [printPrepared, setPrintPrepared] = useState(false);
   const [savedScenarios, setSavedScenarios] = useState<SavedScenario[]>([]);
@@ -352,6 +377,42 @@ export function CalculatorResultContext({
     setSavedScenarios([]);
     setBaselineScenarioId(null);
     setScenarioStatus("");
+  }
+
+  async function shareSummary() {
+    if (!currentSnapshot) {
+      setShareStatus(copy.shareUnavailable);
+      return;
+    }
+    if (hasStaleResult()) {
+      setShareStatus(copy.shareStale);
+      return;
+    }
+
+    const calculatorIdentity = getCalculatorIdentity();
+    const text = createShareText(currentSnapshot, calculatorIdentity);
+    const share = navigator.share?.bind(navigator);
+
+    if (share) {
+      try {
+        await share({
+          title: `${calculatorIdentity} · CalCome`,
+          text,
+        });
+        setShareStatus(copy.shareShared);
+        return;
+      } catch (error) {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+      }
+    }
+
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error("Clipboard unavailable");
+      await navigator.clipboard.writeText(text);
+      setShareStatus(copy.shareCopied);
+    } catch {
+      setShareStatus(copy.shareFailed);
+    }
   }
 
   function printSummary() {
@@ -464,6 +525,20 @@ export function CalculatorResultContext({
         </div>
         <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs leading-5 text-muted-foreground">
+            {copy.sharePrivacy}
+          </p>
+          <Button
+            type="button"
+            variant="outline"
+            className="min-h-11 shrink-0"
+            data-testid="result-share-action"
+            onClick={() => void shareSummary()}
+          >
+            {copy.shareAction}
+          </Button>
+        </div>
+        <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs leading-5 text-muted-foreground">
             {copy.printPrivacy}
           </p>
           <Button
@@ -482,6 +557,16 @@ export function CalculatorResultContext({
             className="mt-2 text-xs text-muted-foreground"
           >
             {scenarioStatus}
+          </p>
+        ) : null}
+        {shareStatus ? (
+          <p
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+            className="mt-2 text-xs text-muted-foreground"
+          >
+            {shareStatus}
           </p>
         ) : null}
         {printStatus ? (
