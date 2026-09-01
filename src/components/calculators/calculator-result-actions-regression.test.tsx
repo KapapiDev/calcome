@@ -43,7 +43,9 @@ describe("CalculatorResultContext shared action accessibility regression", () =>
       screen.getByText(/Inputs and URLs are not included or stored/),
     ).toBeVisible();
     expect(
-      screen.getByText(/without uploading or automatically saving your inputs or results/),
+      screen.getByText(
+        /without uploading or automatically saving your inputs or results/,
+      ),
     ).toBeVisible();
   });
 
@@ -65,12 +67,13 @@ describe("CalculatorResultContext shared action accessibility regression", () =>
     fireEvent.click(
       screen.getByRole("button", { name: "Save current result as scenario" }),
     );
-    expect(screen.getByText("Current result saved as a scenario.")).toHaveAttribute(
-      "role",
-      "status",
-    );
+    expect(
+      screen.getByText("Current result saved as a scenario."),
+    ).toHaveAttribute("role", "status");
 
-    fireEvent.click(screen.getByRole("button", { name: "Copy / Share result" }));
+    fireEvent.click(
+      screen.getByRole("button", { name: "Copy / Share result" }),
+    );
     await waitFor(() => expect(share).toHaveBeenCalledTimes(1));
 
     const payload = share.mock.calls[0]?.[0];
@@ -111,20 +114,28 @@ describe("CalculatorResultContext shared action accessibility regression", () =>
     fireEvent.click(
       screen.getByRole("button", { name: "Save current result as scenario" }),
     );
-    fireEvent.click(screen.getByRole("button", { name: "Copy / Share result" }));
+    fireEvent.click(
+      screen.getByRole("button", { name: "Copy / Share result" }),
+    );
     fireEvent.click(screen.getByRole("button", { name: "Print / Save PDF" }));
 
     expect(share).not.toHaveBeenCalled();
     expect(writeText).not.toHaveBeenCalled();
     expect(print).not.toHaveBeenCalled();
     expect(
-      screen.getByText("Inputs changed. Recalculate before saving this scenario."),
+      screen.getByText(
+        "Inputs changed. Recalculate before saving this scenario.",
+      ),
     ).toHaveAttribute("role", "status");
     expect(
-      screen.getByText("Inputs changed. Recalculate before sharing this result."),
+      screen.getByText(
+        "Inputs changed. Recalculate before sharing this result.",
+      ),
     ).toHaveAttribute("aria-atomic", "true");
     expect(
-      screen.getByText("Inputs changed. Recalculate before printing this summary."),
+      screen.getByText(
+        "Inputs changed. Recalculate before printing this summary.",
+      ),
     ).toHaveAttribute("role", "status");
   });
 
@@ -155,9 +166,9 @@ describe("CalculatorResultContext shared action accessibility regression", () =>
     expect(screen.getByRole("button", { name: "결과 복사·공유" })).toHaveClass(
       "min-h-11",
     );
-    expect(screen.getByRole("button", { name: "결과 인쇄·PDF 저장" })).toHaveClass(
-      "min-h-11",
-    );
+    expect(
+      screen.getByRole("button", { name: "결과 인쇄·PDF 저장" }),
+    ).toHaveClass("min-h-11");
     expect(
       screen.getByText(/입력값이나 URL은 포함하거나 저장하지 않습니다/),
     ).toBeVisible();
