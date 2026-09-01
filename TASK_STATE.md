@@ -16,8 +16,6 @@ Remaining to Target: 0
 
 ## Recent completed work
 
-- [x] UX-052 DONE — Shared Calculator Printable Result Summary Upgrade
-  - Shared calculated-result guidance offers a bilingual browser print/PDF summary without uploading or automatically persisting calculator inputs or results.
 - [x] SEO-015 DONE — Post-100 Internal-Link Reachability and Orphan-Route Regression
   - All 100 published calculator IDs remain covered by directory/search discovery and bilingual sitemap registration.
 - [x] SEO-016 DONE — Post-100 Metadata and Structured-Data Coverage Regression
@@ -34,11 +32,13 @@ Remaining to Target: 0
   - Up to three result-only scenarios can be captured and compared in the current page session without persistent input storage.
 - [x] UX-054 DONE — Shared Calculator Scenario Labels and Baseline Comparison Upgrade
   - Saved in-session result scenarios support short local labels and one selected comparison baseline. Labels and baseline selection stay bounded to component memory, stale results cannot be selected as a new baseline, removing or clearing a scenario clears any matching baseline, and formulas/input persistence remain unchanged.
+- [x] PERF-007 DONE — Post-100 Core Web Vitals and Shared Client Bundle Budget Audit
+  - Current Next.js build output now reports shared and aggregate emitted client JavaScript sizes, largest chunks, and enforces deterministic gzip budgets for the root shared client runtime after every CI build without changing routes, calculations, hydration behavior, or public UX.
 
 ## Active queue
 
-- [ ] PERF-007 OPEN — Post-100 Core Web Vitals and Shared Client Bundle Budget Audit
-  - Scope: measure current production/build-side performance evidence for the 100-calculator site, identify shared client JavaScript or hydration regressions with concrete evidence, and make only bounded high-confidence improvements that preserve routes, SEO, calculations, accessibility, and current shared UX behavior. Add durable budget/regression coverage where the repository can measure it deterministically; do not perform speculative rewrites merely to reduce an estimated bundle size.
+- [ ] PERF-008 OPEN — Post-100 Route-Level Client Chunk and Heavy Dependency Regression
+  - Scope: use build evidence from the shared-bundle guard to identify route-level client JavaScript outliers and unexpectedly eager heavy dependencies, then add bounded regression coverage or targeted lazy boundaries only where concrete measurements justify them. Preserve routes, SEO, calculations, accessibility, and current shared UX behavior; do not split modules speculatively.
 
 ## Security gate
 

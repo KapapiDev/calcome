@@ -11,6 +11,7 @@
     "format": "prettier --write .",
     "format:check": "node scripts/check-format.mjs",
     "task-state:check": "node scripts/check-task-state.mjs",
+    "bundle:check": "node scripts/check-client-bundle-budget.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "check": "npm run lint && npm run typecheck && npm run format:check && npm run task-state:check && npm run test"

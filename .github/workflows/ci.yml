@@ -79,3 +79,6 @@ jobs:
 
       - name: Build application
         run: npm run build
+
+      - name: Check shared client bundle budget
+        run: npm run bundle:check
