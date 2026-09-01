@@ -16,55 +16,29 @@ Remaining to Target: 0
 
 ## Recent completed work
 
-- [x] UX-039 DONE — Directory Search Ranking Tier Single-Source Regression
-  - PR: #379. Closed the directory-search micro-regression sequence and added the permanent task-granularity/product-progress rule.
-- [x] UX-040 DONE — Shared Calculator Result Actions and Repeat-Use Upgrade
-  - PR: #380. Added bilingual recalculate, copy-result feedback, and calculator-directory continuation actions.
-- [x] UX-041 DONE — Shared Calculator First-Run Guidance and Example Entry Upgrade
-  - PR: #381. Added bilingual first-run guidance, safe example filling, reset localization, and accessible feedback.
-- [x] UX-042 DONE — Shared Calculator Input Validation and Error Recovery Upgrade
-  - PR: #382. Added shared native-constraint recovery, first-invalid focus, and preservation of other entered values.
-- [x] UX-043 DONE — Shared Calculator Stale-Result and Recalculation Clarity Upgrade
-  - PR: #383. Added stale-result detection, first-invalid recovery, and stale-copy blocking without changing formulas or stored inputs.
-- [x] UX-044 DONE — Calculator Favorites and Recent-Use Shortcuts
-  - Shared directory cards now let users explicitly favorite calculators and record recently opened calculator IDs. Korean and English routes share the same calculator identity, repeat-use shortcuts are restored on the directory without storing calculator inputs or financial data, and storage/private-browsing failures remain non-fatal.
-- [x] UX-045 DONE — Shared Calculator Mobile Completion and Result Navigation Upgrade
-  - Successful narrow-screen calculation now moves directly from the shared submit action to the calculated primary results and focuses the result region without adding URL state or storing calculator inputs.
-- [x] UX-046 DONE — Shared Calculator Result Explanation and Assumption Clarity Upgrade
-  - Shared primary results now include bilingual interpretation guidance that identifies the featured result hierarchy and reminds users to verify calculator-specific units, assumptions, and included scope.
-- [x] UX-047 DONE — Shared Calculator Result Comparison and Decision Support Upgrade
-  - Shared result guidance now compares the current calculation with the immediately previous calculated result in the same page session, using matching result labels only, without persisting calculator inputs or result history.
-- [x] UX-048 DONE — Shared Calculator Comparison Delta and Change-Summary Upgrade
-  - Previous-versus-current result comparison now adds deterministic increase/decrease/no-change direction and formatted absolute delta only when both displayed values contain one safely parseable numeric value with matching unit/currency decoration.
-- [x] PERF-006 DONE — Post-100 Shared Calculator Interaction Performance Regression
-  - Replaced per-card global repeat-use/storage listeners and repeated localStorage parsing with one shared external-store subscription path while preserving cross-tab updates and non-fatal storage behavior.
-- [x] UX-049 DONE — Calculator Favorites and Recent-Use Management Upgrade
-  - Repeat-use shortcuts now support removing individual recent items, clearing recent history, and removing favorites directly from the shortcut area with bilingual accessible controls.
-- [x] UX-050 DONE — Calculator Directory Return-Context and Navigation Continuity Upgrade
-  - Calculator-directory search text remains session-restored, and opening a calculator from either a directory card or search result now records only the current directory scroll position plus locale for a one-time same-locale return. Returning restores the prior category/search position without storing calculator inputs or results, and malformed, unavailable-storage, or cross-locale context fails safely.
-- [x] UX-051 DONE — Calculator Directory Search Result Expansion and Long-List Discovery Upgrade
-  - Broad directory searches keep the initial eight-result render but can now reveal deterministically ranked matches in bounded, bilingual, keyboard-accessible batches. Changing the query resets the visible cap without persisting calculator inputs or results.
 - [x] UX-052 DONE — Shared Calculator Printable Result Summary Upgrade
-  - Shared calculated-result guidance now offers a bilingual browser print/PDF summary containing calculator identity, current output labels and values, and existing interpretation/assumption guidance. Printing is blocked for missing or stale results, uses a print-only browser surface, and does not upload or automatically persist calculator inputs or results.
+  - Shared calculated-result guidance offers a bilingual browser print/PDF summary without uploading or automatically persisting calculator inputs or results.
 - [x] SEO-015 DONE — Post-100 Internal-Link Reachability and Orphan-Route Regression
-  - Audited all 100 published calculator IDs against category discovery, shared directory/search hrefs, and bilingual sitemap entries. No source-level orphan was found; regression coverage now prevents future published calculators from silently losing those direct discovery paths.
+  - All 100 published calculator IDs remain covered by directory/search discovery and bilingual sitemap registration.
 - [x] SEO-016 DONE — Post-100 Metadata and Structured-Data Coverage Regression
-  - Added catalog-driven regression coverage requiring every published calculator route to retain deterministic title/description metadata, canonical plus ko/en/x-default alternates, and calculator JSON-LD through its route or feature contract.
+  - Published calculator routes retain deterministic metadata, alternates, and calculator structured-data coverage.
 - [x] SEO-017 DONE — Post-100 Metadata Uniqueness and Search-Snippet Regression
-  - Added executable bilingual metadata regression coverage across all 100 published calculator routes so duplicate titles/descriptions and placeholder snippet copy fail CI while preserving existing canonical, hreflang, structured-data, and calculation behavior.
+  - Bilingual metadata uniqueness and placeholder regressions are executable CI failures.
 - [x] SEO-018 DONE — Post-100 Search Discovery Quality and Snippet Optimization
-  - Added executable bilingual snippet-quality coverage across all 100 published calculators so thin descriptions, title-only descriptions, and descriptions without a clear user-facing calculation purpose fail CI while preserving canonical/hreflang, structured data, and calculation behavior.
+  - Thin or purpose-free calculator descriptions are rejected by executable coverage.
 - [x] SEO-019 DONE — Post-100 Calculator Content Helpfulness and Explanation Coverage Regression
-  - Audited all 100 published calculator routes against the shared result path, added bilingual next-step decision guidance to calculated results and printable summaries, and added executable coverage preventing a published calculator from silently losing shared interpretation, assumption, or next-step guidance.
+  - Shared result interpretation, assumptions, and next-step guidance are covered across published calculators.
 - [x] SEO-020 DONE — Post-100 Content Trust Template Coverage Regression
-  - Audited published calculator sources against the reusable content trust template, preserved deliberate calculator-specific adoption rather than blanket boilerplate, and added executable coverage for method, example, assumptions, limitations, semantic review dates, and complete future adoption.
+  - Reusable method/example/assumption/limitation trust-template adoption remains guarded without blanket boilerplate.
 - [x] UX-053 DONE — Shared Calculator Scenario Presets and Side-by-Side Comparison Upgrade
-  - Shared result guidance can now capture up to three privacy-safe result-only scenarios in the current page session, compare each with the current result using matching labels and safe deltas, reject stale/duplicate capture, and clear the ephemeral scenarios on result reset without local storage, URL state, or formula changes.
+  - Up to three result-only scenarios can be captured and compared in the current page session without persistent input storage.
+- [x] UX-054 DONE — Shared Calculator Scenario Labels and Baseline Comparison Upgrade
+  - Saved in-session result scenarios support short local labels and one selected comparison baseline. Labels and baseline selection stay bounded to component memory, stale results cannot be selected as a new baseline, removing or clearing a scenario clears any matching baseline, and formulas/input persistence remain unchanged.
 
 ## Active queue
 
-- [ ] UX-054 OPEN — Shared Calculator Scenario Labels and Baseline Comparison Upgrade
-  - Scope: let users give the up-to-three in-session result-only scenarios short local labels and choose a saved scenario as the comparison baseline, while preserving bilingual accessibility, bounded session-only state, stale-result protection, and the no-input-persistence/no-formula-change guarantees.
+- [ ] PERF-007 OPEN — Post-100 Core Web Vitals and Shared Client Bundle Budget Audit
+  - Scope: measure current production/build-side performance evidence for the 100-calculator site, identify shared client JavaScript or hydration regressions with concrete evidence, and make only bounded high-confidence improvements that preserve routes, SEO, calculations, accessibility, and current shared UX behavior. Add durable budget/regression coverage where the repository can measure it deterministically; do not perform speculative rewrites merely to reduce an estimated bundle size.
 
 ## Security gate
 
