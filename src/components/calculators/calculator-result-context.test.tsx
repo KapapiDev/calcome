@@ -61,7 +61,9 @@ describe("CalculatorResultContext", () => {
       </main>,
     );
 
-    expect(screen.queryByTestId("print-result-summary")).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId("print-result-summary"),
+    ).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Print / Save PDF" }));
 
@@ -81,7 +83,9 @@ describe("CalculatorResultContext", () => {
 
     window.dispatchEvent(new Event("afterprint"));
     expect(document.body.dataset.calcomeResultPrinting).toBeUndefined();
-    expect(screen.queryByTestId("print-result-summary")).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId("print-result-summary"),
+    ).not.toBeInTheDocument();
   });
 
   it("blocks printing when the displayed result is stale", () => {
@@ -103,7 +107,9 @@ describe("CalculatorResultContext", () => {
     fireEvent.click(screen.getByRole("button", { name: "Print / Save PDF" }));
 
     expect(print).not.toHaveBeenCalled();
-    expect(screen.queryByTestId("print-result-summary")).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId("print-result-summary"),
+    ).not.toBeInTheDocument();
     expect(screen.getByRole("status")).toHaveTextContent(
       "Recalculate before printing this summary.",
     );
