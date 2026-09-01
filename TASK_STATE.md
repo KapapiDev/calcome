@@ -56,11 +56,13 @@ Remaining to Target: 0
   - Added executable bilingual snippet-quality coverage across all 100 published calculators so thin descriptions, title-only descriptions, and descriptions without a clear user-facing calculation purpose fail CI while preserving canonical/hreflang, structured data, and calculation behavior.
 - [x] SEO-019 DONE — Post-100 Calculator Content Helpfulness and Explanation Coverage Regression
   - Audited all 100 published calculator routes against the shared result path, added bilingual next-step decision guidance to calculated results and printable summaries, and added executable coverage preventing a published calculator from silently losing shared interpretation, assumption, or next-step guidance.
+- [x] SEO-020 DONE — Post-100 Content Trust Template Coverage Regression
+  - Audited published calculator sources against the reusable content trust template, preserved deliberate calculator-specific adoption rather than blanket boilerplate, and added executable coverage for method, example, assumptions, limitations, semantic review dates, and complete future adoption.
 
 ## Active queue
 
-- [ ] SEO-020 OPEN — Post-100 Content Trust Template Coverage Regression
-  - Scope: audit published calculator detail pages for appropriate use of the existing content-depth/trust template, then add regression coverage for method, example, assumptions, limitations, and review-date signals without forcing unverified policy-sensitive claims or changing formulas.
+- [ ] UX-053 OPEN — Shared Calculator Scenario Presets and Side-by-Side Comparison Upgrade
+  - Scope: make repeated what-if calculations easier by adding privacy-safe in-session scenario capture and side-by-side comparison through the shared calculator result path, without persisting sensitive inputs, changing calculator formulas, or creating URL state.
 
 ## Security gate
 
