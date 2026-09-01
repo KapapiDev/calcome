@@ -23,12 +23,13 @@ export function resolveFavoriteDirectoryCalculators(
   favoriteIds: readonly string[],
   calculators: readonly DirectoryFavoriteCalculator[],
 ) {
-  const byId = new Map(calculators.map((calculator) => [calculator.id, calculator]));
+  const byId = new Map(
+    calculators.map((calculator) => [calculator.id, calculator]),
+  );
   return favoriteIds
     .map((id) => byId.get(id))
-    .filter(
-      (calculator): calculator is DirectoryFavoriteCalculator =>
-        Boolean(calculator),
+    .filter((calculator): calculator is DirectoryFavoriteCalculator =>
+      Boolean(calculator),
     );
 }
 
@@ -85,7 +86,10 @@ export function DirectoryFavorites({
             : `${favorites.length}개`}
         </span>
       </div>
-      <ul className="mt-4 flex flex-wrap gap-2" aria-label={isEnglish ? "Favorite calculators" : "즐겨찾기 계산기"}>
+      <ul
+        className="mt-4 flex flex-wrap gap-2"
+        aria-label={isEnglish ? "Favorite calculators" : "즐겨찾기 계산기"}
+      >
         {favorites.map((calculator) => (
           <li key={calculator.id}>
             <Link
