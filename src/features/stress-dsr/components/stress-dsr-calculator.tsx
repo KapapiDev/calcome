@@ -2,6 +2,7 @@
 
 import Decimal from "decimal.js";
 import { type FormEvent, useState } from "react";
+import { PrimaryResults } from "@/components/calculators/calculator-workspace";
 import { Button } from "@/components/ui/button";
 import { calculateStressDsr, type StressDsrResult } from "../calculate";
 import { stressDsrContent, type StressDsrLocale } from "../content";
@@ -79,6 +80,30 @@ export function StressDsrCalculator({ locale }: { locale: StressDsrLocale }) {
     setError(null);
   }
 
+  const metrics = [
+    {
+      label: copy.baseDsr,
+      value: result ? `${result.base.dsrRate.toDecimalPlaces(1)}%` : "—",
+    },
+    {
+      label: copy.stressedDsr,
+      value: result ? `${result.stressed.dsrRate.toDecimalPlaces(1)}%` : "—",
+      featured: true,
+    },
+    {
+      label: copy.increase,
+      value: result ? `${result.dsrIncrease.toDecimalPlaces(1)}%p` : "—",
+    },
+    {
+      label: copy.basePayment,
+      value: result ? formatKrw(result.base.monthlyPayment, locale) : "—",
+    },
+    {
+      label: copy.stressedPayment,
+      value: result ? formatKrw(result.stressed.monthlyPayment, locale) : "—",
+    },
+  ];
+
   return (
     <section className="grid gap-4 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
       <form
@@ -143,41 +168,7 @@ export function StressDsrCalculator({ locale }: { locale: StressDsrLocale }) {
           <h2 className="text-xl font-semibold">
             {locale === "ko" ? "비교 결과" : "Comparison results"}
           </h2>
-          <div className="mt-4 grid gap-3 sm:grid-cols-3">
-            <Metric
-              label={copy.baseDsr}
-              value={
-                result ? `${result.base.dsrRate.toDecimalPlaces(1)}%` : "—"
-              }
-            />
-            <Metric
-              label={copy.stressedDsr}
-              value={
-                result ? `${result.stressed.dsrRate.toDecimalPlaces(1)}%` : "—"
-              }
-              featured
-            />
-            <Metric
-              label={copy.increase}
-              value={
-                result ? `${result.dsrIncrease.toDecimalPlaces(1)}%p` : "—"
-              }
-            />
-          </div>
-          <div className="mt-3 grid gap-3 sm:grid-cols-2">
-            <Metric
-              label={copy.basePayment}
-              value={
-                result ? formatKrw(result.base.monthlyPayment, locale) : "—"
-              }
-            />
-            <Metric
-              label={copy.stressedPayment}
-              value={
-                result ? formatKrw(result.stressed.monthlyPayment, locale) : "—"
-              }
-            />
-          </div>
+          <PrimaryResults metrics={metrics} />
         </section>
         <section className="rounded-xl border bg-card p-5 text-sm leading-7 text-muted-foreground shadow-sm">
           <p>{copy.note}</p>
@@ -214,23 +205,6 @@ function Field({
         </span>
       </div>
     </label>
-  );
-}
-
-function Metric({
-  label,
-  value,
-  featured = false,
-}: {
-  label: string;
-  value: string;
-  featured?: boolean;
-}) {
-  return (
-    <div className={`rounded-lg border p-4 ${featured ? "bg-muted/60" : ""}`}>
-      <p className="text-sm text-muted-foreground">{label}</p>
-      <p className="mt-1 text-xl font-semibold tabular-nums">{value}</p>
-    </div>
   );
 }
 

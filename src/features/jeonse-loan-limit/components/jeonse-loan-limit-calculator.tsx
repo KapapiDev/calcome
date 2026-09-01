@@ -2,6 +2,7 @@
 
 import Decimal from "decimal.js";
 import { type FormEvent, useState } from "react";
+import { PrimaryResults } from "@/components/calculators/calculator-workspace";
 import { Button } from "@/components/ui/button";
 import {
   calculateJeonseLoanLimit,
@@ -98,6 +99,27 @@ export function JeonseLoanLimitCalculator({
             : "Multiple limits are equal"
     : "—";
 
+  const metrics = [
+    {
+      label: copy.finalLimit,
+      value: result ? formatKrw(result.areaAdjustedLimit, locale) : "—",
+      featured: true,
+    },
+    { label: copy.factor, value: factor },
+    {
+      label: copy.subjectLimit,
+      value: result ? formatKrw(result.subjectLimit, locale) : "—",
+    },
+    {
+      label: copy.fundingLimit,
+      value: result ? formatKrw(result.fundingLimit, locale) : "—",
+    },
+    {
+      label: copy.repaymentLimit,
+      value: result ? formatKrw(result.repaymentLimit, locale) : "—",
+    },
+  ];
+
   return (
     <section className="grid gap-4 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
       <form
@@ -166,26 +188,7 @@ export function JeonseLoanLimitCalculator({
           <h2 className="text-xl font-semibold">
             {locale === "ko" ? "예상 한도" : "Estimated limit"}
           </h2>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            <Metric
-              label={copy.finalLimit}
-              value={result ? formatKrw(result.areaAdjustedLimit, locale) : "—"}
-              featured
-            />
-            <Metric label={copy.factor} value={factor} />
-            <Metric
-              label={copy.subjectLimit}
-              value={result ? formatKrw(result.subjectLimit, locale) : "—"}
-            />
-            <Metric
-              label={copy.fundingLimit}
-              value={result ? formatKrw(result.fundingLimit, locale) : "—"}
-            />
-            <Metric
-              label={copy.repaymentLimit}
-              value={result ? formatKrw(result.repaymentLimit, locale) : "—"}
-            />
-          </div>
+          <PrimaryResults metrics={metrics} />
         </section>
         <section className="rounded-xl border bg-card p-5 text-sm leading-7 text-muted-foreground shadow-sm">
           <p>{copy.note}</p>
@@ -242,23 +245,6 @@ function CheckField({
       />
       <span>{label}</span>
     </label>
-  );
-}
-
-function Metric({
-  label,
-  value,
-  featured = false,
-}: {
-  label: string;
-  value: string;
-  featured?: boolean;
-}) {
-  return (
-    <div className={`rounded-lg border p-4 ${featured ? "bg-muted/60" : ""}`}>
-      <p className="text-sm text-muted-foreground">{label}</p>
-      <p className="mt-1 text-xl font-semibold tabular-nums">{value}</p>
-    </div>
   );
 }
 

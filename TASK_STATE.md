@@ -54,11 +54,13 @@ Remaining to Target: 0
   - Added executable bilingual metadata regression coverage across all 100 published calculator routes so duplicate titles/descriptions and placeholder snippet copy fail CI while preserving existing canonical, hreflang, structured-data, and calculation behavior.
 - [x] SEO-018 DONE — Post-100 Search Discovery Quality and Snippet Optimization
   - Added executable bilingual snippet-quality coverage across all 100 published calculators so thin descriptions, title-only descriptions, and descriptions without a clear user-facing calculation purpose fail CI while preserving canonical/hreflang, structured data, and calculation behavior.
+- [x] SEO-019 DONE — Post-100 Calculator Content Helpfulness and Explanation Coverage Regression
+  - Audited all 100 published calculator routes against the shared result path, added bilingual next-step decision guidance to calculated results and printable summaries, and added executable coverage preventing a published calculator from silently losing shared interpretation, assumption, or next-step guidance.
 
 ## Active queue
 
-- [ ] SEO-019 OPEN — Post-100 Calculator Content Helpfulness and Explanation Coverage Regression
-  - Scope: audit all published calculator detail pages for deterministic bilingual explanatory content that tells users what the result means, key assumptions or limits, and how to use the output without duplicating metadata boilerplate or changing calculator formulas and policy-sensitive values.
+- [ ] SEO-020 OPEN — Post-100 Content Trust Template Coverage Regression
+  - Scope: audit published calculator detail pages for appropriate use of the existing content-depth/trust template, then add regression coverage for method, example, assumptions, limitations, and review-date signals without forcing unverified policy-sensitive claims or changing formulas.
 
 ## Security gate
 
