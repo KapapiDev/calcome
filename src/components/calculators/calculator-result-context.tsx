@@ -1,6 +1,9 @@
 "use client";
 
-import { isValidElement, type ReactNode, useState } from "react";
+import { isValidElement, type ReactNode, useRef, useState } from "react";
+import { flushSync } from "react-dom";
+
+import { Button } from "@/components/ui/button";
 
 const COPY = {
   ko: {
@@ -18,6 +21,15 @@ const COPY = {
     decreased: "감소",
     unchanged: "변화 없음",
     delta: "변화량",
+    printAction: "결과 인쇄·PDF 저장",
+    printTitle: "CalCome 계산 결과 요약",
+    printCalculator: "계산기",
+    printGuidance: "해석 및 가정 확인",
+    printPrivacy:
+      "브라우저 인쇄 기능을 사용하며 입력값이나 결과를 업로드하거나 자동 저장하지 않습니다.",
+    printUnavailable: "먼저 계산을 완료한 뒤 인쇄해 주세요.",
+    printStale:
+      "입력값이 변경되었습니다. 최신 결과를 다시 계산한 뒤 인쇄해 주세요.",
   },
   en: {
     title: "How to read these results",
@@ -34,6 +46,14 @@ const COPY = {
     decreased: "Decreased",
     unchanged: "No change",
     delta: "Delta",
+    printAction: "Print / Save PDF",
+    printTitle: "CalCome result summary",
+    printCalculator: "Calculator",
+    printGuidance: "Interpretation and assumptions",
+    printPrivacy:
+      "Uses your browser’s print feature without uploading or automatically saving your inputs or results.",
+    printUnavailable: "Complete a calculation before printing.",
+    printStale: "Inputs changed. Recalculate before printing this summary.",
   },
 } as const;
 
@@ -164,15 +184,28 @@ function compareDisplayedValues(previousText: string, currentText: string) {
   } as const;
 }
 
+function getCalculatorIdentity() {
+  const heading = document.querySelector("main h1, h1")?.textContent?.trim();
+  if (heading) return heading;
+
+  const title = document.title.split("|")[0]?.trim();
+  return title || "CalCome";
+}
+
 export function CalculatorResultContext({
   metrics,
 }: {
   metrics: readonly Metric[];
 }) {
-  const copy = COPY[inferLocale(metrics)];
+  const locale = inferLocale(metrics);
+  const copy = COPY[locale];
   const featured = metrics.find((metric) => metric.featured) ?? metrics[0];
   const supporting = metrics.find((metric) => metric !== featured);
   const currentSnapshot = createSnapshot(metrics);
+  const contextRef = useRef<HTMLElement>(null);
+  const printIdentityRef = useRef<HTMLSpanElement>(null);
+  const [printStatus, setPrintStatus] = useState("");
+  const [printPrepared, setPrintPrepared] = useState(false);
   const [snapshotState, setSnapshotState] = useState<SnapshotState>(() => ({
     current: currentSnapshot,
     previous: null,
@@ -188,9 +221,69 @@ export function CalculatorResultContext({
 
   const previousSnapshot = snapshotState.previous;
 
+  function printSummary() {
+    if (!currentSnapshot) {
+      setPrintStatus(copy.printUnavailable);
+      return;
+    }
+
+    const staleNotice = contextRef.current?.parentElement?.querySelector(
+      "[data-testid='stale-result-notice']",
+    );
+    if (staleNotice) {
+      setPrintStatus(copy.printStale);
+      return;
+    }
+
+    flushSync(() => {
+      setPrintStatus("");
+      setPrintPrepared(true);
+    });
+    if (printIdentityRef.current)
+      printIdentityRef.current.textContent = getCalculatorIdentity();
+    document.body.dataset.calcomeResultPrinting = "true";
+
+    const cleanup = () => {
+      delete document.body.dataset.calcomeResultPrinting;
+      flushSync(() => {
+        setPrintPrepared(false);
+      });
+    };
+    window.addEventListener("afterprint", cleanup, { once: true });
+
+    try {
+      window.print();
+    } catch {
+      cleanup();
+      setPrintStatus(copy.printUnavailable);
+    }
+  }
+
   return (
     <>
+      <style>{`
+        @media print {
+          body[data-calcome-result-printing="true"] * {
+            visibility: hidden !important;
+          }
+          body[data-calcome-result-printing="true"] [data-calcome-print-summary],
+          body[data-calcome-result-printing="true"] [data-calcome-print-summary] * {
+            visibility: visible !important;
+          }
+          body[data-calcome-result-printing="true"] [data-calcome-print-summary] {
+            display: block !important;
+            position: absolute;
+            inset: 0 auto auto 0;
+            width: 100%;
+            background: white !important;
+            color: black !important;
+            padding: 24px;
+          }
+        }
+      `}</style>
+
       <section
+        ref={contextRef}
         className="mt-3 rounded-lg border bg-muted/30 p-3 text-sm"
         data-testid="result-context"
         aria-labelledby="result-context-title"
@@ -213,7 +306,58 @@ export function CalculatorResultContext({
             </p>
           ) : null}
         </div>
+        <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs leading-5 text-muted-foreground">
+            {copy.printPrivacy}
+          </p>
+          <Button
+            type="button"
+            variant="outline"
+            className="min-h-11 shrink-0"
+            onClick={printSummary}
+          >
+            {copy.printAction}
+          </Button>
+        </div>
+        {printStatus ? (
+          <p
+            className="sr-only"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            {printStatus}
+          </p>
+        ) : null}
       </section>
+
+      {printPrepared ? (
+        <section
+          className="hidden"
+          data-calcome-print-summary
+          data-testid="print-result-summary"
+          aria-hidden="true"
+        >
+          <h1 className="text-2xl font-bold">{copy.printTitle}</h1>
+          <p className="mt-2 text-sm">
+            <strong>{copy.printCalculator}:</strong>{" "}
+            <span ref={printIdentityRef}>CalCome</span>
+          </p>
+          <dl className="mt-6 grid gap-3">
+            {currentSnapshot?.pairs.map(({ label, value }) => (
+              <div key={label} className="border-b pb-2">
+                <dt className="text-sm font-medium">{label}</dt>
+                <dd className="mt-1 text-xl font-bold">{value}</dd>
+              </div>
+            ))}
+          </dl>
+          <div className="mt-6 border-t pt-4">
+            <h2 className="font-semibold">{copy.printGuidance}</h2>
+            <p className="mt-2 text-sm leading-6">{copy.description}</p>
+            <p className="mt-2 text-xs leading-5">{copy.printPrivacy}</p>
+          </div>
+        </section>
+      ) : null}
 
       {previousSnapshot && currentSnapshot ? (
         <section
