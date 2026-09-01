@@ -102,8 +102,7 @@ describe("calculator repeat-use storage", () => {
       <CalculatorRepeatUseShortcuts
         calculators={calculators.map((calculator) => ({
           ...calculator,
-          name:
-            calculator.id === "vat" ? "부가가치세" : "복리",
+          name: calculator.id === "vat" ? "부가가치세" : "복리",
           href:
             calculator.id === "vat"
               ? "/ko/business/vat"

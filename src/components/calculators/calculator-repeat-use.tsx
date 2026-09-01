@@ -361,7 +361,9 @@ export function CalculatorRepeatUseShortcuts({
                       <>
                         <button
                           type="button"
-                          onClick={() => moveCalculatorFavorite(calculator.id, -1)}
+                          onClick={() =>
+                            moveCalculatorFavorite(calculator.id, -1)
+                          }
                           disabled={index === 0}
                           aria-label={
                             isEnglish
@@ -374,7 +376,9 @@ export function CalculatorRepeatUseShortcuts({
                         </button>
                         <button
                           type="button"
-                          onClick={() => moveCalculatorFavorite(calculator.id, 1)}
+                          onClick={() =>
+                            moveCalculatorFavorite(calculator.id, 1)
+                          }
                           disabled={index === favorites.length - 1}
                           aria-label={
                             isEnglish
