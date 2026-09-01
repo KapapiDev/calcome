@@ -186,72 +186,68 @@ describe("published calculator SEO coverage", () => {
     ).toEqual([]);
   });
 
-  it(
-    "keeps calculator search snippets unique and free of placeholder copy in each locale",
-    async () => {
-      const failures: string[] = [];
+  it("keeps calculator search snippets unique and free of placeholder copy in each locale", async () => {
+    const failures: string[] = [];
 
-      for (const locale of ["ko", "en"] as const) {
-        const titles: Array<[string, string]> = [];
-        const descriptions: Array<[string, string]> = [];
-        const placeholders: string[] = [];
+    for (const locale of ["ko", "en"] as const) {
+      const titles: Array<[string, string]> = [];
+      const descriptions: Array<[string, string]> = [];
+      const placeholders: string[] = [];
 
-        for (const calculator of allPublishedCalculators) {
-          const relativeRoute = routePathFromHref(calculator.href);
-          const moduleKey = `../app/[locale]/${relativeRoute}/page.tsx`;
-          const loadRoute = routeModules[moduleKey];
+      for (const calculator of allPublishedCalculators) {
+        const relativeRoute = routePathFromHref(calculator.href);
+        const moduleKey = `../app/[locale]/${relativeRoute}/page.tsx`;
+        const loadRoute = routeModules[moduleKey];
 
-          if (!loadRoute) {
-            failures.push(`${locale}:${calculator.id} missing route module`);
-            continue;
-          }
-
-          const routeModule = await loadRoute();
-          if (!routeModule.generateMetadata) {
-            failures.push(`${locale}:${calculator.id} missing generateMetadata`);
-            continue;
-          }
-
-          const metadata = await routeModule.generateMetadata({
-            params: Promise.resolve({ locale }),
-          });
-          const title = titleText(metadata.title);
-          const description =
-            typeof metadata.description === "string"
-              ? metadata.description.trim()
-              : "";
-
-          titles.push([calculator.id, title]);
-          descriptions.push([calculator.id, description]);
-
-          if (looksPlaceholder(title)) {
-            placeholders.push(`${calculator.id} title: ${title || "<empty>"}`);
-          }
-          if (looksPlaceholder(description)) {
-            placeholders.push(
-              `${calculator.id} description: ${description || "<empty>"}`,
-            );
-          }
+        if (!loadRoute) {
+          failures.push(`${locale}:${calculator.id} missing route module`);
+          continue;
         }
 
-        failures.push(
-          ...duplicateValues(titles).map(
-            (duplicate) => `${locale} duplicate title ${duplicate}`,
-          ),
-          ...duplicateValues(descriptions).map(
-            (duplicate) => `${locale} duplicate description ${duplicate}`,
-          ),
-          ...placeholders.map(
-            (placeholder) => `${locale} placeholder ${placeholder}`,
-          ),
-        );
+        const routeModule = await loadRoute();
+        if (!routeModule.generateMetadata) {
+          failures.push(`${locale}:${calculator.id} missing generateMetadata`);
+          continue;
+        }
+
+        const metadata = await routeModule.generateMetadata({
+          params: Promise.resolve({ locale }),
+        });
+        const title = titleText(metadata.title);
+        const description =
+          typeof metadata.description === "string"
+            ? metadata.description.trim()
+            : "";
+
+        titles.push([calculator.id, title]);
+        descriptions.push([calculator.id, description]);
+
+        if (looksPlaceholder(title)) {
+          placeholders.push(`${calculator.id} title: ${title || "<empty>"}`);
+        }
+        if (looksPlaceholder(description)) {
+          placeholders.push(
+            `${calculator.id} description: ${description || "<empty>"}`,
+          );
+        }
       }
 
-      expect(
-        failures,
-        "published calculator metadata must provide unique, non-placeholder title/description snippets per locale",
-      ).toEqual([]);
-    },
-    15_000,
-  );
+      failures.push(
+        ...duplicateValues(titles).map(
+          (duplicate) => `${locale} duplicate title ${duplicate}`,
+        ),
+        ...duplicateValues(descriptions).map(
+          (duplicate) => `${locale} duplicate description ${duplicate}`,
+        ),
+        ...placeholders.map(
+          (placeholder) => `${locale} placeholder ${placeholder}`,
+        ),
+      );
+    }
+
+    expect(
+      failures,
+      "published calculator metadata must provide unique, non-placeholder title/description snippets per locale",
+    ).toEqual([]);
+  }, 15_000);
 });
