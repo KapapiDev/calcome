@@ -53,8 +53,8 @@ Remaining to Target: 0
 
 ## Active queue
 
-- [ ] UX-007 OPEN — Full-Site Accessibility and Visual Consistency Regression
-  - Scope: run the existing post-100 full-site accessibility and visual consistency regression across shared navigation, directory, category/search discovery, and representative calculator families; fix only proven shared defects and preserve calculation logic, canonical routes, and bilingual behavior.
+- [ ] SEO-017 OPEN — Post-100 Metadata Uniqueness and Search-Snippet Regression
+  - Scope: audit published calculator metadata for duplicated or placeholder titles/descriptions across Korean and English routes, preserve canonical/hreflang behavior, and add deterministic regression coverage without rewriting policy-sensitive calculation content.
 
 ## Security gate
 
