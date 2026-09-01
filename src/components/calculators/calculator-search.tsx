@@ -3,6 +3,10 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
+import {
+  consumeDirectoryReturnContext,
+  saveDirectoryReturnContext,
+} from "@/components/calculators/calculator-directory-context";
 import type { DirectorySearchCalculator } from "@/config/calculator-directory";
 
 type IndexedCalculator = {
@@ -118,6 +122,19 @@ export function CalculatorSearch({
     }
   }, [hasRestoredQuery, query]);
 
+  useEffect(() => {
+    if (!hasRestoredQuery) return;
+
+    const scrollY = consumeDirectoryReturnContext(locale);
+    if (scrollY === null) return;
+
+    const frame = window.requestAnimationFrame(() => {
+      window.scrollTo({ top: scrollY, left: 0, behavior: "auto" });
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [hasRestoredQuery, locale]);
+
   const searchIndex = useMemo<readonly IndexedCalculator[]>(
     () =>
       calculators.map((calculator, sourceIndex) => ({
@@ -179,6 +196,7 @@ export function CalculatorSearch({
                   <li key={calculator.id}>
                     <Link
                       href={calculator.href}
+                      onClick={() => saveDirectoryReturnContext(locale)}
                       className="flex min-h-11 items-center justify-between gap-3 rounded-xl border bg-background px-4 py-3 transition hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/30"
                     >
                       <span className="min-w-0">
