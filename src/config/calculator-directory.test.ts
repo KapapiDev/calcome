@@ -44,7 +44,9 @@ describe("calculator directory", () => {
 
   it("keeps every published calculator directly discoverable and bilingual", () => {
     const directoryIds = new Set(
-      calculatorDirectoryCategories.flatMap((category) => category.calculatorIds),
+      calculatorDirectoryCategories.flatMap(
+        (category) => category.calculatorIds,
+      ),
     );
     const searchById = new Map(
       directorySearchCalculators.map(
@@ -69,7 +71,9 @@ describe("calculator directory", () => {
       expect(sitemapUrls.has(`https://www.calcome.com${calculator.href}`)).toBe(
         true,
       );
-      expect(sitemapUrls.has(`https://www.calcome.com${englishHref}`)).toBe(true);
+      expect(sitemapUrls.has(`https://www.calcome.com${englishHref}`)).toBe(
+        true,
+      );
     }
   });
 
