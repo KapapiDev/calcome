@@ -44,11 +44,13 @@ Remaining to Target: 0
   - The bilingual calculator directory now surfaces device-local favorites ahead of popular/category sections when favorites exist, preserves favorite order and stable localized routes, records recent use on shortcut navigation, and leaves the complete server-rendered 100-calculator directory and structured data unchanged.
 - [x] UX-058 DONE — Directory Search Recovery and Keyboard Discovery Upgrade
   - Directory search now exposes deterministic full-directory recovery for zero or weak matches, preserves alias/category result ranking, supports Escape-to-clear without losing keyboard focus, and keeps the complete bilingual server-rendered directory as the recovery target instead of introducing client-only routes or duplicate URLs.
+- [x] UX-059 DONE — Shared Calculator Result Copy and Share Upgrade
+  - Shared result context now offers bilingual result reuse through native sharing when available and clipboard fallback otherwise, sharing only the calculator identity and currently displayed result summary without persisting inputs or adding result URLs; stale results remain blocked until recalculation.
 
 ## Active queue
 
-- [ ] UX-059 OPEN — Shared Calculator Result Copy and Share Upgrade
-  - Scope: make useful calculator outcomes easier to reuse without accounts or persistent sensitive input storage. Add a shared, bilingual result-summary copy/share path where the existing result context can safely provide concise output, prefer native sharing when available with a clipboard fallback, preserve calculation/state behavior, and keep keyboard, screen-reader, mobile, privacy, and no-duplicate-route guarantees intact.
+- [ ] UX-060 OPEN — Shared Result Actions Accessibility and Mobile Regression
+  - Scope: regression-test shared scenario, copy/share, print/PDF, and previous-result actions together for keyboard order, accessible status announcements, mobile touch targets and overflow, stale-result blocking, bilingual copy, and privacy-safe result-only behavior without changing formulas, persistent input storage, or public routes.
 
 ## Security gate
 
