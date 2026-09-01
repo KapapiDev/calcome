@@ -18,10 +18,13 @@ describe("shared calculator keyboard submit and reset interactions", () => {
       </form>,
     );
 
-    const form = screen.getByRole("button", { name: "Calculate" }).closest("form");
+    const form = screen
+      .getByRole("button", { name: "Calculate" })
+      .closest("form");
     expect(form).not.toBeNull();
     fireEvent.submit(form!);
 
+    expect(handleSubmit).not.toHaveBeenCalled();
     expect(screen.getByLabelText("Amount")).toHaveFocus();
     expect(screen.getByRole("alert")).toHaveTextContent("Amount");
   });
@@ -38,7 +41,9 @@ describe("shared calculator keyboard submit and reset interactions", () => {
       </form>,
     );
 
-    const form = screen.getByRole("button", { name: "Calculate" }).closest("form");
+    const form = screen
+      .getByRole("button", { name: "Calculate" })
+      .closest("form");
     fireEvent.submit(form!);
 
     expect(handleSubmit).toHaveBeenCalledTimes(1);
@@ -50,7 +55,10 @@ describe("shared calculator keyboard submit and reset interactions", () => {
       <div>
         <form>
           <input aria-label="Amount" defaultValue="100" />
-          <CalculatorActions submitLabel="Calculate" onReset={() => undefined} />
+          <CalculatorActions
+            submitLabel="Calculate"
+            onReset={() => undefined}
+          />
         </form>
         <section>
           <PrimaryResults

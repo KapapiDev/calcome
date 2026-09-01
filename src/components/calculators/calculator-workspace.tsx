@@ -1,6 +1,12 @@
 "use client";
 
-import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import {
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import { CalculatorResultContext } from "@/components/calculators/calculator-result-context";
 import { Button } from "@/components/ui/button";
@@ -224,6 +230,7 @@ export function CalculatorActions({
     const handleSubmit = (event: SubmitEvent) => {
       if (!validateBeforeSubmit(form)) {
         event.preventDefault();
+        event.stopPropagation();
         return;
       }
       moveMobileCompletionToResults(form);
