@@ -42,11 +42,13 @@ Remaining to Target: 0
   - Repeat-use shortcuts now support removing individual recent items, clearing recent history, and removing favorites directly from the shortcut area with bilingual accessible controls.
 - [x] UX-050 DONE — Calculator Directory Return-Context and Navigation Continuity Upgrade
   - Calculator-directory search text remains session-restored, and opening a calculator from either a directory card or search result now records only the current directory scroll position plus locale for a one-time same-locale return. Returning restores the prior category/search position without storing calculator inputs or results, and malformed, unavailable-storage, or cross-locale context fails safely.
+- [x] UX-051 DONE — Calculator Directory Search Result Expansion and Long-List Discovery Upgrade
+  - Broad directory searches keep the initial eight-result render but can now reveal deterministically ranked matches in bounded, bilingual, keyboard-accessible batches. Changing the query resets the visible cap without persisting calculator inputs or results.
 
 ## Active queue
 
-- [ ] UX-051 OPEN — Calculator Directory Search Result Expansion and Long-List Discovery Upgrade
-  - Scope: make broad directory searches with more than the initial visible result cap explorable without forcing users to rewrite the query or abandon search for category browsing. Preserve deterministic ranking, Korean/English parity, keyboard/accessibility behavior, canonical calculator routes, fast directory performance, and the current non-persistence of calculator inputs/results.
+- [ ] UX-052 OPEN — Shared Calculator Printable Result Summary Upgrade
+  - Scope: add a shared bilingual print/save-friendly result summary that makes calculated outputs, calculator identity, and existing assumption/context guidance usable outside the live page without uploading or automatically persisting calculator inputs or results. Preserve calculator formulas, policy-source boundaries, canonical routes, accessibility, and mobile behavior.
 
 ## Security gate
 

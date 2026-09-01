@@ -33,10 +33,11 @@ const searchCopy = {
     resultsLabel: "계산기 검색 결과",
     resultCount: (total: number, visible: number) =>
       total > visible
-        ? `${total}개 결과 중 상위 ${visible}개를 표시합니다.`
+        ? `총 ${total}개 중 ${visible}개를 표시합니다.`
         : `${total}개 결과`,
+    showMore: (count: number) => `검색 결과 더 보기 (${count}개)`,
     refine:
-      "더 정확한 결과가 필요하면 검색어를 구체화하거나 아래 카테고리를 이용하세요.",
+      "필요한 계산기가 아직 보이지 않으면 결과를 더 펼치거나 아래 카테고리를 이용하세요.",
   },
   en: {
     label: "Search calculators",
@@ -47,10 +48,11 @@ const searchCopy = {
     resultsLabel: "Calculator search results",
     resultCount: (total: number, visible: number) =>
       total > visible
-        ? `Showing the top ${visible} of ${total} results.`
+        ? `Showing ${visible} of ${total} results.`
         : `${total} ${total === 1 ? "result" : "results"}`,
+    showMore: (count: number) => `Show more results (${count})`,
     refine:
-      "Refine your search for a narrower match, or browse the full inventory by category below.",
+      "If the calculator you need is not visible yet, show more results or browse the categories below.",
   },
 } as const;
 
@@ -83,6 +85,10 @@ export function CalculatorSearch({
 }) {
   const [query, setQuery] = useState("");
   const [hasRestoredQuery, setHasRestoredQuery] = useState(false);
+  const [resultExpansion, setResultExpansion] = useState({
+    query: "",
+    count: MAX_VISIBLE_SEARCH_RESULTS,
+  });
   const copy = searchCopy[locale];
 
   useEffect(() => {
@@ -168,7 +174,28 @@ export function CalculatorSearch({
       )
       .map(({ indexed }) => indexed.calculator);
   }, [searchIndex, normalizedQuery]);
-  const visibleResults = results.slice(0, MAX_VISIBLE_SEARCH_RESULTS);
+  const visibleResultLimit =
+    resultExpansion.query === normalizedQuery
+      ? resultExpansion.count
+      : MAX_VISIBLE_SEARCH_RESULTS;
+  const visibleResults = results.slice(0, visibleResultLimit);
+  const hiddenResultCount = Math.max(0, results.length - visibleResults.length);
+  const nextResultBatchSize = Math.min(
+    MAX_VISIBLE_SEARCH_RESULTS,
+    hiddenResultCount,
+  );
+
+  const showMoreResults = () => {
+    setResultExpansion((current) => ({
+      query: normalizedQuery,
+      count: Math.min(
+        results.length,
+        (current.query === normalizedQuery
+          ? current.count
+          : MAX_VISIBLE_SEARCH_RESULTS) + MAX_VISIBLE_SEARCH_RESULTS,
+      ),
+    }));
+  };
 
   return (
     <div className="mt-8 max-w-2xl">
@@ -185,13 +212,20 @@ export function CalculatorSearch({
         className="mt-2 h-12 w-full rounded-xl border bg-background px-4 text-base shadow-sm outline-none transition focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30"
       />
       {normalizedQuery ? (
-        <div className="mt-4" aria-live="polite">
+        <div className="mt-4">
           {results.length ? (
             <>
-              <p className="mb-2 text-sm text-muted-foreground">
+              <p
+                className="mb-2 text-sm text-muted-foreground"
+                aria-live="polite"
+              >
                 {copy.resultCount(results.length, visibleResults.length)}
               </p>
-              <ul className="grid gap-2" aria-label={copy.resultsLabel}>
+              <ul
+                id="calculator-search-results"
+                className="grid gap-2"
+                aria-label={copy.resultsLabel}
+              >
                 {visibleResults.map((calculator) => (
                   <li key={calculator.id}>
                     <Link
@@ -214,14 +248,27 @@ export function CalculatorSearch({
                   </li>
                 ))}
               </ul>
-              {results.length > visibleResults.length ? (
-                <p className="mt-2 text-xs leading-5 text-muted-foreground">
-                  {copy.refine}
-                </p>
+              {hiddenResultCount ? (
+                <div className="mt-3">
+                  <button
+                    type="button"
+                    onClick={showMoreResults}
+                    aria-controls="calculator-search-results"
+                    className="inline-flex min-h-11 items-center rounded-lg border bg-background px-4 text-sm font-medium text-foreground transition hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/30"
+                  >
+                    {copy.showMore(nextResultBatchSize)}
+                  </button>
+                  <p className="mt-2 text-xs leading-5 text-muted-foreground">
+                    {copy.refine}
+                  </p>
+                </div>
               ) : null}
             </>
           ) : (
-            <div className="rounded-xl border bg-muted/30 p-4 text-sm text-muted-foreground">
+            <div
+              className="rounded-xl border bg-muted/30 p-4 text-sm text-muted-foreground"
+              aria-live="polite"
+            >
               <p>{copy.empty}</p>
               <p className="mt-1">{copy.recovery}</p>
               <button
