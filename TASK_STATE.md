@@ -45,8 +45,8 @@ Remaining to Target: 0
 
 ## Active queue
 
-- [ ] UX-007 OPEN — Full-Site Accessibility and Visual Consistency Regression
-  - Scope: run whole-site keyboard, focus, accessible-name, contrast, zoom, reduced-motion, touch-target, mobile overflow, light/dark-mode, and shared visual-consistency regression checks; fix only proven inconsistencies and preserve current routes, SEO, calculations, data, and accessibility safety lines.
+- [ ] UX-051 OPEN — Calculator Directory Search Result Expansion and Long-List Discovery Upgrade
+  - Scope: make broad directory searches with more than the initial visible result cap explorable without forcing users to rewrite the query or abandon search for category browsing. Preserve deterministic ranking, Korean/English parity, keyboard/accessibility behavior, canonical calculator routes, fast directory performance, and the current non-persistence of calculator inputs/results.
 
 ## Security gate
 
