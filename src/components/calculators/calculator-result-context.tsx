@@ -1,6 +1,7 @@
 "use client";
 
 import { isValidElement, type ReactNode, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 
 import { Button } from "@/components/ui/button";
 
@@ -204,6 +205,7 @@ export function CalculatorResultContext({
   const contextRef = useRef<HTMLElement>(null);
   const printIdentityRef = useRef<HTMLSpanElement>(null);
   const [printStatus, setPrintStatus] = useState("");
+  const [printPrepared, setPrintPrepared] = useState(false);
   const [snapshotState, setSnapshotState] = useState<SnapshotState>(() => ({
     current: currentSnapshot,
     previous: null,
@@ -233,13 +235,17 @@ export function CalculatorResultContext({
       return;
     }
 
+    flushSync(() => {
+      setPrintStatus("");
+      setPrintPrepared(true);
+    });
     if (printIdentityRef.current)
       printIdentityRef.current.textContent = getCalculatorIdentity();
-    setPrintStatus("");
     document.body.dataset.calcomeResultPrinting = "true";
 
     const cleanup = () => {
       delete document.body.dataset.calcomeResultPrinting;
+      setPrintPrepared(false);
     };
     window.addEventListener("afterprint", cleanup, { once: true });
 
@@ -321,31 +327,33 @@ export function CalculatorResultContext({
         </p>
       </section>
 
-      <section
-        className="hidden"
-        data-calcome-print-summary
-        data-testid="print-result-summary"
-        aria-hidden="true"
-      >
-        <h1 className="text-2xl font-bold">{copy.printTitle}</h1>
-        <p className="mt-2 text-sm">
-          <strong>{copy.printCalculator}:</strong>{" "}
-          <span ref={printIdentityRef}>CalCome</span>
-        </p>
-        <dl className="mt-6 grid gap-3">
-          {currentSnapshot?.pairs.map(({ label, value }) => (
-            <div key={label} className="border-b pb-2">
-              <dt className="text-sm font-medium">{label}</dt>
-              <dd className="mt-1 text-xl font-bold">{value}</dd>
-            </div>
-          ))}
-        </dl>
-        <div className="mt-6 border-t pt-4">
-          <h2 className="font-semibold">{copy.printGuidance}</h2>
-          <p className="mt-2 text-sm leading-6">{copy.description}</p>
-          <p className="mt-2 text-xs leading-5">{copy.printPrivacy}</p>
-        </div>
-      </section>
+      {printPrepared ? (
+        <section
+          className="hidden"
+          data-calcome-print-summary
+          data-testid="print-result-summary"
+          aria-hidden="true"
+        >
+          <h1 className="text-2xl font-bold">{copy.printTitle}</h1>
+          <p className="mt-2 text-sm">
+            <strong>{copy.printCalculator}:</strong>{" "}
+            <span ref={printIdentityRef}>CalCome</span>
+          </p>
+          <dl className="mt-6 grid gap-3">
+            {currentSnapshot?.pairs.map(({ label, value }) => (
+              <div key={label} className="border-b pb-2">
+                <dt className="text-sm font-medium">{label}</dt>
+                <dd className="mt-1 text-xl font-bold">{value}</dd>
+              </div>
+            ))}
+          </dl>
+          <div className="mt-6 border-t pt-4">
+            <h2 className="font-semibold">{copy.printGuidance}</h2>
+            <p className="mt-2 text-sm leading-6">{copy.description}</p>
+            <p className="mt-2 text-xs leading-5">{copy.printPrivacy}</p>
+          </div>
+        </section>
+      ) : null}
 
       {previousSnapshot && currentSnapshot ? (
         <section

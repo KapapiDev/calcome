@@ -52,7 +52,30 @@ jobs:
         run: npm run task-state:check
 
       - name: Run tests
-        run: npm run test
+        id: tests
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run test 2>&1 | tee vitest-output.log
+
+      - name: Publish test failure diagnostics
+        if: failure() && steps.tests.outcome == 'failure'
+        shell: bash
+        run: |
+          {
+            echo "## Vitest failure diagnostics"
+            echo '```text'
+            tail -n 200 vitest-output.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload test failure diagnostics
+        if: failure() && steps.tests.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: vitest-failure-${{ github.sha }}
+          path: vitest-output.log
+          retention-days: 3
 
       - name: Build application
         run: npm run build
