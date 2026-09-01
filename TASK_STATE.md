@@ -39,8 +39,8 @@ Remaining to Target: 0
 
 ## Active queue
 
-- [ ] UX-007 OPEN — Full-Site Accessibility and Visual Consistency Regression
-  - Scope: run shared keyboard, focus, accessible-name, zoom, reduced-motion, touch-target, mobile-overflow, and light/dark consistency regression coverage across the current 100-calculator product, fixing only confirmed shared defects and preserving calculation, route, SEO, and data behavior.
+- [ ] UX-055 OPEN — Shared Favorites and Recent Calculator Navigation Upgrade
+  - Scope: improve repeat use across the 100-calculator directory by letting users locally favorite calculators and revisit a bounded recent-calculator list without accounts or financial-input persistence. Keep only calculator identity/order in browser storage, preserve bilingual route identity, keyboard and screen-reader usability, mobile layout, SEO/indexability, and existing directory/search behavior.
 
 ## Security gate
 
