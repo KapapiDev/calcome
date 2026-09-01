@@ -34,11 +34,13 @@ Remaining to Target: 0
   - Saved in-session result scenarios support short local labels and one selected comparison baseline. Labels and baseline selection stay bounded to component memory, stale results cannot be selected as a new baseline, removing or clearing a scenario clears any matching baseline, and formulas/input persistence remain unchanged.
 - [x] PERF-007 DONE — Post-100 Core Web Vitals and Shared Client Bundle Budget Audit
   - Current Next.js build output now reports shared and aggregate emitted client JavaScript sizes, largest chunks, and enforces deterministic gzip budgets for the root shared client runtime after every CI build without changing routes, calculations, hydration behavior, or public UX.
+- [x] PERF-008 DONE — Post-100 Route-Level Client Chunk and Heavy Dependency Regression
+  - Build-time bundle auditing now separates non-shared route/feature JavaScript from the shared runtime, reports the largest non-shared chunks, and rejects any single route/feature chunk above a bounded 350 KiB gzip ceiling so unexpectedly eager heavy dependencies become an executable CI regression instead of silently expanding page cost.
 
 ## Active queue
 
-- [ ] PERF-008 OPEN — Post-100 Route-Level Client Chunk and Heavy Dependency Regression
-  - Scope: use build evidence from the shared-bundle guard to identify route-level client JavaScript outliers and unexpectedly eager heavy dependencies, then add bounded regression coverage or targeted lazy boundaries only where concrete measurements justify them. Preserve routes, SEO, calculations, accessibility, and current shared UX behavior; do not split modules speculatively.
+- [ ] UX-055 OPEN — Shared Favorites and Recent Calculator Navigation Upgrade
+  - Scope: improve repeat use across the 100-calculator directory by letting users locally favorite calculators and revisit a bounded recent-calculator list without accounts or financial-input persistence. Keep only calculator identity/order in browser storage, preserve bilingual route identity, keyboard and screen-reader usability, mobile layout, SEO/indexability, and existing directory/search behavior.
 
 ## Security gate
 
