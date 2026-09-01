@@ -50,11 +50,13 @@ Remaining to Target: 0
   - Shared scenario, copy/share, print/PDF, and previous-result behavior now has one integrated regression covering deterministic keyboard order, 44px mobile action targets, narrow-screen stacking, polite status announcements, stale-result blocking, bilingual copy, and result-only privacy boundaries without changing formulas, storage, or routes.
 - [x] UX-061 DONE — Favorite Ordering and Repeat-Use Shortcut Personalization Upgrade
   - Device-local favorite shortcuts now support deliberate earlier/later ordering with bilingual keyboard-accessible 44px controls, preserve stable calculator-ID-only storage and localized routes, leave recent history independent, and retain the complete server-rendered directory and structured data unchanged.
+- [x] UX-062 DONE — Repeat-Use Personalization Cross-Surface Consistency Regression
+  - One integrated bilingual regression now keeps device-local favorite order synchronized between repeat-use shortcuts and favorites-first directory discovery through stale-ID reconciliation, reordering, localized route identity, removal/clear actions, keyboard focusability, and 44px mobile targets without storing calculator inputs/results or changing server-rendered directory/structured-data coverage.
 
 ## Active queue
 
-- [ ] UX-062 OPEN — Repeat-Use Personalization Cross-Surface Consistency Regression
-  - Scope: regression-test that device-local favorite ordering stays consistent between repeat-use shortcuts and favorites-first directory discovery across bilingual routes, stale-ID reconciliation, removal/clear actions, keyboard interaction, and mobile layouts without persisting calculator inputs/results or changing server-rendered directory/structured-data coverage.
+- [ ] UX-063 OPEN — Shared Calculator Keyboard Submit and Reset Interaction Upgrade
+  - Scope: make keyboard submit, reset, recalculation, focus return, and stale-result clearing predictable across the shared calculator shell in Korean and English while preserving formulas, routes, mobile usability, and existing accessibility semantics. Prefer one shared fix and bounded cross-calculator regression over calculator-by-calculator micro tasks.
 
 ## Security gate
 
