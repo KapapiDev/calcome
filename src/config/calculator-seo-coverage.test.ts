@@ -2,7 +2,7 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 
-import { calculatorDirectory } from "@/config/calculator-directory";
+import { allPublishedCalculators } from "@/config/calculator-directory";
 
 const ROOT = process.cwd();
 const APP_ROOT = path.join(ROOT, "src", "app", "[locale]");
@@ -70,7 +70,7 @@ describe("published calculator SEO coverage", () => {
     const missingMetadata: string[] = [];
     const missingStructuredData: string[] = [];
 
-    for (const calculator of calculatorDirectory) {
+    for (const calculator of allPublishedCalculators) {
       const relativeRoute = routePathFromHref(calculator.href);
       const routeFile = path.join(APP_ROOT, relativeRoute, "page.tsx");
 
