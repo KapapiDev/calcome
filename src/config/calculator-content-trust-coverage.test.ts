@@ -86,7 +86,9 @@ describe("published calculator content trust coverage", () => {
       const sources = [
         routeSource,
         ...importedFeatureNames(routeSource).flatMap((featureName) =>
-          collectSourceFiles(path.join(FEATURES_ROOT, featureName)).map(readSource),
+          collectSourceFiles(path.join(FEATURES_ROOT, featureName)).map(
+            readSource,
+          ),
         ),
       ];
       const guideSources = sources.filter((source) =>
