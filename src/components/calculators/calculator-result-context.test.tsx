@@ -66,7 +66,9 @@ describe("CalculatorResultContext", () => {
     expect(summary).toHaveTextContent("Final balance");
     expect(summary).toHaveTextContent("$1,250");
     expect(summary).toHaveTextContent("Interpretation and assumptions");
-    expect(summary).toHaveTextContent("without uploading or automatically saving");
+    expect(summary).toHaveTextContent(
+      "without uploading or automatically saving",
+    );
 
     fireEvent.click(screen.getByRole("button", { name: "Print / Save PDF" }));
 
