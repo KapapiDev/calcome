@@ -52,11 +52,13 @@ Remaining to Target: 0
   - Added catalog-driven regression coverage requiring every published calculator route to retain deterministic title/description metadata, canonical plus ko/en/x-default alternates, and calculator JSON-LD through its route or feature contract.
 - [x] SEO-017 DONE — Post-100 Metadata Uniqueness and Search-Snippet Regression
   - Added executable bilingual metadata regression coverage across all 100 published calculator routes so duplicate titles/descriptions and placeholder snippet copy fail CI while preserving existing canonical, hreflang, structured-data, and calculation behavior.
+- [x] SEO-018 DONE — Post-100 Search Discovery Quality and Snippet Optimization
+  - Added executable bilingual snippet-quality coverage across all 100 published calculators so thin descriptions, title-only descriptions, and descriptions without a clear user-facing calculation purpose fail CI while preserving canonical/hreflang, structured data, and calculation behavior.
 
 ## Active queue
 
-- [ ] SEO-018 OPEN — Post-100 Search Discovery Quality and Snippet Optimization
-  - Scope: use the completed 100-calculator metadata, structured-data, uniqueness, and internal-link baselines to improve clearly weak search-discovery copy and snippet usefulness as one bounded product-growth pass, preserving canonical/hreflang behavior and policy-sensitive calculation rules without fabricating search volume.
+- [ ] SEO-019 OPEN — Post-100 Calculator Content Helpfulness and Explanation Coverage Regression
+  - Scope: audit all published calculator detail pages for deterministic bilingual explanatory content that tells users what the result means, key assumptions or limits, and how to use the output without duplicating metadata boilerplate or changing calculator formulas and policy-sensitive values.
 
 ## Security gate
 

@@ -132,6 +132,32 @@ function looksPlaceholder(value: string): boolean {
   );
 }
 
+function snippetQualityIssue(
+  title: string,
+  description: string,
+  locale: "ko" | "en",
+): string | null {
+  const normalizedTitle = normalizeSnippet(title);
+  const normalizedDescription = normalizeSnippet(description);
+  const minimumLength = locale === "ko" ? 24 : 48;
+  const purposePattern =
+    locale === "ko"
+      ? /(?:계산|확인|비교|추정|예상|환산|분석|구합니다|알아봅니다|더하거나|역산합니다)/
+      : /\b(?:add|calculate|calculates|check|compare|compares|convert|converts|estimate|estimates|extract|find|forecast|project|projects|see|show|shows|turn)\b/i;
+
+  if (normalizedDescription.length < minimumLength) {
+    return `description shorter than ${minimumLength} characters`;
+  }
+  if (normalizedDescription === normalizedTitle) {
+    return "description duplicates the title";
+  }
+  if (!purposePattern.test(description)) {
+    return "description lacks a clear user-facing calculation purpose";
+  }
+
+  return null;
+}
+
 describe("published calculator SEO coverage", () => {
   it("keeps deterministic bilingual metadata and structured data on every published route", () => {
     const missingRouteFiles: string[] = [];
@@ -248,6 +274,48 @@ describe("published calculator SEO coverage", () => {
     expect(
       failures,
       "published calculator metadata must provide unique, non-placeholder title/description snippets per locale",
+    ).toEqual([]);
+  }, 15_000);
+
+  it("keeps calculator descriptions useful enough for search-result discovery", async () => {
+    const failures: string[] = [];
+
+    for (const locale of ["ko", "en"] as const) {
+      for (const calculator of allPublishedCalculators) {
+        const relativeRoute = routePathFromHref(calculator.href);
+        const moduleKey = `../app/[locale]/${relativeRoute}/page.tsx`;
+        const loadRoute = routeModules[moduleKey];
+
+        if (!loadRoute) {
+          failures.push(`${locale}:${calculator.id} missing route module`);
+          continue;
+        }
+
+        const routeModule = await loadRoute();
+        if (!routeModule.generateMetadata) {
+          failures.push(`${locale}:${calculator.id} missing generateMetadata`);
+          continue;
+        }
+
+        const metadata = await routeModule.generateMetadata({
+          params: Promise.resolve({ locale }),
+        });
+        const title = titleText(metadata.title);
+        const description =
+          typeof metadata.description === "string"
+            ? metadata.description.trim()
+            : "";
+        const issue = snippetQualityIssue(title, description, locale);
+
+        if (issue) {
+          failures.push(`${locale}:${calculator.id} ${issue}: ${description}`);
+        }
+      }
+    }
+
+    expect(
+      failures,
+      "calculator metadata descriptions must provide readable, calculator-specific user context instead of thin boilerplate",
     ).toEqual([]);
   }, 15_000);
 });
