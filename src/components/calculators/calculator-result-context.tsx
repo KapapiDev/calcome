@@ -411,12 +411,21 @@ export function CalculatorResultContext({
           </Button>
         </div>
         {scenarioStatus ? (
-          <p role="status" aria-live="polite" className="mt-2 text-xs text-muted-foreground">
+          <p
+            role="status"
+            aria-live="polite"
+            className="mt-2 text-xs text-muted-foreground"
+          >
             {scenarioStatus}
           </p>
         ) : null}
         {printStatus ? (
-          <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+          <p
+            className="sr-only"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+          >
             {printStatus}
           </p>
         ) : null}
