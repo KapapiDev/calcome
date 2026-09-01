@@ -49,8 +49,8 @@ Remaining to Target: 0
 
 ## Active queue
 
-- [ ] UX-007 OPEN — Full-Site Accessibility and Visual Consistency Regression
-  - Scope: run the existing cataloged full-site keyboard, focus-order, accessible-name, contrast, zoom, reduced-motion, touch-target, mobile-overflow, light/dark-mode, and shared visual-consistency regression across the post-100 calculator surface, applying only proven reusable fixes and preserving routes, calculations, and public-path integrity.
+- [ ] UX-060 OPEN — Shared Result Actions Accessibility and Mobile Regression
+  - Scope: regression-test shared scenario, copy/share, print/PDF, and previous-result actions together for keyboard order, accessible status announcements, mobile touch targets and overflow, stale-result blocking, bilingual copy, and privacy-safe result-only behavior without changing formulas, persistent input storage, or public routes.
 
 ## Security gate
 
