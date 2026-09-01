@@ -115,7 +115,10 @@ describe("CalculatorSearch", () => {
 
     await user.clear(search);
     await user.type(search, "두번째검색");
-    expect(within(resultList).getAllByRole("link")).toHaveLength(8);
+    const resetResultList = screen.getByRole("list", {
+      name: "계산기 검색 결과",
+    });
+    expect(within(resetResultList).getAllByRole("link")).toHaveLength(8);
     expect(screen.getByText("총 12개 중 8개를 표시합니다.")).toBeVisible();
   });
 
