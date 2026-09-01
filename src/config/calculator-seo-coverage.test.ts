@@ -19,14 +19,14 @@ function routePathFromHref(href: string): string {
 function importedFeatureNames(source: string): string[] {
   return Array.from(
     source.matchAll(/from\s+["']@\/features\/([^/"']+)(?:\/[^"']*)?["']/g),
-    (match) => match[1],
+    (match) => match[1] as string,
   );
 }
 
 function importedMetadataSources(source: string): string[] {
   const featureNames = Array.from(
     source.matchAll(/from\s+["']@\/features\/([^/"']+)\/metadata["']/g),
-    (match) => match[1],
+    (match) => match[1] as string,
   );
 
   return featureNames
