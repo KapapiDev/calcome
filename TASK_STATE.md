@@ -51,8 +51,8 @@ Remaining to Target: 0
 
 ## Active queue
 
-- [ ] SEO-003 OPEN — Technical SEO and Indexability Audit
-  - Scope: run the existing catalog technical SEO/indexability audit now that the 100-calculator inventory is complete, preserving already-correct canonical, bilingual routing, sitemap, and public-route behavior while fixing only confirmed indexability defects.
+- [ ] SEO-016 OPEN — Post-100 Metadata and Structured-Data Coverage Regression
+  - Scope: audit all 100 bilingual calculator routes for deterministic title/description, canonical and hreflang coverage, and calculator structured-data presence from shared source contracts. Fix only proven coverage gaps, preserve route identity and policy-sensitive calculation logic, and avoid duplicating already-merged SEO-003 through SEO-014 work.
 
 ## Security gate
 
