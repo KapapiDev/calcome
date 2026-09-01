@@ -1,4 +1,8 @@
 import Link from "next/link";
+import {
+  JsonLdScript,
+  createPageStructuredData,
+} from "@/lib/seo/structured-data";
 import { dividendYieldRateContent } from "../content";
 import type { DividendYieldRateLocale } from "../validation";
 import { DividendYieldRateCalculator } from "./dividend-yield-rate-calculator";
@@ -9,15 +13,28 @@ export function LocalizedDividendYieldRatePage({
   locale: DividendYieldRateLocale;
 }) {
   const copy = dividendYieldRateContent[locale];
+  const path = `/${locale}/finance/dividend-yield`;
+  const home = locale === "ko" ? "홈" : "Home";
+  const data = createPageStructuredData({
+    name: copy.title,
+    description: copy.description,
+    path,
+    locale,
+    breadcrumbs: [
+      { name: home, path: "/" },
+      { name: copy.title, path },
+    ],
+  });
 
   return (
     <main id="main-content" className="flex-1">
+      <JsonLdScript data={data} />
       <div className="mx-auto w-full max-w-[1440px] px-5 py-8 sm:px-6 sm:py-10">
         <nav
           aria-label={locale === "ko" ? "경로" : "Breadcrumb"}
           className="text-sm text-muted-foreground"
         >
-          <Link href="/">{locale === "ko" ? "홈" : "Home"}</Link> /{" "}
+          <Link href="/">{home}</Link> /{" "}
           <span aria-current="page">{copy.title}</span>
         </nav>
         <header className="mt-5 max-w-3xl">

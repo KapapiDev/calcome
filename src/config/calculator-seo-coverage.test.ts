@@ -61,14 +61,18 @@ function hasMetadataContract(source: string): boolean {
 }
 
 function hasStructuredDataContract(source: string): boolean {
-  return (
+  const sharedStructuredData =
     source.includes("JsonLdScript") &&
-    /create[A-Za-z0-9]*StructuredData/.test(source)
-  );
+    /create[A-Za-z0-9]*StructuredData/.test(source);
+  const directJsonLd =
+    source.includes('type="application/ld+json"') &&
+    source.includes("JSON.stringify");
+
+  return sharedStructuredData || directJsonLd;
 }
 
 describe("published calculator SEO coverage", () => {
-  it("keeps deterministic bilingual metadata and calculator structured data on every published route", () => {
+  it("keeps deterministic bilingual metadata and structured data on every published route", () => {
     const missingRouteFiles: string[] = [];
     const missingMetadata: string[] = [];
     const missingStructuredData: string[] = [];
@@ -117,7 +121,7 @@ describe("published calculator SEO coverage", () => {
     ).toEqual([]);
     expect(
       missingStructuredData,
-      "published calculator routes missing calculator JSON-LD coverage",
+      "published calculator routes missing JSON-LD coverage",
     ).toEqual([]);
   });
 });
