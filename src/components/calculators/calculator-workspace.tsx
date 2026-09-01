@@ -255,6 +255,10 @@ export function CalculatorActions({
           type="submit"
           size="lg"
           className="h-11 px-5"
+          onClick={(event) => {
+            if (!validateBeforeSubmit(event.currentTarget.form))
+              event.preventDefault();
+          }}
         >
           {submitLabel}
         </Button>
