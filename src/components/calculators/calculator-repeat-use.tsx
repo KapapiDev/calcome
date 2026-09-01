@@ -217,8 +217,7 @@ export function CalculatorRepeatUseShortcuts({
   const recent = resolveCalculators(snapshot.recent, byId).filter(
     (calculator) => !favoriteIds.has(calculator.id),
   );
-
-  if (favorites.length === 0 && recent.length === 0) return null;
+  const isEmpty = favorites.length === 0 && recent.length === 0;
 
   return (
     <section
@@ -236,88 +235,104 @@ export function CalculatorRepeatUseShortcuts({
           {isEnglish ? "Stored only on this device" : "이 기기에만 저장됩니다"}
         </p>
       </div>
-      <div className="mt-4 space-y-4">
-        {favorites.length > 0 ? (
-          <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-              {isEnglish ? "Favorites" : "즐겨찾기"}
-            </h3>
-            <ul className="mt-2 flex flex-wrap gap-2">
-              {favorites.map((calculator) => (
-                <li
-                  key={calculator.id}
-                  className="flex min-h-11 items-stretch overflow-hidden rounded-lg border bg-background"
-                >
-                  <Link
-                    href={calculator.href}
-                    onClick={() => recordRecentCalculator(calculator.id)}
-                    className="inline-flex items-center px-3 text-sm font-medium transition hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/30 motion-reduce:transition-none"
-                  >
-                    {calculator.name}
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={() => removeCalculatorFavorite(calculator.id)}
-                    aria-label={
-                      isEnglish
-                        ? `Remove ${calculator.name} from favorites`
-                        : `${calculator.name} 즐겨찾기에서 제거`
-                    }
-                    className="inline-flex min-h-11 min-w-11 items-center justify-center border-l text-base text-muted-foreground transition hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/30 motion-reduce:transition-none"
-                  >
-                    ×
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : null}
-
-        {recent.length > 0 ? (
-          <div>
-            <div className="flex flex-wrap items-center justify-between gap-2">
+      {isEmpty ? (
+        <div className="mt-4 rounded-lg border border-dashed bg-background/70 p-4">
+          <p className="text-sm text-muted-foreground">
+            {isEnglish
+              ? "Favorite a calculator or open one from the directory to keep a quick path back here."
+              : "계산기를 즐겨찾기하거나 목록에서 사용하면 여기에서 빠르게 다시 열 수 있습니다."}
+          </p>
+          <Link
+            href={isEnglish ? "/en/calculators" : "/ko/calculators"}
+            className="mt-3 inline-flex min-h-11 items-center rounded-lg border bg-background px-3 text-sm font-medium transition hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/30 motion-reduce:transition-none"
+          >
+            {isEnglish ? "Browse all calculators" : "전체 계산기 보기"}
+          </Link>
+        </div>
+      ) : (
+        <div className="mt-4 space-y-4">
+          {favorites.length > 0 ? (
+            <div>
               <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                {isEnglish ? "Recently used" : "최근 사용"}
+                {isEnglish ? "Favorites" : "즐겨찾기"}
               </h3>
-              <button
-                type="button"
-                onClick={clearRecentCalculators}
-                className="inline-flex min-h-11 items-center rounded-lg px-2 text-xs font-medium text-muted-foreground transition hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/30 motion-reduce:transition-none"
-              >
-                {isEnglish ? "Clear recent" : "최근 사용 지우기"}
-              </button>
+              <ul className="mt-2 flex flex-wrap gap-2">
+                {favorites.map((calculator) => (
+                  <li
+                    key={calculator.id}
+                    className="flex min-h-11 items-stretch overflow-hidden rounded-lg border bg-background"
+                  >
+                    <Link
+                      href={calculator.href}
+                      onClick={() => recordRecentCalculator(calculator.id)}
+                      className="inline-flex items-center px-3 text-sm font-medium transition hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/30 motion-reduce:transition-none"
+                    >
+                      {calculator.name}
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => removeCalculatorFavorite(calculator.id)}
+                      aria-label={
+                        isEnglish
+                          ? `Remove ${calculator.name} from favorites`
+                          : `${calculator.name} 즐겨찾기에서 제거`
+                      }
+                      className="inline-flex min-h-11 min-w-11 items-center justify-center border-l text-base text-muted-foreground transition hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/30 motion-reduce:transition-none"
+                    >
+                      ×
+                    </button>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <ul className="mt-2 flex flex-wrap gap-2">
-              {recent.map((calculator) => (
-                <li
-                  key={calculator.id}
-                  className="flex min-h-11 items-stretch overflow-hidden rounded-lg border bg-background"
+          ) : null}
+
+          {recent.length > 0 ? (
+            <div>
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  {isEnglish ? "Recently used" : "최근 사용"}
+                </h3>
+                <button
+                  type="button"
+                  onClick={clearRecentCalculators}
+                  className="inline-flex min-h-11 items-center rounded-lg px-2 text-xs font-medium text-muted-foreground transition hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/30 motion-reduce:transition-none"
                 >
-                  <Link
-                    href={calculator.href}
-                    onClick={() => recordRecentCalculator(calculator.id)}
-                    className="inline-flex items-center px-3 text-sm font-medium transition hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/30 motion-reduce:transition-none"
+                  {isEnglish ? "Clear recent" : "최근 사용 지우기"}
+                </button>
+              </div>
+              <ul className="mt-2 flex flex-wrap gap-2">
+                {recent.map((calculator) => (
+                  <li
+                    key={calculator.id}
+                    className="flex min-h-11 items-stretch overflow-hidden rounded-lg border bg-background"
                   >
-                    {calculator.name}
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={() => removeRecentCalculator(calculator.id)}
-                    aria-label={
-                      isEnglish
-                        ? `Remove ${calculator.name} from recent calculators`
-                        : `${calculator.name} 최근 사용에서 제거`
-                    }
-                    className="inline-flex min-h-11 min-w-11 items-center justify-center border-l text-base text-muted-foreground transition hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/30 motion-reduce:transition-none"
-                  >
-                    ×
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : null}
-      </div>
+                    <Link
+                      href={calculator.href}
+                      onClick={() => recordRecentCalculator(calculator.id)}
+                      className="inline-flex items-center px-3 text-sm font-medium transition hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/30 motion-reduce:transition-none"
+                    >
+                      {calculator.name}
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => removeRecentCalculator(calculator.id)}
+                      aria-label={
+                        isEnglish
+                          ? `Remove ${calculator.name} from recent calculators`
+                          : `${calculator.name} 최근 사용에서 제거`
+                      }
+                      className="inline-flex min-h-11 min-w-11 items-center justify-center border-l text-base text-muted-foreground transition hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/30 motion-reduce:transition-none"
+                    >
+                      ×
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+        </div>
+      )}
     </section>
   );
 }
