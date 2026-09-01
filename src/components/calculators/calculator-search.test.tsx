@@ -91,7 +91,10 @@ describe("CalculatorSearch", () => {
     const showMore = screen.getByRole("button", {
       name: "검색 결과 더 보기 (8개)",
     });
-    expect(showMore).toHaveAttribute("aria-controls", "calculator-search-results");
+    expect(showMore).toHaveAttribute(
+      "aria-controls",
+      "calculator-search-results",
+    );
     showMore.focus();
     await user.keyboard("{Enter}");
 
