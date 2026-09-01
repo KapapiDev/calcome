@@ -267,7 +267,9 @@ export function CalculatorRepeatUseShortcuts({
             {isEnglish ? "Your calculator shortcuts" : "내 계산기 바로가기"}
           </h2>
           <p className="mt-1 text-xs text-muted-foreground">
-            {isEnglish ? "Stored only on this device" : "이 기기에만 저장됩니다"}
+            {isEnglish
+              ? "Stored only on this device"
+              : "이 기기에만 저장됩니다"}
           </p>
         </div>
         {!isEmpty ? (
