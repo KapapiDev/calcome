@@ -44,7 +44,9 @@ describe("CalculatorResultContext result sharing", () => {
     expect(await screen.findByRole("status")).toHaveTextContent(
       "Result summary shared.",
     );
-    expect(screen.getByText(/Inputs and URLs are not included or stored/)).toBeVisible();
+    expect(
+      screen.getByText(/Inputs and URLs are not included or stored/),
+    ).toBeVisible();
   });
 
   it("falls back to clipboard when native sharing is unavailable", async () => {

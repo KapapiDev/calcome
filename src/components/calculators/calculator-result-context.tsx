@@ -402,12 +402,14 @@ export function CalculatorResultContext({
         setShareStatus(copy.shareShared);
         return;
       } catch (error) {
-        if (error instanceof DOMException && error.name === "AbortError") return;
+        if (error instanceof DOMException && error.name === "AbortError")
+          return;
       }
     }
 
     try {
-      if (!navigator.clipboard?.writeText) throw new Error("Clipboard unavailable");
+      if (!navigator.clipboard?.writeText)
+        throw new Error("Clipboard unavailable");
       await navigator.clipboard.writeText(text);
       setShareStatus(copy.shareCopied);
     } catch {
