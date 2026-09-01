@@ -284,7 +284,7 @@ describe("CalculatorResultContext", () => {
       />,
     );
     const scenarios = screen.getByTestId("scenario-comparison");
-    expect(scenarios).toHaveTextContent("Scenario: $100");
+    expect(scenarios).toHaveTextContent("Scenario 1: $100");
     expect(scenarios).toHaveTextContent("Current: $125");
     expect(scenarios).toHaveTextContent("Increased · Delta: $25");
 
