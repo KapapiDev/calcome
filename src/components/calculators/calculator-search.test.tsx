@@ -67,27 +67,78 @@ describe("CalculatorSearch", () => {
     expect(screen.queryByText("금융")).not.toBeInTheDocument();
   });
 
-  it("keeps broad searches compact while preserving canonical result entry", async () => {
+  it("expands broad Korean searches in bounded keyboard-accessible batches and resets for a new query", async () => {
+    const user = userEvent.setup();
+    const broadMatches = directorySearchCalculators
+      .slice(0, 20)
+      .map((calculator, index) => ({
+        ...calculator,
+        keywords: [
+          ...calculator.keywords,
+          "공통검색",
+          ...(index < 12 ? ["두번째검색"] : []),
+        ],
+      }));
+
+    render(<CalculatorSearch calculators={broadMatches} />);
+    const search = screen.getByRole("searchbox");
+    await user.type(search, "공통검색");
+
+    const resultList = screen.getByRole("list", { name: "계산기 검색 결과" });
+    expect(within(resultList).getAllByRole("link")).toHaveLength(8);
+    expect(screen.getByText("총 20개 중 8개를 표시합니다.")).toBeVisible();
+
+    const showMore = screen.getByRole("button", {
+      name: "검색 결과 더 보기 (8개)",
+    });
+    expect(showMore).toHaveAttribute("aria-controls", "calculator-search-results");
+    showMore.focus();
+    await user.keyboard("{Enter}");
+
+    expect(within(resultList).getAllByRole("link")).toHaveLength(16);
+    expect(screen.getByText("총 20개 중 16개를 표시합니다.")).toBeVisible();
+    expect(
+      screen.getByRole("button", { name: "검색 결과 더 보기 (4개)" }),
+    ).toBeVisible();
+
+    await user.click(
+      screen.getByRole("button", { name: "검색 결과 더 보기 (4개)" }),
+    );
+    expect(within(resultList).getAllByRole("link")).toHaveLength(20);
+    expect(screen.getByText("20개 결과")).toBeVisible();
+    expect(
+      screen.queryByRole("button", { name: /검색 결과 더 보기/ }),
+    ).not.toBeInTheDocument();
+
+    await user.clear(search);
+    await user.type(search, "두번째검색");
+    expect(within(resultList).getAllByRole("link")).toHaveLength(8);
+    expect(screen.getByText("총 12개 중 8개를 표시합니다.")).toBeVisible();
+  });
+
+  it("localizes broad-search expansion controls in English", async () => {
     const user = userEvent.setup();
     const broadMatches = directorySearchCalculators
       .slice(0, 12)
       .map((calculator) => ({
         ...calculator,
-        keywords: [...calculator.keywords, "공통검색"],
+        keywords: [...calculator.keywords, "shared-search"],
       }));
 
-    render(<CalculatorSearch calculators={broadMatches} />);
-    await user.type(screen.getByRole("searchbox"), "공통검색");
+    render(<CalculatorSearch calculators={broadMatches} locale="en" />);
+    await user.type(screen.getByRole("searchbox"), "shared-search");
 
-    const resultList = screen.getByRole("list", { name: "계산기 검색 결과" });
-    expect(within(resultList).getAllByRole("link")).toHaveLength(8);
+    expect(screen.getByText("Showing 8 of 12 results.")).toBeVisible();
+    const showMore = screen.getByRole("button", {
+      name: "Show more results (4)",
+    });
+    showMore.focus();
+    await user.keyboard("{Enter}");
+
+    expect(screen.getByText("12 results")).toBeVisible();
     expect(
-      screen.getByText("12개 결과 중 상위 8개를 표시합니다."),
-    ).toBeVisible();
-    expect(screen.getByText(/아래 카테고리를 이용하세요/)).toBeVisible();
-
-    const firstResult = within(resultList).getAllByRole("link")[0];
-    expect(firstResult).toHaveAttribute("href", broadMatches[0].href);
+      screen.queryByRole("button", { name: /Show more results/ }),
+    ).not.toBeInTheDocument();
   });
 
   it("provides keyboard-accessible Korean zero-result recovery", async () => {
