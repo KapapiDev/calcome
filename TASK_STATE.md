@@ -52,11 +52,13 @@ Remaining to Target: 0
   - Device-local favorite shortcuts now support deliberate earlier/later ordering with bilingual keyboard-accessible 44px controls, preserve stable calculator-ID-only storage and localized routes, leave recent history independent, and retain the complete server-rendered directory and structured data unchanged.
 - [x] UX-062 DONE — Repeat-Use Personalization Cross-Surface Consistency Regression
   - One integrated bilingual regression now keeps device-local favorite order synchronized between repeat-use shortcuts and favorites-first directory discovery through stale-ID reconciliation, reordering, localized route identity, removal/clear actions, keyboard focusability, and 44px mobile targets without storing calculator inputs/results or changing server-rendered directory/structured-data coverage.
+- [x] UX-063 DONE — Shared Calculator Keyboard Submit and Reset Interaction Upgrade
+  - Shared calculator forms now validate keyboard-style form submission through the same path as submit-button activation, reset clears shared stale-result/action state, and reset/recalculate return focus predictably to the first usable control without changing formulas, routes, storage, or mobile result behavior.
 
 ## Active queue
 
-- [ ] UX-063 OPEN — Shared Calculator Keyboard Submit and Reset Interaction Upgrade
-  - Scope: make keyboard submit, reset, recalculation, focus return, and stale-result clearing predictable across the shared calculator shell in Korean and English while preserving formulas, routes, mobile usability, and existing accessibility semantics. Prefer one shared fix and bounded cross-calculator regression over calculator-by-calculator micro tasks.
+- [ ] UX-064 OPEN — Shared Calculator Form Interaction Cross-Calculator Regression
+  - Scope: exercise keyboard submit, reset, recalculation, validation recovery, focus return, stale-result state, and bilingual action semantics across representative calculator families so future calculator-specific forms cannot drift from the shared interaction contract. Prefer executable shared regression coverage and only fix proven deviations.
 
 ## Security gate
 

@@ -1,6 +1,12 @@
 "use client";
 
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import {
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import { CalculatorResultContext } from "@/components/calculators/calculator-result-context";
 import { Button } from "@/components/ui/button";
@@ -13,6 +19,8 @@ export const calculatorSettingsClass =
   "rounded-2xl border bg-card p-5 shadow-sm sm:p-7 lg:sticky lg:top-6";
 export const compactCalculatorSettingsClass =
   "rounded-xl border bg-card p-4 shadow-sm lg:sticky lg:top-6";
+
+const CALCULATOR_RESET_EVENT = "calcome:calculator-reset";
 
 type CalculatorActionCopy = {
   reset: string;
@@ -151,6 +159,12 @@ function findFirstInvalidControl(form: HTMLFormElement | null) {
   );
 }
 
+function findFirstFormControl(form: HTMLFormElement | null) {
+  return form?.querySelector<HTMLElement>(
+    "input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button[type='submit']:not([disabled])",
+  );
+}
+
 function findNearestPrimaryResults(form: HTMLFormElement) {
   let current: HTMLElement | null = form.parentElement;
 
@@ -186,13 +200,14 @@ export function CalculatorActions({
   onReset: () => void;
   compact?: boolean;
 }) {
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
   const locale = inferCalculatorActionLocale(submitLabel);
   const copy = CALCULATOR_ACTION_COPY[locale];
   const [exampleStatus, setExampleStatus] = useState("");
   const [validationIssue, setValidationIssue] =
     useState<ValidationIssue | null>(null);
 
-  function validateBeforeSubmit(form: HTMLFormElement | null) {
+  const validateBeforeSubmit = useCallback((form: HTMLFormElement | null) => {
     const invalidControl = findFirstInvalidControl(form);
     if (!invalidControl) {
       setValidationIssue(null);
@@ -206,7 +221,24 @@ export function CalculatorActions({
     setValidationIssue(issue);
     invalidControl.focus();
     return false;
-  }
+  }, []);
+
+  useEffect(() => {
+    const form = submitButtonRef.current?.form;
+    if (!form) return;
+
+    const handleSubmit = (event: SubmitEvent) => {
+      if (!validateBeforeSubmit(form)) {
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+      }
+      moveMobileCompletionToResults(form);
+    };
+
+    form.addEventListener("submit", handleSubmit);
+    return () => form.removeEventListener("submit", handleSubmit);
+  }, [validateBeforeSubmit]);
 
   const validationMessage = validationIssue?.label
     ? `${copy.validationPrefix}${validationIssue.label}${copy.validationSuffix}`
@@ -219,16 +251,13 @@ export function CalculatorActions({
       </p>
       <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto_auto]">
         <Button
+          ref={submitButtonRef}
           type="submit"
           size="lg"
           className="h-11 px-5"
           onClick={(event) => {
-            const form = event.currentTarget.form;
-            if (!validateBeforeSubmit(form)) {
+            if (!validateBeforeSubmit(event.currentTarget.form))
               event.preventDefault();
-              return;
-            }
-            if (form) moveMobileCompletionToResults(form);
           }}
         >
           {submitLabel}
@@ -252,9 +281,13 @@ export function CalculatorActions({
           variant="outline"
           size="lg"
           className="h-11 px-4"
-          onClick={() => {
+          onClick={(event) => {
+            const form = event.currentTarget.form;
             setValidationIssue(null);
+            setExampleStatus("");
             onReset();
+            form?.dispatchEvent(new Event(CALCULATOR_RESET_EVENT));
+            window.setTimeout(() => findFirstFormControl(form)?.focus(), 0);
           }}
         >
           {copy.reset}
@@ -400,8 +433,14 @@ export function PrimaryResults({
       if (getResultText(list).hasCalculatedValue) setIsStale(true);
     };
 
+    const clearResetState = () => {
+      setIsStale(false);
+      setActionStatus("");
+    };
+
     form.addEventListener("input", markStale);
     form.addEventListener("change", markStale);
+    form.addEventListener(CALCULATOR_RESET_EVENT, clearResetState);
 
     const observer = new MutationObserver(() => setIsStale(false));
     observer.observe(list, {
@@ -413,6 +452,7 @@ export function PrimaryResults({
     return () => {
       form.removeEventListener("input", markStale);
       form.removeEventListener("change", markStale);
+      form.removeEventListener(CALCULATOR_RESET_EVENT, clearResetState);
       observer.disconnect();
     };
   }, []);
@@ -447,9 +487,7 @@ export function PrimaryResults({
     if (!list) return;
 
     const form = findNearestCalculatorForm(list);
-    const firstControl = form?.querySelector<HTMLElement>(
-      "input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button[type='submit']:not([disabled])",
-    );
+    const firstControl = findFirstFormControl(form);
 
     form?.scrollIntoView({ block: "start", behavior: "smooth" });
     firstControl?.focus();
