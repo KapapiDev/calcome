@@ -61,7 +61,10 @@ function hasMetadataContract(source: string): boolean {
 }
 
 function hasStructuredDataContract(source: string): boolean {
-  return source.includes("JsonLdScript") && /create[A-Za-z0-9]*StructuredData/.test(source);
+  return (
+    source.includes("JsonLdScript") &&
+    /create[A-Za-z0-9]*StructuredData/.test(source)
+  );
 }
 
 describe("published calculator SEO coverage", () => {
@@ -80,14 +83,23 @@ describe("published calculator SEO coverage", () => {
       }
 
       const routeSource = readSource(routeFile);
-      const metadataSources = [routeSource, ...importedMetadataSources(routeSource)];
+      const metadataSources = [
+        routeSource,
+        ...importedMetadataSources(routeSource),
+      ];
 
-      if (!routeSource.includes("generateMetadata") || !metadataSources.some(hasMetadataContract)) {
+      if (
+        !routeSource.includes("generateMetadata") ||
+        !metadataSources.some(hasMetadataContract)
+      ) {
         missingMetadata.push(`${calculator.id}: ${relativeRoute}`);
       }
 
-      const featureSources = importedFeatureNames(routeSource).flatMap((featureName) =>
-        collectSourceFiles(path.join(FEATURES_ROOT, featureName)).map(readSource),
+      const featureSources = importedFeatureNames(routeSource).flatMap(
+        (featureName) =>
+          collectSourceFiles(path.join(FEATURES_ROOT, featureName)).map(
+            readSource,
+          ),
       );
 
       if (![routeSource, ...featureSources].some(hasStructuredDataContract)) {
@@ -95,7 +107,10 @@ describe("published calculator SEO coverage", () => {
       }
     }
 
-    expect(missingRouteFiles, "published calculator routes missing page.tsx").toEqual([]);
+    expect(
+      missingRouteFiles,
+      "published calculator routes missing page.tsx",
+    ).toEqual([]);
     expect(
       missingMetadata,
       "published calculator routes missing title/description/canonical/ko-en-x-default metadata coverage",
