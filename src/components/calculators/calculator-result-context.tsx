@@ -582,7 +582,9 @@ export function CalculatorResultContext({
                         aria-pressed={isBaseline}
                         onClick={() => selectBaseline(scenario.id)}
                       >
-                        {isBaseline ? copy.baselineSelected : copy.useAsBaseline}
+                        {isBaseline
+                          ? copy.baselineSelected
+                          : copy.useAsBaseline}
                       </Button>
                       <Button
                         type="button"
@@ -644,7 +646,8 @@ export function CalculatorResultContext({
           aria-labelledby="scenario-baseline-title"
         >
           <p id="scenario-baseline-title" className="font-medium">
-            {copy.baselineTitle}: {baselineScenario.label.trim() || copy.scenarioLabel}
+            {copy.baselineTitle}:{" "}
+            {baselineScenario.label.trim() || copy.scenarioLabel}
           </p>
           <p className="mt-1 leading-5 text-muted-foreground">
             {copy.baselineDescription}
