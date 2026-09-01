@@ -59,8 +59,8 @@ Remaining to Target: 0
 
 ## Active queue
 
-- [ ] SEO-004 OPEN — Calculator Content Depth and Trust Template
-  - Scope: strengthen useful on-page calculator explanations and trust signals without duplicating metadata boilerplate, changing formulas, or publishing unverified policy-sensitive claims.
+- [ ] SEO-020 OPEN — Post-100 Content Trust Template Coverage Regression
+  - Scope: audit published calculator detail pages for appropriate use of the existing content-depth/trust template, then add regression coverage for method, example, assumptions, limitations, and review-date signals without forcing unverified policy-sensitive claims or changing formulas.
 
 ## Security gate
 
