@@ -255,7 +255,11 @@ describe("published calculator SEO coverage", () => {
           ),
       );
 
-      if (![routeSource, ...featureSources].some((source) => source.includes("PrimaryResults"))) {
+      if (
+        ![routeSource, ...featureSources].some((source) =>
+          source.includes("PrimaryResults"),
+        )
+      ) {
         missingResultGuidance.push(`${calculator.id}: ${relativeRoute}`);
       }
     }
