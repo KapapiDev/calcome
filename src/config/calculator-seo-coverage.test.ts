@@ -239,7 +239,9 @@ describe("published calculator SEO coverage", () => {
         ...duplicateValues(descriptions).map(
           (duplicate) => `${locale} duplicate description ${duplicate}`,
         ),
-        ...placeholders.map((placeholder) => `${locale} placeholder ${placeholder}`),
+        ...placeholders.map(
+          (placeholder) => `${locale} placeholder ${placeholder}`,
+        ),
       );
     }
 
