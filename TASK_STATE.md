@@ -63,8 +63,8 @@ Remaining to Target: 0
 
 ## Active queue
 
-- [ ] UX-007 OPEN — Full-Site Accessibility and Visual Consistency Regression
-  - Scope: run the whole-site keyboard, focus, accessible-name, zoom, reduced-motion, touch-target, overflow, light/dark-mode, and shared visual consistency regression described in `TASK_QUEUE.md`, fixing only reproduced shared defects.
+- [ ] UX-054 OPEN — Shared Calculator Scenario Labels and Baseline Comparison Upgrade
+  - Scope: let users give the up-to-three in-session result-only scenarios short local labels and choose a saved scenario as the comparison baseline, while preserving bilingual accessibility, bounded session-only state, stale-result protection, and the no-input-persistence/no-formula-change guarantees.
 
 ## Security gate
 
