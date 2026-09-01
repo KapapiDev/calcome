@@ -6,7 +6,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -28,6 +28,21 @@ jobs:
         with:
           node-version: 20
           cache: npm
+
+      - name: Regenerate security remediation lockfile once
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: |
+          npm install --package-lock-only --ignore-scripts
+          if git diff --quiet -- package-lock.json; then
+            echo "package-lock.json is already synchronized"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json
+          git commit -m "security: synchronize package lock"
+          git push origin HEAD:${{ github.head_ref }}
 
       - name: Install dependencies
         run: npm ci
