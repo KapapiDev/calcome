@@ -8,6 +8,29 @@ const ROOT = process.cwd();
 const APP_ROOT = path.join(ROOT, "src", "app", "[locale]");
 const FEATURES_ROOT = path.join(ROOT, "src", "features");
 
+type RouteMetadata = {
+  title?: string | { absolute?: string; default?: string } | null;
+  description?: string | null;
+};
+
+type RouteModule = {
+  generateMetadata?: (props: {
+    params: Promise<{ locale: string }>;
+  }) => RouteMetadata | Promise<RouteMetadata>;
+};
+
+declare global {
+  interface ImportMeta {
+    glob<TModule = unknown>(
+      pattern: string,
+    ): Record<string, () => Promise<TModule>>;
+  }
+}
+
+const routeModules = import.meta.glob<RouteModule>(
+  "../app/[locale]/**/page.tsx",
+);
+
 function readSource(filePath: string): string {
   return readFileSync(filePath, "utf8");
 }
@@ -71,6 +94,44 @@ function hasStructuredDataContract(source: string): boolean {
   return sharedStructuredData || directJsonLd;
 }
 
+function titleText(title: RouteMetadata["title"]): string {
+  if (typeof title === "string") return title.trim();
+  if (title && typeof title === "object") {
+    if (typeof title.absolute === "string") return title.absolute.trim();
+    if (typeof title.default === "string") return title.default.trim();
+  }
+  return "";
+}
+
+function normalizeSnippet(value: string): string {
+  return value.replace(/\s+/g, " ").trim().toLocaleLowerCase();
+}
+
+function duplicateValues(entries: Array<[string, string]>): string[] {
+  const grouped = new Map<string, string[]>();
+
+  for (const [routeId, value] of entries) {
+    const key = normalizeSnippet(value);
+    if (!key) continue;
+    const current = grouped.get(key) ?? [];
+    current.push(routeId);
+    grouped.set(key, current);
+  }
+
+  return Array.from(grouped.entries())
+    .filter(([, routeIds]) => routeIds.length > 1)
+    .map(([value, routeIds]) => `${routeIds.join(", ")}: ${value}`);
+}
+
+function looksPlaceholder(value: string): boolean {
+  const normalized = normalizeSnippet(value);
+  return (
+    normalized.length === 0 ||
+    /\b(?:todo|tbd|placeholder|lorem ipsum|coming soon)\b/i.test(value) ||
+    /(?:임시|준비 중|준비중|추후 작성|내용 입력)/.test(value)
+  );
+}
+
 describe("published calculator SEO coverage", () => {
   it("keeps deterministic bilingual metadata and structured data on every published route", () => {
     const missingRouteFiles: string[] = [];
@@ -124,4 +185,69 @@ describe("published calculator SEO coverage", () => {
       "published calculator routes missing JSON-LD coverage",
     ).toEqual([]);
   });
+
+  it("keeps calculator search snippets unique and free of placeholder copy in each locale", async () => {
+    const failures: string[] = [];
+
+    for (const locale of ["ko", "en"] as const) {
+      const titles: Array<[string, string]> = [];
+      const descriptions: Array<[string, string]> = [];
+      const placeholders: string[] = [];
+
+      for (const calculator of allPublishedCalculators) {
+        const relativeRoute = routePathFromHref(calculator.href);
+        const moduleKey = `../app/[locale]/${relativeRoute}/page.tsx`;
+        const loadRoute = routeModules[moduleKey];
+
+        if (!loadRoute) {
+          failures.push(`${locale}:${calculator.id} missing route module`);
+          continue;
+        }
+
+        const routeModule = await loadRoute();
+        if (!routeModule.generateMetadata) {
+          failures.push(`${locale}:${calculator.id} missing generateMetadata`);
+          continue;
+        }
+
+        const metadata = await routeModule.generateMetadata({
+          params: Promise.resolve({ locale }),
+        });
+        const title = titleText(metadata.title);
+        const description =
+          typeof metadata.description === "string"
+            ? metadata.description.trim()
+            : "";
+
+        titles.push([calculator.id, title]);
+        descriptions.push([calculator.id, description]);
+
+        if (looksPlaceholder(title)) {
+          placeholders.push(`${calculator.id} title: ${title || "<empty>"}`);
+        }
+        if (looksPlaceholder(description)) {
+          placeholders.push(
+            `${calculator.id} description: ${description || "<empty>"}`,
+          );
+        }
+      }
+
+      failures.push(
+        ...duplicateValues(titles).map(
+          (duplicate) => `${locale} duplicate title ${duplicate}`,
+        ),
+        ...duplicateValues(descriptions).map(
+          (duplicate) => `${locale} duplicate description ${duplicate}`,
+        ),
+        ...placeholders.map(
+          (placeholder) => `${locale} placeholder ${placeholder}`,
+        ),
+      );
+    }
+
+    expect(
+      failures,
+      "published calculator metadata must provide unique, non-placeholder title/description snippets per locale",
+    ).toEqual([]);
+  }, 15_000);
 });
