@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useSyncExternalStore } from "react";
 
 export type RepeatUseCalculator = {
   id: string;
@@ -85,9 +85,7 @@ function refreshRepeatUseSnapshot() {
   cachedSnapshot = next;
   hasCachedSnapshot = true;
 
-  if (changed) {
-    subscribers.forEach((subscriber) => subscriber());
-  }
+  if (changed) subscribers.forEach((subscriber) => subscriber());
 }
 
 function handleRepeatUseEvent() {
@@ -161,6 +159,11 @@ export function removeCalculatorFavorite(id: string) {
   notifyRepeatUseChange();
 }
 
+export function clearCalculatorFavorites() {
+  writeIds(FAVORITES_KEY, []);
+  notifyRepeatUseChange();
+}
+
 export function recordRecentCalculator(id: string) {
   const recent = getRepeatUseSnapshot().recent.filter(
     (recentId) => recentId !== id,
@@ -181,6 +184,28 @@ export function removeRecentCalculator(id: string) {
 export function clearRecentCalculators() {
   writeIds(RECENT_KEY, []);
   notifyRepeatUseChange();
+}
+
+export function clearRepeatUseShortcuts() {
+  writeIds(FAVORITES_KEY, []);
+  writeIds(RECENT_KEY, []);
+  notifyRepeatUseChange();
+}
+
+export function reconcileRepeatUseCalculators(validIds: readonly string[]) {
+  const valid = new Set(validIds);
+  const current = getRepeatUseSnapshot();
+  const next: RepeatUseSnapshot = {
+    favorites: current.favorites.filter((id) => valid.has(id)),
+    recent: current.recent.filter((id) => valid.has(id)),
+  };
+
+  if (snapshotsEqual(current, next)) return false;
+
+  writeIds(FAVORITES_KEY, next.favorites);
+  writeIds(RECENT_KEY, next.recent);
+  notifyRepeatUseChange();
+  return true;
 }
 
 function resolveCalculators(
@@ -207,10 +232,18 @@ export function CalculatorRepeatUseShortcuts({
     () => EMPTY_SNAPSHOT,
   );
   const isEnglish = locale === "en";
+  const validIds = useMemo(
+    () => calculators.map((calculator) => calculator.id),
+    [calculators],
+  );
   const byId = useMemo(
     () => new Map(calculators.map((calculator) => [calculator.id, calculator])),
     [calculators],
   );
+
+  useEffect(() => {
+    reconcileRepeatUseCalculators(validIds);
+  }, [validIds]);
 
   const favorites = resolveCalculators(snapshot.favorites, byId);
   const favoriteIds = new Set(favorites.map((calculator) => calculator.id));
@@ -218,23 +251,45 @@ export function CalculatorRepeatUseShortcuts({
     (calculator) => !favoriteIds.has(calculator.id),
   );
   const isEmpty = favorites.length === 0 && recent.length === 0;
+  const shortcutCount = favorites.length + recent.length;
 
   return (
     <section
       className="mt-10 rounded-xl border bg-muted/30 p-4 sm:p-5"
       aria-labelledby={`repeat-use-heading-${locale}`}
     >
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h2
-          id={`repeat-use-heading-${locale}`}
-          className="text-base font-semibold tracking-tight"
-        >
-          {isEnglish ? "Your calculator shortcuts" : "내 계산기 바로가기"}
-        </h2>
-        <p className="text-xs text-muted-foreground">
-          {isEnglish ? "Stored only on this device" : "이 기기에만 저장됩니다"}
-        </p>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h2
+            id={`repeat-use-heading-${locale}`}
+            className="text-base font-semibold tracking-tight"
+          >
+            {isEnglish ? "Your calculator shortcuts" : "내 계산기 바로가기"}
+          </h2>
+          <p className="mt-1 text-xs text-muted-foreground">
+            {isEnglish
+              ? "Stored only on this device"
+              : "이 기기에만 저장됩니다"}
+          </p>
+        </div>
+        {!isEmpty ? (
+          <div className="flex min-h-11 items-center gap-2">
+            <span className="text-xs text-muted-foreground" aria-live="polite">
+              {isEnglish
+                ? `${shortcutCount} shortcut${shortcutCount === 1 ? "" : "s"}`
+                : `바로가기 ${shortcutCount}개`}
+            </span>
+            <button
+              type="button"
+              onClick={clearRepeatUseShortcuts}
+              className="inline-flex min-h-11 items-center rounded-lg px-2 text-xs font-medium text-muted-foreground transition hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/30 motion-reduce:transition-none"
+            >
+              {isEnglish ? "Clear all" : "전체 지우기"}
+            </button>
+          </div>
+        ) : null}
       </div>
+
       {isEmpty ? (
         <div className="mt-4 rounded-lg border border-dashed bg-background/70 p-4">
           <p className="text-sm text-muted-foreground">
@@ -253,9 +308,18 @@ export function CalculatorRepeatUseShortcuts({
         <div className="mt-4 space-y-4">
           {favorites.length > 0 ? (
             <div>
-              <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                {isEnglish ? "Favorites" : "즐겨찾기"}
-              </h3>
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  {isEnglish ? "Favorites" : "즐겨찾기"}
+                </h3>
+                <button
+                  type="button"
+                  onClick={clearCalculatorFavorites}
+                  className="inline-flex min-h-11 items-center rounded-lg px-2 text-xs font-medium text-muted-foreground transition hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/30 motion-reduce:transition-none"
+                >
+                  {isEnglish ? "Clear favorites" : "즐겨찾기 지우기"}
+                </button>
+              </div>
               <ul className="mt-2 flex flex-wrap gap-2">
                 {favorites.map((calculator) => (
                   <li

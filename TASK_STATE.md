@@ -38,11 +38,13 @@ Remaining to Target: 0
   - Build-time bundle auditing now separates non-shared route/feature JavaScript from the shared runtime, reports the largest non-shared chunks, and rejects any single route/feature chunk above a bounded 350 KiB gzip ceiling so unexpectedly eager heavy dependencies become an executable CI regression instead of silently expanding page cost.
 - [x] UX-055 DONE — Shared Favorites and Recent Calculator Navigation Upgrade
   - Local favorites and bounded recent-calculator shortcuts retain deterministic calculator identity/order, direct stable routes, explicit removal semantics, and now remain discoverable with bilingual empty-state guidance back to the full calculator directory without storing financial inputs.
+- [x] UX-056 DONE — Shared Favorites/Recent Management and Discoverability Upgrade
+  - Repeat-use shortcuts now self-heal retired or malformed stored calculator IDs against the current public registry, expose clear favorites/recent/all management actions, and show a compact shortcut count while continuing to store only calculator identity/order on the device.
 
 ## Active queue
 
-- [ ] UX-056 OPEN — Shared Favorites/Recent Management and Discoverability Upgrade
-  - Scope: strengthen favorites/recent management and discovery cues across shared calculator surfaces, including stale-storage recovery and clear management actions, without cluttering routes, changing calculator math, or weakening accessibility/SEO behavior.
+- [ ] UX-057 OPEN — Favorites-First Directory Discovery Upgrade
+  - Scope: make locally favorited calculators easier to rediscover from the shared 100-calculator directory without accounts or financial-input persistence. Reuse the existing calculator-ID-only browser state, keep search/category ordering deterministic for non-favorites, preserve bilingual route identity and server-rendered indexable directory content, and add only compact discovery cues or filtering that remain keyboard, screen-reader, mobile, and empty-state friendly.
 
 ## Security gate
 
