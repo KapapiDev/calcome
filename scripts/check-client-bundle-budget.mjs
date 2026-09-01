@@ -42,7 +42,9 @@ function measure(filePath) {
 const sharedMeasurements = sharedFiles.map((file) => {
   const filePath = resolve(nextDir, file);
   if (!existsSync(filePath)) {
-    throw new Error(`PERF-007 manifest entry is missing from build output: ${file}`);
+    throw new Error(
+      `PERF-007 manifest entry is missing from build output: ${file}`,
+    );
   }
   return { file, ...measure(filePath) };
 });
@@ -64,8 +66,13 @@ const allChunkMeasurements = walkJavaScript(chunksDir).map((filePath) => ({
 const sharedRaw = sharedMeasurements.reduce((sum, item) => sum + item.raw, 0);
 const sharedGzip = sharedMeasurements.reduce((sum, item) => sum + item.gzip, 0);
 const totalRaw = allChunkMeasurements.reduce((sum, item) => sum + item.raw, 0);
-const totalGzip = allChunkMeasurements.reduce((sum, item) => sum + item.gzip, 0);
-const largestSharedGzip = Math.max(...sharedMeasurements.map((item) => item.gzip));
+const totalGzip = allChunkMeasurements.reduce(
+  (sum, item) => sum + item.gzip,
+  0,
+);
+const largestSharedGzip = Math.max(
+  ...sharedMeasurements.map((item) => item.gzip),
+);
 
 const kib = (bytes) => `${(bytes / 1024).toFixed(1)} KiB`;
 const SHARED_GZIP_BUDGET = 450 * 1024;
@@ -74,7 +81,9 @@ const SINGLE_SHARED_CHUNK_GZIP_BUDGET = 300 * 1024;
 console.log("PERF-007 shared client bundle audit");
 console.log(`- shared JS files: ${sharedMeasurements.length}`);
 console.log(`- shared JS raw: ${kib(sharedRaw)}`);
-console.log(`- shared JS gzip: ${kib(sharedGzip)} / ${kib(SHARED_GZIP_BUDGET)} budget`);
+console.log(
+  `- shared JS gzip: ${kib(sharedGzip)} / ${kib(SHARED_GZIP_BUDGET)} budget`,
+);
 console.log(
   `- largest shared chunk gzip: ${kib(largestSharedGzip)} / ${kib(SINGLE_SHARED_CHUNK_GZIP_BUDGET)} budget`,
 );
