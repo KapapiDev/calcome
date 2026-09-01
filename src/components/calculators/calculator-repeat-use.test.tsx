@@ -1,12 +1,15 @@
 /* @vitest-environment jsdom */
 
+import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
+  CalculatorRepeatUseShortcuts,
   clearCalculatorFavorites,
   clearRecentCalculators,
   clearRepeatUseShortcuts,
   getRepeatUseSnapshot,
+  moveCalculatorFavorite,
   reconcileRepeatUseCalculators,
   recordRecentCalculator,
   removeCalculatorFavorite,
@@ -37,6 +40,86 @@ describe("calculator repeat-use storage", () => {
     expect(getRepeatUseSnapshot().favorites).toEqual(["compound-interest"]);
     expect(toggleCalculatorFavorite("compound-interest")).toBe(false);
     expect(getRepeatUseSnapshot().favorites).toEqual([]);
+  });
+
+  it("reorders favorites deliberately without changing recent history", () => {
+    toggleCalculatorFavorite("salary");
+    toggleCalculatorFavorite("vat");
+    toggleCalculatorFavorite("compound-interest");
+    recordRecentCalculator("salary");
+    recordRecentCalculator("vat");
+
+    expect(moveCalculatorFavorite("vat", -1)).toBe(true);
+    expect(getRepeatUseSnapshot()).toEqual({
+      favorites: ["vat", "compound-interest", "salary"],
+      recent: ["vat", "salary"],
+    });
+
+    expect(moveCalculatorFavorite("vat", -1)).toBe(false);
+    expect(moveCalculatorFavorite("salary", 1)).toBe(false);
+    expect(moveCalculatorFavorite("missing", 1)).toBe(false);
+    expect(getRepeatUseSnapshot()).toEqual({
+      favorites: ["vat", "compound-interest", "salary"],
+      recent: ["vat", "salary"],
+    });
+  });
+
+  it("exposes bilingual keyboard-accessible favorite ordering controls with mobile touch targets", () => {
+    toggleCalculatorFavorite("vat");
+    toggleCalculatorFavorite("compound-interest");
+
+    const calculators = [
+      {
+        id: "compound-interest",
+        name: "Compound Interest",
+        href: "/en/finance/compound-interest",
+      },
+      { id: "vat", name: "VAT", href: "/en/business/vat" },
+    ];
+    const { rerender } = render(
+      <CalculatorRepeatUseShortcuts calculators={calculators} locale="en" />,
+    );
+
+    const moveVatEarlier = screen.getByRole("button", {
+      name: "Move VAT earlier in favorites",
+    });
+    const moveCompoundLater = screen.getByRole("button", {
+      name: "Move Compound Interest later in favorites",
+    });
+    expect(moveVatEarlier).toHaveClass("min-h-11", "min-w-11");
+    expect(moveCompoundLater).toHaveClass("min-h-11", "min-w-11");
+    expect(
+      screen.getByText("Use the arrow controls to personalize shortcut order."),
+    ).toBeVisible();
+
+    fireEvent.click(moveVatEarlier);
+    expect(getRepeatUseSnapshot().favorites).toEqual([
+      "vat",
+      "compound-interest",
+    ]);
+
+    rerender(
+      <CalculatorRepeatUseShortcuts
+        calculators={calculators.map((calculator) => ({
+          ...calculator,
+          name: calculator.id === "vat" ? "부가가치세" : "복리",
+          href:
+            calculator.id === "vat"
+              ? "/ko/business/vat"
+              : "/ko/finance/compound-interest",
+        }))}
+        locale="ko"
+      />,
+    );
+
+    expect(
+      screen.getByRole("button", { name: "복리 즐겨찾기에서 앞으로 이동" }),
+    ).toHaveClass("min-h-11", "min-w-11");
+    expect(
+      screen.getByText(
+        "화살표 버튼으로 바로가기 순서를 원하는 대로 바꿀 수 있습니다.",
+      ),
+    ).toBeVisible();
   });
 
   it("removes favorites directly without changing recent history", () => {
@@ -138,6 +221,7 @@ describe("calculator repeat-use storage", () => {
 
     expect(() => recordRecentCalculator("compound-interest")).not.toThrow();
     expect(() => toggleCalculatorFavorite("compound-interest")).not.toThrow();
+    expect(() => moveCalculatorFavorite("compound-interest", 1)).not.toThrow();
     expect(() => removeRecentCalculator("compound-interest")).not.toThrow();
     expect(() => removeCalculatorFavorite("compound-interest")).not.toThrow();
     expect(() => clearRecentCalculators()).not.toThrow();

@@ -150,6 +150,21 @@ export function toggleCalculatorFavorite(id: string) {
   return !isFavorite;
 }
 
+export function moveCalculatorFavorite(id: string, direction: -1 | 1) {
+  const favorites = getRepeatUseSnapshot().favorites;
+  const currentIndex = favorites.indexOf(id);
+  if (currentIndex < 0) return false;
+
+  const nextIndex = currentIndex + direction;
+  if (nextIndex < 0 || nextIndex >= favorites.length) return false;
+
+  const next = [...favorites];
+  [next[currentIndex], next[nextIndex]] = [next[nextIndex], next[currentIndex]];
+  writeIds(FAVORITES_KEY, next);
+  notifyRepeatUseChange();
+  return true;
+}
+
 export function removeCalculatorFavorite(id: string) {
   const current = getRepeatUseSnapshot().favorites;
   writeIds(
@@ -309,9 +324,18 @@ export function CalculatorRepeatUseShortcuts({
           {favorites.length > 0 ? (
             <div>
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                  {isEnglish ? "Favorites" : "즐겨찾기"}
-                </h3>
+                <div>
+                  <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    {isEnglish ? "Favorites" : "즐겨찾기"}
+                  </h3>
+                  {favorites.length > 1 ? (
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      {isEnglish
+                        ? "Use the arrow controls to personalize shortcut order."
+                        : "화살표 버튼으로 바로가기 순서를 원하는 대로 바꿀 수 있습니다."}
+                    </p>
+                  ) : null}
+                </div>
                 <button
                   type="button"
                   onClick={clearCalculatorFavorites}
@@ -321,7 +345,7 @@ export function CalculatorRepeatUseShortcuts({
                 </button>
               </div>
               <ul className="mt-2 flex flex-wrap gap-2">
-                {favorites.map((calculator) => (
+                {favorites.map((calculator, index) => (
                   <li
                     key={calculator.id}
                     className="flex min-h-11 items-stretch overflow-hidden rounded-lg border bg-background"
@@ -333,6 +357,40 @@ export function CalculatorRepeatUseShortcuts({
                     >
                       {calculator.name}
                     </Link>
+                    {favorites.length > 1 ? (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            moveCalculatorFavorite(calculator.id, -1)
+                          }
+                          disabled={index === 0}
+                          aria-label={
+                            isEnglish
+                              ? `Move ${calculator.name} earlier in favorites`
+                              : `${calculator.name} 즐겨찾기에서 앞으로 이동`
+                          }
+                          className="inline-flex min-h-11 min-w-11 items-center justify-center border-l text-sm text-muted-foreground transition hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/30 disabled:cursor-not-allowed disabled:opacity-40 motion-reduce:transition-none"
+                        >
+                          ↑
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            moveCalculatorFavorite(calculator.id, 1)
+                          }
+                          disabled={index === favorites.length - 1}
+                          aria-label={
+                            isEnglish
+                              ? `Move ${calculator.name} later in favorites`
+                              : `${calculator.name} 즐겨찾기에서 뒤로 이동`
+                          }
+                          className="inline-flex min-h-11 min-w-11 items-center justify-center border-l text-sm text-muted-foreground transition hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/30 disabled:cursor-not-allowed disabled:opacity-40 motion-reduce:transition-none"
+                        >
+                          ↓
+                        </button>
+                      </>
+                    ) : null}
                     <button
                       type="button"
                       onClick={() => removeCalculatorFavorite(calculator.id)}
