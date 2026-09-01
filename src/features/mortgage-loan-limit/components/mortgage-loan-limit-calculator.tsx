@@ -2,6 +2,7 @@
 
 import Decimal from "decimal.js";
 import { type FormEvent, useState } from "react";
+import { PrimaryResults } from "@/components/calculators/calculator-workspace";
 import { Button } from "@/components/ui/button";
 import {
   calculateMortgageLoanLimit,
@@ -90,6 +91,27 @@ export function MortgageLoanLimitCalculator({
           : "LTV and DSR equally"
     : "—";
 
+  const metrics = [
+    {
+      label: copy.loanLimit,
+      value: result ? formatKrw(result.loanLimit, locale) : "—",
+      featured: true,
+    },
+    { label: copy.limitingFactor, value: factor },
+    {
+      label: copy.ltvLimit,
+      value: result ? formatKrw(result.ltvLimit, locale) : "—",
+    },
+    {
+      label: copy.dsrLimit,
+      value: result ? formatKrw(result.dsrLimit, locale) : "—",
+    },
+    {
+      label: copy.monthlyPayment,
+      value: result ? formatKrw(result.estimatedMonthlyPayment, locale) : "—",
+    },
+  ];
+
   return (
     <section className="grid gap-4 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
       <form
@@ -160,28 +182,7 @@ export function MortgageLoanLimitCalculator({
           <h2 className="text-xl font-semibold">
             {locale === "ko" ? "예상 한도" : "Estimated limit"}
           </h2>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            <Metric
-              label={copy.loanLimit}
-              value={result ? formatKrw(result.loanLimit, locale) : "—"}
-              featured
-            />
-            <Metric label={copy.limitingFactor} value={factor} />
-            <Metric
-              label={copy.ltvLimit}
-              value={result ? formatKrw(result.ltvLimit, locale) : "—"}
-            />
-            <Metric
-              label={copy.dsrLimit}
-              value={result ? formatKrw(result.dsrLimit, locale) : "—"}
-            />
-            <Metric
-              label={copy.monthlyPayment}
-              value={
-                result ? formatKrw(result.estimatedMonthlyPayment, locale) : "—"
-              }
-            />
-          </div>
+          <PrimaryResults metrics={metrics} />
         </section>
         <section className="rounded-xl border bg-card p-5 text-sm leading-7 text-muted-foreground shadow-sm">
           <p>{copy.note}</p>
@@ -218,23 +219,6 @@ function Field({
         </span>
       </div>
     </label>
-  );
-}
-
-function Metric({
-  label,
-  value,
-  featured = false,
-}: {
-  label: string;
-  value: string;
-  featured?: boolean;
-}) {
-  return (
-    <div className={`rounded-lg border p-4 ${featured ? "bg-muted/60" : ""}`}>
-      <p className="text-sm text-muted-foreground">{label}</p>
-      <p className="mt-1 text-xl font-semibold tabular-nums">{value}</p>
-    </div>
   );
 }
 
