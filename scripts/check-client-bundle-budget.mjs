@@ -62,6 +62,16 @@ const allChunkMeasurements = walkJavaScript(chunksDir).map((filePath) => ({
   file: relative(nextDir, filePath).replaceAll("\\", "/"),
   ...measure(filePath),
 }));
+const sharedFileSet = new Set(sharedFiles);
+const routeFeatureMeasurements = allChunkMeasurements.filter(
+  (item) => !sharedFileSet.has(item.file),
+);
+
+if (routeFeatureMeasurements.length === 0) {
+  throw new Error(
+    "PERF-008 could not resolve any non-shared client JavaScript chunks from the build output",
+  );
+}
 
 const sharedRaw = sharedMeasurements.reduce((sum, item) => sum + item.raw, 0);
 const sharedGzip = sharedMeasurements.reduce((sum, item) => sum + item.gzip, 0);
@@ -73,10 +83,14 @@ const totalGzip = allChunkMeasurements.reduce(
 const largestSharedGzip = Math.max(
   ...sharedMeasurements.map((item) => item.gzip),
 );
+const largestRouteFeatureGzip = Math.max(
+  ...routeFeatureMeasurements.map((item) => item.gzip),
+);
 
 const kib = (bytes) => `${(bytes / 1024).toFixed(1)} KiB`;
 const SHARED_GZIP_BUDGET = 450 * 1024;
 const SINGLE_SHARED_CHUNK_GZIP_BUDGET = 300 * 1024;
+const SINGLE_ROUTE_FEATURE_CHUNK_GZIP_BUDGET = 350 * 1024;
 
 console.log("PERF-007 shared client bundle audit");
 console.log(`- shared JS files: ${sharedMeasurements.length}`);
@@ -97,6 +111,18 @@ for (const item of [...allChunkMeasurements]
   console.log(`  ${kib(item.gzip)}  ${item.file}`);
 }
 
+console.log("PERF-008 route/feature client chunk audit");
+console.log(`- non-shared JS chunks: ${routeFeatureMeasurements.length}`);
+console.log(
+  `- largest route/feature chunk gzip: ${kib(largestRouteFeatureGzip)} / ${kib(SINGLE_ROUTE_FEATURE_CHUNK_GZIP_BUDGET)} budget`,
+);
+console.log("- largest non-shared chunks (gzip):");
+for (const item of [...routeFeatureMeasurements]
+  .sort((a, b) => b.gzip - a.gzip)
+  .slice(0, 10)) {
+  console.log(`  ${kib(item.gzip)}  ${item.file}`);
+}
+
 const failures = [];
 if (sharedGzip > SHARED_GZIP_BUDGET) {
   failures.push(
@@ -108,7 +134,12 @@ if (largestSharedGzip > SINGLE_SHARED_CHUNK_GZIP_BUDGET) {
     `largest shared chunk gzip ${kib(largestSharedGzip)} exceeds ${kib(SINGLE_SHARED_CHUNK_GZIP_BUDGET)}`,
   );
 }
+if (largestRouteFeatureGzip > SINGLE_ROUTE_FEATURE_CHUNK_GZIP_BUDGET) {
+  failures.push(
+    `largest route/feature chunk gzip ${kib(largestRouteFeatureGzip)} exceeds ${kib(SINGLE_ROUTE_FEATURE_CHUNK_GZIP_BUDGET)}`,
+  );
+}
 
 if (failures.length > 0) {
-  throw new Error(`PERF-007 bundle budget failed:\n- ${failures.join("\n- ")}`);
+  throw new Error(`Client bundle budget failed:\n- ${failures.join("\n- ")}`);
 }
