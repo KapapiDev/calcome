@@ -242,8 +242,12 @@ export function CalculatorSearch({
         }}
         placeholder={copy.placeholder}
         autoComplete="off"
-        aria-controls={normalizedQuery ? "calculator-search-results" : undefined}
-        aria-describedby={normalizedQuery ? "calculator-search-hint" : undefined}
+        aria-controls={
+          normalizedQuery ? "calculator-search-results" : undefined
+        }
+        aria-describedby={
+          normalizedQuery ? "calculator-search-hint" : undefined
+        }
         className="mt-2 h-12 w-full rounded-xl border bg-background px-4 text-base shadow-sm outline-none transition focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30"
       />
       {normalizedQuery ? (
