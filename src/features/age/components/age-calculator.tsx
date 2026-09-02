@@ -2,11 +2,11 @@
 
 import { type FormEvent, useMemo, useState } from "react";
 import {
+  CalculatorActions,
   PrimaryResults,
   compactCalculatorSettingsClass,
   dashboardCalculatorWorkspaceClass,
 } from "@/components/calculators/calculator-workspace";
-import { Button } from "@/components/ui/button";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
 import { calculateAge, type AgeResult } from "../calculate";
 import { ageContent, type AgeLocale } from "../content";
@@ -79,6 +79,7 @@ export function AgeCalculator({ locale }: { locale: AgeLocale }) {
               <input
                 id="birthDate"
                 type="date"
+                required
                 value={values.birthDate}
                 onChange={(event) =>
                   setValues((current) => ({
@@ -97,6 +98,7 @@ export function AgeCalculator({ locale }: { locale: AgeLocale }) {
               <input
                 id="asOfDate"
                 type="date"
+                required
                 value={values.asOfDate}
                 onChange={(event) =>
                   setValues((current) => ({
@@ -109,12 +111,11 @@ export function AgeCalculator({ locale }: { locale: AgeLocale }) {
               />
             </div>
           </div>
-          <div className="mt-5 grid grid-cols-[1fr_auto] gap-2">
-            <Button type="submit">{copy.calculate}</Button>
-            <Button type="button" variant="outline" onClick={reset}>
-              {copy.reset}
-            </Button>
-          </div>
+          <CalculatorActions
+            submitLabel={copy.calculate}
+            onReset={reset}
+            compact
+          />
         </form>
         <section
           ref={resultRef}
