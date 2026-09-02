@@ -63,6 +63,20 @@ describe("shared localized layout UI", () => {
       );
     }
 
+    const languageControl = screen.getByLabelText("Select language");
+    expect(languageControl).toHaveClass(
+      "min-h-11",
+      "min-w-11",
+      "focus-visible:ring-2",
+    );
+    languageControl.click();
+    const koreanOption = await screen.findByRole("link", { name: "한국어" });
+    expect(koreanOption).toHaveClass(
+      "min-h-11",
+      "focus-visible:ring-2",
+      "focus-visible:ring-ring",
+    );
+
     const allowedKoreanOption = "한국어";
     expect(container.textContent?.replace(allowedKoreanOption, "")).not.toMatch(
       /[가-힣]/,
@@ -93,6 +107,15 @@ describe("shared localized layout UI", () => {
     ).toBeVisible();
     expect(screen.getByRole("link", { name: "CalCome•" })).toHaveClass(
       "min-h-11",
+    );
+
+    const languageControl = screen.getByLabelText("언어 선택");
+    languageControl.click();
+    const englishOption = await screen.findByRole("link", { name: "English" });
+    expect(englishOption).toHaveClass(
+      "min-h-11",
+      "focus-visible:ring-2",
+      "focus-visible:ring-ring",
     );
   });
 });
