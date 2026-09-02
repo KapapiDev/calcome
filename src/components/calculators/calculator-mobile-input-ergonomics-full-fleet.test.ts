@@ -24,9 +24,11 @@ function calculatorInputFiles() {
 
 function constantClasses(source: string) {
   return new Map(
-    [...source.matchAll(/const\s+([A-Za-z_$][\w$]*)\s*=\s*["']([^"']+)["'];?/g)].map(
-      (match) => [match[1], match[2]],
-    ),
+    [
+      ...source.matchAll(
+        /const\s+([A-Za-z_$][\w$]*)\s*=\s*["']([^"']+)["'];?/g,
+      ),
+    ].map((match) => [match[1], match[2]]),
   );
 }
 
@@ -50,7 +52,9 @@ function resolveClasses(source: string, input: string) {
 
 function isTextEntryInput(input: string) {
   const type = input.match(/type=["']([^"']+)["']/)?.[1] ?? "text";
-  return !["checkbox", "radio", "hidden", "range", "file", "color"].includes(type);
+  return !["checkbox", "radio", "hidden", "range", "file", "color"].includes(
+    type,
+  );
 }
 
 function auditInput(source: string, input: string) {
@@ -70,23 +74,36 @@ function auditInput(source: string, input: string) {
         token,
       ) || /^py-(2|2\.5|3|3\.5|4)$/.test(token),
   );
-  const hasFluidWidth = tokens.includes("w-full") || tokens.includes("max-w-full");
+  const hasFluidWidth =
+    tokens.includes("w-full") || tokens.includes("max-w-full");
 
   if (!hasMobileReadableText)
     issues.push("text-entry input lacks a mobile text-base-or-larger size");
   if (!hasUsableTarget)
-    issues.push("text-entry input lacks a bounded mobile touch-target height/padding");
+    issues.push(
+      "text-entry input lacks a bounded mobile touch-target height/padding",
+    );
   if (!hasFluidWidth)
     issues.push("text-entry input lacks fluid-width overflow protection");
 
-  if (inputMode && !["numeric", "decimal", "tel", "email", "url", "search", "text"].includes(inputMode))
+  if (
+    inputMode &&
+    !["numeric", "decimal", "tel", "email", "url", "search", "text"].includes(
+      inputMode,
+    )
+  )
     issues.push(`unsupported inputMode ${inputMode}`);
 
   if (type === "text" && !inputMode)
     issues.push("text input has no explicit mobile keyboard hint");
 
-  if (["date", "month", "week", "time", "datetime-local"].includes(type) && inputMode)
-    issues.push("native date/time input should keep its native keyboard semantics");
+  if (
+    ["date", "month", "week", "time", "datetime-local"].includes(type) &&
+    inputMode
+  )
+    issues.push(
+      "native date/time input should keep its native keyboard semantics",
+    );
 
   return issues;
 }
