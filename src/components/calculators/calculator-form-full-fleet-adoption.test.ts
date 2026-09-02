@@ -32,9 +32,8 @@ function hasInlineResetAction(source: string) {
   return buttons.some((button) => {
     if (!/type=["']button["']/.test(button)) return false;
 
-    const resetHandler = /onClick=\{\s*[A-Za-z_$][\w$]*reset[\w$]*\s*\}/i.test(
-      button,
-    );
+    const handler = button.match(/onClick=\{\s*([A-Za-z_$][\w$]*)\s*\}/)?.[1];
+    const resetHandler = handler ? /reset/i.test(handler) : false;
     const localizedResetCopy =
       /onClick=\{/.test(button) && /\{[^}]*\.reset\}/i.test(button);
 
