@@ -66,11 +66,13 @@ Remaining to Target: 0
   - Every published `*-calculator.tsx` result surface is now guarded by a self-discovering CI audit requiring the shared mobile-safe `PrimaryResults` contract for narrow-screen stacking, long-value wrapping, stable numeric alignment, and result hierarchy without changing formulas, routes, policy values, or stored data.
 - [x] UX-069 DONE — Shared Calculator Mobile Result Readability Runtime Regression
   - Representative Korean and English long localized result values are now covered at rendered runtime through the shared `PrimaryResults` contract for narrow-screen stacking, long-value wrapping, stable numeric alignment, and featured-result hierarchy without changing formulas, routes, policy values, or stored data.
+- [x] UX-070 DONE — Post-100 Shared Interaction and Accessibility Hardening
+  - Shared calculator completion and recalculate scrolling now honor reduced-motion preferences, focused result targets expose a bilingual accessible name plus polite result updates and visible focus treatment, shared calculator actions can wrap without losing the 44px touch target at narrow/zoomed widths, and the shared button primitive disables transition and pressed-translation motion when reduced motion is requested without changing formulas, routes, storage, or light/dark color semantics.
 
 ## Active queue
 
-- [ ] UX-070 OPEN — Post-100 Shared Interaction and Accessibility Hardening
-  - Scope: consolidate the next meaningful post-100 UX pass around keyboard/focus behavior, accessible names and announcements, touch targets, narrow-screen containment, reduced-motion behavior, and shared light/dark visual consistency; fix only proven reusable drifts and bundle closely related regression coverage in one bounded task rather than continuing micro-test PRs.
+- [ ] UX-071 OPEN — Full-Site Accessibility and Visual Consistency Regression
+  - Scope: run the broader post-100 keyboard-only, focus-order, accessible-name, contrast, zoom, reduced-motion, touch-target, mobile-overflow, light-mode, and dark-mode regression across home, navigation, directory, related-calculator surfaces, and representative calculator families; standardize only proven remaining inconsistencies and preserve the shared calculator contracts hardened through UX-070.
 
 ## Security gate
 
