@@ -22,29 +22,32 @@ function calculatorFormFiles() {
     .sort();
 }
 
-function resetHandlerNames(source: string) {
-  return [...source.matchAll(/function\s+([\w$]*reset[\w$]*)\s*\(/gi)].map(
-    (match) => match[1],
+function hasSharedCalculatorActions(source: string) {
+  return /<CalculatorActions\b[\s\S]*?\/>/m.test(source);
+}
+
+function hasInlineResetAction(source: string) {
+  return /<Button\b[\s\S]*?type=["']button["'][\s\S]*?onClick=\{\(\)\s*=>\s*\{[\s\S]*?\}\}[\s\S]*?\{copy\.reset\}[\s\S]*?<\/Button>/m.test(
+    source,
   );
 }
 
 function auditFormContract(path: string) {
   const source = readFileSync(path, "utf8");
   const issues: string[] = [];
+  const sharedActions = hasSharedCalculatorActions(source);
 
-  if (!/\<form[\s\S]*?onSubmit=\{[^}]+\}/m.test(source))
+  if (!/<form[\s\S]*?onSubmit=\{[^}]+\}/m.test(source))
     issues.push("form has no React onSubmit handler");
-  if (!/type=["']submit["']/.test(source))
+  if (!sharedActions && !/type=["']submit["']/.test(source))
     issues.push("form has no semantic submit control");
 
-  const resetHandlers = resetHandlerNames(source);
-  const sharedReset = /onReset=\{[^}]+\}/.test(source);
-  const localReset = resetHandlers.some((handler) =>
-    new RegExp(`onClick=\\{${handler}\\}`).test(source),
-  );
+  const sharedReset =
+    sharedActions && /<CalculatorActions\b[\s\S]*?onReset=\{[^}]+\}[\s\S]*?\/>/m.test(source);
+  const inlineReset = hasInlineResetAction(source);
   const nativeReset = /type=["']reset["']/.test(source);
 
-  if (!sharedReset && !localReset && !nativeReset)
+  if (!sharedReset && !inlineReset && !nativeReset)
     issues.push("form has no explicit reset action wired to its reset path");
 
   return issues;
