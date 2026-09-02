@@ -25,12 +25,10 @@ describe("calculator mobile input runtime regression", () => {
   for (const locale of ["ko", "en"] as const) {
     it(`keeps ${locale} numeric and formatted-money inputs on decimal mobile keyboards`, () => {
       const cagr = render(<CagrCalculator locale={locale} />);
-      const numeric = cagr.container.querySelector<HTMLInputElement>(
-        "#investmentPeriod",
-      );
-      const formattedMoney = cagr.container.querySelector<HTMLInputElement>(
-        "#initialValue",
-      );
+      const numeric =
+        cagr.container.querySelector<HTMLInputElement>("#investmentPeriod");
+      const formattedMoney =
+        cagr.container.querySelector<HTMLInputElement>("#initialValue");
 
       expect(numeric).not.toBeNull();
       expect(formattedMoney).not.toBeNull();
