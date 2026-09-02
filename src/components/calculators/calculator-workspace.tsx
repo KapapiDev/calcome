@@ -179,6 +179,12 @@ function findNearestPrimaryResults(form: HTMLFormElement) {
   return null;
 }
 
+function getScrollBehavior(): ScrollBehavior {
+  return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+    ? "auto"
+    : "smooth";
+}
+
 function moveMobileCompletionToResults(form: HTMLFormElement) {
   if (!window.matchMedia?.("(max-width: 767px)").matches) return;
 
@@ -186,7 +192,7 @@ function moveMobileCompletionToResults(form: HTMLFormElement) {
     const results = findNearestPrimaryResults(form);
     if (!results || !getResultText(results).hasCalculatedValue) return;
 
-    results.scrollIntoView({ block: "start", behavior: "smooth" });
+    results.scrollIntoView({ block: "start", behavior: getScrollBehavior() });
     results.focus({ preventScroll: true });
   }, 0);
 }
@@ -254,7 +260,7 @@ export function CalculatorActions({
           ref={submitButtonRef}
           type="submit"
           size="lg"
-          className="h-11 px-5"
+          className="h-auto min-h-11 min-w-0 whitespace-normal px-5 py-2.5 text-center"
           onClick={(event) => {
             if (!validateBeforeSubmit(event.currentTarget.form))
               event.preventDefault();
@@ -266,7 +272,7 @@ export function CalculatorActions({
           type="button"
           variant="outline"
           size="lg"
-          className="h-11 px-4"
+          className="h-auto min-h-11 min-w-0 whitespace-normal px-4 py-2.5 text-center"
           onClick={(event) => {
             const filled = fillExampleValues(event.currentTarget.form);
             setExampleStatus(
@@ -280,7 +286,7 @@ export function CalculatorActions({
           type="button"
           variant="outline"
           size="lg"
-          className="h-11 px-4"
+          className="h-auto min-h-11 min-w-0 whitespace-normal px-4 py-2.5 text-center"
           onClick={(event) => {
             const form = event.currentTarget.form;
             setValidationIssue(null);
@@ -306,7 +312,7 @@ export function CalculatorActions({
             type="button"
             variant="outline"
             size="sm"
-            className="mt-2 min-h-11"
+            className="mt-2 min-h-11 whitespace-normal text-center"
             onClick={() => validationIssue.control.focus()}
           >
             {copy.fixProblem}
@@ -333,6 +339,7 @@ type ResultActionCopy = {
   recalculate: string;
   recalculateReady: string;
   anotherCalculator: string;
+  resultsLabel: string;
   staleTitle: string;
   staleDescription: string;
   staleCopyBlocked: string;
@@ -347,6 +354,7 @@ const RESULT_ACTION_COPY: Record<"ko" | "en", ResultActionCopy> = {
     recalculate: "다시 계산",
     recalculateReady: "입력 영역으로 이동했습니다.",
     anotherCalculator: "다른 계산기",
+    resultsLabel: "계산 결과",
     staleTitle: "입력값이 변경되었습니다.",
     staleDescription:
       "표시된 결과는 이전 입력 기준입니다. 다시 계산하면 최신 값으로 갱신됩니다.",
@@ -361,6 +369,7 @@ const RESULT_ACTION_COPY: Record<"ko" | "en", ResultActionCopy> = {
     recalculate: "Recalculate",
     recalculateReady: "Moved to the calculator inputs.",
     anotherCalculator: "Another calculator",
+    resultsLabel: "Calculation results",
     staleTitle: "Inputs have changed.",
     staleDescription:
       "These results use your previous inputs. Recalculate to refresh them.",
@@ -489,7 +498,7 @@ export function PrimaryResults({
     const form = findNearestCalculatorForm(list);
     const firstControl = findFirstFormControl(form);
 
-    form?.scrollIntoView({ block: "start", behavior: "smooth" });
+    form?.scrollIntoView({ block: "start", behavior: getScrollBehavior() });
     firstControl?.focus();
     setActionStatus(copy.recalculateReady);
   }
@@ -500,9 +509,12 @@ export function PrimaryResults({
     <>
       <dl
         ref={resultsRef}
-        className="mt-4 grid scroll-mt-4 gap-2 outline-none sm:grid-cols-3"
+        className="mt-4 grid scroll-mt-4 gap-2 rounded-lg outline-none focus:ring-3 focus:ring-ring/50 sm:grid-cols-3"
         data-testid="primary-results"
         tabIndex={-1}
+        aria-label={copy.resultsLabel}
+        aria-live="polite"
+        aria-atomic="true"
       >
         {metrics.map((metric) => (
           <div
@@ -543,7 +555,7 @@ export function PrimaryResults({
         <Button
           type="button"
           variant="outline"
-          className="min-h-11"
+          className="h-auto min-h-11 min-w-0 whitespace-normal py-2.5 text-center"
           onClick={recalculate}
         >
           {copy.recalculate}
@@ -551,14 +563,14 @@ export function PrimaryResults({
         <Button
           type="button"
           variant="outline"
-          className="min-h-11"
+          className="h-auto min-h-11 min-w-0 whitespace-normal py-2.5 text-center"
           onClick={copyResult}
         >
           {copy.copy}
         </Button>
         <a
           href={directoryHref}
-          className="inline-flex min-h-11 items-center justify-center rounded-md border bg-background px-4 text-sm font-medium shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+          className="inline-flex min-h-11 min-w-0 items-center justify-center rounded-md border bg-background px-4 py-2.5 text-center text-sm font-medium break-words whitespace-normal shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 motion-reduce:transition-none"
         >
           {copy.anotherCalculator}
         </a>
