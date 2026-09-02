@@ -69,8 +69,8 @@ Remaining to Target: 0
 
 ## Active queue
 
-- [ ] UX-007 OPEN — Full-Site Accessibility and Visual Consistency Regression
-  - Scope: run a consolidated keyboard, focus, accessible-name, zoom, reduced-motion, touch-target, mobile-overflow, light/dark-mode, and shared visual-consistency pass across the current post-100 product; fix only proven reusable drifts while preserving routes, formulas, policy values, stored data, SEO, and public calculator coverage.
+- [ ] UX-070 OPEN — Post-100 Shared Interaction and Accessibility Hardening
+  - Scope: consolidate the next meaningful post-100 UX pass around keyboard/focus behavior, accessible names and announcements, touch targets, narrow-screen containment, reduced-motion behavior, and shared light/dark visual consistency; fix only proven reusable drifts and bundle closely related regression coverage in one bounded task rather than continuing micro-test PRs.
 
 ## Security gate
 
