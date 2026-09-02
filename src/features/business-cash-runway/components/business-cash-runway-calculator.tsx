@@ -2,11 +2,11 @@
 
 import { type FormEvent, useMemo, useState } from "react";
 import {
+  CalculatorActions,
   PrimaryResults,
   compactCalculatorSettingsClass,
   dashboardCalculatorWorkspaceClass,
 } from "@/components/calculators/calculator-workspace";
-import { Button } from "@/components/ui/button";
 import { useStableResultScroll } from "@/hooks/use-stable-result-scroll";
 import { formatMoneyInput } from "@/lib/input/money";
 import {
@@ -112,6 +112,7 @@ export function BusinessCashRunwayCalculator({
       <input
         id={id}
         inputMode="decimal"
+        required
         value={values[id]}
         onChange={(event) =>
           setValues((current) => ({
@@ -157,12 +158,11 @@ export function BusinessCashRunwayCalculator({
           <p className="mt-3 text-xs leading-5 text-muted-foreground">
             {copy.note}
           </p>
-          <div className="mt-5 grid grid-cols-[1fr_auto] gap-2">
-            <Button type="submit">{copy.calculate}</Button>
-            <Button type="button" variant="outline" onClick={reset}>
-              {copy.reset}
-            </Button>
-          </div>
+          <CalculatorActions
+            submitLabel={copy.calculate}
+            onReset={reset}
+            compact
+          />
         </form>
         <section
           ref={resultRef}
