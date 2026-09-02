@@ -39,7 +39,7 @@ Remaining to Target: 0
 - [x] UX-055 DONE — Shared Favorites and Recent Calculator Navigation Upgrade
   - Local favorites and bounded recent-calculator shortcuts retain deterministic calculator identity/order, direct stable routes, explicit removal semantics, and now remain discoverable with bilingual empty-state guidance back to the full calculator directory without storing financial inputs.
 - [x] UX-056 DONE — Shared Favorites/Recent Management and Discoverability Upgrade
-  - Repeat-use shortcuts now self-heal retired or malformed stored calculator IDs against the current public registry, expose clear favorites/recent/all management actions, and show a compact shortcut count while continuing to store only calculator identity/order on the device.
+  - Repeat-use shortcuts now self-heal retired or malformed stored calculator IDs against the current public registry, expose clear-favorites, clear-recent, and clear-all management actions, and show a compact shortcut count while continuing to store only calculator identity/order on the device.
 - [x] UX-057 DONE — Favorites-First Directory Discovery Upgrade
   - The bilingual calculator directory now surfaces device-local favorites ahead of popular/category sections when favorites exist, preserves favorite order and stable localized routes, records recent use on shortcut navigation, and leaves the complete server-rendered 100-calculator directory and structured data unchanged.
 - [x] UX-058 DONE — Directory Search Recovery and Keyboard Discovery Upgrade
@@ -60,11 +60,13 @@ Remaining to Target: 0
   - Every form-bearing `*-calculator.tsx` implementation is now guarded by a self-discovering CI audit requiring semantic form submission plus an explicit reset action wired to either shared or local reset behavior; equivalent existing action components remain valid and formulas, routes, policy values, and storage remain unchanged.
 - [x] UX-066 DONE — Shared Calculator Mobile Input Ergonomics Full-Fleet Audit
   - Published calculator text-entry inputs are now guarded by a self-discovering CI audit for mobile-readable sizing, bounded touch-target sizing, fluid-width overflow protection, and explicit keyboard/date semantics without changing formulas, routes, policy values, or stored data.
+- [x] UX-067 DONE — Shared Calculator Mobile Input Runtime Regression
+  - Representative numeric, formatted-money, and native date inputs are now covered at rendered runtime across Korean and English surfaces for intended mobile keyboard semantics, mobile-readable sizing, fluid width, and formatted-money behavior without changing formulas, routes, policy values, or stored data.
 
 ## Active queue
 
-- [ ] UX-067 OPEN — Shared Calculator Mobile Input Runtime Regression
-  - Scope: verify representative numeric, formatted-money, and native date inputs render the intended mobile keyboard semantics and usable control sizing across Korean and English calculator surfaces without changing formulas, routes, policy values, or stored data.
+- [ ] UX-068 OPEN — Shared Calculator Mobile Result Readability and Overflow Full-Fleet Audit
+  - Scope: audit published calculator result surfaces for narrow-screen overflow, long-number containment, readable wrapping, and mobile result hierarchy; fix only proven shared or repeated drifts without changing formulas, routes, policy values, or stored data.
 
 ## Security gate
 
