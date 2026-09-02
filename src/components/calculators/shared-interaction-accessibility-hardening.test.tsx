@@ -107,7 +107,9 @@ describe("shared interaction and accessibility hardening", () => {
       />,
     );
 
-    expect(screen.getByRole("link", { name: "Another calculator" })).toHaveClass(
+    expect(
+      screen.getByRole("link", { name: "Another calculator" }),
+    ).toHaveClass(
       "min-h-11",
       "min-w-0",
       "whitespace-normal",
