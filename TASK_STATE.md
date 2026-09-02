@@ -58,11 +58,13 @@ Remaining to Target: 0
   - Representative date/general and business-finance calculators now adopt the shared bilingual form-action contract, including keyboard validation recovery, stale-result reset semantics, and first-control focus return; the regression is executable while compound-interest retains its already-covered explicit validation/focus behavior.
 - [x] UX-065 DONE — Shared Calculator Form Contract Full-Fleet Adoption Audit
   - Every form-bearing `*-calculator.tsx` implementation is now guarded by a self-discovering CI audit requiring semantic form submission plus an explicit reset action wired to either shared or local reset behavior; equivalent existing action components remain valid and formulas, routes, policy values, and storage remain unchanged.
+- [x] UX-066 DONE — Shared Calculator Mobile Input Ergonomics Full-Fleet Audit
+  - Published calculator text-entry inputs are now guarded by a self-discovering CI audit for mobile-readable sizing, bounded touch-target sizing, fluid-width overflow protection, and explicit keyboard/date semantics without changing formulas, routes, policy values, or stored data.
 
 ## Active queue
 
-- [ ] UX-066 OPEN — Shared Calculator Mobile Input Ergonomics Full-Fleet Audit
-  - Scope: audit published calculator inputs for mobile keyboard hints, touch target sizing, numeric/date input semantics, and accidental zoom/overflow risks; convert only proven drifts and add bounded executable coverage without changing formulas, routes, policy values, or stored data.
+- [ ] UX-067 OPEN — Shared Calculator Mobile Input Runtime Regression
+  - Scope: verify representative numeric, formatted-money, and native date inputs render the intended mobile keyboard semantics and usable control sizing across Korean and English calculator surfaces without changing formulas, routes, policy values, or stored data.
 
 ## Security gate
 
