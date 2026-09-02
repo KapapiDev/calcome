@@ -71,7 +71,7 @@ Remaining to Target: 0
 
 ## Active queue
 
-- [ ] UX-007 OPEN — Full-Site Accessibility and Visual Consistency Regression
+- [ ] UX-071 OPEN — Full-Site Accessibility and Visual Consistency Regression
   - Scope: run the broader post-100 keyboard-only, focus-order, accessible-name, contrast, zoom, reduced-motion, touch-target, mobile-overflow, light-mode, and dark-mode regression across home, navigation, directory, related-calculator surfaces, and representative calculator families; standardize only proven remaining inconsistencies and preserve the shared calculator contracts hardened through UX-070.
 
 ## Security gate
