@@ -56,11 +56,13 @@ Remaining to Target: 0
   - Shared calculator forms now validate keyboard-style form submission through the same path as submit-button activation, reset clears shared stale-result/action state, and reset/recalculate return focus predictably to the first usable control without changing formulas, routes, storage, or mobile result behavior.
 - [x] UX-064 DONE — Shared Calculator Form Interaction Cross-Calculator Regression
   - Representative date/general and business-finance calculators now adopt the shared bilingual form-action contract, including keyboard validation recovery, stale-result reset semantics, and first-control focus return; the regression is executable while compound-interest retains its already-covered explicit validation/focus behavior.
+- [x] UX-065 DONE — Shared Calculator Form Contract Full-Fleet Adoption Audit
+  - Every form-bearing `*-calculator.tsx` implementation is now guarded by a self-discovering CI audit requiring semantic form submission plus an explicit reset action wired to either shared or local reset behavior; equivalent existing action components remain valid and formulas, routes, policy values, and storage remain unchanged.
 
 ## Active queue
 
-- [ ] UX-065 OPEN — Shared Calculator Form Contract Full-Fleet Adoption Audit
-  - Scope: audit the remaining published calculator form implementations for shared keyboard submit, validation recovery, reset focus, stale-result clearing, and bilingual action semantics; convert only proven drifts and add bounded executable coverage without changing formulas, routes, or policy values.
+- [ ] UX-066 OPEN — Shared Calculator Mobile Input Ergonomics Full-Fleet Audit
+  - Scope: audit published calculator inputs for mobile keyboard hints, touch target sizing, numeric/date input semantics, and accidental zoom/overflow risks; convert only proven drifts and add bounded executable coverage without changing formulas, routes, policy values, or stored data.
 
 ## Security gate
 
