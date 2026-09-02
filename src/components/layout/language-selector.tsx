@@ -10,7 +10,7 @@ import { localizedDestination } from "./language-routing";
 import { sharedLayoutCopy } from "./layout-i18n";
 
 const optionClassName =
-  "block rounded-md px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+  "flex min-h-11 items-center rounded-md px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
 export function LanguageSelector({
   locale,
