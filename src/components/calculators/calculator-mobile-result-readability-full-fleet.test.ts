@@ -30,9 +30,12 @@ function sharedResultContract(source: string) {
   if (!resultList) return ["shared PrimaryResults list is missing"];
 
   const issues: string[] = [];
-  const listClass = resultList.match(/<dl\b[\s\S]*?className=["']([^"']+)["']/m)?.[1] ?? "";
-  const cardClass = resultList.match(/<div\b[\s\S]*?className=\{`([^`]+)`\}/m)?.[1] ?? "";
-  const valueClass = resultList.match(/<dd\b[\s\S]*?className=["']([^"']+)["']/m)?.[1] ?? "";
+  const listClass =
+    resultList.match(/<dl\b[\s\S]*?className=["']([^"']+)["']/m)?.[1] ?? "";
+  const cardClass =
+    resultList.match(/<div\b[\s\S]*?className=\{`([^`]+)`\}/m)?.[1] ?? "";
+  const valueClass =
+    resultList.match(/<dd\b[\s\S]*?className=["']([^"']+)["']/m)?.[1] ?? "";
 
   if (!listClass.includes("grid"))
     issues.push("shared results do not use a mobile-stackable grid");
