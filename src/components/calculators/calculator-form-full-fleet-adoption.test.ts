@@ -27,8 +27,13 @@ function hasSharedCalculatorActions(source: string) {
 }
 
 function hasInlineResetAction(source: string) {
-  return /<Button\b[\s\S]*?type=["']button["'][\s\S]*?onClick=\{\(\)\s*=>\s*\{[\s\S]*?\}\}[\s\S]*?\{copy\.reset\}[\s\S]*?<\/Button>/m.test(
-    source,
+  const buttons = source.match(/<Button\b[\s\S]*?<\/Button>/gm) ?? [];
+
+  return buttons.some(
+    (button) =>
+      /type=["']button["']/.test(button) &&
+      /onClick=\{/.test(button) &&
+      /\{copy\.reset\}/.test(button),
   );
 }
 
