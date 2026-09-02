@@ -31,7 +31,9 @@ function auditFormContract(path: string) {
   if (!/\<form[\s\S]*?onSubmit=\{[^}]+\}/m.test(source))
     issues.push("form has no React onSubmit handler");
   if (/onKey(?:Down|Up|Press)=/.test(source))
-    issues.push("implements manual keyboard submission instead of form semantics");
+    issues.push(
+      "implements manual keyboard submission instead of form semantics",
+    );
   if (!/onReset=\{[^}]+\}/.test(source))
     issues.push("shared actions have no reset callback");
 
