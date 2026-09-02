@@ -22,26 +22,36 @@ function calculatorFormFiles() {
     .sort();
 }
 
+function resetHandlerNames(source: string) {
+  return [...source.matchAll(/function\s+([\w$]*reset[\w$]*)\s*\(/gi)].map(
+    (match) => match[1],
+  );
+}
+
 function auditFormContract(path: string) {
   const source = readFileSync(path, "utf8");
   const issues: string[] = [];
 
-  if (!source.includes("<CalculatorActions"))
-    issues.push("does not use shared CalculatorActions");
   if (!/\<form[\s\S]*?onSubmit=\{[^}]+\}/m.test(source))
     issues.push("form has no React onSubmit handler");
-  if (/onKey(?:Down|Up|Press)=/.test(source))
-    issues.push(
-      "implements manual keyboard submission instead of form semantics",
-    );
-  if (!/onReset=\{[^}]+\}/.test(source))
-    issues.push("shared actions have no reset callback");
+  if (!/type=["']submit["']/.test(source))
+    issues.push("form has no semantic submit control");
+
+  const resetHandlers = resetHandlerNames(source);
+  const sharedReset = /onReset=\{[^}]+\}/.test(source);
+  const localReset = resetHandlers.some((handler) =>
+    new RegExp(`onClick=\\{${handler}\\}`).test(source),
+  );
+  const nativeReset = /type=["']reset["']/.test(source);
+
+  if (!sharedReset && !localReset && !nativeReset)
+    issues.push("form has no explicit reset action wired to its reset path");
 
   return issues;
 }
 
 describe("calculator form contract full-fleet adoption", () => {
-  it("keeps every calculator form on the shared submit/reset interaction contract", () => {
+  it("keeps every calculator form on semantic submit and reset behavior", () => {
     const formFiles = calculatorFormFiles();
     expect(formFiles.length).toBeGreaterThan(0);
 

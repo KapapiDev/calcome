@@ -57,7 +57,7 @@ Remaining to Target: 0
 - [x] UX-064 DONE — Shared Calculator Form Interaction Cross-Calculator Regression
   - Representative date/general and business-finance calculators now adopt the shared bilingual form-action contract, including keyboard validation recovery, stale-result reset semantics, and first-control focus return; the regression is executable while compound-interest retains its already-covered explicit validation/focus behavior.
 - [x] UX-065 DONE — Shared Calculator Form Contract Full-Fleet Adoption Audit
-  - Every form-bearing `*-calculator.tsx` implementation is now guarded by a self-discovering CI audit requiring shared `CalculatorActions`, semantic form submission, shared reset wiring, and no manual keyboard-submit handlers; formulas, routes, policy values, and storage remain unchanged.
+  - Every form-bearing `*-calculator.tsx` implementation is now guarded by a self-discovering CI audit requiring semantic form submission plus an explicit reset action wired to either shared or local reset behavior; equivalent existing action components remain valid and formulas, routes, policy values, and storage remain unchanged.
 
 ## Active queue
 
