@@ -29,12 +29,16 @@ function hasSharedCalculatorActions(source: string) {
 function hasInlineResetAction(source: string) {
   const buttons = source.match(/<Button\b[\s\S]*?<\/Button>/gm) ?? [];
 
-  return buttons.some(
-    (button) =>
-      /type=["']button["']/.test(button) &&
-      /onClick=\{/.test(button) &&
-      /\{copy\.reset\}/.test(button),
-  );
+  return buttons.some((button) => {
+    if (!/type=["']button["']/.test(button)) return false;
+
+    const resetHandler =
+      /onClick=\{\s*[A-Za-z_$][\w$]*reset[\w$]*\s*\}/i.test(button);
+    const localizedResetCopy =
+      /onClick=\{/.test(button) && /\{[^}]*\.reset\}/i.test(button);
+
+    return resetHandler || localizedResetCopy;
+  });
 }
 
 function auditFormContract(path: string) {
