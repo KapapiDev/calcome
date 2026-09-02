@@ -43,7 +43,8 @@ function auditFormContract(path: string) {
     issues.push("form has no semantic submit control");
 
   const sharedReset =
-    sharedActions && /<CalculatorActions\b[\s\S]*?onReset=\{[^}]+\}[\s\S]*?\/>/m.test(source);
+    sharedActions &&
+    /<CalculatorActions\b[\s\S]*?onReset=\{[^}]+\}[\s\S]*?\/>/m.test(source);
   const inlineReset = hasInlineResetAction(source);
   const nativeReset = /type=["']reset["']/.test(source);
 
