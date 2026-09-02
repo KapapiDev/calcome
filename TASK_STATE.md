@@ -62,11 +62,13 @@ Remaining to Target: 0
   - Published calculator text-entry inputs are now guarded by a self-discovering CI audit for mobile-readable sizing, bounded touch-target sizing, fluid-width overflow protection, and explicit keyboard/date semantics without changing formulas, routes, policy values, or stored data.
 - [x] UX-067 DONE — Shared Calculator Mobile Input Runtime Regression
   - Representative numeric, formatted-money, and native date inputs are now covered at rendered runtime across Korean and English surfaces for intended mobile keyboard semantics, mobile-readable sizing, fluid width, and formatted-money behavior without changing formulas, routes, policy values, or stored data.
+- [x] UX-068 DONE — Shared Calculator Mobile Result Readability and Overflow Full-Fleet Audit
+  - Every published `*-calculator.tsx` result surface is now guarded by a self-discovering CI audit requiring the shared mobile-safe `PrimaryResults` contract for narrow-screen stacking, long-value wrapping, stable numeric alignment, and result hierarchy without changing formulas, routes, policy values, or stored data.
 
 ## Active queue
 
-- [ ] UX-068 OPEN — Shared Calculator Mobile Result Readability and Overflow Full-Fleet Audit
-  - Scope: audit published calculator result surfaces for narrow-screen overflow, long-number containment, readable wrapping, and mobile result hierarchy; fix only proven shared or repeated drifts without changing formulas, routes, policy values, or stored data.
+- [ ] UX-069 OPEN — Shared Calculator Mobile Result Readability Runtime Regression
+  - Scope: verify representative long numeric and localized result values render through the shared result contract across Korean and English calculator surfaces, preserving narrow-screen containment and readable hierarchy without changing formulas, routes, policy values, or stored data.
 
 ## Security gate
 
