@@ -64,6 +64,7 @@ function auditInput(source: string, input: string) {
   const tokens = resolveClasses(source, input);
   const type = input.match(/type=["']([^"']+)["']/)?.[1] ?? "text";
   const inputMode = input.match(/inputMode=["']([^"']+)["']/)?.[1];
+  const hasInputMode = /\binputMode\s*=/.test(input);
 
   const hasMobileReadableText = tokens.some((token) =>
     ["text-base", "text-lg", "text-xl", "text-2xl"].includes(token),
@@ -94,7 +95,7 @@ function auditInput(source: string, input: string) {
   )
     issues.push(`unsupported inputMode ${inputMode}`);
 
-  if (type === "text" && !inputMode)
+  if (type === "text" && !hasInputMode)
     issues.push("text input has no explicit mobile keyboard hint");
 
   if (
