@@ -126,6 +126,16 @@ const koreanPages: Record<InfoKey, React.ComponentType> = {
   contact: ContactPage,
 };
 
+export function generateStaticParams() {
+  // englishPages is the authoritative bounded set of info slugs.
+  return (["ko", "en"] as const).flatMap((locale) =>
+    Object.keys(englishPages).map((info) => ({ locale, info })),
+  );
+}
+
+// Any other slug 404s at build time instead of booting a function.
+export const dynamicParams = false;
+
 export async function generateMetadata({
   params,
 }: {

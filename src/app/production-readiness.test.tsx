@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
@@ -103,7 +103,9 @@ describe("production recovery and navigation", () => {
     expect(
       screen.getByRole("heading", { name: "금융 계산을 쉽게." }),
     ).toBeVisible();
-    expect(screen.getByText("CalCome")).toBeVisible();
+    // The homepage now renders inside the shared server chrome, so scope the
+    // hero assertions to <main> (the header also shows the CalCome wordmark).
+    expect(within(screen.getByRole("main")).getByText("CalCome")).toBeVisible();
     expect(screen.getByText("복리, 대출, 적금, 예금, ETF까지.")).toBeVisible();
     expect(
       screen.getByText("누구나 쉽게 사용할 수 있는 금융 계산기를 제공합니다."),

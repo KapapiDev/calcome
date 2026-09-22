@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import {
   allPublishedCalculators,
@@ -105,13 +108,8 @@ export function getRelatedCalculators(pathname: string, limit = 4) {
     .slice(0, limit);
 }
 
-export function RelatedCalculators({
-  locale,
-  pathname,
-}: {
-  locale: "ko" | "en";
-  pathname: string;
-}) {
+export function RelatedCalculators({ locale }: { locale: "ko" | "en" }) {
+  const pathname = usePathname() ?? "/";
   const related = getRelatedCalculators(pathname);
   if (related.length === 0) return null;
 

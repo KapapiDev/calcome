@@ -3,7 +3,9 @@ import {
   getAdSenseRuntimeConfig,
 } from "@/components/ads/adsense";
 
-export const dynamic = "force-dynamic";
+// publisherId comes from process.env only, which is fixed for the lifetime of
+// a deployment, so this can be baked at build time instead of per request.
+export const dynamic = "force-static";
 
 export function GET() {
   const config = getAdSenseRuntimeConfig();
@@ -12,7 +14,7 @@ export function GET() {
     return new Response("Not Found\n", {
       status: 404,
       headers: {
-        "Cache-Control": "no-store",
+        "Cache-Control": "public, max-age=3600, s-maxage=3600",
         "Content-Type": "text/plain; charset=utf-8",
         "X-CalCome-AdSense-Status": config.status,
       },

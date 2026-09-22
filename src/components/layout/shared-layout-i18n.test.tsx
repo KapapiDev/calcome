@@ -5,6 +5,14 @@ import { SiteFooter } from "./site-footer";
 import { SiteHeader } from "./site-header";
 import { SkipLink } from "./skip-link";
 
+const { pathnameRef } = vi.hoisted(() => ({
+  pathnameRef: { current: "/" },
+}));
+
+vi.mock("next/navigation", () => ({
+  usePathname: () => pathnameRef.current,
+}));
+
 describe("shared localized layout UI", () => {
   beforeEach(() => {
     window.localStorage.clear();
@@ -22,10 +30,11 @@ describe("shared localized layout UI", () => {
   });
 
   it("renders English navigation, footer, skip link, and accessibility labels", async () => {
+    pathnameRef.current = "/en/finance/compound-interest";
     const { container } = render(
       <>
         <SkipLink locale="en" />
-        <SiteHeader locale="en" pathname="/en/finance/compound-interest" />
+        <SiteHeader locale="en" />
         <SiteFooter locale="en" />
       </>,
     );
@@ -84,10 +93,11 @@ describe("shared localized layout UI", () => {
   });
 
   it("keeps the existing Korean shared UI", async () => {
+    pathnameRef.current = "/ko/finance/compound-interest";
     render(
       <>
         <SkipLink locale="ko" />
-        <SiteHeader locale="ko" pathname="/ko/finance/compound-interest" />
+        <SiteHeader locale="ko" />
         <SiteFooter locale="ko" />
       </>,
     );

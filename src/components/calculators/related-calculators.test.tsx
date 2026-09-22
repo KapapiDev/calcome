@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { allPublishedCalculators } from "@/config/calculator-directory";
 
@@ -7,6 +7,14 @@ import {
   getRelatedCalculators,
   RelatedCalculators,
 } from "./related-calculators";
+
+const { pathnameRef } = vi.hoisted(() => ({
+  pathnameRef: { current: "/" },
+}));
+
+vi.mock("next/navigation", () => ({
+  usePathname: () => pathnameRef.current,
+}));
 
 describe("RelatedCalculators", () => {
   it("derives deterministic compound-interest journeys from published sources", () => {
@@ -34,12 +42,8 @@ describe("RelatedCalculators", () => {
   });
 
   it("preserves English locale in every related target", () => {
-    render(
-      <RelatedCalculators
-        locale="en"
-        pathname="/en/finance/compound-interest"
-      />,
-    );
+    pathnameRef.current = "/en/finance/compound-interest";
+    render(<RelatedCalculators locale="en" />);
 
     expect(
       screen.getByRole("heading", { name: "Related calculators" }),
@@ -53,9 +57,8 @@ describe("RelatedCalculators", () => {
   });
 
   it("does not render recommendations on non-calculator routes", () => {
-    const { container } = render(
-      <RelatedCalculators locale="ko" pathname="/ko/calculators" />,
-    );
+    pathnameRef.current = "/ko/calculators";
+    const { container } = render(<RelatedCalculators locale="ko" />);
 
     expect(container).toBeEmptyDOMElement();
   });

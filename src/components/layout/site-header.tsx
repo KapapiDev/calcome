@@ -8,13 +8,7 @@ import { LanguageSelector } from "./language-selector";
 import { localizedDestination } from "./language-routing";
 import { sharedLayoutCopy } from "./layout-i18n";
 
-export function SiteHeader({
-  locale = "ko",
-  pathname = "/",
-}: {
-  locale?: CompoundLocale;
-  pathname?: string;
-}) {
+export function SiteHeader({ locale = "ko" }: { locale?: CompoundLocale }) {
   const copy = sharedLayoutCopy[locale];
   return (
     <header className="border-b bg-background/95">
@@ -45,7 +39,7 @@ export function SiteHeader({
             </Link>
           </div>
           <div className="ml-auto flex items-center gap-1">
-            <LanguageSelector locale={locale} pathname={pathname} />
+            <LanguageSelector locale={locale} />
             <ThemeToggle locale={locale} />
           </div>
         </nav>

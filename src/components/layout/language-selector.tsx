@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
@@ -12,13 +13,8 @@ import { sharedLayoutCopy } from "./layout-i18n";
 const optionClassName =
   "flex min-h-11 items-center rounded-md px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
-export function LanguageSelector({
-  locale,
-  pathname,
-}: {
-  locale: CompoundLocale;
-  pathname: string;
-}) {
+export function LanguageSelector({ locale }: { locale: CompoundLocale }) {
+  const pathname = usePathname() ?? "/";
   const [open, setOpen] = useState(false);
   const copy = sharedLayoutCopy[locale];
   const currentLabel = locale === "ko" ? "한국어" : "English";

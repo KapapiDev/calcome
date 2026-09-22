@@ -1,10 +1,18 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { publishedCalculators } from "@/config/calculators";
 import { localizedDestination } from "./language-routing";
 import { LanguageSelector } from "./language-selector";
+
+const { pathnameRef } = vi.hoisted(() => ({
+  pathnameRef: { current: "/" },
+}));
+
+vi.mock("next/navigation", () => ({
+  usePathname: () => pathnameRef.current,
+}));
 
 describe("localizedDestination", () => {
   it("preserves every published calculator route in both directions", () => {
@@ -39,12 +47,8 @@ describe("localizedDestination", () => {
 describe("LanguageSelector", () => {
   it("shows Korean as the current locale and preserves the target calculator", async () => {
     const user = userEvent.setup();
-    render(
-      <LanguageSelector
-        locale="ko"
-        pathname="/ko/employment/weekly-holiday-pay"
-      />,
-    );
+    pathnameRef.current = "/ko/employment/weekly-holiday-pay";
+    render(<LanguageSelector locale="ko" />);
     const selector = screen.getByLabelText("언어 선택");
     expect(selector).toHaveTextContent("한국어");
     expect(selector).toHaveClass("min-h-11", "min-w-11");
@@ -65,12 +69,8 @@ describe("LanguageSelector", () => {
 
   it("shows English as the current locale and preserves the target calculator", async () => {
     const user = userEvent.setup();
-    render(
-      <LanguageSelector
-        locale="en"
-        pathname="/en/employment/weekly-holiday-pay"
-      />,
-    );
+    pathnameRef.current = "/en/employment/weekly-holiday-pay";
+    render(<LanguageSelector locale="en" />);
     const selector = screen.getByLabelText("Select language");
     expect(selector).toHaveTextContent("English");
     expect(selector).toHaveClass("min-h-11", "min-w-11");

@@ -1,16 +1,33 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { AD_CONSENT_STORAGE_KEY } from "./ad-consent";
 import { PrivacyControl } from "./privacy-control";
 
+const { pathnameRef } = vi.hoisted(() => ({
+  pathnameRef: { current: "/" },
+}));
+
+vi.mock("next/navigation", () => ({
+  usePathname: () => pathnameRef.current,
+}));
+
+const REGION_SESSION_KEY = "calcome.ad-privacy-region.v1";
+
 describe("PrivacyControl", () => {
   beforeEach(() => {
     window.localStorage.removeItem(AD_CONSENT_STORAGE_KEY);
+    window.sessionStorage.clear();
+    pathnameRef.current = "/";
+    // Region normally arrives from /api/privacy-region; the session cache
+    // short-circuits that so these tests stay offline.
+    vi.stubGlobal("fetch", vi.fn());
   });
 
   it("preserves 44px minimum touch targets for privacy actions", () => {
-    render(<PrivacyControl locale="en" region="other" />);
+    pathnameRef.current = "/en/finance/compound-interest";
+    window.sessionStorage.setItem(REGION_SESSION_KEY, "other");
+    render(<PrivacyControl />);
 
     const launcher = screen.getByRole("button", { name: "Privacy choices" });
     expect(launcher).toHaveClass("min-h-11");
@@ -35,7 +52,9 @@ describe("PrivacyControl", () => {
   });
 
   it("keeps the regulated-region control touch-safe without exposing local allow", () => {
-    render(<PrivacyControl locale="ko" region="regulated" />);
+    pathnameRef.current = "/ko/finance/compound-interest";
+    window.sessionStorage.setItem(REGION_SESSION_KEY, "regulated");
+    render(<PrivacyControl />);
 
     fireEvent.click(screen.getByRole("button", { name: "개인정보 선택" }));
 

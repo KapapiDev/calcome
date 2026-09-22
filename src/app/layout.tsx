@@ -1,29 +1,20 @@
 import type { Metadata, Viewport } from "next";
-import { headers } from "next/headers";
-import { cache } from "react";
 
 import { PrivacyControl } from "@/components/ads/privacy-control";
-import { classifyGoogleConsentRegion } from "@/components/ads/privacy-region";
 import { getAdSenseRuntimeConfig } from "@/components/ads/adsense";
-import { RelatedCalculators } from "@/components/calculators/related-calculators";
-import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteHeader } from "@/components/layout/site-header";
-import { SkipLink } from "@/components/layout/skip-link";
+import { DocumentLanguage } from "@/components/layout/document-language";
 import { themeInitializationScript } from "@/components/theme/theme-provider";
 import { siteConfig } from "@/config/site";
 import { localizedSeoPaths, socialLocale } from "@/lib/seo/metadata";
 
 import "./globals.css";
 
-const getRequestContext = cache(async () => {
-  const requestHeaders = await headers();
-
-  return {
-    locale: requestHeaders.get("x-calcome-locale") === "en" ? "en" : "ko",
-    pathname: requestHeaders.get("x-calcome-pathname") ?? "/",
-    country: requestHeaders.get("x-vercel-ip-country"),
-  } as const;
-});
+/**
+ * Applied synchronously before first paint so `/en/*` documents report the
+ * right language without making the layout request-dependent. Soft
+ * navigations are handled afterwards by <DocumentLanguage />.
+ */
+const documentLanguageScript = `(function(){try{var p=window.location.pathname;document.documentElement.lang=(p==="/en"||p.indexOf("/en/")===0)?"en":"ko";}catch(e){}})();`;
 
 export function createRootMetadata(pathname: string): Metadata {
   const seo = localizedSeoPaths(pathname);
@@ -78,10 +69,12 @@ export function createRootMetadata(pathname: string): Metadata {
   };
 }
 
-export async function generateMetadata(): Promise<Metadata> {
-  const { pathname } = await getRequestContext();
-  return createRootMetadata(pathname === "/" ? "/ko" : pathname);
-}
+/**
+ * Static defaults. Every route below this layout sets its own
+ * `alternates.canonical`/`languages`, which override these, so the root no
+ * longer needs the request pathname to emit correct SEO metadata.
+ */
+export const metadata: Metadata = createRootMetadata("/ko");
 
 export const viewport: Viewport = {
   themeColor: [
@@ -90,23 +83,20 @@ export const viewport: Viewport = {
   ],
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { locale, pathname, country } = await getRequestContext();
   const adsense = getAdSenseRuntimeConfig();
-  const privacyRegion = adsense.enabled
-    ? classifyGoogleConsentRegion(country)
-    : null;
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang="ko" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{ __html: themeInitializationScript }}
         />
+        <script dangerouslySetInnerHTML={{ __html: documentLanguageScript }} />
         {adsense.enabled && adsense.clientId ? (
           <script
             async
@@ -120,16 +110,9 @@ export default async function RootLayout({
         className="min-h-screen bg-background font-sans text-foreground antialiased"
         data-ad-runtime-status={adsense.status}
       >
-        <SkipLink locale={locale} />
-        <div className="flex min-h-screen flex-col">
-          <SiteHeader locale={locale} pathname={pathname} />
-          {children}
-          <RelatedCalculators locale={locale} pathname={pathname} />
-          <SiteFooter locale={locale} />
-        </div>
-        {privacyRegion ? (
-          <PrivacyControl locale={locale} region={privacyRegion} />
-        ) : null}
+        <DocumentLanguage />
+        {children}
+        {adsense.enabled ? <PrivacyControl /> : null}
       </body>
     </html>
   );

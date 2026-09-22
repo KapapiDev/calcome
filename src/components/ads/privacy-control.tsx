@@ -1,6 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+
+import { localeFromPathname } from "@/lib/i18n/locale";
 
 import {
   AD_CONSENT_POLICY_VERSION,
@@ -41,16 +44,59 @@ const copy = {
   },
 } as const;
 
-type PrivacyControlProps = {
-  locale: "ko" | "en";
-  region: AdPrivacyRegion;
-};
+const REGION_SESSION_KEY = "calcome.ad-privacy-region.v1";
 
-export function PrivacyControl({ locale, region }: PrivacyControlProps) {
+function readCachedRegion(): AdPrivacyRegion | null {
+  try {
+    const cached = window.sessionStorage.getItem(REGION_SESSION_KEY);
+    return cached === "regulated" || cached === "other" || cached === "unknown"
+      ? cached
+      : null;
+  } catch {
+    return null;
+  }
+}
+
+export function PrivacyControl() {
+  const pathname = usePathname();
+  const locale = localeFromPathname(pathname ?? "/");
   const [open, setOpen] = useState(false);
   const [consent, setConsent] = useState<AdConsentSnapshot>(defaultAdConsent);
+  // "unknown" keeps requiresCertifiedCmp() true, so the conservative
+  // certified-CMP path applies until the real region is known.
+  const [region, setRegion] = useState<AdPrivacyRegion>(() =>
+    typeof window === "undefined"
+      ? "unknown"
+      : (readCachedRegion() ?? "unknown"),
+  );
   const text = copy[locale];
   const cmpRequired = requiresCertifiedCmp(region);
+
+  useEffect(() => {
+    // A cached region was already applied by the lazy initializer above.
+    if (readCachedRegion()) return;
+
+    let active = true;
+    fetch("/api/privacy-region")
+      .then((response) => (response.ok ? response.json() : null))
+      .then((payload: { region?: AdPrivacyRegion } | null) => {
+        const next = payload?.region;
+        if (!active || !next) return;
+        setRegion(next);
+        try {
+          window.sessionStorage.setItem(REGION_SESSION_KEY, next);
+        } catch {
+          // Session storage is optional; the fetched value still applies.
+        }
+      })
+      .catch(() => {
+        // Network failure keeps the conservative "unknown" default.
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const toggleOpen = () => {
     if (!open) {
