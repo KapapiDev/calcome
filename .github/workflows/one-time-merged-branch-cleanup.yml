@@ -1,0 +1,59 @@
+name: One-time merged branch cleanup
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/one-time-merged-branch-cleanup.yml
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Delete only branches fully contained in main
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git fetch origin '+refs/heads/*:refs/remotes/origin/*' --prune
+
+          deleted=0
+          kept=0
+
+          mapfile -t branches < <(
+            git for-each-ref --format='%(refname:strip=3)' refs/remotes/origin |
+              grep -v '^HEAD$' |
+              grep -v '^main$'
+          )
+
+          echo "Found ${#branches[@]} non-main branches."
+
+          for branch in "${branches[@]}"; do
+            if git merge-base --is-ancestor "refs/remotes/origin/$branch" "refs/remotes/origin/main"; then
+              echo "DELETE: $branch"
+              git push origin --delete "$branch"
+              deleted=$((deleted + 1))
+            else
+              echo "KEEP (not fully in main): $branch"
+              kept=$((kept + 1))
+            fi
+          done
+
+          echo "Deleted: $deleted"
+          echo "Kept: $kept"
+
+          {
+            echo "## Branch cleanup result"
+            echo "- Deleted branches fully contained in main: **$deleted**"
+            echo "- Preserved branches with commits not in main: **$kept**"
+          } >> "$GITHUB_STEP_SUMMARY"
