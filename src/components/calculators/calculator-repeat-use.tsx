@@ -237,9 +237,11 @@ function resolveCalculators(
 export function CalculatorRepeatUseShortcuts({
   calculators,
   locale = "ko",
+  hideWhenEmpty = false,
 }: {
   calculators: readonly RepeatUseCalculator[];
   locale?: "ko" | "en";
+  hideWhenEmpty?: boolean;
 }) {
   const snapshot = useSyncExternalStore(
     subscribeRepeatUse,
@@ -267,6 +269,8 @@ export function CalculatorRepeatUseShortcuts({
   );
   const isEmpty = favorites.length === 0 && recent.length === 0;
   const shortcutCount = favorites.length + recent.length;
+
+  if (hideWhenEmpty && isEmpty) return null;
 
   return (
     <section
@@ -313,7 +317,7 @@ export function CalculatorRepeatUseShortcuts({
               : "계산기를 즐겨찾기하거나 목록에서 사용하면 여기에서 빠르게 다시 열 수 있습니다."}
           </p>
           <Link
-            href={isEnglish ? "/en/calculators" : "/ko/calculators"}
+            href={isEnglish ? "/en/calculators" : "/calculators"}
             className="mt-3 inline-flex min-h-11 items-center rounded-lg border bg-background px-3 text-sm font-medium transition hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/30 motion-reduce:transition-none"
           >
             {isEnglish ? "Browse all calculators" : "전체 계산기 보기"}
