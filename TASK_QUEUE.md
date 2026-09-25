@@ -677,4 +677,3 @@ Scope:
 - After SEO-021, advance one task at a time through SEO-022, SEO-023, and SEO-024.
 - SEO-025 becomes active only after the observation window and fresh evidence exist.
 - Do not create UX-073+ merely to keep automation busy unless a concrete new UX defect or measured opportunity justifies it.
-
