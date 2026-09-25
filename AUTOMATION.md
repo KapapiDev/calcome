@@ -136,6 +136,24 @@ This rule reduces CI/Preview churn and PR inflation while preserving the exact-h
 
 For a new task, create one task-specific branch from latest `origin/main`. For recoverable work, resume the existing branch.
 
+### Local-first remote-head discipline
+
+The default execution shape is:
+
+`latest main -> one local/workspace task branch -> complete implementation -> npm run automation:preflight -> one remote head update -> one PR -> exact-head CI -> one Preview when runtime-relevant -> merge -> branch cleanup`.
+
+Rules:
+
+- Keep exactly one active automation implementation branch and one active automation Pull Request at a time.
+- New automation branches use `auto/<task-id-lowercase>` unless recovering an already-existing task branch.
+- Before creating a branch, reconcile open PRs and remote task branches. A branch that belongs to a merged PR and still points at that merged PR head must be deleted/cleaned rather than reused.
+- A branch with no open PR and unique unmerged commits must not be deleted blindly. Resume it only when it maps to the current eligible task; otherwise leave it quarantined for explicit reconciliation and do not create work on top of it.
+- Do not create the remote task branch/head merely to begin coding when an executable workspace exists. Build and validate locally/workspace-first, then publish the completed head.
+- When connector-only editing is unavoidable, batch file changes into one commit/tree and move the branch ref once when the GitHub tool supports that flow. Do not create one remote commit per edited file.
+- Target one pushed implementation head per task. One corrective push is acceptable after a complete CI failure diagnosis. A third push for the same root cause is prohibited; improve the local/preflight/CI detection path before publishing another head.
+- Opening, editing, or closing a PR must never be used as a way to trigger extra Vercel deployments.
+- After merge, delete the merged task branch when its current SHA still equals the merged PR head. The repository branch-cleanup workflow is part of this invariant and must not be disabled.
+
 Implementation must:
 
 - follow the current architecture and design system
@@ -157,6 +175,10 @@ When the same proven defect and safe fix repeat across several files, fix the co
 Treat Vercel Preview deployments as a limited Hobby-plan resource.
 
 A remote branch push can trigger a new Preview deployment, so do not use Vercel as a formatting or syntax feedback loop.
+
+The canonical local/workspace gate is `npm run automation:preflight`. When an executable checkout exists, it must pass before the first remote task-head update. It intentionally aligns the common formatter, lint, typecheck, task-state, test, production-build, bundle-budget, and diff checks into one command.
+
+Repository `vercel.json` uses an Ignored Build Step for changes that are provably non-runtime-only: Markdown/docs, GitHub workflow/config files, and test/spec/snapshot files. If any runtime-relevant or unknown file changes, Vercel must build normally. Failure or uncertainty in the ignore detector must fail open and build rather than silently skip.
 
 Before the first push:
 
