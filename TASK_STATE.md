@@ -1,6 +1,6 @@
 # CalCome Task State
 
-Last Updated: 2026-09-02
+Last Updated: 2026-09-25
 Current Calculator Count: 100
 Target Calculator Count: 100
 Remaining to Target: 0
@@ -10,11 +10,14 @@ Remaining to Target: 0
 - [ ] OPS-ADS-001 EXTERNAL_WAIT — Production AdSense Activation Verification
   - Verified 2026-08-29: Vercel team discovery succeeds; project deployment listing returns 403 and the current Vercel-bot deployment ID returns 404 through the direct deployment lookup. The public production site is reachable, but connected Gmail contains no AdSense account approval/site-status message or real publisher ID.
   - Resume condition: authoritative AdSense account evidence exposes the intended publisher ID and `calcome.com` site status. This account-owner wait is not a product/security failure and must not freeze unrelated repository development.
-- [ ] SEO-009 EXTERNAL_WAIT — Post-100 Calculator Search Performance and Coverage Review
-  - Verified 2026-08-29: current Search Console notifications exist, but a fresh query/page/country/device performance export is unavailable through connected sources.
-  - Resume condition: authoritative current Search Console performance and Page Indexing evidence becomes available. This private-account wait is not a confirmed product/indexability failure.
 
 ## Recent completed work
+
+- [x] SEO-009 DONE — Post-100 Calculator Search Performance and Coverage Review
+  - Fresh 2026-09-25 Search Console exports are now available and reviewed: 19 clicks / 3,537 impressions over the last 3 months; the latest 7 days improved to 9 clicks / 271 impressions / 3.32% CTR / 22.38 average position versus 3 clicks / 344 impressions / 0.87% CTR / 28.49 average position in the prior 7 days.
+  - Page Indexing reached 193 indexed and 55 not indexed on 2026-09-21. The 55 exclusions are 22 redirects, 1 alternate canonical, 18 discovered-not-indexed, 6 crawled-not-indexed, 6 404, and 2 Soft 404.
+  - Search Generative AI Features recorded 219 impressions in the 3-month export; 154 occurred in the latest 28 days versus 61 in the prior 28 days.
+  - Data-backed growth work is queued after UX-072 in `TASK_QUEUE.md`; do not manufacture additional UX tasks merely to keep the queue non-empty.
 
 - [x] SEO-015 through SEO-020 DONE — Post-100 internal-link, metadata, snippet, helpful-content, and trust-template coverage remains executable in CI.
 - [x] PERF-007 through PERF-008 DONE — Shared and route-level client bundle budgets remain executable in CI.
@@ -42,6 +45,7 @@ Remaining to Target: 0
 
 - [ ] UX-072 OPEN — Post-100 Home and Directory Conversion and Discovery Upgrade
   - Scope: improve the bilingual home-to-calculator and directory-to-calculator journeys using the existing 100-calculator inventory, search, category, favorites, and recent-use primitives; prioritize clearer high-intent entry points and measurable discovery value without adding duplicate routes, fabricated demand claims, or new persistent financial data.
+  - Post-merge transition: if UX-072 merges without a higher-priority blocker, the next OPEN task is SEO-021 from the 2026-09-25 Search Growth Program. Do not extend the UX sequence by default.
 
 ## Security gate
 
