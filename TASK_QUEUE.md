@@ -18,12 +18,12 @@
 
 ## Product milestone
 
-- Repository `main` currently registers **55 calculators** through the public calculator source of truth.
-- Production review on 2026-08-24 observed **53 calculators** in the live directory, so release drift must be reconciled before treating the live count as current.
-- Target: **100 distinct production calculators**.
+- Repository `main` currently registers **100 calculators** through the public calculator source of truth.
+- The 100-calculator milestone is complete; future calculator additions require distinct validated user value rather than count expansion.
+- Target: **100 distinct production calculators — achieved**.
 - Original expansion program: P-045 through P-093 adds 49 calculators to the original verified baseline of 51.
 - Completed expansion tasks on `main`: **P-089, P-062, P-063, and P-076**.
-- Remaining expansion tasks after those four: **45 calculators**.
+- Remaining expansion tasks to the 100-calculator milestone: **0**.
 - P-001 through P-044 are merged and effectively `DONE`.
 - SEO-001 XML sitemap and SEO-002 shared JSON-LD foundation are merged.
 - Demand ordering is qualitative and documented in `QUEUE_RESEARCH_2026-07-25.md`; exact search volumes must not be invented.
@@ -518,3 +518,162 @@ ADS-005 AdSense Integration and ads.txt — BLOCKED — MEDIUM
 7. After every four additional calculators, run fresh Search Console, locale, directory, and production-regression feedback before the next batch.
 8. Run whole-site SEO optimization for top-ranking search goals.
 9. Strengthen AdSense policy readiness and advertisement architecture.
+
+---
+
+# Post-100 Search Growth Program — 2026-09-25 Search Console baseline
+
+This program is based on the fresh user-exported Search Console Web Performance, Search Generative AI Features, and Page Indexing reports dated 2026-09-25. It replaces the previous SEO-009 external wait with an evidence-driven growth loop.
+
+## Baseline evidence
+
+- Last 3 months Web Search: **19 clicks / 3,537 impressions / ~0.54% CTR**.
+- Latest 7 days: **9 clicks / 271 impressions / 3.32% CTR / 22.38 average position**.
+- Prior 7 days: **3 clicks / 344 impressions / 0.87% CTR / 28.49 average position**.
+- Page Indexing on 2026-09-21: **193 indexed / 55 not indexed**.
+- Not-indexed reasons: **22 redirect**, **1 alternate canonical**, **18 discovered - currently not indexed**, **6 crawled - currently not indexed**, **6 not found (404)**, **2 Soft 404**.
+- Search Generative AI Features: **219 impressions** over the 3-month export; **154** in the latest 28 days versus **61** in the prior 28 days.
+- Current quick-win pages/queries include:
+  - `/en/finance/currency-conversion`: 100 impressions, average position 9.67, 0 clicks.
+  - `/en/finance/early-loan-repayment-fee`: 149 impressions, 4 clicks, average position 15.66.
+  - `/en/employment/work-hours-converter`: 136 impressions, 2 clicks, average position 16.14.
+  - `/en/employment/part-time-monthly-pay`: 99 impressions, average position 16.11, 0 clicks.
+  - `/ko/finance/jeonse-loan-limit`: 44 impressions, average position 10.68, 0 clicks.
+  - query `yield to maturity calculator`: 18 impressions, average position 15.61.
+  - query `연평균 증가율 계산기`: 9 impressions, average position 12.56.
+- Generative AI exposure is already concentrated on useful answer pages such as `/about`, `/en/finance/currency-conversion`, `/en/employment/minimum-wage`, `/en/finance/early-loan-repayment-fee`, `/en/employment/weekly-holiday-pay`, `/en/calculators`, and `/en/guides`.
+
+## Execution order
+
+SEO-021
+
+Title: Search Console Indexing and Canonical Reconciliation
+
+Status: BLOCKED — becomes the single OPEN task after UX-072 unless a higher-priority security/calculation/public-route blocker appears.
+
+Priority: HIGH
+
+Goal: Separate intentional exclusions from real indexability defects and repair only confirmed problems.
+
+Scope:
+
+- Reconcile the 55 not-indexed pages against canonical public routes, redirects, sitemap entries, locale variants, `www` normalization, and known legacy locale-less routes.
+- Treat the 22 redirect pages and 1 alternate-canonical page as potentially healthy exclusions until proven otherwise.
+- Investigate the 18 discovered-not-indexed and 6 crawled-not-indexed pages as the primary indexability opportunity set.
+- Classify the 6 404 and 2 Soft 404 entries and fix unintended public canonical failures; do not resurrect intentionally retired or redirect-only URLs.
+- Ensure sitemap entries contain only canonical 200 targets and preserve reciprocal locale/canonical/hreflang behavior.
+- Strengthen internal discovery or page uniqueness only where evidence shows a real weakness.
+- Record the reconciled exclusion classes so future automation does not repeatedly “fix” healthy redirects/canonicals.
+
+Acceptance:
+
+- No confirmed public canonical calculator route remains an unintended 404 or Soft 404.
+- Canonical/locale/`www` behavior converges to the intended production URL shape.
+- The 18 discovered and 6 crawled-not-indexed candidates are classified with bounded corrective action where justified.
+- Existing 100 calculator routes, sitemap coverage, redirects, and bilingual behavior remain intact.
+- Exact-head CI passes before merge.
+
+SEO-022
+
+Title: Search Console Quick-Win SERP Lift
+
+Status: BLOCKED on SEO-021
+
+Priority: HIGH
+
+Goal: Improve CTR and first-page/top-10 reach for pages already receiving meaningful impressions around positions 9–20.
+
+Scope:
+
+- Prioritize the baseline quick-win pages and queries above.
+- Review title, description, visible answer framing, intent match, worked examples, internal links, and result snippet usefulness.
+- Improve page-level copy only where it makes the calculator more useful and the search intent clearer.
+- Link from relevant high-authority internal surfaces without creating artificial sitewide link spam.
+- Preserve formulas and policy scope. Policy-sensitive pages require current official primary-source verification before changing factual policy content.
+- Do not fabricate search volume, demand, rankings, or expected traffic.
+
+Acceptance:
+
+- Each modified page has a documented Search Console baseline and a reason for the change.
+- Metadata and visible content remain unique and aligned.
+- Internal links are contextual and non-duplicative.
+- All metadata, sitemap, route, structured-data, and regression tests pass.
+
+SEO-023
+
+Title: Content SEO Cluster Batch 1
+
+Status: BLOCKED on SEO-022
+
+Priority: HIGH
+
+Goal: Build the first evidence-backed guide layer around calculators already receiving search demand instead of publishing 100 generic articles blindly.
+
+Scope:
+
+- Publish one coherent batch of **5–10 genuinely useful guides**, not one branch/Preview per article.
+- Candidate clusters should come from the measured opportunity set, including currency conversion, early-loan-repayment fees, work-hours/pay, minimum-wage scope, YTM, and CAGR.
+- Guides should answer informational/comparison/how-to intent that the calculator page should not be forced to carry.
+- Every guide must link naturally to the relevant calculator and, where useful, calculators link back to the guide.
+- Avoid thin templated filler, doorway pages, keyword swapping, duplicate examples, or mass AI text with no incremental value.
+- For employment/minimum-wage or other policy-sensitive guides, verify current official primary sources during the implementation run and show source/verification context in-product.
+- Runtime content must follow the normal Preview/build path even if stored as Markdown/MDX/JSON.
+
+Acceptance:
+
+- 5–10 guides form a coherent topic-bounded batch.
+- Each guide has distinct user intent, examples, and calculator linkage.
+- No guide exists solely to target a keyword variant.
+- The batch is discoverable from an appropriate guide/index surface and represented correctly in metadata/sitemap/structured data if applicable.
+- One batch equals one implementation PR and ideally one validated remote head.
+
+SEO-024
+
+Title: Generative AI Search Answerability and Trust Hardening
+
+Status: BLOCKED on SEO-023
+
+Priority: MEDIUM
+
+Goal: Improve the usefulness and citation-readiness of pages already surfacing in Search Generative AI Features without chasing opaque “AI SEO” tricks.
+
+Scope:
+
+- Use the 219-impression baseline and the top AI-exposed pages to identify recurring answer formats.
+- Improve concise definitions, assumptions, worked examples, source/trust cues, and direct answers where they benefit users.
+- Keep factual claims attributable and current; do not add unverifiable “AI optimized” copy.
+- Reuse existing trust/content components where possible.
+- Preserve fast calculator-first UX.
+
+Acceptance:
+
+- Changes are user-useful even outside AI search.
+- No hidden prompt text, cloaking, synthetic citations, or search-engine-only content is introduced.
+- Relevant content/metadata/structured-data tests pass.
+
+SEO-025
+
+Title: 28-Day Search Growth Measurement and Reprioritization
+
+Status: EXTERNAL_WAIT after SEO-023/SEO-024 implementation until a meaningful 2–4 week observation window exists.
+
+Priority: HIGH when resume condition is met
+
+Resume condition:
+
+- Fresh Search Console Web Performance, Search Generative AI Features, and Page Indexing evidence covering a meaningful post-change window is available.
+
+Scope:
+
+- Compare clicks, impressions, CTR, average position, indexed/not-indexed counts, target query/page movement, and AI-search exposure against the 2026-09-25 baseline.
+- Separate sitewide growth from changes attributable to target clusters.
+- Promote the next evidence-backed quick-win/content cluster; do not auto-generate endless follow-up work when the data does not support it.
+- Keep successful page patterns, kill ineffective templates, and update this queue with the next bounded growth task.
+
+## Transition rule
+
+- UX-072 remains the only current OPEN task.
+- When UX-072 merges, its same-PR `TASK_STATE.md` transition should open SEO-021 unless a higher-priority blocker supersedes it.
+- After SEO-021, advance one task at a time through SEO-022, SEO-023, and SEO-024.
+- SEO-025 becomes active only after the observation window and fresh evidence exist.
+- Do not create UX-073+ merely to keep automation busy unless a concrete new UX defect or measured opportunity justifies it.
