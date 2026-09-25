@@ -178,7 +178,7 @@ A remote branch push can trigger a new Preview deployment, so do not use Vercel 
 
 The canonical local/workspace gate is `npm run automation:preflight`. When an executable checkout exists, it must pass before the first remote task-head update. It intentionally aligns the common formatter, lint, typecheck, task-state, test, production-build, bundle-budget, and diff checks into one command.
 
-Repository `vercel.json` uses an Ignored Build Step for changes that are provably non-runtime-only: Markdown/docs, GitHub workflow/config files, and test/spec/snapshot files. If any runtime-relevant or unknown file changes, Vercel must build normally. Failure or uncertainty in the ignore detector must fail open and build rather than silently skip.
+Repository `vercel.json` uses an Ignored Build Step only for changes that are provably non-runtime-only: repository-root Markdown policy/docs files, files under `docs/`, GitHub workflow/config files, and test/spec/snapshot files. Published or runtime-consumed content is never classified as docs-only merely because its extension is `.md`, `.mdx`, `.json`, or another content format. If any runtime-relevant or unknown file changes, Vercel must build normally. Failure or uncertainty in the ignore detector must fail open and build rather than silently skip.
 
 Before the first push:
 
@@ -199,6 +199,16 @@ Push discipline:
 - Never rerun the same failed head unchanged.
 
 Reducing Preview count must never weaken calculation, security, test, or build validation.
+
+### Content and SEO batch discipline
+
+Content-heavy SEO work must not recreate Preview churn through one-article-per-branch automation.
+
+- When several related guides/articles can be reviewed and validated together, prefer one coherent batch task/PR, normally 5 to 10 pieces, instead of one PR per article.
+- Keep each batch topically bounded and individually useful; batching is not permission to publish thin, duplicate, or templated filler.
+- Any article, guide, Markdown/MDX, JSON, or generated content that the application reads at runtime is runtime-relevant and must trigger the normal Preview/build path.
+- Repository documentation that is not shipped to users may use the ignored-build path.
+- A content batch still follows the same one-active-branch, preflight, exact-head CI, merge, and branch-cleanup rules.
 
 ---
 

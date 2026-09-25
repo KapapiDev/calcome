@@ -20,8 +20,10 @@ function resolveBase() {
 }
 
 function isNonRuntimeOnly(path) {
+  const rootMarkdown = !path.includes("/") && path.endsWith(".md");
+
   return (
-    path.endsWith(".md") ||
+    rootMarkdown ||
     path.startsWith("docs/") ||
     path.startsWith(".github/") ||
     /(^|\/)(?:__tests__\/.*|.*\.(?:test|spec)\.[^/]+|.*\.snap)$/.test(path)
