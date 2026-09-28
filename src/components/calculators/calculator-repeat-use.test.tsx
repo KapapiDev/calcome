@@ -20,8 +20,9 @@ import {
 
 describe("calculator repeat-use storage", () => {
   beforeEach(() => {
-    window.localStorage.clear();
     vi.restoreAllMocks();
+    window.localStorage.clear();
+    clearRepeatUseShortcuts();
   });
 
   it("stores only calculator identifiers and keeps recent use unique and bounded", () => {
@@ -33,6 +34,51 @@ describe("calculator repeat-use storage", () => {
       favorites: [],
       recent: ["c", "g", "f", "e", "d", "b"],
     });
+  });
+
+  it("can stay out of the home journey until repeat-use shortcuts exist", () => {
+    const calculators = [
+      {
+        id: "compound-interest",
+        name: "복리 계산기",
+        href: "/ko/finance/compound-interest",
+      },
+    ];
+
+    const { rerender } = render(
+      <CalculatorRepeatUseShortcuts calculators={calculators} hideWhenEmpty />,
+    );
+
+    expect(
+      screen.queryByRole("heading", { name: "내 계산기 바로가기" }),
+    ).not.toBeInTheDocument();
+
+    recordRecentCalculator("compound-interest");
+    rerender(
+      <CalculatorRepeatUseShortcuts calculators={calculators} hideWhenEmpty />,
+    );
+
+    expect(
+      screen.getByRole("heading", { name: "내 계산기 바로가기" }),
+    ).toBeVisible();
+  });
+
+  it("uses the canonical Korean directory route in the empty shortcut state", () => {
+    render(
+      <CalculatorRepeatUseShortcuts
+        calculators={[
+          {
+            id: "compound-interest",
+            name: "복리 계산기",
+            href: "/ko/finance/compound-interest",
+          },
+        ]}
+      />,
+    );
+
+    expect(
+      screen.getByRole("link", { name: "전체 계산기 보기" }),
+    ).toHaveAttribute("href", "/calculators");
   });
 
   it("toggles favorites by shared calculator id across locale routes", () => {

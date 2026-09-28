@@ -5,6 +5,7 @@ import { CalculatorCard } from "@/components/calculators/calculator-card";
 import { SiteChrome } from "@/components/layout/site-chrome";
 import { HomeCategoryEntry } from "@/components/calculators/home-category-entry";
 import { CalculatorSearch } from "@/components/calculators/calculator-search";
+import { CalculatorRepeatUseShortcuts } from "@/components/calculators/calculator-repeat-use";
 import { buttonVariants } from "@/components/ui/button";
 import {
   directorySearchCalculators,
@@ -46,6 +47,10 @@ export default function Home() {
             </p>
             <CalculatorSearch calculators={directorySearchCalculators} />
             <HomeCategoryEntry />
+            <CalculatorRepeatUseShortcuts
+              calculators={directorySearchCalculators}
+              hideWhenEmpty
+            />
           </div>
         </section>
         <section

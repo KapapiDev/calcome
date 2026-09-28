@@ -13,6 +13,11 @@ Remaining to Target: 0
 
 ## Recent completed work
 
+- [x] UX-072 DONE — Post-100 Home and Directory Conversion and Discovery Upgrade
+  - Bilingual home pages now surface device-local favorites/recent calculators only when repeat-use context exists, keeping first-visit discovery uncluttered.
+  - Bilingual directories expose both favorites and recent-use shortcuts ahead of the 100-calculator catalog while preserving search, categories, popular calculators, and canonical routes.
+  - The Korean empty shortcut recovery link now targets the canonical `/calculators` directory.
+
 - [x] SEO-009 DONE — Post-100 Calculator Search Performance and Coverage Review
   - Fresh 2026-09-25 Search Console exports are now available and reviewed: 19 clicks / 3,537 impressions over the last 3 months; the latest 7 days improved to 9 clicks / 271 impressions / 3.32% CTR / 22.38 average position versus 3 clicks / 344 impressions / 0.87% CTR / 28.49 average position in the prior 7 days.
   - Page Indexing reached 193 indexed and 55 not indexed on 2026-09-21. The 55 exclusions are 22 redirects, 1 alternate canonical, 18 discovered-not-indexed, 6 crawled-not-indexed, 6 404, and 2 Soft 404.
@@ -43,9 +48,9 @@ Remaining to Target: 0
 
 ## Active queue
 
-- [ ] UX-072 OPEN — Post-100 Home and Directory Conversion and Discovery Upgrade
-  - Scope: improve the bilingual home-to-calculator and directory-to-calculator journeys using the existing 100-calculator inventory, search, category, favorites, and recent-use primitives; prioritize clearer high-intent entry points and measurable discovery value without adding duplicate routes, fabricated demand claims, or new persistent financial data.
-  - Post-merge transition: if UX-072 merges without a higher-priority blocker, the next OPEN task is SEO-021 from the 2026-09-25 Search Growth Program. Do not extend the UX sequence by default.
+- [ ] SEO-021 OPEN — Search Console Indexing and Canonical Reconciliation
+  - Scope: reconcile the 55 Search Console exclusions against canonical public routes, redirects, sitemap entries, locale variants, `www` normalization, and known legacy routes; prioritize the 18 discovered-not-indexed, 6 crawled-not-indexed, 6 404, and 2 Soft 404 entries while leaving healthy redirects/canonical alternates alone.
+  - Source of truth: the 2026-09-25 Search Growth Program in `TASK_QUEUE.md`.
 
 ## Security gate
 

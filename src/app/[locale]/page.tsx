@@ -6,6 +6,7 @@ import Home from "@/app/page";
 import { CalculatorCard } from "@/components/calculators/calculator-card";
 import { HomeCategoryEntry } from "@/components/calculators/home-category-entry";
 import { CalculatorSearch } from "@/components/calculators/calculator-search";
+import { CalculatorRepeatUseShortcuts } from "@/components/calculators/calculator-repeat-use";
 import { buttonVariants } from "@/components/ui/button";
 import {
   directorySearchCalculators,
@@ -96,6 +97,11 @@ export default async function LocalizedHome({
           </p>
           <CalculatorSearch calculators={searchCalculators} />
           <HomeCategoryEntry locale="en" />
+          <CalculatorRepeatUseShortcuts
+            calculators={searchCalculators}
+            locale="en"
+            hideWhenEmpty
+          />
         </div>
       </section>
       <section
