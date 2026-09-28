@@ -45,10 +45,7 @@ describe("calculator repeat-use storage", () => {
     ];
 
     const { rerender } = render(
-      <CalculatorRepeatUseShortcuts
-        calculators={calculators}
-        hideWhenEmpty
-      />,
+      <CalculatorRepeatUseShortcuts calculators={calculators} hideWhenEmpty />,
     );
 
     expect(
@@ -57,10 +54,7 @@ describe("calculator repeat-use storage", () => {
 
     recordRecentCalculator("compound-interest");
     rerender(
-      <CalculatorRepeatUseShortcuts
-        calculators={calculators}
-        hideWhenEmpty
-      />,
+      <CalculatorRepeatUseShortcuts calculators={calculators} hideWhenEmpty />,
     );
 
     expect(
