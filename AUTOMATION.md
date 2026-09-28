@@ -17,7 +17,7 @@ Read these in this order at every run:
 1. latest `origin/main/AUTOMATION.md`
 2. latest `origin/main/TASK_STATE.md`
 3. latest `origin/main/TASK_QUEUE.md`
-4. actual GitHub Pull Requests, branches, merge state, current head SHA, and exact-head GitHub Actions
+4. actual GitHub Pull Requests, branches, merge state, current head SHA, and exact-head local/preflight verification evidence
 5. actual Vercel connector and GitHub Vercel-bot evidence
 
 `AUTOMATION.md` is the permanent operating policy.
@@ -59,7 +59,7 @@ At minimum:
 - read `AUTOMATION.md`, `TASK_STATE.md`, and relevant `TASK_QUEUE.md` scope
 - inspect open Pull Requests and matching task branches
 - inspect the current PR head SHA when one exists
-- inspect GitHub Actions associated with that exact current head
+- inspect exact-head local/preflight verification evidence
 
 ### Vercel startup
 
@@ -128,7 +128,7 @@ When planning, extending, or advancing the queue:
 - Queue detail may contain subtasks or checklists, but those subtasks do not each require their own branch or PR.
 - When consolidation changes future task IDs or scopes, update `TASK_STATE.md` and the relevant `TASK_QUEUE.md` scope in the same implementation PR so exactly one next OPEN task remains.
 
-This rule reduces CI/Preview churn and PR inflation while preserving the exact-head CI, security, calculation, route, data, and critical-UX gates below.
+This rule reduces verification/Preview churn and PR inflation while preserving the exact-head security, calculation, route, data, and critical-UX gates below.
 
 ---
 
@@ -140,7 +140,7 @@ For a new task, create one task-specific branch from latest `origin/main`. For r
 
 The default execution shape is:
 
-`latest main -> one local/workspace task branch -> complete implementation -> npm run automation:preflight -> one remote head update -> one PR -> exact-head CI -> one Preview when runtime-relevant -> merge -> branch cleanup`.
+`latest main -> one local/workspace task branch -> complete implementation -> npm run automation:preflight -> one remote head update -> one PR -> one Preview when runtime-relevant -> merge -> branch cleanup`.
 
 Rules:
 
@@ -150,9 +150,9 @@ Rules:
 - A branch with no open PR and unique unmerged commits must not be deleted blindly. Resume it only when it maps to the current eligible task; otherwise leave it quarantined for explicit reconciliation and do not create work on top of it.
 - Do not create the remote task branch/head merely to begin coding when an executable workspace exists. Build and validate locally/workspace-first, then publish the completed head.
 - When connector-only editing is unavoidable, batch file changes into one commit/tree and move the branch ref once when the GitHub tool supports that flow. Do not create one remote commit per edited file.
-- Target one pushed implementation head per task. One corrective push is acceptable after a complete CI failure diagnosis. A third push for the same root cause is prohibited; improve the local/preflight/CI detection path before publishing another head.
+- Target one pushed implementation head per task. One corrective push is acceptable after a complete verification failure diagnosis. A third push for the same root cause is prohibited; improve the local/preflight detection path before publishing another head.
 - Opening, editing, or closing a PR must never be used as a way to trigger extra Vercel deployments.
-- After merge, delete the merged task branch when its current SHA still equals the merged PR head. The repository branch-cleanup workflow is part of this invariant and must not be disabled.
+- After merge, delete the merged task branch when its current SHA still equals the merged PR head. Branch cleanup is an ordinary repository hygiene step and must not depend on GitHub Actions.
 
 Implementation must:
 
@@ -191,9 +191,9 @@ Before the first push:
 Push discipline:
 
 - Prefer one validated implementation push.
-- Do not push speculative intermediate states merely to see what CI or Vercel says.
+- Do not push speculative intermediate states merely to see what remote services say.
 - Do not create no-op or empty trigger commits when a rerun API or real corrective commit is available.
-- If the first CI run fails, collect the complete failure set before making the next push.
+- If local/preflight verification fails, collect the complete failure set before making the next push.
 - Correct all same-root-cause formatting or lint issues in one pass.
 - Never fix one formatting line per scheduled execution.
 - Never rerun the same failed head unchanged.
@@ -208,7 +208,7 @@ Content-heavy SEO work must not recreate Preview churn through one-article-per-b
 - Keep each batch topically bounded and individually useful; batching is not permission to publish thin, duplicate, or templated filler.
 - Any article, guide, Markdown/MDX, JSON, or generated content that the application reads at runtime is runtime-relevant and must trigger the normal Preview/build path.
 - Repository documentation that is not shipped to users may use the ignored-build path.
-- A content batch still follows the same one-active-branch, preflight, exact-head CI, merge, and branch-cleanup rules.
+- A content batch still follows the same one-active-branch, preflight, merge, and branch-cleanup rules.
 
 ---
 
@@ -297,25 +297,23 @@ Run at minimum when defined:
 
 For calculators, manually verify representative examples, boundary values, units, rounding, monthly/annual conversion, tax treatment, and invalid inputs. Record expected and actual results.
 
-### Exact-head GitHub Actions gate
+### Exact-head verification gate
 
-When a repository GitHub Actions workflow exists for the Pull Request, the current PR head must receive a successful workflow result before automatic merge.
+GitHub Actions is not part of CalCome's required development path. The canonical
+gate is local/workspace verification on the exact commit that will be merged.
 
-- Do not merge while the current-head workflow is queued or in progress.
-- Do not merge a failed or cancelled current-head workflow.
-- A previous head's green run does not validate a newer corrective commit.
-- Local checks strengthen the gate but do not replace the current-head CI requirement when CI is configured and running normally.
-- If GitHub Actions itself is externally unavailable, leave the Pull Request open for the next run rather than weakening the gate.
+Before merge, run `npm run automation:preflight` on the current head when an
+executable checkout is available. That gate already covers formatter, lint,
+typecheck, task-state checks, tests, production build, bundle budget, and diff
+checks.
 
-Formatting-only failure procedure:
+If the environment cannot execute one check, record that limitation and use the
+strongest available direct verification. An unavailable hosted CI service,
+billing limit, runner quota, or GitHub Actions outage is never by itself a merge
+blocker.
 
-1. Fetch the exact failing job log.
-2. Capture every formatter-reported file and exact diff/output.
-3. Apply all formatter corrections in one corrective change.
-4. Push once.
-5. Require a new current-head CI success before merge.
-
----
+A real code failure from tests, build, lint, typecheck, security checks, or
+review remains blocking until fixed or explicitly accepted.
 
 ## Pull Request and automatic merge
 
@@ -337,7 +335,7 @@ Automatic squash merge is allowed only when:
 - latest `main` is included without conflict
 - Pull Request is not Draft
 - body contains `AUTO_MERGE: true`
-- current-head GitHub Actions is successful when configured
+- current-head local/preflight verification is successful
 - formatter, lint, typecheck, all tests, production build, and `git diff --check` passed
 - calculation accuracy and required policy-source checks passed
 - no known security, regression, route, calculation, data, or critical UX blocker remains
@@ -348,7 +346,7 @@ Use the expected head SHA when merging when the tool supports it so a moved head
 
 ## Preview and Vercel continuity
 
-Vercel Preview browser access is useful but is not a merge gate when repository and current-head CI gates pass.
+Vercel Preview browser access is useful but is not a merge gate when repository and current-head local verification gates pass.
 
 For each pushed head, inspect deployment evidence once without creating extra pushes merely for inspection.
 
@@ -431,20 +429,20 @@ Report in Korean and keep routine automation results concise.
 State only the important verified facts:
 
 - task/PR and whether it merged
-- current-head CI result
+- current-head verification result
 - Vercel Preview/Production result or exact external limitation
 - any real product/security blocker
 - next OPEN task / whether queue continues
 
 Do not dump long logs unless a failure needs them.
 
-## CI wait continuity
+## External service continuity
 
-A normal current-head GitHub Actions wait is part of the current execution, not a handoff boundary.
+Do not wait on GitHub Actions. CalCome development and merge decisions are based
+on exact-head local/preflight verification and review.
 
-- queued or in_progress by itself is **not** a reason to end the execution, return polling to the user, or defer ordinary polling to the next scheduled run.
-- While the selected task's current-head CI is progressing normally, keep polling at reasonable intervals until it reaches a terminal state when practical within the execution window.
-- If current-head CI fails, collect the complete failure set and continue diagnose -> fix -> push -> new current-head verification within the same execution, subject to the corrective-push rules above.
-- When possible, close the selected task through current-head CI success -> merge -> branch cleanup -> post-merge TASK_STATE.md verification before ending the execution.
-- An open PR may be handed to the next run only for an actual external GitHub Actions outage, execution runtime limit, a user-only approval/authentication/billing/legal blocker, or another genuine external blocker after tool-based recovery paths are exhausted.
-- This continuity rule does not relax the one-implementation-task-per-execution boundary and never permits merging queued, in-progress, failed, or cancelled current-head CI.
+External GitHub, Vercel, billing, quota, browser, or preview limitations should
+be recorded when relevant, but they must not stall unrelated implementation.
+Only a reproduced product/code defect or a genuinely required user-only action
+should stop the task.
+
