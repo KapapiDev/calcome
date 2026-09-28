@@ -27,7 +27,7 @@ Make useful calculations fast to find, easy to understand, accessible on any dev
 
 ```text
 .
-├── .github/               Pull request template and CI workflow
+├── .github/               Pull request templates and repository metadata
 ├── public/                 Static assets
 ├── docs/                   Permanent standards and feature specifications
 ├── src/
