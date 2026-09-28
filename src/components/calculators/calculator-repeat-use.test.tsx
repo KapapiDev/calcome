@@ -20,8 +20,9 @@ import {
 
 describe("calculator repeat-use storage", () => {
   beforeEach(() => {
-    window.localStorage.clear();
     vi.restoreAllMocks();
+    window.localStorage.clear();
+    clearRepeatUseShortcuts();
   });
 
   it("stores only calculator identifiers and keeps recent use unique and bounded", () => {
