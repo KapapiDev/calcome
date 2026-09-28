@@ -82,7 +82,9 @@ export default function CalculatorsPage() {
         </header>
 
         <DirectoryCategoryNavigation />
-        <CalculatorRepeatUseShortcuts\n          calculators={directorySearchCalculators}\n        />
+        <CalculatorRepeatUseShortcuts
+          calculators={directorySearchCalculators}
+        />
 
         <section className="mt-12" aria-labelledby="popular-calculators">
           <h2
