@@ -1,6 +1,6 @@
 # CalCome Task State
 
-Last Updated: 2026-09-25
+Last Updated: 2026-09-28
 Current Calculator Count: 100
 Target Calculator Count: 100
 Remaining to Target: 0
@@ -12,6 +12,11 @@ Remaining to Target: 0
   - Resume condition: authoritative AdSense account evidence exposes the intended publisher ID and `calcome.com` site status. This account-owner wait is not a product/security failure and must not freeze unrelated repository development.
 
 ## Recent completed work
+
+- [x] SEO-021 DONE — Search Console Indexing and Canonical Reconciliation
+  - Reconciled the 2026-09-25 baseline into intentional exclusions (22 redirects, 1 alternate canonical), crawl/indexing opportunity classes (18 discovered-not-indexed, 6 crawled-not-indexed), and unresolved URL-level exclusions (6 404, 2 Soft 404).
+  - Current repository contracts prove all 100 calculators have bilingual source-backed canonical routes, canonical sitemap coverage, and one-hop locale-less redirects; no repository-side canonical 404/Soft-404 defect was reproduced.
+  - The baseline export retained counts but not the affected URL examples, so the 6 404 and 2 Soft 404 rows are explicitly not guessed or resurrected. Fresh URL-level Search Console evidence remains the trigger for any later targeted repair.
 
 - [x] UX-072 DONE — Post-100 Home and Directory Conversion and Discovery Upgrade
   - Bilingual home pages now surface device-local favorites/recent calculators only when repeat-use context exists, keeping first-visit discovery uncluttered.
@@ -48,8 +53,9 @@ Remaining to Target: 0
 
 ## Active queue
 
-- [ ] SEO-021 OPEN — Search Console Indexing and Canonical Reconciliation
-  - Scope: reconcile the 55 Search Console exclusions against canonical public routes, redirects, sitemap entries, locale variants, `www` normalization, and known legacy routes; prioritize the 18 discovered-not-indexed, 6 crawled-not-indexed, 6 404, and 2 Soft 404 entries while leaving healthy redirects/canonical alternates alone.
+- [ ] SEO-022 OPEN — Search Console Quick-Win SERP Lift
+  - Scope: improve CTR and first-page/top-10 reach for measured pages and queries around positions 9–20, using the 2026-09-25 Search Console baseline.
+  - Preserve formulas and policy scope; policy-sensitive factual changes require current official primary-source verification during the implementation run.
   - Source of truth: the 2026-09-25 Search Growth Program in `TASK_QUEUE.md`.
 
 ## Security gate
