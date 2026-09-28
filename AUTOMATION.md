@@ -437,3 +437,15 @@ State only the important verified facts:
 - next OPEN task / whether queue continues
 
 Do not dump long logs unless a failure needs them.
+
+
+## CI wait continuity
+
+A normal current-head GitHub Actions wait is part of the current execution, not a handoff boundary.
+
+- queued or in_progress by itself is **not** a reason to end the execution, return polling to the user, or defer ordinary polling to the next scheduled run.
+- While the selected task's current-head CI is progressing normally, keep polling at reasonable intervals until it reaches a terminal state when practical within the execution window.
+- If current-head CI fails, collect the complete failure set and continue diagnose -> fix -> push -> new current-head verification within the same execution, subject to the corrective-push rules above.
+- When possible, close the selected task through current-head CI success -> merge -> branch cleanup -> post-merge TASK_STATE.md verification before ending the execution.
+- An open PR may be handed to the next run only for an actual external GitHub Actions outage, execution runtime limit, a user-only approval/authentication/billing/legal blocker, or another genuine external blocker after tool-based recovery paths are exhausted.
+- This continuity rule does not relax the one-implementation-task-per-execution boundary and never permits merging queued, in-progress, failed, or cancelled current-head CI.
