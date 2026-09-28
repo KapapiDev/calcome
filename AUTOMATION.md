@@ -438,7 +438,6 @@ State only the important verified facts:
 
 Do not dump long logs unless a failure needs them.
 
-
 ## CI wait continuity
 
 A normal current-head GitHub Actions wait is part of the current execution, not a handoff boundary.
