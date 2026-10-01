@@ -12,10 +12,10 @@ export function LocalizedCurrencyConversionPage({
   locale: CurrencyConversionLocale;
 }) {
   const ko = locale === "ko";
-  const title = ko ? "환율 변환 계산기" : "Currency Conversion Calculator";
+  const title = ko ? "환율 변환 계산기" : "Currency Converter Calculator";
   const description = ko
     ? "직접 확인한 환율을 입력해 두 통화 사이의 금액과 역환율을 계산합니다. 실시간 환율을 임의로 추정하지 않습니다."
-    : "Convert an amount between two currencies using a rate you have verified, with the inverse rate shown as well. No live rate is guessed.";
+    : "Convert money between two currencies with an exchange rate you enter. The calculator also shows the inverse rate, so you can check both directions without relying on a guessed live rate.";
   const path = `/${locale}/finance/currency-conversion`;
   const home = ko ? "홈" : "Home";
   const calculators = ko ? "계산기" : "Calculators";
