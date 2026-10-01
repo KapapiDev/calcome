@@ -549,7 +549,7 @@ SEO-021
 
 Title: Search Console Indexing and Canonical Reconciliation
 
-Status: BLOCKED — becomes the single OPEN task after UX-072 unless a higher-priority security/calculation/public-route blocker appears.
+Status: DONE — reconciled 2026-09-28; no repository-side canonical 404/Soft-404 defect reproduced.
 
 Priority: HIGH
 
@@ -577,7 +577,7 @@ SEO-022
 
 Title: Search Console Quick-Win SERP Lift
 
-Status: BLOCKED on SEO-021
+Status: OPEN
 
 Priority: HIGH
 
@@ -672,8 +672,7 @@ Scope:
 
 ## Transition rule
 
-- UX-072 remains the only current OPEN task.
-- When UX-072 merges, its same-PR `TASK_STATE.md` transition should open SEO-021 unless a higher-priority blocker supersedes it.
-- After SEO-021, advance one task at a time through SEO-022, SEO-023, and SEO-024.
+- SEO-021 is DONE; SEO-022 is the single current OPEN task.
+- After SEO-022, advance one task at a time through SEO-023 and SEO-024.
 - SEO-025 becomes active only after the observation window and fresh evidence exist.
 - Do not create UX-073+ merely to keep automation busy unless a concrete new UX defect or measured opportunity justifies it.
