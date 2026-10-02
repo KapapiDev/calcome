@@ -1,6 +1,6 @@
 # CalCome Task State
 
-Last Updated: 2026-10-01
+Last Updated: 2026-10-02
 Current Calculator Count: 100
 Target Calculator Count: 100
 Remaining to Target: 0
@@ -12,6 +12,11 @@ Remaining to Target: 0
   - Resume condition: authoritative AdSense account evidence exposes the intended publisher ID and `calcome.com` site status. This account-owner wait is not a product/security failure and must not freeze unrelated repository development.
 
 ## Recent completed work
+
+- [x] SEO-023 DONE — Content SEO Cluster Batch 1
+  - Published five bilingual, non-policy-sensitive guides across measured CAGR, YTM, and currency-conversion demand.
+  - Added guide-index discovery, calculator links, reciprocal locale metadata, and sitemap coverage without changing calculator formulas.
+  - Kept policy-sensitive employment and lending guides out of this batch so no current legal or policy claim was published without official-source verification.
 
 - [x] SEO-022 DONE — Search Console Quick-Win SERP Lift
   - Improved three measured, non-policy-sensitive opportunities: English currency conversion (100 impressions, position 9.67, 0 clicks), `yield to maturity calculator` (18 impressions, position 15.61), and `연평균 증가율 계산기` (9 impressions, position 12.56).
@@ -59,9 +64,9 @@ Remaining to Target: 0
 
 ## Active queue
 
-- [ ] SEO-023 OPEN — Content SEO Cluster Batch 1
-  - Scope: publish one coherent evidence-backed batch of 5–10 genuinely useful guides around measured calculator demand, with distinct intent and natural calculator linkage.
-  - Policy-sensitive guides require current official primary-source verification during the implementation run.
+- [ ] SEO-024 OPEN — Generative AI Search Answerability and Trust Hardening
+  - Scope: improve concise definitions, assumptions, worked examples, and trust cues on pages already receiving Generative AI Search exposure.
+  - Changes must remain useful outside AI search; no cloaking, synthetic citations, or search-engine-only content.
   - Source of truth: the 2026-09-25 Search Growth Program in `TASK_QUEUE.md`.
 
 ## Security gate
