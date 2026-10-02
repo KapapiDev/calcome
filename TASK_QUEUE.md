@@ -603,7 +603,7 @@ SEO-023
 
 Title: Content SEO Cluster Batch 1
 
-Status: OPEN
+Status: DONE — five bilingual non-policy guide topics published 2026-10-02.
 
 Priority: HIGH
 
@@ -631,7 +631,7 @@ SEO-024
 
 Title: Generative AI Search Answerability and Trust Hardening
 
-Status: BLOCKED on SEO-023
+Status: OPEN
 
 Priority: MEDIUM
 

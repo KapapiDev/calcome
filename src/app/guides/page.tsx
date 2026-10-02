@@ -1,4 +1,7 @@
+import Link from "next/link";
+
 import { InfoPage } from "@/components/layout/info-page";
+import { guideContent, guideSlugs } from "@/content/guides";
 import { createPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = createPageMetadata({
@@ -46,6 +49,25 @@ export default function GuidesPage() {
           <p className="mt-4 leading-8 text-muted-foreground">{step.body}</p>
         </section>
       ))}
+
+      <section>
+        <h2 className="text-2xl font-semibold tracking-tight">주제별 실전 가이드</h2>
+        <div className="mt-4 space-y-4">
+          {guideSlugs.map((slug) => {
+            const guide = guideContent[slug].ko;
+            return (
+              <article key={slug} className="rounded-2xl border p-5">
+                <h3 className="text-lg font-semibold">
+                  <Link className="hover:underline" href={`/ko/guides/${slug}`}>
+                    {guide.title}
+                  </Link>
+                </h3>
+                <p className="mt-2 leading-7 text-muted-foreground">{guide.description}</p>
+              </article>
+            );
+          })}
+        </div>
+      </section>
 
       <section>
         <h2 className="text-2xl font-semibold tracking-tight">
