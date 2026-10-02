@@ -1,6 +1,6 @@
 # CalCome Task State
 
-Last Updated: 2026-09-28
+Last Updated: 2026-10-01
 Current Calculator Count: 100
 Target Calculator Count: 100
 Remaining to Target: 0
@@ -12,6 +12,12 @@ Remaining to Target: 0
   - Resume condition: authoritative AdSense account evidence exposes the intended publisher ID and `calcome.com` site status. This account-owner wait is not a product/security failure and must not freeze unrelated repository development.
 
 ## Recent completed work
+
+- [x] SEO-022 DONE — Search Console Quick-Win SERP Lift
+  - Improved three measured, non-policy-sensitive opportunities: English currency conversion (100 impressions, position 9.67, 0 clicks), `yield to maturity calculator` (18 impressions, position 15.61), and `연평균 증가율 계산기` (9 impressions, position 12.56).
+  - Metadata and visible answer framing now match those measured intents without changing formulas, routes, policy scope, or adding speculative demand claims.
+  - Policy-sensitive quick-win pages were intentionally left unchanged in this pass because this bounded task did not require factual policy edits.
+
 
 - [x] SEO-021 DONE — Search Console Indexing and Canonical Reconciliation
   - Reconciled the 2026-09-25 baseline into intentional exclusions (22 redirects, 1 alternate canonical), crawl/indexing opportunity classes (18 discovered-not-indexed, 6 crawled-not-indexed), and unresolved URL-level exclusions (6 404, 2 Soft 404).
@@ -53,9 +59,9 @@ Remaining to Target: 0
 
 ## Active queue
 
-- [ ] SEO-022 OPEN — Search Console Quick-Win SERP Lift
-  - Scope: improve CTR and first-page/top-10 reach for measured pages and queries around positions 9–20, using the 2026-09-25 Search Console baseline.
-  - Preserve formulas and policy scope; policy-sensitive factual changes require current official primary-source verification during the implementation run.
+- [ ] SEO-023 OPEN — Content SEO Cluster Batch 1
+  - Scope: publish one coherent evidence-backed batch of 5–10 genuinely useful guides around measured calculator demand, with distinct intent and natural calculator linkage.
+  - Policy-sensitive guides require current official primary-source verification during the implementation run.
   - Source of truth: the 2026-09-25 Search Growth Program in `TASK_QUEUE.md`.
 
 ## Security gate

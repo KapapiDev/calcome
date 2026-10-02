@@ -577,7 +577,7 @@ SEO-022
 
 Title: Search Console Quick-Win SERP Lift
 
-Status: OPEN
+Status: DONE — measured non-policy quick-win pass completed 2026-10-01.
 
 Priority: HIGH
 
@@ -603,7 +603,7 @@ SEO-023
 
 Title: Content SEO Cluster Batch 1
 
-Status: BLOCKED on SEO-022
+Status: OPEN
 
 Priority: HIGH
 
@@ -672,7 +672,7 @@ Scope:
 
 ## Transition rule
 
-- SEO-021 is DONE; SEO-022 is the single current OPEN task.
-- After SEO-022, advance one task at a time through SEO-023 and SEO-024.
+- SEO-021 and SEO-022 are DONE; SEO-023 is the single current OPEN task.
+- After SEO-023, advance to SEO-024.
 - SEO-025 becomes active only after the observation window and fresh evidence exist.
 - Do not create UX-073+ merely to keep automation busy unless a concrete new UX defect or measured opportunity justifies it.

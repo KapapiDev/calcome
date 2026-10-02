@@ -63,7 +63,7 @@ export const bondYieldContent: Record<BondYieldLocale, Copy> = {
   en: {
     title: "Bond Yield to Maturity Calculator",
     description:
-      "Enter face value, market price, coupon rate, time to maturity, and payment frequency to estimate yield to maturity (YTM) and current yield.",
+      "Use this yield to maturity calculator to estimate bond YTM and current yield from face value, market price, coupon rate, time to maturity, and payment frequency.",
     category: "Investment calculator",
     input: "Bond terms",
     faceValue: "Face value",
@@ -89,6 +89,6 @@ export const bondYieldContent: Record<BondYieldLocale, Copy> = {
       "The calculator discounts every coupon payment and the face-value redemption using one yield, then numerically solves for the yield that matches the entered market price. Current yield is annual coupon income divided by market price.",
     cautions:
       "Real bond pricing may include accrued interest, settlement conventions, day-count rules, call features, and taxes. This calculator is intended for plain fixed-rate bond comparisons.",
-    metaTitle: "Bond YTM Calculator | Yield to Maturity and Current Yield",
+    metaTitle: "Yield to Maturity Calculator (YTM) | Bond Yield & Current Yield",
   },
 };
