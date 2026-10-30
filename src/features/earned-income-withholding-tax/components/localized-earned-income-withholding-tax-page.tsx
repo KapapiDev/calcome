@@ -1,3 +1,4 @@
+import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import Link from "next/link";
 import {
   JsonLdScript,
@@ -25,8 +26,11 @@ export function LocalizedEarnedIncomeWithholdingTaxPage({
     path,
     locale,
     breadcrumbs: [
-      { name: ko ? "홈" : "Home", path: "/" },
-      { name: ko ? "계산기" : "Calculators", path: "/calculators" },
+      { name: ko ? "홈" : "Home", path: locale === "ko" ? "/" : "/en" },
+      {
+        name: ko ? "계산기" : "Calculators",
+        path: locale === "ko" ? "/calculators" : "/en/calculators",
+      },
       { name: title, path },
     ],
   });
@@ -39,8 +43,8 @@ export function LocalizedEarnedIncomeWithholdingTaxPage({
           aria-label={ko ? "경로" : "Breadcrumb"}
           className="text-sm text-muted-foreground"
         >
-          <Link href={`/${locale}`}>{ko ? "홈" : "Home"}</Link> /{" "}
-          <span aria-current="page">{title}</span>
+          <Link href={locale === "ko" ? "/" : "/en"}>{ko ? "홈" : "Home"}</Link>{" "}
+          / <span aria-current="page">{title}</span>
         </nav>
         <header className="mt-5 max-w-3xl">
           <p className="text-sm font-semibold text-primary">
@@ -54,6 +58,10 @@ export function LocalizedEarnedIncomeWithholdingTaxPage({
         <div className="mt-6">
           <EarnedIncomeWithholdingTaxCalculator locale={locale} />
         </div>
+        <CalculatorWorkedExample
+          slug="earned-income-withholding-tax"
+          locale={locale}
+        />
         <section className="mt-10 rounded-xl border bg-card p-5">
           <h2 className="text-xl font-semibold">
             {ko ? "2026년 계산 기준" : "2026 calculation basis"}

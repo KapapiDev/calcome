@@ -1,3 +1,4 @@
+import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import Link from "next/link";
 import {
   JsonLdScript,
@@ -26,9 +27,9 @@ const sources = [
     en: "Employment Insurance Act Enforcement Decree, Article 101 (effective 2026-07-01)",
   },
   {
-    href: "https://www.moel.go.kr/info/lawinfo/lawmaking/view.do?bbs_seq=20260800749",
-    ko: "고용노동부 상한액 고시 개정안 행정예고 (2026-08-25)",
-    en: "MOEL administrative preannouncement for a cap revision (2026-08-25)",
+    href: "https://1350.moel.go.kr/rtmview.do?id=1000325544",
+    ko: "고용노동부: 2026년 월 상한 220만원과 지원 기간",
+    en: "MOEL: 2026 monthly cap of KRW 2.2 million and support periods",
   },
 ] as const;
 
@@ -47,8 +48,11 @@ export function LocalizedMaternityLeaveBenefitPage({
     path,
     locale,
     breadcrumbs: [
-      { name: home, path: "/" },
-      { name: calculators, path: "/calculators" },
+      { name: home, path: locale === "ko" ? "/" : "/en" },
+      {
+        name: calculators,
+        path: locale === "ko" ? "/calculators" : "/en/calculators",
+      },
       { name: copy.title, path },
     ],
   });
@@ -61,7 +65,7 @@ export function LocalizedMaternityLeaveBenefitPage({
           aria-label={locale === "ko" ? "경로" : "Breadcrumb"}
           className="text-sm text-muted-foreground"
         >
-          <Link href={`/${locale}`}>{home}</Link> /{" "}
+          <Link href={locale === "ko" ? "/" : "/en"}>{home}</Link> /{" "}
           <span aria-current="page">{copy.title}</span>
         </nav>
         <header className="mt-5 max-w-3xl">
@@ -76,6 +80,10 @@ export function LocalizedMaternityLeaveBenefitPage({
         <div className="mt-6">
           <MaternityLeaveBenefitCalculator locale={locale} />
         </div>
+        <CalculatorWorkedExample
+          slug="maternity-leave-benefit"
+          locale={locale}
+        />
         <section className="mt-10 rounded-xl border bg-card p-5">
           <h2 className="text-xl font-semibold">
             {locale === "ko" ? "계산 기준" : "How it works"}

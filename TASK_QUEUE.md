@@ -15,7 +15,7 @@ This file contains current work and explicit waits. Historical scopes and obsole
 
 ## Current priorities
 
-The owner subsequently authorized SEO-028 as a bounded five-calculator improvement/usage pilot, separate from SEO-027's traffic-observation gate. Its post-merge record is in `docs/SEO_028_FIVE_CALCULATOR_PILOT.md`; it does not authorize automatic work on the other 95 calculators or an early ranking-outcome review.
+The owner authorized SEO-028 as a bounded five-calculator improvement/usage pilot, separate from SEO-027's traffic-observation gate. After the pilot, the owner separately authorized SEO-029 to review all remaining 95 calculators and improve necessary content in one PR. This explicit continuation supersedes the pilot's original scope limit; it does not authorize an early ranking-outcome review. Records: `docs/SEO_028_FIVE_CALCULATOR_PILOT.md` and `docs/SEO_029_CALCULATOR_FLEET_REVIEW.md`.
 
 | Track              | Priority                     | Task                                                | Actual state               | Next action                                                                                 |
 | ------------------ | ---------------------------- | --------------------------------------------------- | -------------------------- | ------------------------------------------------------------------------------------------- |
@@ -82,6 +82,12 @@ Scope when eligible:
 - Before the evidence gate, create no branch, PR, repeated full-site audit or speculative page rewrite. A newly reproduced product defect may still override this wait.
 
 Acceptance: dated comparable evidence and a clear next decision; any resulting implementation must follow the normal gates. Do not manufacture another task if no useful change is supported.
+
+## SEO-029 — Remaining calculator fleet review
+
+Status: DONE. The owner's explicit continuation covers all remaining 95 identities / 190 localized routes after the five-calculator pilot. Added 91 bilingual worked-example sections, retained four adequate existing guides, corrected locale breadcrumbs and repaired stale take-home child credits and the maternity benefit cap. Review matrix, sources and model boundaries: `docs/SEO_029_CALCULATOR_FLEET_REVIEW.md`.
+
+All 100 calculator identities now have reviewed example/interpretation coverage. This is a content and correctness release, not evidence of ranking or AI-citation improvement. SEO-027 must use the actual latest release baseline for pages changed by SEO-029; complete post-release coverage and matched windows remain required. No recurring fleet rewrite or automatic indexing retry was authorized.
 
 ## OPS-ADS-001 — Verify AdSense activation
 

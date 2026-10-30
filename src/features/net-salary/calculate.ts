@@ -70,10 +70,10 @@ function estimatedMonthlyIncomeTax(
       ? zero()
       : new Decimal(
           children === 1
-            ? 12_500
+            ? 20_830
             : children === 2
-              ? 29_160
-              : 29_160 + (children - 2) * 25_000,
+              ? 45_830
+              : 45_830 + (children - 2) * 33_330,
         );
   return money(
     Decimal.max(

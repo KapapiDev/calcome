@@ -1,3 +1,4 @@
+import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import Link from "next/link";
 
 import { absoluteUrl, siteConfig } from "@/config/site";
@@ -58,8 +59,10 @@ export function LocalizedHourlyWagePage({
           aria-label={locale === "ko" ? "경로" : "Breadcrumb"}
           className="text-sm text-muted-foreground"
         >
-          <Link href="/">{locale === "ko" ? "홈" : "Home"}</Link> /{" "}
-          <span aria-current="page">{copy.title}</span>
+          <Link href={locale === "ko" ? "/" : "/en"}>
+            {locale === "ko" ? "홈" : "Home"}
+          </Link>{" "}
+          / <span aria-current="page">{copy.title}</span>
         </nav>
         <header className="mt-5 max-w-3xl">
           <p className="text-sm font-semibold text-primary">{copy.category}</p>
@@ -74,6 +77,7 @@ export function LocalizedHourlyWagePage({
         <div className="mt-6">
           <HourlyWageCalculator locale={locale} />
         </div>
+        <CalculatorWorkedExample slug="hourly-wage" locale={locale} />
         <div className="mt-12 grid gap-4 md:grid-cols-2">
           <Info title={copy.formulaTitle} items={copy.formula} />
           <Info title={copy.cautionTitle} items={copy.cautions} />

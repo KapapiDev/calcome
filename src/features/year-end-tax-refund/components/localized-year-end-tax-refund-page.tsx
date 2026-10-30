@@ -1,3 +1,4 @@
+import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import Link from "next/link";
 import {
   JsonLdScript,
@@ -25,8 +26,11 @@ export function LocalizedYearEndTaxRefundPage({
     path,
     locale,
     breadcrumbs: [
-      { name: ko ? "홈" : "Home", path: "/" },
-      { name: ko ? "계산기" : "Calculators", path: "/calculators" },
+      { name: ko ? "홈" : "Home", path: locale === "ko" ? "/" : "/en" },
+      {
+        name: ko ? "계산기" : "Calculators",
+        path: locale === "ko" ? "/calculators" : "/en/calculators",
+      },
       { name: title, path },
     ],
   });
@@ -39,8 +43,8 @@ export function LocalizedYearEndTaxRefundPage({
           aria-label={ko ? "경로" : "Breadcrumb"}
           className="text-sm text-muted-foreground"
         >
-          <Link href={`/${locale}`}>{ko ? "홈" : "Home"}</Link> /{" "}
-          <span aria-current="page">{title}</span>
+          <Link href={locale === "ko" ? "/" : "/en"}>{ko ? "홈" : "Home"}</Link>{" "}
+          / <span aria-current="page">{title}</span>
         </nav>
         <header className="mt-5 max-w-3xl">
           <p className="text-sm font-semibold text-primary">
@@ -54,6 +58,7 @@ export function LocalizedYearEndTaxRefundPage({
         <div className="mt-6">
           <YearEndTaxRefundCalculator locale={locale} />
         </div>
+        <CalculatorWorkedExample slug="year-end-tax-refund" locale={locale} />
         <section className="mt-10 rounded-xl border bg-card p-5">
           <h2 className="text-xl font-semibold">
             {ko ? "계산 기준" : "Calculation basis"}

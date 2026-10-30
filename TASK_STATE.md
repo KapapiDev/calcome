@@ -30,6 +30,11 @@ SEO-023's release baseline is 2026-10-30: five topics, ten localized guide route
 
 ## Recently completed
 
+- [x] SEO-029 DONE — Owner-authorized remaining 95 calculator review
+  - Reviewed all 95 identities / 190 localized routes after the pilot. Added 91 tailored bilingual worked examples with interpretation, limitations, references and contextual links; retained four adequate existing guides.
+  - Repaired stale take-home child credits and the maternity benefit cap using current primary sources and regression cases. Corrected localized breadcrumbs; preserved the 100 calculators, 224 canonical URLs and existing gates.
+  - Scope and review matrix: `docs/SEO_029_CALCULATOR_FLEET_REVIEW.md`. The PR/release artifacts record current-head preflight, complete route checks, representative browser verification and usage measurements. SEO-027 remains the sole evidence-gated OPEN task; use this batch's actual release baseline for changed pages. No ranking uplift, automatic rewrite, monitor or indexing retry is claimed.
+
 - [x] SEO-028 DONE — Owner-requested five-calculator usage pilot
   - Separately authorized bounded work on currency conversion, CAGR, work-hours conversion, weekly holiday pay and minimum wage: five additional identities / ten localized routes using GPT-6.1 Sol High.
   - Added reproducible examples, scoped policy/calendar assumptions, verified references, input guidance and contextual links. Formulas, policy rates, the 100-calculator inventory and 224 canonical routes remain unchanged.

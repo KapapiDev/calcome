@@ -1,0 +1,1942 @@
+[
+  {
+    "slug": "ltv",
+    "input": {
+      "propertyValue": 300000000,
+      "loanAmount": 180000000,
+      "targetLtvRate": 70
+    },
+    "d": ["propertyValue", "loanAmount", "targetLtvRate"],
+    "expected": {
+      "ltvRate": 60,
+      "remainingLoanCapacity": 30000000
+    },
+    "fn": "calculateLtv",
+    "published": {
+      "ko": "담보가치 300,000,000원, 대출 180,000,000원이라면 LTV는 60%입니다. 목표 LTV 70%의 금액은 210,000,000원, 추가 여력은 30,000,000원입니다.",
+      "en": "A property value of 300,000,000 and loan of 180,000,000 give 60% LTV. A hypothetical 70% target gives 210,000,000, leaving 30,000,000 of capacity in the same currency."
+    }
+  },
+  {
+    "slug": "dsr",
+    "input": {
+      "annualIncome": 60000000,
+      "existingAnnualDebtService": 6000000,
+      "newLoanPrincipal": 12000000,
+      "annualInterestRate": 0,
+      "termYears": 1
+    },
+    "d": [
+      "annualIncome",
+      "existingAnnualDebtService",
+      "newLoanPrincipal",
+      "annualInterestRate",
+      "termYears"
+    ],
+    "expected": {
+      "monthlyPayment": 1000000,
+      "dsrRate": 30
+    },
+    "fn": "calculateDsr",
+    "published": {
+      "ko": "연소득 60,000,000원, 기존 연간 원리금 6,000,000원, 신규 대출 12,000,000원·1년·금리 0%의 비교 조건이면 신규 월 상환액은 1,000,000원, DSR은 30%입니다.",
+      "en": "For annual income 60,000,000, existing annual debt service 6,000,000 and a 12,000,000 one-year loan at a hypothetical 0% rate, the new monthly payment is 1,000,000 and DSR is 30%."
+    }
+  },
+  {
+    "slug": "dti",
+    "input": {
+      "annualIncome": 60000000,
+      "mortgagePrincipal": 12000000,
+      "annualInterestRate": 0,
+      "termYears": 1,
+      "otherMonthlyDebt": 500000
+    },
+    "d": [
+      "annualIncome",
+      "mortgagePrincipal",
+      "annualInterestRate",
+      "termYears",
+      "otherMonthlyDebt"
+    ],
+    "expected": {
+      "totalMonthlyDebt": 1500000,
+      "dtiRate": 30
+    },
+    "fn": "calculateDti",
+    "published": {
+      "ko": "연소득 60,000,000원, 주택대출 12,000,000원·1년·예시 금리 0%, 기타 월 부채 500,000원이면 월 부채 합계 1,500,000원, DTI 30%입니다.",
+      "en": "Annual income of 60,000,000, a 12,000,000 one-year mortgage at an illustrative 0%, and other monthly debt of 500,000 give total monthly debt of 1,500,000 and DTI of 30%."
+    }
+  },
+  {
+    "slug": "loan",
+    "input": {
+      "loanAmount": "12000000",
+      "annualInterestRate": "12",
+      "months": 12,
+      "repaymentType": "equal-principal"
+    },
+    "expected": {
+      "monthlyPayment": 1120000,
+      "lastMonthlyPayment": 1010000,
+      "totalInterest": 780000
+    },
+    "fn": "calculateLoan",
+    "published": {
+      "ko": "12,000,000원, 연 12%, 12개월, 원금균등이면 매월 원금 1,000,000원입니다. 첫 달 납부액은 1,120,000원, 마지막은 1,010,000원, 총 이자는 780,000원입니다.",
+      "en": "For 12,000,000 at 12% annually over 12 months with equal-principal repayment, principal is 1,000,000 monthly. The first payment is 1,120,000, the last is 1,010,000 and total interest is 780,000."
+    }
+  },
+  {
+    "slug": "loan-interest-comparison",
+    "input": {
+      "principal": 12000000,
+      "annualRateA": 6,
+      "annualRateB": 6,
+      "termMonths": 12
+    },
+    "d": ["principal", "annualRateA", "annualRateB"],
+    "expected": {
+      "interestSavings": 0,
+      "lowerCostOption": "same"
+    },
+    "fn": "calculateLoanInterestComparison",
+    "published": {
+      "ko": "원금 12,000,000원·12개월에서 A와 B를 모두 예시 금리 6%로 두면 월 상환액과 총 이자가 같아 이자 절감액은 0원입니다. 한쪽 금리만 낮추면 차이를 확인할 수 있습니다.",
+      "en": "For 12,000,000 over 12 months with both illustrative rates set to 6%, payments and total interest match, so interest savings are zero. Change just one rate to compare the difference."
+    }
+  },
+  {
+    "slug": "loan-refinancing-savings",
+    "input": {
+      "remainingBalance": 12000000,
+      "currentAnnualRate": 6,
+      "newAnnualRate": 6,
+      "remainingMonths": 12,
+      "refinancingCosts": 100000
+    },
+    "d": [
+      "remainingBalance",
+      "currentAnnualRate",
+      "newAnnualRate",
+      "refinancingCosts"
+    ],
+    "expected": {
+      "grossInterestSavings": 0,
+      "netSavings": -100000,
+      "breakEvenMonths": null
+    },
+    "fn": "calculateLoanRefinancingSavings",
+    "published": {
+      "ko": "잔액 12,000,000원·잔여 12개월, 기존/신규 금리를 모두 6%, 대환 비용을 100,000원으로 입력하면 이자 절감은 0원, 순절감은 −100,000원입니다.",
+      "en": "With a 12,000,000 balance, 12 remaining months, both rates at 6% and switching costs of 100,000, interest savings are zero and net savings are −100,000."
+    }
+  },
+  {
+    "slug": "balloon-payment",
+    "input": {
+      "principal": 12000000,
+      "annualRate": 0,
+      "termMonths": 12,
+      "balloonAmount": 6000000
+    },
+    "d": ["principal", "annualRate", "balloonAmount"],
+    "expected": {
+      "monthlyPayment": 500000,
+      "totalRepayment": 12000000,
+      "balloonRatio": 50
+    },
+    "fn": "calculateBalloonPayment",
+    "published": {
+      "ko": "원금 12,000,000원, 예시 금리 0%, 12개월, 만기 유예금 6,000,000원이면 매월 500,000원을 내고 만기에 유예금 6,000,000원을 추가로 상환합니다.",
+      "en": "For principal 12,000,000, an illustrative 0% rate, 12 months and a 6,000,000 balloon, regular payments are 500,000 monthly, with the 6,000,000 balloon added at maturity."
+    }
+  },
+  {
+    "slug": "mortgage-payment",
+    "input": {
+      "homePrice": 300000000,
+      "downPayment": 180000000,
+      "annualRate": 0,
+      "termYears": 10,
+      "monthlyCosts": 200000
+    },
+    "d": ["homePrice", "downPayment", "annualRate", "monthlyCosts"],
+    "expected": {
+      "loanAmount": 120000000,
+      "estimatedMonthlyPayment": 1200000
+    },
+    "fn": "calculateMortgagePayment",
+    "published": {
+      "ko": "집값 300,000,000원, 자기자금 180,000,000원, 예시 금리 0%, 10년이면 대출은 120,000,000원이고 월 원리금은 1,000,000원입니다. 월 추가 비용 200,000원을 더하면 1,200,000원입니다.",
+      "en": "A 300,000,000 home with 180,000,000 down, a hypothetical 0% rate and ten years needs a 120,000,000 loan. Monthly principal is 1,000,000; adding 200,000 recurring costs gives 1,200,000."
+    }
+  },
+  {
+    "slug": "jeonse-loan-interest",
+    "input": {
+      "deposit": 200000000,
+      "ownFunds": 80000000,
+      "annualRate": 4,
+      "termYears": 2,
+      "monthlyFees": 10000
+    },
+    "d": ["deposit", "ownFunds", "annualRate", "monthlyFees"],
+    "expected": {
+      "loanAmount": 120000000,
+      "monthlyInterest": 400000,
+      "monthlyCost": 410000,
+      "totalInterest": 9600000
+    },
+    "fn": "calculateJeonseLoanInterest",
+    "published": {
+      "ko": "보증금 200,000,000원, 자기자금 80,000,000원, 연 4%, 기간 2년, 월 수수료 10,000원이면 대출 120,000,000원, 월 이자 400,000원, 월 부담 410,000원입니다.",
+      "en": "A KRW 200,000,000 deposit, KRW 80,000,000 own funds, 4% annual interest, two years and KRW 10,000 monthly fees give a KRW 120,000,000 loan, KRW 400,000 monthly interest and KRW 410,000 monthly cost."
+    }
+  },
+  {
+    "slug": "credit-loan-interest",
+    "input": {
+      "loanAmount": 30000000,
+      "annualRate": 6,
+      "termMonths": 12,
+      "monthlyFees": 10000
+    },
+    "d": ["loanAmount", "annualRate", "monthlyFees"],
+    "expected": {
+      "monthlyInterest": 150000,
+      "monthlyCost": 160000,
+      "totalCost": 1920000
+    },
+    "fn": "calculateCreditLoanInterest",
+    "published": {
+      "ko": "대출 30,000,000원·연 6%·12개월·월 수수료 10,000원이면 월 이자 150,000원, 월 부담 160,000원, 기간 이자와 수수료 합계 1,920,000원입니다.",
+      "en": "A 30,000,000 loan at 6% for 12 months plus 10,000 monthly fees gives 150,000 monthly interest, 160,000 monthly cost and 1,920,000 total interest plus fees."
+    }
+  },
+  {
+    "slug": "early-loan-repayment-fee",
+    "input": {
+      "repaymentAmount": 20000000,
+      "feeRate": 1.2,
+      "originalTermMonths": 36,
+      "elapsedMonths": 12
+    },
+    "d": ["repaymentAmount", "feeRate"],
+    "expected": {
+      "estimatedFee": 160000,
+      "effectiveFeeRate": 0.8
+    },
+    "fn": "calculateEarlyRepaymentFee",
+    "published": {
+      "ko": "상환액 20,000,000원·수수료율 1.2%·약정 36개월·경과 12개월이면 남은 비율은 24/36이고 수수료는 160,000원입니다.",
+      "en": "For repayment 20,000,000, an illustrative 1.2% fee, 36 original months and 12 elapsed months, the remaining fraction is 24/36 and the estimated fee is 160,000."
+    }
+  },
+  {
+    "slug": "loan-affordability",
+    "input": {
+      "annualIncome": 60000000,
+      "otherMonthlyDebt": 500000,
+      "debtServiceLimit": 40,
+      "annualInterestRate": 0,
+      "termYears": 10
+    },
+    "d": [
+      "annualIncome",
+      "otherMonthlyDebt",
+      "debtServiceLimit",
+      "annualInterestRate",
+      "termYears"
+    ],
+    "expected": {
+      "availableMonthlyPayment": 1500000,
+      "maximumLoan": 180000000
+    },
+    "fn": "calculateLoanAffordability",
+    "published": {
+      "ko": "연소득 60,000,000원·비교 한도 40%·기존 월 부채 500,000원이면 가용 월 상환액은 1,500,000원입니다. 예시 금리 0%·10년이면 원금 비교값은 180,000,000원입니다.",
+      "en": "Annual income 60,000,000, a hypothetical 40% debt-service budget and 500,000 existing monthly debt leave 1,500,000 monthly. At an illustrative 0% over ten years, the principal comparison is 180,000,000."
+    }
+  },
+  {
+    "slug": "debt-repayment-period",
+    "input": {
+      "balance": 1200000,
+      "annualInterestRate": 12,
+      "monthlyPayment": 12000
+    },
+    "d": ["balance", "annualInterestRate", "monthlyPayment"],
+    "expected": null,
+    "fn": "calculateDebtRepaymentPeriod",
+    "published": {
+      "ko": "잔액 1,200,000원·연 12%·월 납부 112,000원이면 첫 달 이자 12,000원, 원금 감소 100,000원입니다. 같은 잔액에서 월 12,000원만 내면 원금이 줄지 않아 상환 완료 기간을 구할 수 없습니다.",
+      "en": "For a balance of 1,200,000 at 12% and monthly payment 112,000, first-month interest is 12,000 and principal falls by 100,000. Paying only 12,000 monthly would not reduce principal, so no payoff period is produced."
+    }
+  },
+  {
+    "slug": "credit-card-installment-interest",
+    "input": {
+      "purchaseAmount": 1200000,
+      "installmentMonths": 12,
+      "annualFeeRate": 12
+    },
+    "d": ["purchaseAmount", "annualFeeRate"],
+    "expected": {
+      "totalFee": 78000,
+      "firstPayment": 112000,
+      "lastPayment": 101000
+    },
+    "fn": "calculateCreditCardInstallmentInterest",
+    "published": {
+      "ko": "결제 1,200,000원·12개월·예시 연 수수료율 12%이면 첫 회 112,000원, 마지막 회 101,000원, 총 수수료 78,000원, 총 납부액 1,278,000원입니다.",
+      "en": "A 1,200,000 purchase over 12 months at an illustrative 12% annual fee rate gives a first payment of 112,000, a last payment of 101,000, fees of 78,000 and total payments of 1,278,000."
+    }
+  },
+  {
+    "slug": "stress-dsr",
+    "input": {
+      "annualIncome": 60000000,
+      "existingAnnualDebtService": 0,
+      "newLoanPrincipal": 12000000,
+      "annualInterestRate": 3,
+      "termYears": 1,
+      "stressRateAddOn": 1.5
+    },
+    "d": [
+      "annualIncome",
+      "existingAnnualDebtService",
+      "newLoanPrincipal",
+      "annualInterestRate",
+      "termYears",
+      "stressRateAddOn"
+    ],
+    "expected": {
+      "stressedAnnualInterestRate": 4.5
+    },
+    "fn": "calculateStressDsr",
+    "published": {
+      "ko": "기본 금리 3%에 가산금리 1.5%p를 입력하면 스트레스 비교 금리는 4.5%입니다. 3% × 1.5로 계산하는 것이 아닙니다.",
+      "en": "A 3% base rate plus a hypothetical 1.5 percentage-point adjustment produces a 4.5% stress comparison rate; it is not 3% multiplied by 1.5."
+    }
+  },
+  {
+    "slug": "mortgage-loan-limit",
+    "input": {
+      "homePrice": 300000000,
+      "annualIncome": 60000000,
+      "existingAnnualDebtService": 6000000,
+      "annualInterestRate": 0,
+      "termYears": 10,
+      "ltvLimitRate": 70,
+      "dsrLimitRate": 40
+    },
+    "d": [
+      "homePrice",
+      "annualIncome",
+      "existingAnnualDebtService",
+      "annualInterestRate",
+      "termYears",
+      "ltvLimitRate",
+      "dsrLimitRate"
+    ],
+    "expected": {
+      "ltvLimit": 210000000,
+      "dsrLimit": 180000000,
+      "loanLimit": 180000000
+    },
+    "fn": "calculateMortgageLoanLimit",
+    "published": {
+      "ko": "집값 300,000,000원·LTV 70%면 담보 한도는 210,000,000원입니다. 연소득 60,000,000원·기존 연 원리금 6,000,000원·DSR 40%·예시 금리 0%·10년이면 상환 기준 한도는 180,000,000원, 최종 비교값도 180,000,000원입니다.",
+      "en": "For a 300,000,000 home and hypothetical 70% LTV, collateral capacity is 210,000,000. Income 60,000,000, existing annual debt 6,000,000, a 40% DSR budget, 0% example interest and ten years give 180,000,000 debt-service capacity, which is the lower limit."
+    }
+  },
+  {
+    "slug": "severance-pay",
+    "input": {
+      "averageDailyWage": "100000",
+      "serviceDays": "730"
+    },
+    "expected": {
+      "estimatedSeverancePay": 6000000,
+      "serviceYears": 2
+    },
+    "fn": "calculateSeverancePay",
+    "published": {
+      "ko": "적용 1일 평균임금 100,000원·재직 730일이면 100,000 × 30 × 730/365 = 세전 6,000,000원입니다.",
+      "en": "At an applicable daily average wage of KRW 100,000 and 730 service days, 100,000 × 30 × 730/365 = KRW 6,000,000 before tax."
+    }
+  },
+  {
+    "slug": "unemployment-benefits",
+    "input": {
+      "averageDailyWage": 120000,
+      "insuredMonths": 24,
+      "age": 35,
+      "dailyHours": 8,
+      "disabled": false
+    },
+    "d": ["averageDailyWage"],
+    "expected": {
+      "calculatedDailyBenefit": 72000,
+      "dailyBenefit": 68100,
+      "benefitDays": 150,
+      "totalBenefit": 10215000
+    },
+    "fn": "calculateUnemploymentBenefit",
+    "published": {
+      "ko": "1일 평균임금 120,000원·가입 24개월·만 35세·장애 없음·1일 8시간이면 60%는 72,000원이지만 상한 68,100원이 적용됩니다. 지급일수 150일의 총 비교액은 10,215,000원입니다.",
+      "en": "At daily average wage KRW 120,000, 24 insured months, age 35, no disability and an eight-hour day, 60% is KRW 72,000 but the KRW 68,100 cap applies. The modeled 150 days total KRW 10,215,000."
+    }
+  },
+  {
+    "slug": "net-salary",
+    "input": {
+      "salaryMode": "monthly",
+      "salary": 3000000,
+      "bonus": 0,
+      "monthlyNonTaxable": 0,
+      "dependents": 0,
+      "children": 0,
+      "pension": true,
+      "health": true,
+      "longTermCare": true,
+      "employment": true,
+      "incomeTax": false,
+      "localIncomeTax": false
+    },
+    "d": ["salary", "bonus", "monthlyNonTaxable"],
+    "expected": {
+      "monthlyDeductions": 291522,
+      "monthlyTakeHome": 2708478
+    },
+    "fn": "calculateNetSalary",
+    "published": {
+      "ko": "월급 3,000,000원·상여/비과세 0원·보험 4항목 포함·소득세와 지방소득세는 제외 선택 시 보험 합계 291,522원, 비교 실수령액은 2,708,478원입니다.",
+      "en": "With monthly salary KRW 3,000,000, no bonus/non-taxable amount, all four insurance deductions on and income/local income tax switched off, insurance totals KRW 291,522 and modeled take-home pay is KRW 2,708,478."
+    }
+  },
+  {
+    "slug": "hourly-wage",
+    "input": {
+      "payUnit": "daily",
+      "payAmount": 96000,
+      "dailyHours": 8,
+      "weeklyHours": 40,
+      "includePaidHoliday": false
+    },
+    "d": ["payAmount", "dailyHours", "weeklyHours"],
+    "expected": {
+      "hourlyWage": 12000,
+      "dailyPay": 96000,
+      "weeklyPay": 480000
+    },
+    "fn": "calculateHourlyWage",
+    "published": {
+      "ko": "일급 96,000원·하루 8시간·주 40시간·주휴 제외이면 환산 시급 12,000원, 하루 급여 96,000원, 주급 비교액 480,000원입니다.",
+      "en": "Daily pay KRW 96,000, eight hours daily, 40 hours weekly and paid weekly holidays off give an hourly equivalent KRW 12,000, daily pay KRW 96,000 and weekly pay KRW 480,000."
+    }
+  },
+  {
+    "slug": "social-insurance",
+    "input": {
+      "monthlyPay": 3000000,
+      "nonTaxablePay": 0,
+      "accidentRate": 1,
+      "workplaceSize": "under150"
+    },
+    "d": ["monthlyPay", "nonTaxablePay", "accidentRate"],
+    "expected": {
+      "employee.total": 291522,
+      "employer.total": 329022,
+      "combinedTotal": 620544
+    },
+    "fn": "calculateSocialInsurance",
+    "published": {
+      "ko": "월 보수 3,000,000원·비과세 0원·150인 미만·예시 산재요율 1%이면 근로자 합계 291,522원, 사업주 합계 329,022원, 합계 620,544원입니다.",
+      "en": "At monthly pay KRW 3,000,000, no non-taxable pay, the under-150 category and an illustrative 1% accident rate, employee contributions total KRW 291,522 and employer contributions KRW 329,022: KRW 620,544 combined."
+    }
+  },
+  {
+    "slug": "average-wage",
+    "input": {
+      "wageTotal": 9000000,
+      "calendarDays": 90,
+      "ordinaryDailyWage": 110000
+    },
+    "d": ["wageTotal", "calendarDays", "ordinaryDailyWage"],
+    "expected": {
+      "calculatedDailyWage": 100000,
+      "appliedDailyWage": 110000,
+      "thirtyDayWage": 3300000
+    },
+    "fn": "calculateAverageWage",
+    "published": {
+      "ko": "기간 임금총액 9,000,000원·총 90일이면 산술 평균일급은 100,000원입니다. 확인한 통상일급 110,000원을 함께 입력하면 적용 비교일급 110,000원, 30일분 3,300,000원입니다.",
+      "en": "KRW 9,000,000 over 90 calendar days gives a calculated daily average KRW 100,000. Entering verified ordinary daily wage KRW 110,000 produces an applied comparison of KRW 110,000 and KRW 3,300,000 for 30 days."
+    }
+  },
+  {
+    "slug": "salary-raise",
+    "input": {
+      "salary": 36000000,
+      "raiseRate": 5,
+      "period": "annual"
+    },
+    "d": ["salary", "raiseRate"],
+    "expected": {
+      "newAnnualSalary": 37800000,
+      "annualIncrease": 1800000,
+      "monthlyIncrease": 150000
+    },
+    "fn": "calculateSalaryRaise",
+    "published": {
+      "ko": "현재 연봉 36,000,000원·인상률 5%이면 새 연봉 37,800,000원, 연 증가액 1,800,000원, 월평균 증가액 150,000원입니다.",
+      "en": "Current annual salary 36,000,000 with a 5% raise gives 37,800,000 new annual pay, a 1,800,000 annual increase and 150,000 monthly equivalent increase."
+    }
+  },
+  {
+    "slug": "salary-conversion",
+    "input": {
+      "salary": 52000000,
+      "period": "annual"
+    },
+    "d": ["salary"],
+    "expected": {
+      "annualSalary": 52000000,
+      "monthlySalary": 4333333.333333333,
+      "weeklySalary": 1000000
+    },
+    "fn": "calculateSalaryConversion",
+    "published": {
+      "ko": "연봉 52,000,000원은 월 52,000,000 ÷ 12 ≈ 4,333,333원, 이 도구의 52주 기준 주급은 1,000,000원입니다.",
+      "en": "Annual pay 52,000,000 gives 52,000,000 ÷ 12 ≈ 4,333,333 monthly and 1,000,000 weekly on this tool's 52-week basis."
+    }
+  },
+  {
+    "slug": "overtime-pay",
+    "input": {
+      "hourlyWage": 12000,
+      "overtimeHours": 10,
+      "premiumRate": 50,
+      "workplaceSize": "fiveOrMore"
+    },
+    "d": ["hourlyWage", "overtimeHours", "premiumRate"],
+    "expected": {
+      "basePay": 120000,
+      "premiumPay": 60000,
+      "totalPay": 180000
+    },
+    "fn": "calculateOvertimePay",
+    "published": {
+      "ko": "통상시급 12,000원·연장 10시간·가산률 50%이면 기본 120,000원 + 가산 60,000원 = 180,000원입니다.",
+      "en": "Ordinary hourly wage KRW 12,000, ten overtime hours and a 50% premium give KRW 120,000 base plus KRW 60,000 premium: KRW 180,000 total."
+    }
+  },
+  {
+    "slug": "night-work-pay",
+    "input": {
+      "hourlyWage": 12000,
+      "nightHours": 6,
+      "premiumRate": 50,
+      "workplaceSize": "fiveOrMore"
+    },
+    "d": ["hourlyWage", "nightHours", "premiumRate"],
+    "expected": {
+      "basePay": 72000,
+      "premiumPay": 36000,
+      "totalPay": 108000
+    },
+    "fn": "calculateNightWorkPay",
+    "published": {
+      "ko": "통상시급 12,000원·대상 야간 6시간·가산률 50%이면 기본 72,000원, 가산 36,000원, 합계 108,000원입니다.",
+      "en": "At KRW 12,000 hourly, six qualifying night hours and a 50% premium, base pay is KRW 72,000, premium KRW 36,000 and total KRW 108,000."
+    }
+  },
+  {
+    "slug": "holiday-work-pay",
+    "input": {
+      "hourlyWage": 12000,
+      "holidayHours": 10,
+      "workplaceSize": "fiveOrMore",
+      "contractualPremiumRate": 0
+    },
+    "d": ["hourlyWage", "holidayHours", "contractualPremiumRate"],
+    "expected": {
+      "basePay": 120000,
+      "withinEightPremium": 48000,
+      "overEightPremium": 24000,
+      "totalPay": 192000
+    },
+    "fn": "calculateHolidayWorkPay",
+    "published": {
+      "ko": "통상시급 12,000원·휴일근로 10시간·5인 이상이면 기본 120,000원 + 8시간 가산 48,000원 + 초과 2시간 가산 24,000원 = 192,000원입니다.",
+      "en": "At KRW 12,000 hourly for ten holiday-work hours in the five-or-more category, KRW 120,000 base + KRW 48,000 first-eight-hour premium + KRW 24,000 excess premium = KRW 192,000."
+    }
+  },
+  {
+    "slug": "annual-leave-allowance",
+    "input": {
+      "completedYears": 3,
+      "attendanceAtLeast80": true,
+      "fullAttendanceMonths": 12,
+      "usedDays": 6,
+      "hourlyWage": 12000,
+      "dailyHours": 8
+    },
+    "d": ["hourlyWage", "dailyHours"],
+    "expected": {
+      "grantedDays": 16,
+      "remainingDays": 10,
+      "dailyOrdinaryWage": 96000,
+      "estimatedAllowance": 960000
+    },
+    "fn": "calculateAnnualLeaveAllowance",
+    "published": {
+      "ko": "근속 만 3년·출근율 80% 이상·사용 6일·통상시급 12,000원·일 8시간이면 발생 16일 중 잔여 10일, 통상일급 96,000원, 예상 수당 960,000원입니다.",
+      "en": "With three completed years, at least 80% attendance, six days used, ordinary hourly pay KRW 12,000 and eight hours daily, modeled leave is 16 days, ten remain and the allowance is KRW 96,000 × 10 = KRW 960,000."
+    }
+  },
+  {
+    "slug": "retirement-pension",
+    "input": {
+      "monthlyContribution": 300000,
+      "years": 10,
+      "annualReturnRate": 0
+    },
+    "expected": {
+      "principal": 36000000,
+      "estimatedBalance": 36000000,
+      "investmentGain": 0
+    },
+    "fn": "calculateRetirementPension",
+    "published": {
+      "ko": "월 300,000원씩 10년·예시 수익률 0%이면 원금은 300,000 × 120 = 36,000,000원이고 예상 잔액도 36,000,000원입니다.",
+      "en": "Monthly contributions of 300,000 for ten years at a hypothetical 0% return give 300,000 × 120 = 36,000,000 principal and the same ending balance."
+    }
+  },
+  {
+    "slug": "gross-up-salary",
+    "input": {
+      "targetNetSalary": 3000000,
+      "deductionRate": 20,
+      "period": "monthly"
+    },
+    "d": ["targetNetSalary", "deductionRate"],
+    "expected": {
+      "requiredMonthlyGross": 3750000,
+      "requiredAnnualGross": 45000000
+    },
+    "fn": "calculateGrossUpSalary",
+    "published": {
+      "ko": "월 실수령 목표 3,000,000원·예시 공제율 20%이면 3,000,000 ÷ 0.8 = 필요한 세전 월급 3,750,000원입니다. 목표액에 20%를 더한 3,600,000원과 다릅니다.",
+      "en": "A monthly net target of 3,000,000 and hypothetical flat 20% deductions require 3,000,000 ÷ 0.8 = 3,750,000 gross, not 3,600,000 from adding 20% to the target."
+    }
+  },
+  {
+    "slug": "daily-worker-pay",
+    "input": {
+      "dailyGrossPay": 200000,
+      "workDays": 5,
+      "nonTaxableDailyPay": 0
+    },
+    "expected": {
+      "dailyIncomeTaxBeforeSmallCollection": 1350,
+      "incomeTax": 6750,
+      "localIncomeTax": 670,
+      "totalWithholding": 7420,
+      "estimatedNetPay": 992580
+    },
+    "fn": "calculateDailyWorkerPay",
+    "published": {
+      "ko": "일급 200,000원·5일·비과세 0원이면 일 공제 후 50,000원, 일 소득세 1,350원, 합산 소득세 6,750원과 지방세 670원으로 총 공제 7,420원, 예상 실수령 992,580원입니다.",
+      "en": "At KRW 200,000 daily for five days with no non-taxable pay, the post-deduction daily base is KRW 50,000 and daily income tax KRW 1,350. Aggregated income tax KRW 6,750 plus local tax KRW 670 gives KRW 992,580 net."
+    }
+  },
+  {
+    "slug": "total-compensation-comparison",
+    "input": {
+      "offerA": {
+        "baseSalary": 50000000,
+        "annualBonus": 5000000,
+        "annualEquity": 0,
+        "annualBenefits": 0,
+        "signOnBonus": 5000000
+      },
+      "offerB": {
+        "baseSalary": 56000000,
+        "annualBonus": 0,
+        "annualEquity": 0,
+        "annualBenefits": 0,
+        "signOnBonus": 0
+      },
+      "horizonYears": 2
+    },
+    "expected": {
+      "offerA.horizonTotalCompensation": 115000000,
+      "offerB.horizonTotalCompensation": 112000000,
+      "difference": -3000000,
+      "higherOffer": "A"
+    },
+    "fn": "calculateTotalCompensationComparison",
+    "published": {
+      "ko": "A는 연 기본급 50,000,000원·연 상여 5,000,000원·입사금 5,000,000원, B는 연 기본급 56,000,000원·나머지 0원이라고 가정하면 2년 합계는 A 115,000,000원, B 112,000,000원입니다.",
+      "en": "Assume A offers base 50,000,000, annual bonus 5,000,000 and sign-on 5,000,000, while B offers base 56,000,000 and zero other items. With equity/benefits also zero, two-year totals are A 115,000,000 and B 112,000,000."
+    }
+  },
+  {
+    "slug": "salary-negotiation-target",
+    "input": {
+      "currentSalary": 50000000,
+      "minimumIncreasePercent": 5,
+      "targetIncreasePercent": 10,
+      "stretchIncreasePercent": 15
+    },
+    "expected": {
+      "minimumSalary": 52500000,
+      "targetSalary": 55000000,
+      "stretchSalary": 57500000
+    },
+    "fn": "calculateSalaryNegotiationTarget",
+    "published": {
+      "ko": "현재 연봉 50,000,000원·최소 5%·목표 10%·도전 15%이면 각각 52,500,000원·55,000,000원·57,500,000원입니다.",
+      "en": "Current annual salary 50,000,000 with minimum 5%, target 10% and stretch 15% gives 52,500,000, 55,000,000 and 57,500,000 respectively."
+    }
+  },
+  {
+    "slug": "employer-total-labor-cost",
+    "input": {
+      "monthlyWage": 3000000,
+      "employmentTrainingRate": 0.25,
+      "industrialAccidentRate": 1,
+      "includeRetirementProvision": true
+    },
+    "expected": {
+      "monthlyEmployerOnCost": 579022,
+      "monthlyTotalLaborCost": 3579022
+    },
+    "fn": "calculateEmployerTotalLaborCost",
+    "published": {
+      "ko": "월 급여 3,000,000원·고용안정 부담률 0.25%·예시 산재 1%·퇴직 충당 포함이면 사업주 추가 부담은 579,022원, 월 총 인건비는 3,579,022원입니다.",
+      "en": "Monthly wage KRW 3,000,000, a selected 0.25% training rate, illustrative 1% accident rate and retirement provision on give employer on-cost KRW 579,022 and total monthly labor cost KRW 3,579,022."
+    }
+  },
+  {
+    "slug": "parental-leave-benefit",
+    "input": {
+      "monthlyOrdinaryWage": 3000000,
+      "leaveMonths": 12
+    },
+    "expected": {
+      "firstThreeMonthly": 2500000,
+      "monthsFourToSixMonthly": 2000000,
+      "monthSevenPlusMonthly": 1600000,
+      "totalBenefit": 23100000
+    },
+    "fn": "calculateParentalLeaveBenefit",
+    "published": {
+      "ko": "월 통상임금 3,000,000원·12개월이면 처음 3개월은 월 2,500,000원, 다음 3개월은 월 2,000,000원, 나머지 6개월은 월 1,600,000원으로 합계 23,100,000원입니다.",
+      "en": "At monthly ordinary wage KRW 3,000,000 for 12 months, the first three months pay KRW 2,500,000 each, the next three KRW 2,000,000 and the remaining six KRW 1,600,000: KRW 23,100,000 total."
+    }
+  },
+  {
+    "slug": "maternity-leave-benefit",
+    "input": {
+      "monthlyOrdinaryWage": 3000000,
+      "multipleBirth": false,
+      "prioritySupportedEmployer": true
+    },
+    "expected": {
+      "governmentMonthlyCap": 2200000,
+      "governmentBenefit": 6600000,
+      "employerPayment": 1600000,
+      "estimatedTotalIncome": 8200000
+    },
+    "fn": "calculateMaternityLeaveBenefit",
+    "published": {
+      "ko": "2026년 월 통상임금 3,000,000원·일반 단태아 90일·우선지원 대상기업이면 상한 월 2,200,000원 기준 고용보험 6,600,000원, 최초 60일 사업주 차액 1,600,000원, 합계 8,200,000원입니다.",
+      "en": "For 2026 ordinary wage KRW 3,000,000, ordinary 90-day singleton leave and a priority-supported employer, the KRW 2,200,000 monthly cap gives KRW 6,600,000 insurance support plus KRW 1,600,000 employer top-up for the first 60 days: KRW 8,200,000 total."
+    }
+  },
+  {
+    "slug": "percentage",
+    "input": {
+      "percent": 15,
+      "baseValue": 200,
+      "partValue": 30,
+      "wholeValue": 200,
+      "oldValue": 100,
+      "newValue": 120
+    },
+    "expected": {
+      "percentOfValue": 30,
+      "partAsPercent": 15,
+      "percentChange": 20
+    },
+    "fn": "calculatePercentage",
+    "published": {
+      "ko": "200의 15%는 30, 전체 200 중 부분 30의 비중은 15%, 이전 100에서 120으로의 변화율은 20%입니다.",
+      "en": "Fifteen percent of 200 is 30; 30 as a share of 200 is 15%; the change from 100 to 120 is 20%."
+    }
+  },
+  {
+    "slug": "discount-sale-price",
+    "input": {
+      "originalPrice": 100000,
+      "discountRatePercent": 20,
+      "quantity": 3
+    },
+    "expected": {
+      "salePricePerItem": 80000,
+      "totalSalePrice": 240000,
+      "totalSavings": 60000
+    },
+    "fn": "calculateDiscountSalePrice",
+    "published": {
+      "ko": "정가 100,000원·할인율 20%·수량 3개이면 개당 80,000원, 총 결제 비교액 240,000원, 총 절약액 60,000원입니다.",
+      "en": "Original unit price 100,000, discount 20% and quantity three give a sale price of 80,000 each, total 240,000 and total savings 60,000."
+    }
+  },
+  {
+    "slug": "age",
+    "input": {
+      "birthDate": "2000-06-15",
+      "asOfDate": "2026-06-14"
+    },
+    "expected": {
+      "fullYears": 25,
+      "daysUntilBirthday": 1,
+      "nextBirthday": "2026-06-15"
+    },
+    "fn": "calculateAge",
+    "published": {
+      "ko": "생년월일 2000-06-15·기준일 2026-06-14이면 만 25세이며 다음 생일 2026-06-15까지 1일입니다.",
+      "en": "For birth date 2000-06-15 and reference date 2026-06-14, completed age is 25 and the next birthday, 2026-06-15, is one day away."
+    }
+  },
+  {
+    "slug": "d-day",
+    "input": {
+      "asOfDate": "2026-10-30",
+      "targetDate": "2026-11-01"
+    },
+    "expected": {
+      "signedDays": 2,
+      "absoluteDays": 2,
+      "status": "future"
+    },
+    "fn": "calculateDDay",
+    "published": {
+      "ko": "기준일 2026-10-30·목표일 2026-11-01이면 2일 남았습니다. 목표일을 기준일과 같게 입력하면 차이는 0일입니다.",
+      "en": "Reference date 2026-10-30 and target date 2026-11-01 are two days apart. Identical reference and target dates have a zero-day difference."
+    }
+  },
+  {
+    "slug": "date-difference",
+    "input": {
+      "startDate": "2024-02-28",
+      "endDate": "2024-03-01"
+    },
+    "expected": {
+      "signedDays": 2,
+      "absoluteDays": 2,
+      "calendarYears": 0,
+      "calendarMonths": 0,
+      "calendarDays": 2
+    },
+    "fn": "calculateDateDifference",
+    "published": {
+      "ko": "2024-02-28에서 2024-03-01까지는 윤일을 지나므로 2일입니다. 순서를 바꾸면 부호는 −2일, 절대 차이는 2일입니다.",
+      "en": "From 2024-02-28 to 2024-03-01 the leap day makes the difference two days. Reversing the dates gives −2 signed days and two absolute days."
+    }
+  },
+  {
+    "slug": "rent-conversion-rate",
+    "input": {
+      "jeonseDeposit": 200000000,
+      "monthlyDeposit": 50000000,
+      "monthlyRent": 500000
+    },
+    "d": ["jeonseDeposit", "monthlyDeposit", "monthlyRent"],
+    "expected": {
+      "convertedDeposit": 150000000,
+      "annualRent": 6000000,
+      "conversionRate": 4
+    },
+    "fn": "calculateRentConversionRate",
+    "published": {
+      "ko": "전세 보증금 200,000,000원·월세 보증금 50,000,000원·월세 500,000원이면 전환 보증금 150,000,000원, 연 월세 6,000,000원, 연 전환율 4%입니다.",
+      "en": "Jeonse deposit KRW 200,000,000, monthly-rent deposit KRW 50,000,000 and rent KRW 500,000 give a KRW 150,000,000 deposit difference and KRW 6,000,000 annual rent: a 4% annual conversion rate."
+    }
+  },
+  {
+    "slug": "jeonse-monthly-rent-conversion",
+    "input": {
+      "jeonseDeposit": 200000000,
+      "monthlyDeposit": 50000000,
+      "annualRate": 4
+    },
+    "d": ["jeonseDeposit", "monthlyDeposit", "annualRate"],
+    "expected": {
+      "convertedDeposit": 150000000,
+      "annualRent": 6000000,
+      "monthlyRent": 500000
+    },
+    "fn": "calculateJeonseMonthlyRentConversion",
+    "published": {
+      "ko": "전세 보증금 200,000,000원·변경 보증금 50,000,000원·예시 연 전환율 4%이면 월세는 (200,000,000 − 50,000,000) × 0.04 ÷ 12 = 500,000원입니다.",
+      "en": "A KRW 200,000,000 jeonse deposit changed to KRW 50,000,000 at an illustrative annual 4% rate gives (200,000,000 − 50,000,000) × 0.04 ÷ 12 = KRW 500,000 monthly rent."
+    }
+  },
+  {
+    "slug": "real-estate-brokerage-fee",
+    "input": {
+      "transactionAmount": 300000000,
+      "feeRate": 0.4,
+      "vatRate": 10
+    },
+    "d": ["transactionAmount", "feeRate", "vatRate"],
+    "expected": {
+      "brokerageFee": 1200000,
+      "vat": 120000,
+      "totalFee": 1320000
+    },
+    "fn": "calculateRealEstateBrokerageFee",
+    "published": {
+      "ko": "거래금액 300,000,000원·예시 협의 요율 0.4%·부가세율 10%이면 보수 1,200,000원, 부가세 120,000원, 합계 1,320,000원입니다.",
+      "en": "At transaction amount KRW 300,000,000, illustrative agreed fee rate 0.4% and VAT 10%, brokerage is KRW 1,200,000 plus KRW 120,000 VAT: KRW 1,320,000 total."
+    }
+  },
+  {
+    "slug": "jeonse-loan-limit",
+    "input": {
+      "deposit": 300000000,
+      "requestedAmount": 220000000,
+      "existingGuaranteeBalance": 0,
+      "recognizedAnnualIncome": 250000000,
+      "annualDebtService": 20000000,
+      "repaymentPreferenceAmount": 0,
+      "oneHomeHousehold": false,
+      "capitalOrRegulatedArea": false
+    },
+    "d": [
+      "deposit",
+      "requestedAmount",
+      "existingGuaranteeBalance",
+      "recognizedAnnualIncome",
+      "annualDebtService",
+      "repaymentPreferenceAmount"
+    ],
+    "expected": {
+      "subjectLimit": 400000000,
+      "fundingLimit": 220000000,
+      "repaymentLimit": 230000000,
+      "areaAdjustedLimit": 220000000
+    },
+    "fn": "calculateJeonseLoanLimit",
+    "published": {
+      "ko": "보증금 300,000,000원·신청 220,000,000원·기존 보증 0원·HF 연간인정소득 250,000,000원·연 부채상환 20,000,000원·우대 0원·무주택·수도권/규제지역 아님이면 과목 400,000,000원, 소요자금 220,000,000원, 상환능력 230,000,000원 중 220,000,000원입니다.",
+      "en": "For deposit KRW 300,000,000, request KRW 220,000,000, no existing guarantee, HF-recognized annual income KRW 250,000,000, annual debt service KRW 20,000,000, zero preference, no owned home and no capital/regulated-area adjustment, limits are KRW 400,000,000, 220,000,000 and 230,000,000: the minimum is KRW 220,000,000."
+    }
+  },
+  {
+    "slug": "rent-affordability",
+    "input": {
+      "monthlyTakeHomeIncome": 3000000,
+      "fixedMonthlyObligations": 1200000,
+      "desiredMonthlyLeftover": 900000,
+      "nonRentHousingCosts": 200000,
+      "targetHousingPercent": 30
+    },
+    "expected": {
+      "ratioBasedRentCap": 700000,
+      "cashFlowRentCap": 700000,
+      "recommendedMonthlyRent": 700000,
+      "totalMonthlyHousingCost": 900000
+    },
+    "fn": "calculateRentAffordability",
+    "published": {
+      "ko": "월 실수령 3,000,000원·고정지출 1,200,000원·남길 금액 900,000원·월세 외 주거비 200,000원·선택 주거비율 30%이면 두 기준의 월세 한도는 각각 700,000원입니다.",
+      "en": "Net monthly income 3,000,000, fixed obligations 1,200,000, desired leftover 900,000, non-rent housing costs 200,000 and a selected 30% housing share give a rent cap of 700,000 under both methods."
+    }
+  },
+  {
+    "slug": "jeonse-vs-rent",
+    "input": {
+      "jeonseDeposit": 200000000,
+      "jeonseLoanAmount": 100000000,
+      "jeonseLoanAnnualRatePercent": 4,
+      "monthlyRentDeposit": 20000000,
+      "monthlyRent": 600000,
+      "opportunityAnnualRatePercent": 3,
+      "comparisonMonths": 12
+    },
+    "expected": {
+      "jeonseEconomicCost": 7000000,
+      "rentEconomicCost": 7800000,
+      "costDifference": 800000,
+      "cheaperOption": "jeonse"
+    },
+    "fn": "calculateJeonseVsRent",
+    "published": {
+      "ko": "전세 보증금 200,000,000원·대출 100,000,000원·연 대출금리 4%, 월세 보증금 20,000,000원·월세 600,000원, 기회수익률 연 3%·12개월이면 전세 비교비용 7,000,000원, 월세 7,800,000원입니다.",
+      "en": "A KRW 200,000,000 jeonse deposit with KRW 100,000,000 borrowed at 4%, versus a KRW 20,000,000 rent deposit and KRW 600,000 monthly rent, at an assumed 3% opportunity return over 12 months, gives jeonse cost KRW 7,000,000 versus rent cost KRW 7,800,000."
+    }
+  },
+  {
+    "slug": "home-purchase-total-cost",
+    "input": {
+      "purchasePrice": 300000000,
+      "loanAmount": 180000000,
+      "acquisitionTax": 3300000,
+      "brokerageFee": 1000000,
+      "registrationLegalCost": 700000,
+      "loanAppraisalCost": 200000,
+      "movingSetupCost": 800000,
+      "renovationFurnitureCost": 4000000,
+      "otherCost": 0
+    },
+    "expected": {
+      "transactionCosts": 10000000,
+      "totalPurchaseCost": 310000000,
+      "estimatedCashRequired": 130000000
+    },
+    "fn": "calculateHomePurchaseTotalCost",
+    "published": {
+      "ko": "매매가 300,000,000원·대출 180,000,000원에 취득세 3,300,000원, 중개 1,000,000원, 법무 700,000원, 대출 200,000원, 이사 800,000원, 수리/가구 4,000,000원·기타 0원이면 총비용 310,000,000원, 필요 현금 130,000,000원입니다.",
+      "en": "For a 300,000,000 purchase and 180,000,000 loan, enter acquisition tax 3,300,000, brokerage 1,000,000, legal 700,000, loan/appraisal 200,000, moving 800,000, renovation/furniture 4,000,000 and other costs zero. Total cost is 310,000,000 and cash required is 130,000,000."
+    }
+  },
+  {
+    "slug": "home-sale-net-proceeds",
+    "input": {
+      "salePrice": 400000000,
+      "mortgagePayoff": 220000000,
+      "brokerageFee": 1600000,
+      "transferTax": 20000000,
+      "legalClosingCost": 400000,
+      "repairStagingCost": 3000000,
+      "movingCost": 1000000,
+      "otherCost": 0
+    },
+    "expected": {
+      "sellingCosts": 26000000,
+      "proceedsBeforeLoanPayoff": 374000000,
+      "netProceeds": 154000000
+    },
+    "fn": "calculateHomeSaleNetProceeds",
+    "published": {
+      "ko": "매도가 400,000,000원·대출 상환 220,000,000원·중개 1,600,000원·양도세 20,000,000원·법무 400,000원·수리 3,000,000원·이사 1,000,000원·기타 0원이면 매도 비용 26,000,000원, 순수령액 154,000,000원입니다.",
+      "en": "Sale price 400,000,000 less mortgage payoff 220,000,000 and selling costs of brokerage 1,600,000, transfer tax 20,000,000, legal 400,000, repair 3,000,000, moving 1,000,000 and other zero leaves 154,000,000 net proceeds."
+    }
+  },
+  {
+    "slug": "rental-yield",
+    "input": {
+      "purchasePrice": 200000000,
+      "monthlyRent": 1000000,
+      "annualOtherIncome": 0,
+      "annualOperatingCosts": 2000000,
+      "vacancyRatePercent": 10
+    },
+    "expected": {
+      "effectiveAnnualIncome": 10800000,
+      "netOperatingIncome": 8800000,
+      "netYieldPercent": 4.4
+    },
+    "fn": "calculateRentalYield",
+    "published": {
+      "ko": "매입가 200,000,000원·월세 1,000,000원·기타 연 수입 0원·공실률 10%·연 운영비 2,000,000원이면 유효 수입 10,800,000원, 순운영 수입 8,800,000원, 순수익률 4.4%입니다.",
+      "en": "Purchase price 200,000,000, monthly rent 1,000,000, no other income, 10% vacancy and 2,000,000 annual operating costs give effective income 10,800,000 and net operating income 8,800,000: a 4.4% net yield."
+    }
+  },
+  {
+    "slug": "apartment-management-fee-budget",
+    "input": {
+      "monthlyManagementFee": 200000,
+      "monthlyUtilities": 100000,
+      "monthlyParkingAndOtherFee": 20000,
+      "annualSpecialAssessment": 1200000,
+      "homeSizeSqm": 84,
+      "monthlyNetIncome": 4200000
+    },
+    "expected": {
+      "monthlyBudgetedCost": 420000,
+      "annualBudgetedCost": 5040000,
+      "monthlyCostPerSqm": 5000,
+      "incomeSharePercent": 10
+    },
+    "fn": "calculateApartmentManagementFeeBudget",
+    "published": {
+      "ko": "관리비 200,000원·공과금 100,000원·주차 등 20,000원·연 특별지출 1,200,000원·면적 84㎡·월 실수령 4,200,000원이면 월 예산 420,000원, 연 5,040,000원, ㎡당 월 5,000원, 소득 비중 10%입니다.",
+      "en": "Management fee 200,000, utilities 100,000, parking/other 20,000, annual special assessments 1,200,000, area 84 m² and net monthly income 4,200,000 give a monthly budget of 420,000, annual 5,040,000, 5,000 per m² monthly and 10% of income."
+    }
+  },
+  {
+    "slug": "compound-interest",
+    "input": {
+      "initialPrincipal": "1000000",
+      "recurringContribution": "0",
+      "contributionFrequency": "monthly",
+      "durationYears": 2,
+      "annualInterestRate": "10",
+      "compoundingFrequency": "yearly",
+      "contributionTiming": "end",
+      "inflationRate": "0",
+      "taxRate": "0"
+    },
+    "expected": {
+      "grossFinalBalance": 1210000,
+      "grossInterest": 210000
+    },
+    "fn": "calculateCompoundInterest",
+    "published": {
+      "ko": "초기금 1,000,000원·연 10%·연 1회 복리·2년·추가 납입 0원·세금/물가 0%이면 1,000,000 × 1.1² = 1,210,000원입니다. 이자는 210,000원입니다.",
+      "en": "With 1,000,000 initially, 10% annual interest compounded yearly for two years, no contributions and zero tax/inflation, 1,000,000 × 1.1² = 1,210,000. Interest is 210,000."
+    }
+  },
+  {
+    "slug": "fixed-deposit",
+    "input": {
+      "principal": "10000000",
+      "annualInterestRate": "3",
+      "months": 12,
+      "interestMethod": "simple",
+      "taxRate": "0"
+    },
+    "expected": {
+      "grossInterest": 300000,
+      "maturityAfterTax": 10300000
+    },
+    "fn": "calculateDeposit",
+    "published": {
+      "ko": "원금 10,000,000원·연 3%·12개월·단리·예시 세율 0%이면 이자는 300,000원이고 만기액은 10,300,000원입니다.",
+      "en": "Principal of 10,000,000 at 3% for 12 months with simple interest and a hypothetical 0% tax rate earns 300,000, for 10,300,000 at maturity."
+    }
+  },
+  {
+    "slug": "savings",
+    "input": {
+      "regularDeposit": "100000",
+      "annualInterestRate": "6",
+      "months": 12,
+      "depositFrequency": "monthly",
+      "depositTiming": "beginning",
+      "interestMethod": "simple",
+      "taxRate": "0"
+    },
+    "expected": {
+      "totalPrincipal": 1200000,
+      "grossInterest": 39000,
+      "maturityAfterTax": 1239000
+    },
+    "fn": "calculateSavings",
+    "published": {
+      "ko": "매월 초 100,000원씩 12개월·연 6%·단리·예시 세율 0%이면 납입 원금 1,200,000원, 이자 39,000원, 만기액 1,239,000원입니다.",
+      "en": "Depositing 100,000 at each month's beginning for 12 months at 6% simple interest and a hypothetical 0% tax gives principal 1,200,000, interest 39,000 and maturity value 1,239,000."
+    }
+  },
+  {
+    "slug": "stock-average-cost",
+    "input": {
+      "currentShares": 10,
+      "currentAveragePrice": 10000,
+      "additionalShares": 20,
+      "additionalPrice": 7000
+    },
+    "d": [
+      "currentShares",
+      "currentAveragePrice",
+      "additionalShares",
+      "additionalPrice"
+    ],
+    "expected": {
+      "totalShares": 30,
+      "totalCost": 240000,
+      "averagePrice": 8000
+    },
+    "fn": "calculateStockAverageCost",
+    "published": {
+      "ko": "10주를 주당 10,000원에 보유하고 20주를 7,000원에 추가하면 총 30주·매입액 240,000원, 새 평단은 8,000원입니다.",
+      "en": "Holding 10 shares at 10,000 and buying 20 more at 7,000 gives 30 shares, total cost 240,000 and a new average price of 8,000."
+    }
+  },
+  {
+    "slug": "stock-profit-loss",
+    "input": {
+      "shares": 10,
+      "averagePurchasePrice": 10000,
+      "currentPrice": 12000
+    },
+    "d": ["shares", "averagePurchasePrice", "currentPrice"],
+    "expected": {
+      "costBasis": 100000,
+      "profitLoss": 20000,
+      "returnRate": 20
+    },
+    "fn": "calculateStockProfitLoss",
+    "published": {
+      "ko": "10주·매입 평단 10,000원·현재가 12,000원이면 원가 100,000원, 평가액 120,000원, 손익 +20,000원, 수익률 +20%입니다.",
+      "en": "For 10 shares bought at an average 10,000 with current price 12,000, cost is 100,000, value 120,000, profit 20,000 and return 20%."
+    }
+  },
+  {
+    "slug": "dividend",
+    "input": {
+      "shares": 100,
+      "annualDividendPerShare": 2000,
+      "paymentsPerYear": 4,
+      "withholdingTaxRate": 10
+    },
+    "d": [
+      "shares",
+      "annualDividendPerShare",
+      "paymentsPerYear",
+      "withholdingTaxRate"
+    ],
+    "expected": {
+      "grossAnnualDividend": 200000,
+      "grossDividendPerPayment": 50000,
+      "netAnnualDividend": 180000,
+      "netMonthlyAverage": 15000
+    },
+    "fn": "calculateDividend",
+    "published": {
+      "ko": "100주·연간 주당 배당 2,000원·연 4회·예시 차감률 10%이면 연 세전 200,000원, 회당 세전 50,000원, 연 차감 후 180,000원, 월평균 15,000원입니다.",
+      "en": "For 100 shares, annual dividend per share 2,000, four payments yearly and a hypothetical 10% withholding rate, gross annual dividend is 200,000, gross per payment 50,000, net annual 180,000 and monthly average 15,000."
+    }
+  },
+  {
+    "slug": "dividend-yield",
+    "input": {
+      "sharePrice": 100,
+      "annualDividendPerShare": 4,
+      "investmentAmount": 10000
+    },
+    "d": ["sharePrice", "annualDividendPerShare", "investmentAmount"],
+    "expected": {
+      "dividendYield": 4,
+      "estimatedShares": 100,
+      "estimatedAnnualDividend": 400
+    },
+    "fn": "calculateDividendYieldRate",
+    "published": {
+      "ko": "주가 100·연간 주당 배당 4이면 배당수익률은 4%입니다. 투자금 10,000이면 수량 비교값 100주, 예상 연간 배당 400입니다.",
+      "en": "At share price 100 and annual dividend per share 4, yield is 4%. An investment amount of 10,000 implies 100 shares and 400 annual dividends."
+    }
+  },
+  {
+    "slug": "dollar-cost-averaging",
+    "input": {
+      "initialInvestment": 1200000,
+      "monthlyContribution": 100000,
+      "annualReturnPercent": 0,
+      "years": 1
+    },
+    "expected": {
+      "totalInvested": 2400000,
+      "endingBalance": 2400000,
+      "estimatedGain": 0
+    },
+    "fn": "calculateDollarCostAveraging",
+    "published": {
+      "ko": "초기금 1,200,000원·월 납입 100,000원·1년·예시 수익률 0%이면 총 투자 원금과 예상 잔액은 모두 2,400,000원입니다.",
+      "en": "With 1,200,000 initially, 100,000 monthly for one year and a hypothetical 0% return, both contributions and ending balance are 2,400,000."
+    }
+  },
+  {
+    "slug": "savings-goal",
+    "input": {
+      "targetAmount": 12000000,
+      "initialSavings": 2400000,
+      "annualReturnPercent": 0,
+      "years": 2
+    },
+    "expected": {
+      "monthlyContribution": 400000,
+      "totalContributions": 12000000,
+      "months": 24
+    },
+    "fn": "calculateSavingsGoal",
+    "published": {
+      "ko": "목표 12,000,000원·현재 저축 2,400,000원·2년·예시 수익률 0%이면 부족한 9,600,000원을 24개월로 나눠 월 400,000원이 필요합니다.",
+      "en": "A goal of 12,000,000, existing savings 2,400,000, two years and a hypothetical 0% return leave 9,600,000 to fund over 24 months: 400,000 per month."
+    }
+  },
+  {
+    "slug": "investment-fee-impact",
+    "input": {
+      "initialInvestment": 10000,
+      "monthlyContribution": 0,
+      "annualReturnPercent": 6,
+      "annualFeePercent": 1,
+      "years": 1
+    },
+    "expected": {
+      "endingBalanceWithoutFees": 10616.78,
+      "endingBalanceAfterFees": 10511.62,
+      "feeImpactAmount": 105.16
+    },
+    "tolerance": 0.01,
+    "fn": "calculateInvestmentFeeImpact",
+    "published": {
+      "ko": "초기금 10,000·월 추가 0·연 수익률 6%·연 수수료 1%·1년이면 수수료 전 잔액은 약 10,616.78, 수수료 반영 후 약 10,511.62, 차이는 약 105.16입니다.",
+      "en": "For initial funds 10,000, no contributions, 6% assumed annual return, 1% annual fee and one year, the modeled balance is about 10,616.78 before fees versus 10,511.62 after, a difference of about 105.16."
+    }
+  },
+  {
+    "slug": "inflation-purchasing-power",
+    "input": {
+      "currentAmount": 1000000,
+      "annualInflationPercent": 2,
+      "years": 2
+    },
+    "expected": {
+      "futureNominalCost": 1040400,
+      "futurePurchasingPower": 961169
+    },
+    "tolerance": 0.5,
+    "fn": "calculateInflationPurchasingPower",
+    "published": {
+      "ko": "현재 금액 1,000,000원·가상 물가상승률 연 2%·2년이면 같은 물건의 미래 비용은 1,040,400원, 현재 돈의 미래 구매력은 약 961,169원입니다.",
+      "en": "At 1,000,000 today, a hypothetical 2% annual inflation rate and two years, the same basket costs 1,040,400 in future nominal money; the purchasing power of today's amount becomes about 961,169."
+    }
+  },
+  {
+    "slug": "emergency-fund",
+    "input": {
+      "monthlyEssentialExpenses": 2000000,
+      "targetMonths": 6,
+      "currentSavings": 4000000,
+      "monthlyContribution": 1000000
+    },
+    "expected": {
+      "targetFund": 12000000,
+      "fundingGap": 8000000,
+      "monthsToGoal": 8
+    },
+    "fn": "calculateEmergencyFund",
+    "published": {
+      "ko": "월 필수지출 2,000,000원·목표 6개월·현재 4,000,000원·월 저축 1,000,000원이면 목표 12,000,000원, 부족분 8,000,000원, 목표까지 8개월입니다.",
+      "en": "Essential expenses of 2,000,000 monthly, a six-month target, current savings 4,000,000 and monthly additions of 1,000,000 give a 12,000,000 target, 8,000,000 gap and eight months to fund it."
+    }
+  },
+  {
+    "slug": "fire-retirement-target",
+    "input": {
+      "monthlyExpenses": 2000000,
+      "withdrawalRatePercent": 4,
+      "currentPortfolio": 100000000,
+      "monthlyContribution": 1000000,
+      "expectedAnnualReturnPercent": 0
+    },
+    "expected": {
+      "annualExpenses": 24000000,
+      "targetPortfolio": 600000000,
+      "fundingGap": 500000000,
+      "monthsToTarget": 500
+    },
+    "fn": "calculateFireRetirementTarget",
+    "published": {
+      "ko": "월 생활비 2,000,000원·예시 인출률 4%이면 연 지출 24,000,000원 ÷ 0.04 = 목표 자산 600,000,000원입니다. 현재 100,000,000원이면 부족분은 500,000,000원입니다.",
+      "en": "Monthly expenses of 2,000,000 and a hypothetical 4% withdrawal rate give annual expenses of 24,000,000 and a 600,000,000 target. With 100,000,000 currently invested, the gap is 500,000,000."
+    }
+  },
+  {
+    "slug": "retirement-withdrawal",
+    "input": {
+      "startingPortfolio": 12000000,
+      "monthlyWithdrawal": 1000000,
+      "expectedAnnualReturnPercent": 0,
+      "retirementYears": 2
+    },
+    "expected": {
+      "depletedAfterMonths": 12,
+      "totalWithdrawn": 12000000,
+      "projectedEndingBalance": 0
+    },
+    "fn": "calculateRetirementWithdrawal",
+    "published": {
+      "ko": "초기 자산 12,000,000원·월 인출 1,000,000원·예시 수익률 0%·계획 2년이면 12개월에 소진되고 총 인출액은 12,000,000원입니다.",
+      "en": "With initial assets 12,000,000, monthly withdrawals 1,000,000, a hypothetical 0% return and a two-year plan, funds run out in month 12 after 12,000,000 total withdrawals."
+    }
+  },
+  {
+    "slug": "pension-future-monthly-income",
+    "input": {
+      "currentBalance": 12000000,
+      "monthlyContribution": 1000000,
+      "yearsUntilRetirement": 1,
+      "accumulationAnnualReturnPercent": 0,
+      "payoutYears": 2,
+      "payoutAnnualReturnPercent": 0
+    },
+    "expected": {
+      "projectedRetirementBalance": 24000000,
+      "estimatedMonthlyIncome": 1000000
+    },
+    "fn": "calculatePensionFutureMonthlyIncome",
+    "published": {
+      "ko": "현재 12,000,000원·월 납입 1,000,000원·적립 1년·적립/지급 수익률 모두 0%·지급 2년이면 은퇴 시 24,000,000원, 월 지급 비교값은 1,000,000원입니다.",
+      "en": "Current savings 12,000,000 plus 1,000,000 monthly for one year, zero accumulation/payout returns and two payout years give 24,000,000 at retirement and modeled monthly payments of 1,000,000."
+    }
+  },
+  {
+    "slug": "dividend-reinvestment",
+    "input": {
+      "initialInvestment": 1000,
+      "initialDividendYieldPercent": 10,
+      "annualPriceGrowthPercent": 0,
+      "annualDividendGrowthPercent": 0,
+      "years": 2
+    },
+    "expected": {
+      "reinvestedEndingValue": 1210,
+      "cashDividendEndingValue": 1200,
+      "reinvestmentAdvantage": 10
+    },
+    "fn": "calculateDividendReinvestment",
+    "published": {
+      "ko": "초기금 1,000·초기 배당수익률 10%·주가/주당 배당 성장률 모두 0%·2년이면 재투자 잔액은 1,210, 현금 배당 포함 합계는 1,200, 차이는 10입니다.",
+      "en": "Starting with 1,000, a hypothetical 10% dividend yield, zero price/dividend growth and two years gives 1,210 with reinvestment versus 1,200 including cash dividends, a difference of 10."
+    }
+  },
+  {
+    "slug": "portfolio-rebalancing",
+    "input": {
+      "assets": [
+        {
+          "currentValue": 800000,
+          "targetWeightPercent": 60
+        },
+        {
+          "currentValue": 200000,
+          "targetWeightPercent": 40
+        }
+      ]
+    },
+    "expected": {
+      "totalBuyAmount": 200000,
+      "totalSellAmount": 200000,
+      "assets.0.tradeAmount": -200000,
+      "assets.1.tradeAmount": 200000
+    },
+    "fn": "calculatePortfolioRebalancing",
+    "published": {
+      "ko": "총 1,000,000 중 A 800,000·B 200,000을 목표 A 60%·B 40%로 맞추려면 A 200,000을 매도하고 B 200,000을 매수합니다.",
+      "en": "With a 1,000,000 portfolio split A 800,000 and B 200,000, target weights of 60%/40% imply selling 200,000 of A and buying 200,000 of B."
+    }
+  },
+  {
+    "slug": "bond-price",
+    "input": {
+      "faceValue": 1000,
+      "annualCouponRatePercent": 5,
+      "annualMarketYieldPercent": 10,
+      "yearsToMaturity": 1,
+      "paymentsPerYear": 1
+    },
+    "expected": {
+      "bondPrice": 954.5454545454545
+    },
+    "fn": "calculateBondPrice",
+    "published": {
+      "ko": "액면 1,000·연 쿠폰 5%·잔존 1년·연 1회 지급·시장 수익률 10%이면 1년 뒤 1,050을 받으므로 가격은 1,050 ÷ 1.1 ≈ 954.55입니다.",
+      "en": "For face value 1,000, a 5% annual coupon, one year remaining, annual payments and a 10% market yield, the 1,050 maturity cash flow has a price of 1,050 ÷ 1.1 ≈ 954.55."
+    }
+  },
+  {
+    "slug": "apr-apy-conversion",
+    "input": {
+      "mode": "apr-to-apy",
+      "annualRatePercent": 12,
+      "compoundsPerYear": 4
+    },
+    "expected": {
+      "convertedRatePercent": 12.550881
+    },
+    "fn": "calculateAprApy",
+    "published": {
+      "ko": "명목 연이율 12%·분기 복리 4회이면 APY는 [(1 + 0.12/4)^4 − 1] × 100 = 약 12.550881%입니다.",
+      "en": "A nominal 12% annual rate compounded quarterly gives APY = [(1 + 0.12/4)^4 − 1] × 100 ≈ 12.550881%."
+    }
+  },
+  {
+    "slug": "crypto-average-cost",
+    "input": {
+      "currentQuantity": 1,
+      "currentAveragePrice": 100,
+      "additionalQuantity": 1,
+      "additionalPrice": 80
+    },
+    "expected": {
+      "totalQuantity": 2,
+      "totalCost": 180,
+      "newAveragePrice": 90
+    },
+    "fn": "calculateCryptoAverageCost",
+    "published": {
+      "ko": "기존 1개·평단 100, 추가 1개·가격 80이면 총 2개·원가 180, 새 평단은 90입니다.",
+      "en": "One unit held at average cost 100 plus one unit bought at 80 gives two units, total cost 180 and a new average of 90."
+    }
+  },
+  {
+    "slug": "crypto-profit-loss",
+    "input": {
+      "quantity": 2,
+      "averageEntryPrice": 100,
+      "currentPrice": 120,
+      "buyFeePercent": 1,
+      "sellFeePercent": 1
+    },
+    "expected": {
+      "totalCostBasis": 202,
+      "netCurrentValue": 237.6,
+      "profitLoss": 35.6
+    },
+    "fn": "calculateCryptoProfitLoss",
+    "published": {
+      "ko": "수량 2·매입 단가 100·현재가 120·매수/매도 수수료 각각 1%이면 원가 202, 예상 순매도액 237.6, 손익 +35.6입니다.",
+      "en": "For two units bought at 100, current price 120 and 1% buy/sell fees, total cost is 202, estimated net sale value 237.6 and profit 35.6."
+    }
+  },
+  {
+    "slug": "staking-reward",
+    "input": {
+      "stakedAmount": 1000,
+      "annualRewardRatePercent": 10,
+      "stakingDays": 365,
+      "compoundsPerYear": 0
+    },
+    "expected": {
+      "rewardsEarned": 100,
+      "finalBalance": 1100
+    },
+    "fn": "calculateStakingReward",
+    "published": {
+      "ko": "예치 수량 1,000·연 보상률 10%·365일·복리 횟수 0(단리)이면 예상 보상 100, 최종 수량 1,100입니다.",
+      "en": "For 1,000 tokens, a hypothetical 10% annual reward rate, 365 days and zero compounding periods (simple interest), modeled rewards are 100 and the final quantity is 1,100."
+    }
+  },
+  {
+    "slug": "foreign-currency-average-cost",
+    "input": {
+      "currentAmount": 1000,
+      "currentAverageRate": 1300,
+      "additionalAmount": 1000,
+      "additionalRate": 1400
+    },
+    "expected": {
+      "totalForeignAmount": 2000,
+      "totalQuoteCost": 2700000,
+      "newAverageRate": 1350
+    },
+    "fn": "calculateForeignCurrencyAverageCost",
+    "published": {
+      "ko": "기존 1,000 USD를 1,300 KRW/USD에 보유하고 1,000 USD를 1,400에 추가하면 총 2,000 USD·원가 2,700,000 KRW, 평균 환율은 1,350 KRW/USD입니다.",
+      "en": "Holding USD 1,000 at KRW 1,300/USD and buying USD 1,000 at 1,400 gives USD 2,000, KRW 2,700,000 total cost and an average rate of KRW 1,350/USD."
+    }
+  },
+  {
+    "slug": "break-even-sales",
+    "input": {
+      "fixedCosts": 1000000,
+      "sellingPricePerUnit": 10000,
+      "variableCostPerUnit": 6000
+    },
+    "expected": {
+      "contributionMarginPerUnit": 4000,
+      "breakEvenUnits": 250,
+      "breakEvenSales": 2500000
+    },
+    "fn": "calculateBreakEvenSales",
+    "published": {
+      "ko": "고정비 1,000,000원·단위 판매가 10,000원·단위 변동비 6,000원이면 공헌이익은 4,000원, 손익분기 판매량 250개, 매출액 2,500,000원입니다.",
+      "en": "Fixed costs 1,000,000, price per unit 10,000 and variable cost 6,000 give contribution 4,000, break-even volume 250 units and sales 2,500,000."
+    }
+  },
+  {
+    "slug": "real-estate-acquisition-tax",
+    "input": {
+      "acquisitionPrice": 300000000,
+      "acquisitionTaxRate": 1,
+      "localEducationTaxRate": 0.1,
+      "ruralSpecialTaxRate": 0,
+      "otherCosts": 1000000
+    },
+    "d": [
+      "acquisitionPrice",
+      "acquisitionTaxRate",
+      "localEducationTaxRate",
+      "ruralSpecialTaxRate",
+      "otherCosts"
+    ],
+    "expected": {
+      "totalTax": 3300000,
+      "totalAcquisitionCost": 304300000
+    },
+    "fn": "calculateAcquisitionTax",
+    "published": {
+      "ko": "취득가 300,000,000원·예시 취득세율 1%·지방교육세율 0.1%·농어촌특별세율 0%·기타 비용 1,000,000원이면 세금 합계 3,300,000원, 총 취득 비용 304,300,000원입니다.",
+      "en": "For KRW 300,000,000 and illustrative rates of 1% acquisition tax, 0.1% education tax and 0% rural tax, plus KRW 1,000,000 other costs, taxes total KRW 3,300,000 and total acquisition cost is KRW 304,300,000."
+    }
+  },
+  {
+    "slug": "capital-gains-tax",
+    "input": {
+      "salePrice": 200000000,
+      "acquisitionPrice": 150000000,
+      "deductibleExpenses": 10000000,
+      "basicDeduction": 2500000,
+      "incomeTaxRate": 20,
+      "localIncomeTaxRate": 10
+    },
+    "d": [
+      "salePrice",
+      "acquisitionPrice",
+      "deductibleExpenses",
+      "basicDeduction",
+      "incomeTaxRate",
+      "localIncomeTaxRate"
+    ],
+    "expected": {
+      "taxableGain": 37500000,
+      "totalTax": 8250000
+    },
+    "fn": "calculateCapitalGainsTax",
+    "published": {
+      "ko": "매도가 200,000,000원·취득가 150,000,000원·필요경비 10,000,000원·기본공제 2,500,000원·예시 소득세율 20%·지방세율 10%(소득세액 기준)이면 과세 차익 37,500,000원, 세금 합계 8,250,000원입니다.",
+      "en": "Sale price KRW 200,000,000, acquisition KRW 150,000,000, expenses KRW 10,000,000, entered deduction KRW 2,500,000, hypothetical income-tax rate 20% and local tax at 10% of income tax produce taxable gain KRW 37,500,000 and total tax KRW 8,250,000."
+    }
+  },
+  {
+    "slug": "gift-tax",
+    "input": {
+      "giftValue": 100000000,
+      "assumedDebt": 0,
+      "deductibleAmount": 50000000,
+      "taxRate": 10,
+      "progressiveDeduction": 0,
+      "filingCreditRate": 3
+    },
+    "d": [
+      "giftValue",
+      "assumedDebt",
+      "deductibleAmount",
+      "taxRate",
+      "progressiveDeduction",
+      "filingCreditRate"
+    ],
+    "expected": {
+      "taxableGift": 50000000,
+      "taxBeforeCredit": 5000000,
+      "filingCredit": 150000,
+      "estimatedTax": 4850000
+    },
+    "fn": "calculateGiftTax",
+    "published": {
+      "ko": "증여 100,000,000원·인수 채무 0원·입력 공제 50,000,000원·세율 10%·누진공제 0원·신고공제율 3%의 예시에서는 산출세액 5,000,000원, 공제 150,000원, 추정 납부액 4,850,000원입니다.",
+      "en": "For a KRW 100,000,000 gift, no assumed debt, entered deduction KRW 50,000,000, 10% tax, zero progressive deduction and a hypothetical 3% filing credit, tax before credit is KRW 5,000,000, credit KRW 150,000 and estimated tax KRW 4,850,000."
+    }
+  },
+  {
+    "slug": "inheritance-tax",
+    "input": {
+      "grossEstate": 600000000,
+      "debts": 50000000,
+      "funeralExpenses": 10000000,
+      "deductibleAmount": 500000000,
+      "taxRate": 10,
+      "progressiveDeduction": 0,
+      "filingCreditRate": 3
+    },
+    "d": [
+      "grossEstate",
+      "debts",
+      "funeralExpenses",
+      "deductibleAmount",
+      "taxRate",
+      "progressiveDeduction",
+      "filingCreditRate"
+    ],
+    "expected": {
+      "taxableEstate": 40000000,
+      "estimatedTax": 3880000,
+      "estateAfterTax": 536120000
+    },
+    "fn": "calculateInheritanceTax",
+    "published": {
+      "ko": "재산 600,000,000원·채무 50,000,000원·장례비 10,000,000원·입력 공제 500,000,000원·세율 10%·누진공제 0원·신고공제율 3%이면 과세표준 40,000,000원, 추정 세액 3,880,000원입니다.",
+      "en": "Estate KRW 600,000,000 less debts KRW 50,000,000, funeral costs KRW 10,000,000 and entered deductions KRW 500,000,000 gives a KRW 40,000,000 base. At entered 10% tax, no progressive deduction and 3% filing credit, estimated tax is KRW 3,880,000."
+    }
+  },
+  {
+    "slug": "property-tax",
+    "input": {
+      "assessedValue": 300000000,
+      "taxBaseRate": 60,
+      "propertyTaxRate": 0.2,
+      "progressiveDeduction": 0,
+      "cityAreaTaxRate": 0.14
+    },
+    "d": [
+      "assessedValue",
+      "taxBaseRate",
+      "propertyTaxRate",
+      "progressiveDeduction",
+      "cityAreaTaxRate"
+    ],
+    "expected": {
+      "taxBase": 180000000,
+      "propertyTax": 360000,
+      "localEducationTax": 72000,
+      "totalTax": 684000
+    },
+    "fn": "calculatePropertyTax",
+    "published": {
+      "ko": "공시가격 300,000,000원·입력 과표비율 60%·재산세율 0.2%·누진공제 0원·도시지역분 0.14%의 예시는 과표 180,000,000원, 재산세 360,000원, 도시지역분 252,000원, 교육세 72,000원, 합계 684,000원입니다.",
+      "en": "At assessed value KRW 300,000,000, hypothetical base ratio 60%, property-tax rate 0.2%, no progressive deduction and urban rate 0.14%, the base is KRW 180,000,000; property tax KRW 360,000, urban tax KRW 252,000 and education tax KRW 72,000 total KRW 684,000."
+    }
+  },
+  {
+    "slug": "comprehensive-real-estate-holding-tax",
+    "input": {
+      "aggregateAssessedValue": 1000000000,
+      "basicDeduction": 900000000,
+      "fairMarketValueRate": 60,
+      "taxRate": 0.5,
+      "progressiveDeduction": 0,
+      "deductiblePropertyTax": 100000
+    },
+    "d": [
+      "aggregateAssessedValue",
+      "basicDeduction",
+      "fairMarketValueRate",
+      "taxRate",
+      "progressiveDeduction",
+      "deductiblePropertyTax"
+    ],
+    "expected": {
+      "taxBase": 60000000,
+      "comprehensiveTax": 200000,
+      "specialRuralTax": 40000,
+      "totalTax": 240000
+    },
+    "fn": "calculateComprehensiveRealEstateHoldingTax",
+    "published": {
+      "ko": "합산 공시가격 1,000,000,000원·입력 기본공제 900,000,000원·비율 60%·세율 0.5%·누진공제 0원·재산세 공제 100,000원이면 과표 60,000,000원, 종부세 200,000원, 농특세 40,000원, 합계 240,000원입니다.",
+      "en": "Assessed value KRW 1,000,000,000, entered deduction KRW 900,000,000, 60% ratio, 0.5% rate, no progressive deduction and KRW 100,000 property-tax credit give a KRW 60,000,000 base, KRW 200,000 holding tax and KRW 40,000 rural tax: KRW 240,000 total."
+    }
+  },
+  {
+    "slug": "value-added-tax",
+    "input": {
+      "amount": 110000,
+      "taxRate": 10,
+      "mode": "inclusive"
+    },
+    "d": ["amount", "taxRate"],
+    "expected": {
+      "supplyAmount": 100000,
+      "taxAmount": 10000,
+      "totalAmount": 110000
+    },
+    "fn": "calculateValueAddedTax",
+    "published": {
+      "ko": "부가세 포함 110,000원·세율 10%이면 공급가액은 110,000 ÷ 1.1 = 100,000원, 부가세는 10,000원입니다. 별도 방식에서는 공급가액 100,000원에 10,000원을 더합니다.",
+      "en": "For a tax-inclusive KRW 110,000 at 10%, supply value is 110,000 ÷ 1.1 = KRW 100,000 and VAT is KRW 10,000. Exclusive mode adds KRW 10,000 to a KRW 100,000 supply value."
+    }
+  },
+  {
+    "slug": "comprehensive-income-tax",
+    "input": {
+      "grossIncome": 50000000,
+      "necessaryExpenses": 20000000,
+      "incomeDeduction": 10000000,
+      "taxRate": 15,
+      "progressiveDeduction": 1260000,
+      "taxCredit": 240000,
+      "localIncomeTaxRate": 10
+    },
+    "d": [
+      "grossIncome",
+      "necessaryExpenses",
+      "incomeDeduction",
+      "taxRate",
+      "progressiveDeduction",
+      "taxCredit",
+      "localIncomeTaxRate"
+    ],
+    "expected": {
+      "taxableIncome": 20000000,
+      "nationalIncomeTax": 1500000,
+      "localIncomeTax": 150000,
+      "totalTax": 1650000
+    },
+    "fn": "calculateComprehensiveIncomeTax",
+    "published": {
+      "ko": "수입 50,000,000원·경비 20,000,000원·소득공제 10,000,000원·입력 세율 15%·누진공제 1,260,000원·세액공제 240,000원·지방세율 10%(국세 기준)이면 국세 1,500,000원, 지방세 150,000원, 합계 1,650,000원입니다.",
+      "en": "Income KRW 50,000,000 less expenses KRW 20,000,000 and deductions KRW 10,000,000 gives a KRW 20,000,000 base. Entering 15%, progressive deduction KRW 1,260,000, credit KRW 240,000 and local tax at 10% of national tax gives KRW 1,650,000 total."
+    }
+  },
+  {
+    "slug": "withholding-tax",
+    "input": {
+      "grossPayment": 1000000,
+      "nonTaxableAmount": 0,
+      "nationalTaxRate": 3,
+      "localIncomeTaxRate": 10
+    },
+    "d": [
+      "grossPayment",
+      "nonTaxableAmount",
+      "nationalTaxRate",
+      "localIncomeTaxRate"
+    ],
+    "expected": {
+      "nationalIncomeTax": 30000,
+      "localIncomeTax": 3000,
+      "totalWithholding": 33000,
+      "netPayment": 967000
+    },
+    "fn": "calculateWithholdingTax",
+    "published": {
+      "ko": "총 지급액 1,000,000원·제외액 0원·예시 소득세율 3%·지방세율 10%(소득세액 기준)이면 국세 30,000원, 지방세 3,000원, 원천징수 33,000원, 실수령 967,000원입니다.",
+      "en": "For KRW 1,000,000, no exclusion, an entered 3% national rate and local rate 10% of national tax, national tax is KRW 30,000, local tax KRW 3,000, total withholding KRW 33,000 and net payment KRW 967,000."
+    }
+  },
+  {
+    "slug": "freelancer-3-3-tax",
+    "input": {
+      "grossPayment": 1000000,
+      "expenseAmount": 0
+    },
+    "d": ["grossPayment", "expenseAmount"],
+    "expected": {
+      "totalWithholding": 33000,
+      "netPayment": 967000
+    },
+    "fn": "calculateFreelancerTax",
+    "published": {
+      "ko": "원천징수 대상 지급액 1,000,000원·확인한 제외액 0원이면 소득세 30,000원과 지방소득세 3,000원, 합계 33,000원을 빼 실수령액은 967,000원입니다.",
+      "en": "For an eligible KRW 1,000,000 payment with no confirmed exclusion, national withholding KRW 30,000 plus local tax KRW 3,000 gives KRW 33,000 withheld and KRW 967,000 net."
+    }
+  },
+  {
+    "slug": "pension-savings-tax-credit",
+    "input": {
+      "incomeType": "salary",
+      "incomeAmount": 50000000,
+      "pensionSavingsContribution": 6000000,
+      "retirementPensionContribution": 3000000
+    },
+    "expected": {
+      "eligibleContribution": 9000000,
+      "rate": 0.15,
+      "incomeTaxCredit": 1350000
+    },
+    "fn": "calculatePensionSavingsTaxCredit",
+    "published": {
+      "ko": "총급여 50,000,000원·연금저축 6,000,000원·퇴직연금 추가 납입 3,000,000원이면 공제 대상은 9,000,000원, 적용률 15%의 소득세 공제 비교액은 1,350,000원입니다.",
+      "en": "For salary KRW 50,000,000, pension-savings contributions KRW 6,000,000 and retirement-pension additions KRW 3,000,000, eligible contributions are KRW 9,000,000 and the modeled national income-tax credit at 15% is KRW 1,350,000."
+    }
+  },
+  {
+    "slug": "isa-tax-savings",
+    "input": {
+      "accountType": "general",
+      "netProfit": 3000000
+    },
+    "expected": {
+      "taxFreeLimit": 2000000,
+      "taxableProfit": 1000000,
+      "isaTax": 99000,
+      "ordinaryTax": 462000,
+      "taxSavings": 363000
+    },
+    "fn": "calculateIsaTaxSavings",
+    "published": {
+      "ko": "일반형·순이익 3,000,000원이면 모델의 비과세 2,000,000원 초과 1,000,000원에 9.9%를 적용해 ISA 세금 99,000원입니다. 같은 이익의 15.4% 비교액 462,000원과의 차이는 363,000원입니다.",
+      "en": "For a general account and KRW 3,000,000 net profit, the model exempts KRW 2,000,000 and taxes the remaining KRW 1,000,000 at 9.9%: KRW 99,000. Ordinary 15.4% withholding on the same amount is KRW 462,000, a KRW 363,000 difference."
+    }
+  },
+  {
+    "slug": "retirement-pension-tax-credit",
+    "input": {
+      "incomeType": "salary",
+      "incomeAmount": 50000000,
+      "pensionSavingsContribution": 6000000,
+      "retirementPensionContribution": 1000000
+    },
+    "expected": {
+      "additionalContributionToMax": 2000000,
+      "currentIncomeTaxCredit": 1050000,
+      "additionalIncomeTaxCreditToMax": 300000
+    },
+    "fn": "calculateRetirementPensionTaxCredit",
+    "published": {
+      "ko": "총급여 50,000,000원·연금저축 6,000,000원·퇴직연금 납입 1,000,000원이면 합산 한도 내 추가 납입 여력은 2,000,000원, 15% 소득세 추가 공제 비교액은 300,000원입니다.",
+      "en": "Salary KRW 50,000,000, pension savings KRW 6,000,000 and retirement-pension deposits KRW 1,000,000 leave KRW 2,000,000 of additional eligible capacity. At 15%, the modeled extra national tax credit is KRW 300,000."
+    }
+  },
+  {
+    "slug": "year-end-tax-refund",
+    "input": {
+      "determinedIncomeTax": 1000000,
+      "prepaidIncomeTax": 1200000,
+      "specialPaymentTax": 100000
+    },
+    "expected": {
+      "settlementTax": -300000,
+      "refundAmount": 300000,
+      "additionalPayment": 0
+    },
+    "fn": "calculateYearEndTaxRefund",
+    "published": {
+      "ko": "결정 소득세 1,000,000원·기납부 소득세 1,200,000원·추가 기납부 항목 100,000원이면 정산 차액은 −300,000원, 환급 비교액은 300,000원입니다.",
+      "en": "Determined income tax KRW 1,000,000 minus prepaid tax KRW 1,200,000 and another KRW 100,000 entered prepaid item gives settlement −KRW 300,000 and a modeled refund of KRW 300,000."
+    }
+  },
+  {
+    "slug": "retirement-income-tax",
+    "input": {
+      "retirementPay": 100000000,
+      "nonTaxableRetirementPay": 0,
+      "serviceYears": 20
+    },
+    "expected": {
+      "serviceYearsDeduction": 40000000,
+      "convertedSalary": 36000000,
+      "taxBase": 11200000,
+      "retirementIncomeTax": 1120000,
+      "totalTax": 1232000
+    },
+    "fn": "calculateRetirementIncomeTax",
+    "published": {
+      "ko": "과세 퇴직급여 100,000,000원·근속 20년·비과세 0원이면 근속공제 40,000,000원, 환산급여 36,000,000원, 환산 과표 11,200,000원입니다. 소득세 1,120,000원과 지방세 112,000원으로 합계 1,232,000원입니다.",
+      "en": "For retirement pay KRW 100,000,000, 20 service years and no tax-exempt amount, the service deduction is KRW 40,000,000, converted salary KRW 36,000,000 and converted tax base KRW 11,200,000. Income tax KRW 1,120,000 plus local tax KRW 112,000 totals KRW 1,232,000."
+    }
+  },
+  {
+    "slug": "earned-income-withholding-tax",
+    "input": {
+      "monthlyTaxableSalary": 3500000,
+      "dependents": 4,
+      "eligibleChildren": 2,
+      "withholdingRate": 100
+    },
+    "expected": {
+      "baseTableTax": 49340,
+      "childTaxAdjustment": 45830,
+      "incomeTax": 3510,
+      "localIncomeTax": 350,
+      "totalWithholding": 3860
+    },
+    "fn": "calculateEarnedIncomeWithholdingTax",
+    "published": {
+      "ko": "내장 표 기준 월 과세급여 3,500,000원·본인 포함 가족 4명·대상 자녀 2명·징수 100%이면 기본 표 세액 49,340원에서 자녀 조정 45,830원을 빼 소득세 3,510원, 지방세 350원, 합계 3,860원입니다.",
+      "en": "Using the embedded table, monthly taxable salary KRW 3,500,000, four eligible family members including the employee, two eligible children and 100% withholding give base tax KRW 49,340 less child adjustment KRW 45,830: income tax KRW 3,510 plus local tax KRW 350, total KRW 3,860."
+    }
+  }
+]

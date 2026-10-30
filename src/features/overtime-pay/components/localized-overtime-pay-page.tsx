@@ -1,3 +1,4 @@
+import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import Link from "next/link";
 import {
   JsonLdScript,
@@ -19,10 +20,10 @@ export function LocalizedOvertimePayPage({
     path,
     locale,
     breadcrumbs: [
-      { name: home, path: "/" },
+      { name: home, path: locale === "ko" ? "/" : "/en" },
       {
         name: locale === "ko" ? "계산기" : "Calculators",
-        path: "/calculators",
+        path: locale === "ko" ? "/calculators" : "/en/calculators",
       },
       { name: copy.title, path },
     ],
@@ -35,7 +36,7 @@ export function LocalizedOvertimePayPage({
           aria-label={locale === "ko" ? "경로" : "Breadcrumb"}
           className="text-sm text-muted-foreground"
         >
-          <Link href="/">{home}</Link> /{" "}
+          <Link href={locale === "ko" ? "/" : "/en"}>{home}</Link> /{" "}
           <span aria-current="page">{copy.title}</span>
         </nav>
         <header className="mt-5 max-w-3xl">
@@ -51,6 +52,7 @@ export function LocalizedOvertimePayPage({
         <div className="mt-6">
           <OvertimePayCalculator locale={locale} />
         </div>
+        <CalculatorWorkedExample slug="overtime-pay" locale={locale} />
         <div className="mt-12 grid gap-4 md:grid-cols-2">
           <Info title={copy.explanationTitle} items={copy.explanation} />
           <Info title={copy.cautionsTitle} items={copy.cautions} />
