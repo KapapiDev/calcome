@@ -1,78 +1,65 @@
 # CalCome Task State
 
-Last Updated: 2026-10-02
+Last Updated: 2026-10-30
 Current Calculator Count: 100
 Target Calculator Count: 100
 Remaining to Target: 0
 
-## External waits
+## Current selected task
 
-- [ ] OPS-ADS-001 EXTERNAL_WAIT — Production AdSense Activation Verification
-  - Verified 2026-08-29: Vercel team discovery succeeds; project deployment listing returns 403 and the current Vercel-bot deployment ID returns 404 through the direct deployment lookup. The public production site is reachable, but connected Gmail contains no AdSense account approval/site-status message or real publisher ID.
-  - Resume condition: authoritative AdSense account evidence exposes the intended publisher ID and `calcome.com` site status. This account-owner wait is not a product/security failure and must not freeze unrelated repository development.
+- [ ] SEO-025 OPEN — Search performance review and evidence-backed improvement batch
+  - Refresh Search Console 7-day/28-day evidence for established pages before choosing at most three justified existing-page improvements.
+  - Reuse the current queue scope; do not resurrect standalone SEO-024 or archived expansion tasks.
+  - No code change is required when evidence supports no useful improvement; record the decision and next evidence trigger.
 
-## Recent completed work
+## Guide observation window
 
-- [x] SEO-023 DONE — Content SEO Cluster Batch 1
-  - Published five bilingual, non-policy-sensitive guides across measured CAGR, YTM, and currency-conversion demand.
-  - Added guide-index discovery, calculator links, reciprocal locale metadata, and sitemap coverage without changing calculator formulas.
-  - Kept policy-sensitive employment and lending guides out of this batch so no current legal or policy claim was published without official-source verification.
+SEO-023's release baseline is 2026-10-30: five topics, ten localized guide routes, and 224 total canonical sitemap URLs. Review the new guides over 2026-11-13 through 2026-11-27 (14–28 days), using the actual production release as the start if delayed. No traffic or ranking outcome is claimed. Established-page analysis may proceed immediately. No automatic monitoring or retry schedule was created.
 
-- [x] SEO-022 DONE — Search Console Quick-Win SERP Lift
-  - Improved three measured, non-policy-sensitive opportunities: English currency conversion (100 impressions, position 9.67, 0 clicks), `yield to maturity calculator` (18 impressions, position 15.61), and `연평균 증가율 계산기` (9 impressions, position 12.56).
-  - Metadata and visible answer framing now match those measured intents without changing formulas, routes, policy scope, or adding speculative demand claims.
-  - Policy-sensitive quick-win pages were intentionally left unchanged in this pass because this bounded task did not require factual policy edits.
+## Operational waits
 
+- [ ] OPS-INDEX-001 EXTERNAL_WAIT — Finish individual indexing requests
+  - Six of eighteen desired URLs were confirmed submitted on 2026-10-30; twelve remain after Google's explicit daily-quota rejection.
+  - reCAPTCHA works in the fresh Chrome tab; no browser/security settings were changed. Fix validations and sitemap resubmission were already accepted.
+  - Resume only remaining eligible URLs when quota permits and the owner resumes this work. The owner declined an automatic retry schedule.
+  - Exact remaining paths and acceptance criteria are in `TASK_QUEUE.md`. Request acceptance and actual Google index inclusion are separate states.
 
-- [x] SEO-021 DONE — Search Console Indexing and Canonical Reconciliation
-  - Reconciled the 2026-09-25 baseline into intentional exclusions (22 redirects, 1 alternate canonical), crawl/indexing opportunity classes (18 discovered-not-indexed, 6 crawled-not-indexed), and unresolved URL-level exclusions (6 404, 2 Soft 404).
-  - Current repository contracts prove all 100 calculators have bilingual source-backed canonical routes, canonical sitemap coverage, and one-hop locale-less redirects; no repository-side canonical 404/Soft-404 defect was reproduced.
-  - The baseline export retained counts but not the affected URL examples, so the 6 404 and 2 Soft 404 rows are explicitly not guessed or resurrected. Fresh URL-level Search Console evidence remains the trigger for any later targeted repair.
+- [ ] OPS-ADS-001 EXTERNAL_WAIT — Verify AdSense activation
+  - Last account-evidence verification recorded: 2026-08-29. Fresh authoritative approval/site status and the intended publisher ID remain the resume condition; the old record is not proof of current account status.
+  - This account wait does not block guide or search-performance work.
 
-- [x] UX-072 DONE — Post-100 Home and Directory Conversion and Discovery Upgrade
-  - Bilingual home pages now surface device-local favorites/recent calculators only when repeat-use context exists, keeping first-visit discovery uncluttered.
-  - Bilingual directories expose both favorites and recent-use shortcuts ahead of the 100-calculator catalog while preserving search, categories, popular calculators, and canonical routes.
-  - The Korean empty shortcut recovery link now targets the canonical `/calculators` directory.
+## Recently completed
 
-- [x] SEO-009 DONE — Post-100 Calculator Search Performance and Coverage Review
-  - Fresh 2026-09-25 Search Console exports are now available and reviewed: 19 clicks / 3,537 impressions over the last 3 months; the latest 7 days improved to 9 clicks / 271 impressions / 3.32% CTR / 22.38 average position versus 3 clicks / 344 impressions / 0.87% CTR / 28.49 average position in the prior 7 days.
-  - Page Indexing reached 193 indexed and 55 not indexed on 2026-09-21. The 55 exclusions are 22 redirects, 1 alternate canonical, 18 discovered-not-indexed, 6 crawled-not-indexed, 6 404, and 2 Soft 404.
-  - Search Generative AI Features recorded 219 impressions in the 3-month export; 154 occurred in the latest 28 days versus 61 in the prior 28 days.
-  - Data-backed growth work is queued after UX-072 in `TASK_QUEUE.md`; do not manufacture additional UX tasks merely to keep the queue non-empty.
+- [x] SEO-023 DONE — Publish the measured guide batch
+  - [PR #427](https://github.com/KapapiDev/calcome/pull/427) includes latest main, preserved SEO-026 and the reconciled queue, and releases five topics / ten localized routes.
+  - Added worked examples, explicit assumptions, source links and a visible 2026-10-30 review date; fixed guide index/article language switching and page-specific social metadata.
+  - Required current-head preflight, calculator example checks, and local/production route verification are recorded in the PR. Source references and release checks: `docs/features/measured-guide-cluster.md`.
 
-- [x] SEO-015 through SEO-020 DONE — Post-100 internal-link, metadata, snippet, helpful-content, and trust-template coverage remains executable in CI.
-- [x] PERF-007 through PERF-008 DONE — Shared and route-level client bundle budgets remain executable in CI.
-- [x] UX-053 through UX-062 DONE — Scenario comparison, repeat-use shortcuts, directory discovery, result reuse, and cross-surface personalization are shipped and regression-covered.
-- [x] UX-063 DONE — Shared Calculator Keyboard Submit and Reset Interaction Upgrade
-  - Shared calculator forms validate keyboard-style submission through the same path as submit-button activation; reset clears stale-result/action state and restores predictable focus.
-- [x] UX-064 DONE — Shared Calculator Form Interaction Cross-Calculator Regression
-  - Representative calculator families adopt the shared bilingual form-action contract.
-- [x] UX-065 DONE — Shared Calculator Form Contract Full-Fleet Adoption Audit
-  - Every form-bearing calculator is guarded by a self-discovering semantic submit/reset contract audit.
-- [x] UX-066 DONE — Shared Calculator Mobile Input Ergonomics Full-Fleet Audit
-  - Published calculator text-entry inputs are guarded for mobile-readable sizing, touch targets, fluid width, and explicit keyboard/date semantics.
-- [x] UX-067 DONE — Shared Calculator Mobile Input Runtime Regression
-  - Representative numeric, formatted-money, and native date inputs are covered at rendered runtime across Korean and English surfaces.
-- [x] UX-068 DONE — Shared Calculator Mobile Result Readability and Overflow Full-Fleet Audit
-  - Published calculator result surfaces are guarded by the shared mobile-safe `PrimaryResults` contract.
-- [x] UX-069 DONE — Shared Calculator Mobile Result Readability Runtime Regression
-  - Representative Korean and English long localized result values are covered at rendered runtime.
-- [x] UX-070 DONE — Post-100 Shared Interaction and Accessibility Hardening
-  - Result focus/announcements, reduced-motion behavior, shared action wrapping, and shared button motion are hardened without changing formulas, routes, or storage.
-- [x] UX-071 DONE — Full-Site Accessibility and Visual Consistency Regression
-  - The broader shared-shell regression reconfirmed bilingual skip-link, primary/footer navigation, theme control, accessible names, keyboard focus treatment, and 44px shared navigation targets. The remaining proven inconsistency was the language menu options, which now use the same 44px minimum target and visible focus-ring contract in both locales. Calculator-specific mobile input/result and reduced-motion contracts remain covered by UX-066 through UX-070.
+- [x] OPS-QUEUE-001 DONE — Owner-requested queue reconciliation
+  - Replaced the historical expansion/audit backlog with current priorities and explicit external waits; preserved original queue/state snapshots under `docs/archive/`.
+  - Kept SEO-023 first, moved evidence-backed search work ahead of a standalone AI-search rewrite, and retained the indexing/account facts without creating scheduled work.
 
-## Active queue
+- [x] SEO-026 DONE — URL-level Search Console source remediation
+  - [PR #428](https://github.com/KapapiDev/calcome/pull/428) merged and deployed; all 214 production canonical URLs passed the live SEO check.
+  - Recovered the duplicated English rent-conversion URL, restored language alternates on seven Korean static pages, and repaired absent related-calculator inbound links.
+  - Google-side follow-up remains OPS-INDEX-001; healthy redirect/canonical/resource exclusions and intentional 404s remain valid.
 
-- [ ] SEO-024 OPEN — Generative AI Search Answerability and Trust Hardening
-  - Scope: improve concise definitions, assumptions, worked examples, and trust cues on pages already receiving Generative AI Search exposure.
-  - Changes must remain useful outside AI search; no cloaking, synthetic citations, or search-engine-only content.
-  - Source of truth: the 2026-09-25 Search Growth Program in `TASK_QUEUE.md`.
+- [x] SEO-022 DONE — Measured search snippet improvements
+  - English currency conversion, YTM, and Korean CAGR intent improvements merged in PR #426.
 
-## Security gate
+- [x] SEO-021 DONE — Search Console exclusion/canonical reconciliation
+  - Baseline classification merged in PR #425; subsequent URL-level repairs are SEO-026.
 
-- No confirmed unresolved production-impact high/critical dependency blocker is recorded on current `main`. New audit signals must still be classified under `AUTOMATION.md` before merge.
+- [x] UX-072 DONE — Home and directory repeat-use/discovery upgrade
+  - Bilingual favorites/recent-use entry points and canonical directory recovery are released. Prior UX, accessibility, content/trust, and performance coverage remains part of the executable regression suite.
 
-## Ledger policy
+## Security and execution gates
 
-`TASK_STATE.md` intentionally keeps current waits, recent completed work, milestone counts, security state, and exactly one next OPEN task. Detailed historical task scope remains in `TASK_QUEUE.md` and Git history.
+No new production exploit or application failure is asserted by this queue cleanup. Existing dependency advisories remain classified in `docs/features/search-console-indexing-remediation.md`; a newly confirmed security/calculation/route/data-loss blocker overrides ordinary priorities. Preserve all verification gates.
+
+## State discipline
+
+- Current task scopes and order: `TASK_QUEUE.md`; historical detail: `docs/archive/task-queue-2026-10-30.md` and `docs/archive/task-state-2026-10-30.md`.
+- Keep exactly one selected OPEN task and unique task IDs. Reconcile effective IN_REVIEW/IN_PROGRESS states against GitHub before selecting work.
+- SEO-023 advances to SEO-025; preserve SEO-026 and the reconciliation. Do not restore old OPEN/BLOCKED labels or SEO-024 as next from the older branch.
+- External waits must not create an automatic retry, block unrelated development, or be reported as completed external outcomes.

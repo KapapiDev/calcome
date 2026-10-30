@@ -198,18 +198,25 @@ export default async function LocalizedInfoPage({
       ))}
       {info === "guides" ? (
         <section>
-          <h2 className="text-2xl font-semibold tracking-tight">Topic guides</h2>
+          <h2 className="text-2xl font-semibold tracking-tight">
+            Topic guides
+          </h2>
           <div className="mt-4 space-y-4">
             {guideSlugs.map((slug) => {
               const guide = guideContent[slug].en;
               return (
                 <article key={slug} className="rounded-2xl border p-5">
                   <h3 className="text-lg font-semibold">
-                    <Link className="hover:underline" href={`/en/guides/${slug}`}>
+                    <Link
+                      className="hover:underline"
+                      href={`/en/guides/${slug}`}
+                    >
                       {guide.title}
                     </Link>
                   </h3>
-                  <p className="mt-2 leading-7 text-muted-foreground">{guide.description}</p>
+                  <p className="mt-2 leading-7 text-muted-foreground">
+                    {guide.description}
+                  </p>
                 </article>
               );
             })}

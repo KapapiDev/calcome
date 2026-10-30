@@ -51,7 +51,9 @@ export default function GuidesPage() {
       ))}
 
       <section>
-        <h2 className="text-2xl font-semibold tracking-tight">주제별 실전 가이드</h2>
+        <h2 className="text-2xl font-semibold tracking-tight">
+          주제별 실전 가이드
+        </h2>
         <div className="mt-4 space-y-4">
           {guideSlugs.map((slug) => {
             const guide = guideContent[slug].ko;
@@ -62,7 +64,9 @@ export default function GuidesPage() {
                     {guide.title}
                   </Link>
                 </h3>
-                <p className="mt-2 leading-7 text-muted-foreground">{guide.description}</p>
+                <p className="mt-2 leading-7 text-muted-foreground">
+                  {guide.description}
+                </p>
               </article>
             );
           })}

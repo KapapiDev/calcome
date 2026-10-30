@@ -44,6 +44,17 @@ export function socialLocale(locale: SeoLocale) {
     : ({ locale: "ko_KR", alternateLocale: "en_US" } as const);
 }
 
+export function staticPageAlternates(path: `/${string}`) {
+  return {
+    canonical: path,
+    languages: {
+      ko: path,
+      en: path === "/" ? "/en" : `/en${path}`,
+      "x-default": path,
+    },
+  };
+}
+
 export function createPageMetadata({
   title,
   description,
@@ -59,7 +70,7 @@ export function createPageMetadata({
   return {
     title,
     description,
-    alternates: { canonical: path },
+    alternates: staticPageAlternates(path),
     openGraph: {
       title: socialTitle,
       description,

@@ -8,6 +8,11 @@ const localeRedirects = [
     destination: "/",
     permanent: true,
   },
+  {
+    source: "/en/en/finance/rent-conversion-rate",
+    destination: "/en/finance/rent-conversion-rate",
+    permanent: true,
+  },
   ...allPublishedCalculators.map((calculator) => ({
     source:
       calculator.id === "deposit"

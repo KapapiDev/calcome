@@ -47,7 +47,7 @@ describe("shared localized layout UI", () => {
     ).toHaveTextContent("Calculators");
     expect(
       screen.getByRole("navigation", { name: "Footer navigation" }),
-    ).toHaveTextContent("CalculatorsAboutPrivacy PolicyTermsContact");
+    ).toHaveTextContent("CalculatorsGuidesAboutPrivacy PolicyTermsContact");
     expect(screen.getByLabelText("Select language")).toHaveTextContent(
       "English",
     );
@@ -110,7 +110,7 @@ describe("shared localized layout UI", () => {
     ).toHaveTextContent("계산기");
     expect(
       screen.getByRole("navigation", { name: "하단 탐색" }),
-    ).toHaveTextContent("계산기소개개인정보처리방침이용약관문의");
+    ).toHaveTextContent("계산기가이드소개개인정보처리방침이용약관문의");
     expect(screen.getByLabelText("언어 선택")).toHaveTextContent("한국어");
     expect(
       await screen.findByRole("button", { name: "다크 모드로 전환" }),

@@ -30,7 +30,10 @@ describe("production metadata routes", () => {
         "x-default": "/ko",
       },
     });
-    expect(homeMetadata.alternates).toEqual({ canonical: "/" });
+    expect(homeMetadata.alternates).toEqual({
+      canonical: "/",
+      languages: { ko: "/", en: "/en", "x-default": "/" },
+    });
     expect(metadata.openGraph).toMatchObject({
       locale: "ko_KR",
       alternateLocale: "en_US",
@@ -191,7 +194,7 @@ describe("production recovery and navigation", () => {
       name: "하단 탐색",
     });
     expect(footerNavigation).toHaveTextContent(
-      "계산기소개개인정보처리방침이용약관문의",
+      "계산기가이드소개개인정보처리방침이용약관문의",
     );
     expect(screen.getByRole("link", { name: "계산기" })).toHaveAttribute(
       "href",
