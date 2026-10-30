@@ -1,6 +1,6 @@
 # CalCome Task State
 
-Last Updated: 2026-10-01
+Last Updated: 2026-10-30
 Current Calculator Count: 100
 Target Calculator Count: 100
 Remaining to Target: 0
@@ -13,11 +13,16 @@ Remaining to Target: 0
 
 ## Recent completed work
 
+- [x] SEO-026 DONE — URL-Level Search Console Indexing Remediation
+  - Audited all 50 URLs in the 2026-10-23 report against current production responses. Eighteen desired documents return 200; the four intentionally missing dollar-sign/ROI/margin URLs return 404/noindex; the duplicated English rent-conversion URL has an exact replacement.
+  - Restored language alternates on seven canonical Korean static pages, recovered the duplicated English URL with a permanent redirect, and added contextual inbound recommendations for the seven calculator identities the shared related section never previously linked to.
+  - Intentional redirects, the indexed `/calculators` canonical, and technical-file exclusions remain intact. Search Console submission/validation and eventual Google inclusion are external states and are not asserted by this source change.
+  - The existing SEO-023 guide work remains the next queued task; its separate in-review branch is not part of this repair.
+
 - [x] SEO-022 DONE — Search Console Quick-Win SERP Lift
   - Improved three measured, non-policy-sensitive opportunities: English currency conversion (100 impressions, position 9.67, 0 clicks), `yield to maturity calculator` (18 impressions, position 15.61), and `연평균 증가율 계산기` (9 impressions, position 12.56).
   - Metadata and visible answer framing now match those measured intents without changing formulas, routes, policy scope, or adding speculative demand claims.
   - Policy-sensitive quick-win pages were intentionally left unchanged in this pass because this bounded task did not require factual policy edits.
-
 
 - [x] SEO-021 DONE — Search Console Indexing and Canonical Reconciliation
   - Reconciled the 2026-09-25 baseline into intentional exclusions (22 redirects, 1 alternate canonical), crawl/indexing opportunity classes (18 discovered-not-indexed, 6 crawled-not-indexed), and unresolved URL-level exclusions (6 404, 2 Soft 404).

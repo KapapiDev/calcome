@@ -1,4 +1,6 @@
 const ORIGIN = process.env.CALCOME_ORIGIN ?? "https://www.calcome.com";
+// Check a local/preview build without changing its production canonical metadata.
+const FETCH_ORIGIN = process.env.CALCOME_FETCH_ORIGIN ?? ORIGIN;
 const REQUEST_TIMEOUT_MS = 15_000;
 const CONCURRENCY = 8;
 const MIN_EXPECTED_SITEMAP_URLS = 212;
@@ -105,7 +107,12 @@ function verifyDocumentSeo(url, html) {
 }
 
 async function fetchText(url, expectedContentType) {
-  const response = await fetch(url, {
+  const canonicalUrl = new URL(url);
+  const requestUrl = new URL(
+    `${canonicalUrl.pathname}${canonicalUrl.search}`,
+    FETCH_ORIGIN,
+  );
+  const response = await fetch(requestUrl, {
     redirect: "manual",
     signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     headers: {

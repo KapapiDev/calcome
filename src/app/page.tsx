@@ -16,9 +16,10 @@ import {
   createWebsiteStructuredData,
 } from "@/lib/seo/structured-data";
 import { cn } from "@/lib/utils";
+import { staticPageAlternates } from "@/lib/seo/metadata";
 
 export const metadata: Metadata = {
-  alternates: { canonical: "/" },
+  alternates: staticPageAlternates("/"),
 };
 
 const websiteStructuredData = {

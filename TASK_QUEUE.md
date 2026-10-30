@@ -545,6 +545,12 @@ This program is based on the fresh user-exported Search Console Web Performance,
 
 ## Execution order
 
+SEO-026 — URL-Level Search Console Indexing Remediation
+
+Status: DONE — targeted owner-requested repair on 2026-10-30 after fresh URL-level evidence became available.
+
+Recovered the exact duplicated English rent-conversion URL, restored reciprocal language metadata on the seven canonical Korean static pages, and repaired absent contextual inbound recommendations for the audited calculators. Preserved valid redirects/canonicals and intentional 404s. The bounded implementation contract is `docs/features/search-console-indexing-remediation.md`; it does not replace or advance the separate SEO-023 content work.
+
 SEO-021
 
 Title: Search Console Indexing and Canonical Reconciliation

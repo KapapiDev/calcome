@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import CalculatorsPage from "@/app/calculators/page";
+import CalculatorsPage, {
+  metadata as calculatorsMetadata,
+} from "@/app/calculators/page";
 import { CalculatorCard } from "@/components/calculators/calculator-card";
 import { CalculatorSearch } from "@/components/calculators/calculator-search";
 import { DirectoryCategoryNavigation } from "@/components/calculators/directory-category-navigation";
@@ -121,7 +123,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   if (locale === "ko") {
-    return { alternates: { canonical: "/calculators" } };
+    return { alternates: calculatorsMetadata.alternates };
   }
   if (locale !== "en") return {};
   return {

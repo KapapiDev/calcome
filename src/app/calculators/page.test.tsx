@@ -11,7 +11,14 @@ import CalculatorsPage, { metadata } from "./page";
 describe("calculator directory", () => {
   it("defines unique metadata and a canonical URL", () => {
     expect(metadata.title).toBe("금융 계산기 모음");
-    expect(metadata.alternates).toEqual({ canonical: "/calculators" });
+    expect(metadata.alternates).toEqual({
+      canonical: "/calculators",
+      languages: {
+        ko: "/calculators",
+        en: "/en/calculators",
+        "x-default": "/calculators",
+      },
+    });
     expect(metadata.openGraph).toMatchObject({
       url: "https://www.calcome.com/calculators",
       siteName: "CalCome",
