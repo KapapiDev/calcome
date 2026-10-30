@@ -1,3 +1,4 @@
+import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import Link from "next/link";
 import {
   JsonLdScript,
@@ -24,8 +25,11 @@ export function LocalizedMortgageLoanLimitPage({
     path,
     locale,
     breadcrumbs: [
-      { name: home, path: "/" },
-      { name: calculators, path: "/calculators" },
+      { name: home, path: locale === "ko" ? "/" : "/en" },
+      {
+        name: calculators,
+        path: locale === "ko" ? "/calculators" : "/en/calculators",
+      },
       { name: copy.title, path },
     ],
   });
@@ -38,7 +42,7 @@ export function LocalizedMortgageLoanLimitPage({
           aria-label={locale === "ko" ? "경로" : "Breadcrumb"}
           className="text-sm text-muted-foreground"
         >
-          <Link href="/">{home}</Link> /{" "}
+          <Link href={locale === "ko" ? "/" : "/en"}>{home}</Link> /{" "}
           <span aria-current="page">{copy.title}</span>
         </nav>
         <header className="mt-5 max-w-3xl">
@@ -56,6 +60,7 @@ export function LocalizedMortgageLoanLimitPage({
         <div className="mt-6">
           <MortgageLoanLimitCalculator locale={locale} />
         </div>
+        <CalculatorWorkedExample slug="mortgage-loan-limit" locale={locale} />
         <section className="mt-10 rounded-xl border bg-card p-5">
           <h2 className="text-xl font-semibold">
             {locale === "ko" ? "계산 기준" : "Calculation basis"}

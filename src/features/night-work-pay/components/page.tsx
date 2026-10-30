@@ -1,3 +1,4 @@
+import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import Link from "next/link";
 import {
   createPageStructuredData,
@@ -17,8 +18,11 @@ export function LocalizedNightWorkPayPage({ locale }: { locale: Locale }) {
     path,
     locale,
     breadcrumbs: [
-      { name: home, path: "/" },
-      { name: calculators, path: "/calculators" },
+      { name: home, path: locale === "ko" ? "/" : "/en" },
+      {
+        name: calculators,
+        path: locale === "ko" ? "/calculators" : "/en/calculators",
+      },
       { name: c.title, path },
     ],
   });
@@ -28,8 +32,11 @@ export function LocalizedNightWorkPayPage({ locale }: { locale: Locale }) {
       <JsonLdScript data={data} />
       <div className="mx-auto w-full max-w-[1440px] px-5 py-8 sm:px-6">
         <nav className="text-sm text-muted-foreground">
-          <Link href="/">{home}</Link> /{" "}
-          <Link href="/calculators">{calculators}</Link> / {c.title}
+          <Link href={locale === "ko" ? "/" : "/en"}>{home}</Link> /{" "}
+          <Link href={locale === "ko" ? "/calculators" : "/en/calculators"}>
+            {calculators}
+          </Link>{" "}
+          / {c.title}
         </nav>
         <header className="mt-5 max-w-3xl">
           <p className="text-sm font-semibold text-primary">{c.category}</p>
@@ -40,6 +47,7 @@ export function LocalizedNightWorkPayPage({ locale }: { locale: Locale }) {
         <div className="mt-6">
           <NightWorkPayCalculator locale={locale} />
         </div>
+        <CalculatorWorkedExample slug="night-work-pay" locale={locale} />
         <div className="mt-12 grid gap-4 md:grid-cols-2">
           <Info t={c.exTitle} a={c.ex} />
           <Info t={c.warnTitle} a={c.warn} />

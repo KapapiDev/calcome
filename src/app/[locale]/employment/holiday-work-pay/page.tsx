@@ -1,3 +1,4 @@
+import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { HolidayWorkPayCalculator } from "@/features/holiday-work-pay/components/calculator";
@@ -43,8 +44,11 @@ export default async function Page({
           path,
           locale: selectedLocale,
           breadcrumbs: [
-            { name: home, path: "/" },
-            { name: calculators, path: "/calculators" },
+            { name: home, path: locale === "ko" ? "/" : "/en" },
+            {
+              name: calculators,
+              path: locale === "ko" ? "/calculators" : "/en/calculators",
+            },
             { name: c.title, path },
           ],
         })}
@@ -55,6 +59,10 @@ export default async function Page({
         <div className="mt-6">
           <HolidayWorkPayCalculator locale={selectedLocale} />
         </div>
+        <CalculatorWorkedExample
+          slug="holiday-work-pay"
+          locale={selectedLocale}
+        />
         <section className="mt-8 rounded-xl border bg-card p-5">
           <h2 className="text-xl font-semibold">{c.cautionTitle}</h2>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-muted-foreground">

@@ -14,7 +14,7 @@ export type MaternityLeaveBenefitResult = {
   governmentMonthlyCap: number;
 };
 
-const GOVERNMENT_MONTHLY_CAP = 2100000;
+const GOVERNMENT_MONTHLY_CAP = 2200000;
 
 function prorateMonthly(amount: number, days: number) {
   return (amount * days) / 30;

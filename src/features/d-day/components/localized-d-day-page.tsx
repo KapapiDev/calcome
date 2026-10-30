@@ -1,3 +1,4 @@
+import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import Link from "next/link";
 import {
   JsonLdScript,
@@ -17,8 +18,11 @@ export function LocalizedDDayPage({ locale }: { locale: DDayLocale }) {
     path,
     locale,
     breadcrumbs: [
-      { name: home, path: "/" },
-      { name: calculators, path: "/calculators" },
+      { name: home, path: locale === "ko" ? "/" : "/en" },
+      {
+        name: calculators,
+        path: locale === "ko" ? "/calculators" : "/en/calculators",
+      },
       { name: copy.title, path },
     ],
   });
@@ -31,7 +35,7 @@ export function LocalizedDDayPage({ locale }: { locale: DDayLocale }) {
           aria-label={locale === "ko" ? "경로" : "Breadcrumb"}
           className="text-sm text-muted-foreground"
         >
-          <Link href={`/${locale}`}>{home}</Link> /{" "}
+          <Link href={locale === "ko" ? "/" : "/en"}>{home}</Link> /{" "}
           <span aria-current="page">{copy.title}</span>
         </nav>
         <header className="mt-5 max-w-3xl">
@@ -46,6 +50,7 @@ export function LocalizedDDayPage({ locale }: { locale: DDayLocale }) {
         <div className="mt-6">
           <DDayCalculator locale={locale} />
         </div>
+        <CalculatorWorkedExample slug="d-day" locale={locale} />
         <section className="mt-10 rounded-xl border bg-card p-5">
           <h2 className="text-xl font-semibold">
             {locale === "ko" ? "계산 방법" : "How it works"}

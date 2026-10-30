@@ -1,3 +1,4 @@
+import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import Link from "next/link";
 import { BookOpen, CircleHelp, ShieldCheck } from "lucide-react";
 
@@ -22,7 +23,7 @@ export function LocalizedCompoundInterestPage({
     path,
     locale,
     breadcrumbs: [
-      { name: copy.home, path: "/" },
+      { name: copy.home, path: locale === "ko" ? "/" : "/en" },
       { name: copy.title, path },
     ],
   });
@@ -37,7 +38,10 @@ export function LocalizedCompoundInterestPage({
         >
           <ol className="flex flex-wrap items-center gap-2">
             <li>
-              <Link href="/" className="hover:text-foreground hover:underline">
+              <Link
+                href={locale === "ko" ? "/" : "/en"}
+                className="hover:text-foreground hover:underline"
+              >
                 {copy.home}
               </Link>
             </li>
@@ -58,6 +62,7 @@ export function LocalizedCompoundInterestPage({
         <div className="mt-4">
           <CompoundInterestCalculator locale={locale} />
         </div>
+        <CalculatorWorkedExample slug="compound-interest" locale={locale} />
 
         <div className="mt-4 grid gap-4 lg:grid-cols-2">
           <section className="rounded-xl border bg-card p-5 shadow-sm">

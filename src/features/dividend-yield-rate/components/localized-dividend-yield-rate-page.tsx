@@ -1,3 +1,4 @@
+import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import Link from "next/link";
 import {
   JsonLdScript,
@@ -21,7 +22,7 @@ export function LocalizedDividendYieldRatePage({
     path,
     locale,
     breadcrumbs: [
-      { name: home, path: "/" },
+      { name: home, path: locale === "ko" ? "/" : "/en" },
       { name: copy.title, path },
     ],
   });
@@ -34,7 +35,7 @@ export function LocalizedDividendYieldRatePage({
           aria-label={locale === "ko" ? "경로" : "Breadcrumb"}
           className="text-sm text-muted-foreground"
         >
-          <Link href="/">{home}</Link> /{" "}
+          <Link href={locale === "ko" ? "/" : "/en"}>{home}</Link> /{" "}
           <span aria-current="page">{copy.title}</span>
         </nav>
         <header className="mt-5 max-w-3xl">
@@ -49,6 +50,7 @@ export function LocalizedDividendYieldRatePage({
         <div className="mt-6">
           <DividendYieldRateCalculator locale={locale} />
         </div>
+        <CalculatorWorkedExample slug="dividend-yield" locale={locale} />
         <div className="mt-12 grid gap-4 md:grid-cols-2">
           <section className="rounded-xl border bg-card p-5">
             <h2 className="text-xl font-semibold">

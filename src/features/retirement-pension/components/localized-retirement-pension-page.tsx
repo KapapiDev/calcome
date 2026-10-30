@@ -1,3 +1,4 @@
+import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import Link from "next/link";
 import {
   JsonLdScript,
@@ -25,7 +26,7 @@ export function LocalizedRetirementPensionPage({
           path,
           locale,
           breadcrumbs: [
-            { name: home, path: "/" },
+            { name: home, path: locale === "ko" ? "/" : "/en" },
             { name: copy.title, path },
           ],
         })}
@@ -35,7 +36,7 @@ export function LocalizedRetirementPensionPage({
           aria-label={locale === "ko" ? "경로" : "Breadcrumb"}
           className="text-sm text-muted-foreground"
         >
-          <Link href="/">{home}</Link> /{" "}
+          <Link href={locale === "ko" ? "/" : "/en"}>{home}</Link> /{" "}
           <span aria-current="page">{copy.title}</span>
         </nav>
         <header className="mt-5 max-w-3xl">
@@ -51,6 +52,7 @@ export function LocalizedRetirementPensionPage({
         <div className="mt-6">
           <RetirementPensionCalculator locale={locale} />
         </div>
+        <CalculatorWorkedExample slug="retirement-pension" locale={locale} />
         <div className="mt-12 grid gap-4 md:grid-cols-2">
           <Info title={copy.explanationTitle} items={copy.explanation} />
           <Info title={copy.cautionsTitle} items={copy.cautions} />

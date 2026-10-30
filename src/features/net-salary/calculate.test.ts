@@ -55,4 +55,32 @@ describe("calculateNetSalary", () => {
       withChildren.deductions.incomeTax.lt(without.deductions.incomeTax),
     ).toBe(true);
   });
+
+  it.each([
+    [1, 20830],
+    [2, 45830],
+    [3, 79160],
+  ])(
+    "uses the current monthly child credit for %i eligible children",
+    (children, monthlyCredit) => {
+      const without = calculateNetSalary({
+        ...base,
+        dependents: children,
+        children: 0,
+      });
+      const withChildren = calculateNetSalary({
+        ...base,
+        dependents: children,
+        children,
+      });
+      expect(
+        without.deductions.incomeTax
+          .minus(withChildren.deductions.incomeTax)
+          .toNumber(),
+      ).toBe(monthlyCredit);
+      expect(withChildren.monthlyTakeHome.gt(without.monthlyTakeHome)).toBe(
+        true,
+      );
+    },
+  );
 });

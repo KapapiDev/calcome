@@ -1,3 +1,4 @@
+import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import Link from "next/link";
 
 import {
@@ -17,8 +18,11 @@ export function LocalizedDepositPage({ locale }: { locale: DepositLocale }) {
     path,
     locale,
     breadcrumbs: [
-      { name: copy.home, path: "/" },
-      { name: copy.calculators, path: "/calculators" },
+      { name: copy.home, path: locale === "ko" ? "/" : "/en" },
+      {
+        name: copy.calculators,
+        path: locale === "ko" ? "/calculators" : "/en/calculators",
+      },
       { name: copy.title, path },
     ],
   });
@@ -32,14 +36,17 @@ export function LocalizedDepositPage({ locale }: { locale: DepositLocale }) {
         >
           <ol className="flex flex-wrap items-center gap-2">
             <li>
-              <Link href="/" className="hover:text-foreground hover:underline">
+              <Link
+                href={locale === "ko" ? "/" : "/en"}
+                className="hover:text-foreground hover:underline"
+              >
                 {copy.home}
               </Link>
             </li>
             <li aria-hidden="true">/</li>
             <li>
               <Link
-                href="/calculators"
+                href={locale === "ko" ? "/calculators" : "/en/calculators"}
                 className="hover:text-foreground hover:underline"
               >
                 {copy.calculators}
@@ -66,6 +73,7 @@ export function LocalizedDepositPage({ locale }: { locale: DepositLocale }) {
         <div className="mt-6">
           <DepositCalculator locale={locale} />
         </div>
+        <CalculatorWorkedExample slug="fixed-deposit" locale={locale} />
         <div className="mt-12 grid gap-4 md:grid-cols-2">
           <section
             className="rounded-xl border bg-card p-5"

@@ -11,9 +11,10 @@ describe("calculateMaternityLeaveBenefit", () => {
 
     expect(result.leaveDays).toBe(90);
     expect(result.governmentPaidDays).toBe(90);
-    expect(result.governmentBenefit).toBe(6300000);
-    expect(result.employerPayment).toBe(1800000);
-    expect(result.estimatedTotalIncome).toBe(8100000);
+    expect(result.governmentMonthlyCap).toBe(2200000);
+    expect(result.governmentBenefit).toBe(6600000);
+    expect(result.employerPayment).toBe(1600000);
+    expect(result.estimatedTotalIncome).toBe(8200000);
   });
 
   it("applies the 30-day government portion for a large employer", () => {
@@ -26,8 +27,8 @@ describe("calculateMaternityLeaveBenefit", () => {
     expect(result.employerPaidDays).toBe(60);
     expect(result.governmentPaidDays).toBe(30);
     expect(result.employerPayment).toBe(6000000);
-    expect(result.governmentBenefit).toBe(2100000);
-    expect(result.estimatedTotalIncome).toBe(8100000);
+    expect(result.governmentBenefit).toBe(2200000);
+    expect(result.estimatedTotalIncome).toBe(8200000);
   });
 
   it("uses 120 days and a 45-day final insurance period for multiple births", () => {
@@ -55,6 +56,18 @@ describe("calculateMaternityLeaveBenefit", () => {
     expect(result.governmentBenefit).toBe(5400000);
     expect(result.employerPayment).toBe(0);
     expect(result.estimatedTotalIncome).toBe(5400000);
+  });
+
+  it("caps the 45-day multiple-birth insurance portion at KRW 3.3 million", () => {
+    const result = calculateMaternityLeaveBenefit({
+      monthlyOrdinaryWage: 3000000,
+      multipleBirth: true,
+      prioritySupportedEmployer: false,
+    });
+    expect(result.governmentPaidDays).toBe(45);
+    expect(result.governmentBenefit).toBe(3300000);
+    expect(result.employerPayment).toBe(7500000);
+    expect(result.estimatedTotalIncome).toBe(10800000);
   });
 
   it("rejects invalid ordinary wage", () => {

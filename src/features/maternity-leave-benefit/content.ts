@@ -25,9 +25,9 @@ export const maternityLeaveBenefitContent = {
     error: "월 통상임금은 0보다 큰 금액으로 입력해 주세요.",
     note: "현행 기준의 계획용 추정치입니다. 고용보험 급여 하한액은 휴가 시작일의 시간급 최저임금과 개인 소정근로시간에 따라 달라질 수 있어 이 계산기에는 별도로 반영하지 않습니다. 실제 수급요건, 일할계산, 사업주가 이미 지급한 금품, 계약종료 특례 등은 고용센터의 최종 판단을 확인하세요.",
     method:
-      "출산전후휴가는 단태아 90일, 다태아 120일입니다. 우선지원 대상기업은 고용보험이 전 기간을 지원하고, 사업주는 최초 60일(다태아 75일)에 통상임금과 고용보험 지원액의 차액이 있으면 이를 부담합니다. 대규모기업은 최초 60일(다태아 75일)을 사업주가 통상임금으로 지급하고 이후 30일(다태아 45일)을 고용보험이 지원합니다. 현재 고용24 안내의 상한은 30일당 210만원이며, 2026-08-25 상한액 개정안은 행정예고 단계라 현행값에 반영하지 않았습니다.",
+      "일반 단태아 90일·다태아 120일 휴가 모델입니다. 우선지원 대상기업은 고용보험이 전 기간을 지원하고, 사업주는 최초 60일(다태아 75일)에 통상임금과 고용보험 지원액의 차액이 있으면 이를 부담합니다. 대규모기업은 최초 60일(다태아 75일)을 사업주가 통상임금으로 지급하고 이후 30일(다태아 45일)을 고용보험이 지원합니다. 2026년 고용노동부 안내에서 확인한 상한 30일당 220만원을 적용합니다. 미숙아·유산·사산 등의 별도 휴가 유형은 이 모델에 포함하지 않습니다.",
     sources: "현행 공식 기준",
-    verified: "검증일: 2026-08-26",
+    verified: "기준 확인일: 2026-10-30 (2026년 상한)",
     metaTitle: "출산전후휴가 급여 계산기 | 현행 90일·120일 기준",
   },
   en: {
@@ -54,9 +54,9 @@ export const maternityLeaveBenefitContent = {
     error: "Enter a monthly ordinary wage above zero.",
     note: "This is a planning estimate under current South Korea rules. The statutory benefit floor depends on the hourly minimum wage and the worker's scheduled hours, so it is not separately modeled here. Individual eligibility, day-level proration, amounts already paid by the employer, contract-end special rules, and final agency determinations can change the result.",
     method:
-      "South Korea maternity leave is 90 days for a singleton and 120 days for a multiple birth. For a priority-supported employer, employment insurance supports the full leave period and the employer covers any required ordinary-wage difference during the first 60 days, or 75 days for a multiple birth. For a large employer, the employer pays ordinary wage for those first 60 or 75 days and employment insurance supports the final 30 or 45 days. Current Work24 guidance shows a KRW 2.1 million cap per 30 days. A cap revision was only under administrative preannouncement on 2026-08-25, so this calculator keeps the currently effective amount.",
+      "This model covers ordinary 90-day singleton and 120-day multiple-birth leave. For a priority-supported employer, insurance supports the full period and the employer covers any required ordinary-wage difference during the first 60 or 75 days. For a large employer, ordinary wage for the first 60 or 75 days is employer-paid, with insurance covering the final 30 or 45 days. It uses the KRW 2.2 million cap per 30 days confirmed in MOEL's 2026 guidance. Separate premature-birth, miscarriage and stillbirth leave categories are outside this model.",
     sources: "Current official references",
-    verified: "Verified: 2026-08-26",
+    verified: "Basis checked: 2026-10-30 (2026 benefit cap)",
     metaTitle: "South Korea Maternity Leave Benefit Calculator",
   },
 } satisfies Record<MaternityLeaveBenefitLocale, Record<string, string>>;

@@ -1,3 +1,4 @@
+import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import Link from "next/link";
 import {
   JsonLdScript,
@@ -27,8 +28,11 @@ export function LocalizedIsaTaxSavingsPage({
     path,
     locale,
     breadcrumbs: [
-      { name: home, path: "/" },
-      { name: calculators, path: "/calculators" },
+      { name: home, path: locale === "ko" ? "/" : "/en" },
+      {
+        name: calculators,
+        path: locale === "ko" ? "/calculators" : "/en/calculators",
+      },
       { name: title, path },
     ],
   });
@@ -41,7 +45,7 @@ export function LocalizedIsaTaxSavingsPage({
           aria-label={ko ? "경로" : "Breadcrumb"}
           className="text-sm text-muted-foreground"
         >
-          <Link href={`/${locale}`}>{home}</Link> /{" "}
+          <Link href={locale === "ko" ? "/" : "/en"}>{home}</Link> /{" "}
           <span aria-current="page">{title}</span>
         </nav>
         <header className="mt-5 max-w-3xl">
@@ -56,6 +60,7 @@ export function LocalizedIsaTaxSavingsPage({
         <div className="mt-6">
           <IsaTaxSavingsCalculator locale={locale} />
         </div>
+        <CalculatorWorkedExample slug="isa-tax-savings" locale={locale} />
 
         <section className="mt-10 rounded-xl border bg-card p-5">
           <h2 className="text-xl font-semibold">

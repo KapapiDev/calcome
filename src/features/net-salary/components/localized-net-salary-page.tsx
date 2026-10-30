@@ -1,3 +1,4 @@
+import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import Link from "next/link";
 import {
   JsonLdScript,
@@ -40,8 +41,11 @@ export function LocalizedNetSalaryPage({
     path,
     locale,
     breadcrumbs: [
-      { name: copy.home, path: "/" },
-      { name: copy.calculators, path: "/calculators" },
+      { name: copy.home, path: locale === "ko" ? "/" : "/en" },
+      {
+        name: copy.calculators,
+        path: locale === "ko" ? "/calculators" : "/en/calculators",
+      },
       { name: copy.title, path },
     ],
   });
@@ -55,11 +59,13 @@ export function LocalizedNetSalaryPage({
         >
           <ol className="flex flex-wrap items-center gap-2">
             <li>
-              <Link href="/">{copy.home}</Link>
+              <Link href={locale === "ko" ? "/" : "/en"}>{copy.home}</Link>
             </li>
             <li aria-hidden>/</li>
             <li>
-              <Link href="/calculators">{copy.calculators}</Link>
+              <Link href={locale === "ko" ? "/calculators" : "/en/calculators"}>
+                {copy.calculators}
+              </Link>
             </li>
             <li aria-hidden>/</li>
             <li aria-current="page" className="text-foreground">
@@ -82,6 +88,7 @@ export function LocalizedNetSalaryPage({
         <div className="mt-6">
           <NetSalaryCalculator locale={locale} />
         </div>
+        <CalculatorWorkedExample slug="net-salary" locale={locale} />
         <div className="mt-12 grid gap-4 md:grid-cols-2">
           <Info title={copy.explanationTitle} items={copy.explanation} />
           <Info title={copy.assumptionsTitle} items={copy.assumptions} />
