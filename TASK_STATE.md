@@ -7,10 +7,10 @@ Remaining to Target: 0
 
 ## Current selected task
 
-- [ ] SEO-025 OPEN — Search performance review and evidence-backed improvement batch
-  - Refresh Search Console 7-day/28-day evidence for established pages before choosing at most three justified existing-page improvements.
-  - Reuse the current queue scope; do not resurrect standalone SEO-024 or archived expansion tasks.
-  - No code change is required when evidence supports no useful improvement; record the decision and next evidence trigger.
+- [ ] SEO-027 OPEN — Evaluate the released changes when new search evidence is ready
+  - Evidence-gated follow-up, not immediate implementation permission. Wait for complete Search Console coverage of 2026-10-31 through at least 2026-11-13, preferably through 2026-11-27, adjusted if production release is delayed.
+  - Compare the three changed calculators and new guides against matched available pre-release windows, preserving query visibility and sample-size limits. The owner resumes manually; no automatic monitor was created.
+  - Before coverage reaches the gate, do not create a branch, PR, repeated audit or speculative change. Record the evidence wait in the run result; do not manufacture work to keep the queue busy.
 
 ## Guide observation window
 
@@ -29,6 +29,11 @@ SEO-023's release baseline is 2026-10-30: five topics, ten localized guide route
   - This account wait does not block guide or search-performance work.
 
 ## Recently completed
+
+- [x] SEO-025 DONE — Dated search review and three bounded calculator improvements
+  - Captured current seven-day and 28-day Web performance and preceding-window comparisons from Search Console, ending 2026-10-27. The 28-day window has 11 clicks / 1,779 impressions versus 17 / 1,770 previously; seven days has 3 / 488 versus 4 / 338.
+  - Selected Korean operating profit/margin, English part-time monthly pay, and Korean bond YTM, keeping bilingual explanations consistent. Added reproducible examples, assumptions, sources and review dates; repaired the retired margin link and connected YTM guides. Formulas and published URLs remain unchanged.
+  - Evidence, exclusions, source verification and the observation gate: `docs/SEO_025_SEARCH_REVIEW_2026-10-30.md`. Current-head checks and release evidence are recorded in the implementation PR. No traffic uplift is claimed.
 
 - [x] SEO-023 DONE — Publish the measured guide batch
   - [PR #427](https://github.com/KapapiDev/calcome/pull/427) includes latest main, preserved SEO-026 and the reconciled queue, and releases five topics / ten localized routes.
@@ -61,5 +66,5 @@ No new production exploit or application failure is asserted by this queue clean
 
 - Current task scopes and order: `TASK_QUEUE.md`; historical detail: `docs/archive/task-queue-2026-10-30.md` and `docs/archive/task-state-2026-10-30.md`.
 - Keep exactly one selected OPEN task and unique task IDs. Reconcile effective IN_REVIEW/IN_PROGRESS states against GitHub before selecting work.
-- SEO-023 advances to SEO-025; preserve SEO-026 and the reconciliation. Do not restore old OPEN/BLOCKED labels or SEO-024 as next from the older branch.
+- SEO-025 advances to evidence-gated SEO-027; preserve SEO-023, SEO-026 and the reconciliation. Do not restore old OPEN/BLOCKED labels or standalone SEO-024.
 - External waits must not create an automatic retry, block unrelated development, or be reported as completed external outcomes.

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CalculatorContentGuide } from "@/components/calculators/calculator-content-guide";
 import {
   JsonLdScript,
   createPageStructuredData,
@@ -35,7 +36,7 @@ export function LocalizedOperatingProfitPage({
           aria-label={locale === "ko" ? "경로" : "Breadcrumb"}
           className="text-sm text-muted-foreground"
         >
-          <Link href={`/${locale}`}>{home}</Link> /{" "}
+          <Link href={locale === "ko" ? "/" : "/en"}>{home}</Link> /{" "}
           <span aria-current="page">{copy.title}</span>
         </nav>
         <header className="mt-5 max-w-3xl">
@@ -50,20 +51,22 @@ export function LocalizedOperatingProfitPage({
         <div className="mt-6">
           <OperatingProfitCalculator locale={locale} />
         </div>
-        <section className="mt-10 rounded-xl border bg-card p-5">
+        <CalculatorContentGuide
+          locale={locale}
+          method={<p>{copy.method}</p>}
+          example={<p>{copy.example}</p>}
+          assumptions={[copy.assumptions]}
+          limitations={[copy.note, copy.tips]}
+          reviewedAt="2026-10-30"
+          sources={[
+            {
+              label: "SEC — Beginners' Guide to Financial Statements",
+              href: "https://www.sec.gov/investor/pubs/begfinstmtguide.htm",
+            },
+          ]}
+        />
+        <section className="mt-6 rounded-xl border bg-card p-5">
           <h2 className="text-xl font-semibold">
-            {locale === "ko" ? "계산 방법" : "How it works"}
-          </h2>
-          <p className="mt-3 text-sm leading-7 text-muted-foreground">
-            {copy.method}
-          </p>
-          <h2 className="mt-6 text-xl font-semibold">
-            {locale === "ko" ? "사용할 때 확인할 점" : "What to check"}
-          </h2>
-          <p className="mt-3 text-sm leading-7 text-muted-foreground">
-            {copy.tips}
-          </p>
-          <h2 className="mt-6 text-xl font-semibold">
             {locale === "ko" ? "관련 계산기" : "Related calculators"}
           </h2>
           <div className="mt-3 flex flex-wrap gap-3 text-sm">
@@ -74,12 +77,6 @@ export function LocalizedOperatingProfitPage({
               {locale === "ko"
                 ? "손익분기 매출 계산기"
                 : "Break-Even Sales Calculator"}
-            </Link>
-            <Link
-              className="underline underline-offset-4"
-              href={`/${locale}/finance/margin`}
-            >
-              {locale === "ko" ? "마진 계산기" : "Margin Calculator"}
             </Link>
           </div>
         </section>

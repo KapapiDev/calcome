@@ -26,13 +26,15 @@ type Copy = {
   method: string;
   cautions: string;
   metaTitle: string;
+  example: string;
+  assumptions: string;
 };
 
 export const bondYieldContent: Record<BondYieldLocale, Copy> = {
   ko: {
     title: "채권 만기수익률(YTM) 계산기",
     description:
-      "채권의 액면가, 현재 시장가격, 표면금리, 만기와 이자 지급주기를 입력해 만기수익률(YTM)과 현재수익률을 계산합니다.",
+      "YTM(채권 만기수익률)과 현재수익률을 같은 조건으로 비교하세요. 액면가·시장가격·쿠폰금리·만기·지급주기를 입력해 할인·할증 매수의 수익률 차이를 계산합니다.",
     category: "투자 계산기",
     input: "채권 조건",
     faceValue: "액면가",
@@ -58,7 +60,11 @@ export const bondYieldContent: Record<BondYieldLocale, Copy> = {
       "각 이자 지급시점의 쿠폰과 만기 액면상환액을 하나의 할인율로 현재가치화했을 때 합계가 현재 시장가격과 같아지는 할인율을 수치적으로 찾습니다. 현재수익률은 연간 쿠폰 이자를 현재 시장가격으로 나눈 값입니다.",
     cautions:
       "실제 채권의 시장 관행에는 발생이자, 결제일, day-count convention, 콜옵션과 세금이 포함될 수 있습니다. 이 계산기는 단순한 고정금리 채권 비교용입니다.",
-    metaTitle: "채권 만기수익률(YTM) 계산기 | 현재수익률·쿠폰 수익률",
+    example:
+      "액면가 1,000, 시장가격 950, 연 쿠폰금리 5%, 만기 1년, 연 1회 지급을 가정하면 연 이자는 50입니다. 현재수익률은 50 ÷ 950 ≈ 5.26%, YTM은 (1,000 + 50) ÷ 950 − 1 ≈ 10.53%로 서로 다릅니다.",
+    assumptions:
+      "쿠폰 지급일 직후 매수하고 약속한 금액이 전액 지급되는 단순 고정금리 채권을 가정합니다. YTM은 선택한 지급주기에 따른 명목 연율입니다. 중간 쿠폰의 실제 재투자 금리나 중도 매도 가격에 따라 실현 수익률은 달라질 수 있습니다.",
+    metaTitle: "YTM 계산기 | 채권 만기수익률·현재수익률 비교",
   },
   en: {
     title: "Bond Yield to Maturity Calculator",
@@ -91,5 +97,9 @@ export const bondYieldContent: Record<BondYieldLocale, Copy> = {
       "Real bond pricing may include accrued interest, settlement conventions, day-count rules, call features, and taxes. This calculator is intended for plain fixed-rate bond comparisons.",
     metaTitle:
       "Yield to Maturity Calculator (YTM) | Bond Yield & Current Yield",
+    example:
+      "Assume face value 1,000, market price 950, annual coupon 5%, one year to maturity, and one annual payment. Coupon income is 50. Current yield is 50 ÷ 950 ≈ 5.26%, while YTM is (1,000 + 50) ÷ 950 − 1 ≈ 10.53%.",
+    assumptions:
+      "Assume a plain fixed-rate bond bought immediately after a coupon date, with every promised payment made. YTM is a nominal annual rate for the selected payment frequency. Actual reinvestment rates and a sale before maturity can change realized returns.",
   },
 };

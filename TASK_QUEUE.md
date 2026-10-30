@@ -15,11 +15,11 @@ This file contains current work and explicit waits. Historical scopes and obsole
 
 ## Current priorities
 
-| Track              | Priority                     | Task                                                                      | Actual state               | Next action                                                                                 |
-| ------------------ | ---------------------------- | ------------------------------------------------------------------------- | -------------------------- | ------------------------------------------------------------------------------------------- |
-| Operations 1       | HIGH when eligible           | OPS-INDEX-001 — Finish individual indexing requests                       | EXTERNAL_WAIT, daily quota | Resume only the remaining 12 URLs after quota permits; no automatic schedule was authorized |
-| Development 1      | HIGH                         | SEO-025 — Search performance review and evidence-backed improvement batch | OPEN                       | Refresh search evidence before selecting at most three existing-page improvements           |
-| Account operations | MEDIUM when evidence arrives | OPS-ADS-001 — Verify AdSense activation                                   | EXTERNAL_WAIT              | Confirm approval/site status and the intended publisher ID before production ad activation  |
+| Track              | Priority                     | Task                                                | Actual state               | Next action                                                                                 |
+| ------------------ | ---------------------------- | --------------------------------------------------- | -------------------------- | ------------------------------------------------------------------------------------------- |
+| Operations 1       | HIGH when eligible           | OPS-INDEX-001 — Finish individual indexing requests | EXTERNAL_WAIT, daily quota | Resume only the remaining 12 URLs after quota permits; no automatic schedule was authorized |
+| Evidence review    | HIGH when eligible           | SEO-027 — Evaluate the released search changes      | OPEN, evidence-gated       | Wait for complete post-release coverage; do not start speculative implementation            |
+| Account operations | MEDIUM when evidence arrives | OPS-ADS-001 — Verify AdSense activation             | EXTERNAL_WAIT              | Confirm approval/site status and the intended publisher ID before production ad activation  |
 
 ## SEO-023 — Released guide batch
 
@@ -58,25 +58,28 @@ Remaining URLs, all under `https://www.calcome.com`:
 
 Completion means confirmed submission of the remaining eligible requests, or confirmed existing index inclusion where resubmission is unnecessary. Actual index selection remains Google's external outcome. Stop on a quota limit or a user-required authentication challenge; do not change accounts, bypass CAPTCHA, or change healthy redirects/intentional 404s to chase a zero exclusion count.
 
-## SEO-025 — Search performance review and evidence-backed improvement batch
+## SEO-025 — Completed search review and page improvements
 
-Status: OPEN; current development task after SEO-023. This replaces the old dependency on a standalone SEO-024 AI-search project.
+Status: DONE. Search Console review captured on 2026-10-30; verified data ends on 2026-10-27.
 
-Why next: the old search baseline is from 2026-09-25. Refreshed evidence should determine the next changes before another broad content rewrite.
+Recent 28 days: 11 clicks / 1,779 impressions versus 17 / 1,770 in the preceding window. Recent seven days: 3 / 488 versus 4 / 338. Small samples, anonymized queries, rounded positions and shifting query mix prevent causal performance claims.
 
-Scope:
+Improved three calculator identities: operating profit/margin, part-time monthly pay and bond YTM, with consistent Korean/English explanations. Added worked examples, assumptions, primary references and review dates; removed the retired margin link and added contextual YTM guide links. Mathematical engines and canonical routes remain unchanged. Selection, excluded candidates and before/after rationale: `docs/SEO_025_SEARCH_REVIEW_2026-10-30.md`. Current-head gates and deployment evidence are recorded in the implementation PR.
 
-- Capture fresh Search Console 7-day/28-day page and query metrics, compare established pages with the previous baseline, and classify genuine opportunities by impressions, clicks, CTR, position, and intent. Retain exact date ranges and sources.
-- Record the guide release as a new baseline. Review those new guides after a meaningful 14–28 day observation window; do not attribute immediate movements to the release or let that observation window block work supported by established-page data.
-- Select at most three existing pages for one coherent improvement batch when evidence supports it. Improve useful answer framing, titles/descriptions, examples, source clarity, or contextual links rather than creating keyword variants.
-- Carry the useful answerability/trust requirements from former SEO-024 into those selected pages. Policy-sensitive factual edits still require current official primary sources.
-- If no change is supported, record the decision and a clear next evidence trigger instead of manufacturing implementation tasks.
+## SEO-027 — Evaluate the released search changes
 
-Acceptance:
+Status: OPEN, evidence-gated. This is the next meaningful review, not an instruction to start another code batch immediately.
 
-- A dated source-backed comparison and a justified next-priority decision exist.
-- Any changed pages have a before/after rationale, remain distinct and bilingual, and pass relevant checks plus the normal release gate.
-- The new-guide observation date/trigger is recorded without inventing traffic or ranking promises and without creating an unrequested automation.
+Eligibility: Search Console must cover complete post-release dates 2026-10-31 through at least 2026-11-13; prefer a 28-day view through 2026-11-27. Adjust dates if production release is delayed. A calendar date alone is insufficient when the report lags. The owner resumes manually; do not create a scheduled monitor.
+
+Scope when eligible:
+
+- Capture dated post-release metrics for the three changed calculators and new guides, comparing matched available pre-release windows (2026-10-16–29 for 14 days, or 2026-10-02–29 for 28 days).
+- Separate brand/non-brand evidence where exposed, retain anonymized-query limitations, and account for query, device and country mix. Distinguish the new guides' observation from established-page changes.
+- Decide whether to retain the changes, make a narrowly justified correction or record no action. Do not claim causality or invent a statistical win from a few clicks.
+- Before the evidence gate, create no branch, PR, repeated full-site audit or speculative page rewrite. A newly reproduced product defect may still override this wait.
+
+Acceptance: dated comparable evidence and a clear next decision; any resulting implementation must follow the normal gates. Do not manufacture another task if no useful change is supported.
 
 ## OPS-ADS-001 — Verify AdSense activation
 
@@ -96,7 +99,7 @@ Resume when authoritative account evidence confirms the intended publisher ID an
 ## Completed baseline
 
 - 100 registered calculators; the expansion milestone is achieved.
-- SEO-023 adds five topics / ten localized guides; SEO-025 is the next selected task.
+- SEO-023 adds five topics / ten localized guides. SEO-025 completed the dated search review and three calculator improvements; SEO-027 is the next evidence-gated review.
 - Home/directory repeat-use and discovery improvements through UX-072; mobile/accessibility and bundle regressions remain covered.
 - SEO-021 reconciliation and SEO-022 measured search snippet improvements are merged.
 - SEO-026 URL, language metadata, and related-link repairs are merged and deployed in [PR #428](https://github.com/KapapiDev/calcome/pull/428); remaining Google operations are tracked above, not mislabeled as unfinished source code.

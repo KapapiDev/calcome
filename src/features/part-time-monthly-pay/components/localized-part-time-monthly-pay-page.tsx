@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CalculatorContentGuide } from "@/components/calculators/calculator-content-guide";
 import {
   JsonLdScript,
   createPageStructuredData,
@@ -38,7 +39,7 @@ export function LocalizedPartTimeMonthlyPayPage({
           aria-label={locale === "ko" ? "경로" : "Breadcrumb"}
           className="text-sm text-muted-foreground"
         >
-          <Link href={`/${locale}`}>{home}</Link> /{" "}
+          <Link href={locale === "ko" ? "/" : "/en"}>{home}</Link> /{" "}
           <span aria-current="page">{copy.title}</span>
         </nav>
         <header className="mt-5 max-w-3xl">
@@ -53,20 +54,22 @@ export function LocalizedPartTimeMonthlyPayPage({
         <div className="mt-6">
           <PartTimeMonthlyPayCalculator locale={locale} />
         </div>
-        <section className="mt-10 rounded-xl border bg-card p-5">
+        <CalculatorContentGuide
+          locale={locale}
+          method={<p>{copy.method}</p>}
+          example={<p>{copy.example}</p>}
+          assumptions={[copy.assumptions]}
+          limitations={[copy.note, copy.cautions]}
+          reviewedAt="2026-10-30"
+          sources={[
+            {
+              label: "US Naval Observatory — Gregorian calendar average year",
+              href: "https://aa.usno.navy.mil/faq/leap_years",
+            },
+          ]}
+        />
+        <section className="mt-6 rounded-xl border bg-card p-5">
           <h2 className="text-xl font-semibold">
-            {locale === "ko" ? "계산 방법" : "How it works"}
-          </h2>
-          <p className="mt-3 text-sm leading-7 text-muted-foreground">
-            {copy.method}
-          </p>
-          <h2 className="mt-6 text-xl font-semibold">
-            {locale === "ko" ? "확인할 점" : "What to consider"}
-          </h2>
-          <p className="mt-3 text-sm leading-7 text-muted-foreground">
-            {copy.cautions}
-          </p>
-          <h2 className="mt-6 text-xl font-semibold">
             {locale === "ko" ? "관련 계산기" : "Related calculators"}
           </h2>
           <div className="mt-3 flex flex-wrap gap-3 text-sm">
@@ -76,7 +79,7 @@ export function LocalizedPartTimeMonthlyPayPage({
             >
               {locale === "ko"
                 ? "주휴수당 계산기"
-                : "Weekly Holiday Pay Calculator"}
+                : "South Korea Weekly Holiday Pay Calculator (KRW)"}
             </Link>
             <Link
               className="underline underline-offset-4"
