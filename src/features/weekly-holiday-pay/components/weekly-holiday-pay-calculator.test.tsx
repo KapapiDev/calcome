@@ -39,7 +39,12 @@ describe("WeeklyHolidayPayCalculator input safety", () => {
       expect(wageInput).toHaveAttribute("aria-invalid", "true");
       expect(hoursInput).toHaveAttribute("aria-invalid", "true");
       expect(wageInput).toHaveAttribute("aria-describedby", alert.id);
-      expect(hoursInput).toHaveAttribute("aria-describedby", alert.id);
+      expect(hoursInput.getAttribute("aria-describedby")?.split(" ")).toContain(
+        alert.id,
+      );
+      expect(hoursInput).toHaveAccessibleDescription(
+        new RegExp(alert.textContent!),
+      );
       expect(
         screen.queryByText("예상 적용 대상입니다."),
       ).not.toBeInTheDocument();

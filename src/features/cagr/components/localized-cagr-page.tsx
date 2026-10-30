@@ -1,3 +1,4 @@
+import { CalculatorContentGuide } from "@/components/calculators/calculator-content-guide";
 import Link from "next/link";
 
 import {
@@ -17,8 +18,11 @@ export function LocalizedCagrPage({ locale }: { locale: CagrLocale }) {
     path,
     locale,
     breadcrumbs: [
-      { name: copy.home, path: "/" },
-      { name: copy.calculators, path: "/calculators" },
+      { name: copy.home, path: locale === "ko" ? "/" : "/en" },
+      {
+        name: copy.calculators,
+        path: locale === "ko" ? "/calculators" : "/en/calculators",
+      },
       { name: copy.title, path },
     ],
   });
@@ -33,14 +37,17 @@ export function LocalizedCagrPage({ locale }: { locale: CagrLocale }) {
         >
           <ol className="flex flex-wrap items-center gap-2">
             <li>
-              <Link href="/" className="hover:text-foreground hover:underline">
+              <Link
+                href={locale === "ko" ? "/" : "/en"}
+                className="hover:text-foreground hover:underline"
+              >
                 {copy.home}
               </Link>
             </li>
             <li aria-hidden="true">/</li>
             <li>
               <Link
-                href="/calculators"
+                href={locale === "ko" ? "/calculators" : "/en/calculators"}
                 className="hover:text-foreground hover:underline"
               >
                 {copy.calculators}
@@ -67,34 +74,20 @@ export function LocalizedCagrPage({ locale }: { locale: CagrLocale }) {
         <div className="mt-6">
           <CagrCalculator locale={locale} />
         </div>
-        <div className="mt-12 grid gap-4 md:grid-cols-2">
-          <section
-            className="rounded-xl border bg-card p-5"
-            aria-labelledby="cagr-method"
-          >
-            <h2 id="cagr-method" className="text-xl font-semibold">
-              {copy.explanationTitle}
-            </h2>
-            <ul className="mt-4 list-disc space-y-3 pl-5 text-sm leading-7 text-muted-foreground">
-              {copy.explanation.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </section>
-          <section
-            className="rounded-xl border bg-card p-5"
-            aria-labelledby="cagr-assumptions"
-          >
-            <h2 id="cagr-assumptions" className="text-xl font-semibold">
-              {copy.assumptionsTitle}
-            </h2>
-            <ul className="mt-4 list-disc space-y-3 pl-5 text-sm leading-7 text-muted-foreground">
-              {copy.assumptions.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </section>
-        </div>
+        <CalculatorContentGuide
+          locale={locale}
+          method={copy.explanation.join(" ")}
+          example={copy.example}
+          assumptions={[copy.assumptions[0]]}
+          limitations={copy.assumptions.slice(1)}
+          reviewedAt="2026-10-30"
+          sources={[
+            {
+              label: "FINRA: Return and Rate of Return",
+              href: "https://syndication.finra.org/content/key-concepts-return-and-rate-return",
+            },
+          ]}
+        />
         <section className="mt-8" aria-labelledby="cagr-faq">
           <h2 id="cagr-faq" className="text-2xl font-semibold">
             {copy.faqTitle}

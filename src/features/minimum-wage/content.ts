@@ -29,6 +29,12 @@ export const minimumWageContent = {
       "주 15시간 미만에서는 유급 주휴시간이 적용되지 않습니다. 체크 상태와 관계없이 주휴시간은 0시간으로 계산됩니다.",
     holidayAppliedNotice:
       "유급 주휴시간은 주 15시간 이상 외에도 소정근로일 개근 등 실제 요건을 충족해야 합니다.",
+    hoursHelp:
+      "4주(근로기간이 4주 미만이면 그 기간)의 평균 주 소정근로시간을 기준으로 확인하세요. 시간이 일정한 일반적인 주 40시간·주 5일 근로 기준의 비례 추정입니다.",
+    example:
+      "2026년 주 40시간에 주휴 8시간을 포함하면 주급은 10,320원 × 48 = 495,360원입니다. 이 계산기의 365 ÷ 7 ÷ 12 환산값은 월 약 2,152,457원이며, 공식 209시간 월급 2,156,880원과 구분해야 합니다.",
+    modelAssumption:
+      "2026년 1월 1일부터 12월 31일까지의 한국 최저임금을 사용합니다. 주휴 포함을 선택하려면 평균 주 15시간 이상, 소정근로일 개근 등의 실제 요건을 별도로 확인해야 합니다.",
     explanationTitle: "계산 기준",
     explanation: [
       "2026년 법정 최저시급 10,320원을 사용합니다.",
@@ -42,6 +48,10 @@ export const minimumWageContent = {
       "이 결과는 세전 추정치이며 법률 판단을 대체하지 않습니다.",
     ],
     faq: [
+      [
+        "월 환산 추정액과 공식 월급은 왜 다른가요?",
+        "이 계산기는 입력 주 유급시간에 365 ÷ 7 ÷ 12를 곱해 환산합니다. 공식 월 최저임금은 고시된 209시간 기준이므로, 주 40시간·주휴 8시간 조건에서는 2,156,880원을 따로 확인하세요.",
+      ],
       [
         "2026년 최저시급은 얼마인가요?",
         "10,320원이며 8시간 일급은 82,560원입니다.",
@@ -80,11 +90,17 @@ export const minimumWageContent = {
     weeklyHoursResult: "Entered scheduled weekly hours",
     error: "Enter scheduled weekly hours greater than 0 and no more than 40.",
     resultNote:
-      "This South Korea KRW estimate uses the precise annual average of 365÷7÷12 weeks and is not an official published monthly wage.",
+      "This South Korea KRW estimate uses a 365-day annual average of 365÷7÷12 weeks and is not an official published monthly wage.",
     underFifteenNotice:
       "Below 15 weekly hours, paid weekly-holiday hours do not apply. They are calculated as 0 regardless of the checkbox.",
     holidayAppliedNotice:
       "Paid weekly-holiday hours require actual eligibility conditions in addition to at least 15 weekly hours, including completed scheduled workdays.",
+    hoursHelp:
+      "Check average scheduled weekly hours over four weeks (or the employment period if shorter). The proportional estimate assumes a conventional 40-hour, five-day full-time reference schedule.",
+    example:
+      "For 40 weekly hours plus eight paid holiday hours in 2026, weekly pay = KRW 10,320 × 48 = KRW 495,360. This calculator's 365 ÷ 7 ÷ 12 conversion is about KRW 2,152,457 per month, distinct from the official KRW 2,156,880 minimum on the 209-hour basis.",
+    modelAssumption:
+      "Uses South Korea's minimum wage effective January 1–December 31, 2026. Selecting paid holiday hours requires checking actual eligibility, including at least 15 average weekly hours and completed scheduled workdays.",
     explanationTitle: "Calculation basis",
     explanation: [
       "Uses South Korea's 2026 statutory minimum hourly wage of KRW 10,320.",
@@ -99,6 +115,10 @@ export const minimumWageContent = {
       "This is a pre-tax estimate and does not replace a wage statement or legal determination.",
     ],
     faq: [
+      [
+        "Why do the monthly estimate and official minimum differ?",
+        "The estimate multiplies entered weekly paid hours by 365 ÷ 7 ÷ 12. The published monthly minimum uses 209 hours, so check KRW 2,156,880 separately for the 40-hour week plus eight paid holiday hours.",
+      ],
       [
         "What is the 2026 minimum hourly wage?",
         "South Korea's 2026 statutory minimum hourly wage is KRW 10,320; the eight-hour daily reference is KRW 82,560.",

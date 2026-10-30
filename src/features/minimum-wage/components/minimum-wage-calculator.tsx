@@ -93,10 +93,20 @@ export function MinimumWageCalculator({
               placeholder={locale === "ko" ? "예: 40" : "e.g. 40"}
               onChange={(event) => setHours(event.target.value)}
               aria-invalid={Boolean(error)}
-              aria-describedby={error ? hoursErrorId : undefined}
+              aria-describedby={
+                error
+                  ? "minimum-wage-hours-help " + hoursErrorId
+                  : "minimum-wage-hours-help"
+              }
               className={fieldClass}
             />
           </label>
+          <p
+            id="minimum-wage-hours-help"
+            className="mt-2 text-xs leading-6 text-muted-foreground"
+          >
+            {copy.hoursHelp}
+          </p>
           <label className="mt-4 flex min-h-11 items-center gap-2 rounded-lg border px-3 text-sm">
             <input
               type="checkbox"

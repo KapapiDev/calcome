@@ -5,10 +5,10 @@ export const weeklyHolidayPayContent = {
     title: "주휴수당 계산기",
     metaTitle: "주휴수당 계산기",
     description:
-      "시급과 주 소정근로시간으로 주휴수당, 주급 합계와 월 환산 추정액을 계산합니다.",
+      "평균 주 15시간·개근 요건을 확인하고 시급과 소정근로시간으로 주휴수당, 주급 합계와 월 환산 주휴수당을 계산하세요.",
     category: "근로·급여 계산기",
     intro:
-      "주 15시간 이상 근무하고 소정근로일을 개근한 일반적인 근로자를 위한 간편 추정입니다.",
+      "4주 평균 주 15시간 이상과 소정근로일 개근 요건을 확인하고, 주 40시간·주 5일 통상근로자 기준에 비례한 주휴수당을 추정하세요.",
     input: "근로 조건",
     hourlyWage: "시급",
     weeklyHours: "주 소정근로시간",
@@ -21,10 +21,16 @@ export const weeklyHolidayPayContent = {
     monthlyPay: "월 환산 주휴수당",
     eligible: "예상 적용 대상입니다.",
     ineligible: "입력 조건에서는 주휴수당이 0원으로 추정됩니다.",
+    hoursHelp:
+      "4주(근로기간이 4주 미만이면 그 기간)의 평균 주 소정근로시간을 기준으로 확인하세요. 시간이 일정한 일반적인 주 40시간·주 5일 근로 기준의 비례 추정입니다.",
+    example:
+      "시급 10,320원, 평균 주 20시간, 소정근로일 개근을 가정하면 주휴시간은 20 ÷ 5 = 4시간, 주휴수당은 41,280원입니다. 근로 주급 206,400원을 더하면 247,680원이며, 월 환산 주휴수당만 따로 보면 41,280 × 4.345 ≈ 179,362원입니다.",
+    modelAssumption:
+      "주 40시간·주 5일 통상근로자에 비례한 간편 모델입니다. 입력 시급은 원화이며, 4주 평균 주 소정근로시간이 15시간 이상이고 해당 주 소정근로일을 개근했다고 가정합니다.",
     explanationTitle: "계산 방법",
     explanation: [
-      "주 15시간 이상이고 소정근로일을 개근한 경우를 적용 대상으로 봅니다.",
-      "유급휴일 시간은 주 소정근로시간 ÷ 5로 계산하며 1일 8시간을 상한으로 둡니다.",
+      "4주(근로기간이 더 짧으면 그 기간) 평균 주 소정근로시간이 15시간 이상이고 해당 주 소정근로일을 개근한 경우를 가정합니다.",
+      "이 비례 모델의 유급휴일 시간은 주 소정근로시간 ÷ 5로 계산하며 1일 8시간을 상한으로 둡니다.",
       "주휴수당은 시급 × 유급휴일 시간, 월 환산액은 주휴수당 × 4.345입니다.",
     ],
     cautionsTitle: "확인할 사항",
@@ -44,7 +50,7 @@ export const weeklyHolidayPayContent = {
       ],
       [
         "월 환산액은 왜 4.345를 곱하나요?",
-        "1년 365일을 12개월과 7일로 나눈 평균 주 수를 사용한 비교용 추정치입니다.",
+        "365 ÷ 7 ÷ 12 ≈ 4.345238을 소수 셋째 자리까지 반올림한 4.345를 사용합니다. 주휴수당만 월 단위로 비교하는 추정값이며 월급 전체가 아닙니다.",
       ],
       [
         "정확한 판단은 어디에 문의하나요?",
@@ -56,10 +62,10 @@ export const weeklyHolidayPayContent = {
     title: "South Korea Weekly Holiday Pay Calculator",
     metaTitle: "South Korea Weekly Holiday Pay Calculator | KRW Estimate",
     description:
-      "Estimate South Korean weekly holiday pay, total weekly pay, and a monthly equivalent in KRW from hourly wage and scheduled weekly hours.",
+      "Check the 15-hour average-week and attendance assumptions, then estimate South Korean weekly holiday pay, weekly total and monthly holiday pay in KRW.",
     category: "Employment calculator",
     intro:
-      "A South Korea planning estimate in KRW for workers generally scheduled for at least 15 hours who complete their scheduled workdays.",
+      "Estimate South Korea weekly holiday pay in KRW using average scheduled hours and attendance, with a proportional 40-hour, five-day reference schedule.",
     input: "South Korea work conditions (KRW)",
     hourlyWage: "Hourly wage (KRW)",
     weeklyHours: "Scheduled weekly hours",
@@ -69,13 +75,19 @@ export const weeklyHolidayPayContent = {
     result: "Estimated South Korea results (KRW)",
     holidayPay: "Weekly holiday pay (KRW)",
     totalPay: "Total weekly pay (KRW)",
-    monthlyPay: "Monthly equivalent (KRW)",
+    monthlyPay: "Monthly equivalent of holiday pay (KRW)",
     eligible: "The entered conditions are generally eligible.",
     ineligible: "Estimated holiday pay is KRW 0 for the entered conditions.",
+    hoursHelp:
+      "Check average scheduled weekly hours over four weeks (or the employment period if shorter). The proportional estimate assumes a conventional 40-hour, five-day full-time reference schedule.",
+    example:
+      "At KRW 10,320 per hour, an average 20-hour scheduled week and completed scheduled workdays, paid holiday hours = 20 ÷ 5 = 4. Holiday pay is KRW 41,280; adding KRW 206,400 work pay gives KRW 247,680 weekly total. The monthly equivalent of holiday pay alone is 41,280 × 4.345 ≈ KRW 179,362.",
+    modelAssumption:
+      "This simplified proportional model uses a conventional 40-hour, five-day full-time reference schedule. Wage inputs are KRW. It assumes at least 15 average scheduled weekly hours over four weeks and completion of the relevant week's scheduled workdays.",
     explanationTitle: "How it is calculated",
     explanation: [
-      "Eligibility assumes at least 15 scheduled weekly hours and completion of scheduled workdays under South Korea rules.",
-      "Paid holiday hours equal weekly hours divided by five, capped at eight hours.",
+      "Eligibility assumes at least 15 scheduled weekly hours averaged over four weeks (or a shorter employment period), with completed scheduled workdays in the relevant week.",
+      "This proportional model uses weekly hours divided by five, capped at eight paid holiday hours.",
       "Holiday pay in KRW equals hourly wage times paid holiday hours; the monthly comparison uses 4.345 weeks.",
     ],
     cautionsTitle: "Important cautions",
@@ -95,7 +107,7 @@ export const weeklyHolidayPayContent = {
       ],
       [
         "Why multiply by 4.345?",
-        "It is an average weeks-per-month conversion used only for comparison.",
+        "4.345 is rounded from 365 ÷ 7 ÷ 12 ≈ 4.345238. It estimates a monthly equivalent of holiday pay only, not total monthly salary.",
       ],
       [
         "Where can I confirm eligibility?",

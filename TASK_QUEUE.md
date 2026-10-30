@@ -15,6 +15,8 @@ This file contains current work and explicit waits. Historical scopes and obsole
 
 ## Current priorities
 
+The owner subsequently authorized SEO-028 as a bounded five-calculator improvement/usage pilot, separate from SEO-027's traffic-observation gate. Its post-merge record is in `docs/SEO_028_FIVE_CALCULATOR_PILOT.md`; it does not authorize automatic work on the other 95 calculators or an early ranking-outcome review.
+
 | Track              | Priority                     | Task                                                | Actual state               | Next action                                                                                 |
 | ------------------ | ---------------------------- | --------------------------------------------------- | -------------------------- | ------------------------------------------------------------------------------------------- |
 | Operations 1       | HIGH when eligible           | OPS-INDEX-001 — Finish individual indexing requests | EXTERNAL_WAIT, daily quota | Resume only the remaining 12 URLs after quota permits; no automatic schedule was authorized |

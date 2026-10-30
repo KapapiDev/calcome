@@ -60,7 +60,10 @@ describe("MinimumWageCalculator", () => {
 
     const alert = screen.getByRole("alert");
     expect(hours).toHaveAttribute("aria-invalid", "true");
-    expect(hours).toHaveAttribute("aria-describedby", alert.id);
+    expect(hours.getAttribute("aria-describedby")?.split(" ")).toContain(
+      alert.id,
+    );
+    expect(hours).toHaveAccessibleDescription(new RegExp(alert.textContent!));
     expect(
       screen.queryByText("Official 209-hour monthly minimum (KRW)"),
     ).not.toBeInTheDocument();

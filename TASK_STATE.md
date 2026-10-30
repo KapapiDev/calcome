@@ -30,6 +30,11 @@ SEO-023's release baseline is 2026-10-30: five topics, ten localized guide route
 
 ## Recently completed
 
+- [x] SEO-028 DONE — Owner-requested five-calculator usage pilot
+  - Separately authorized bounded work on currency conversion, CAGR, work-hours conversion, weekly holiday pay and minimum wage: five additional identities / ten localized routes using GPT-6.1 Sol High.
+  - Added reproducible examples, scoped policy/calendar assumptions, verified references, input guidance and contextual links. Formulas, policy rates, the 100-calculator inventory and 224 canonical routes remain unchanged.
+  - Scope, source review and acceptance examples: `docs/SEO_028_FIVE_CALCULATOR_PILOT.md`. Validation, release and before/after usage measurements accompany the implementation PR and local pilot report. SEO-027 remains the next evidence-gated review; no automatic fleet continuation is authorized.
+
 - [x] SEO-025 DONE — Dated search review and three bounded calculator improvements
   - Captured current seven-day and 28-day Web performance and preceding-window comparisons from Search Console, ending 2026-10-27. The 28-day window has 11 clicks / 1,779 impressions versus 17 / 1,770 previously; seven days has 3 / 488 versus 4 / 338.
   - Selected Korean operating profit/margin, English part-time monthly pay, and Korean bond YTM, keeping bilingual explanations consistent. Added reproducible examples, assumptions, sources and review dates; repaired the retired margin link and connected YTM guides. Formulas and published URLs remain unchanged.

@@ -1,3 +1,4 @@
+import { CalculatorContentGuide } from "@/components/calculators/calculator-content-guide";
 import Link from "next/link";
 import {
   JsonLdScript,
@@ -24,8 +25,11 @@ export function LocalizedWorkHoursConverterPage({
     path,
     locale,
     breadcrumbs: [
-      { name: home, path: "/" },
-      { name: calculators, path: "/calculators" },
+      { name: home, path: locale === "ko" ? "/" : "/en" },
+      {
+        name: calculators,
+        path: locale === "ko" ? "/calculators" : "/en/calculators",
+      },
       { name: copy.title, path },
     ],
   });
@@ -38,7 +42,7 @@ export function LocalizedWorkHoursConverterPage({
           aria-label={locale === "ko" ? "경로" : "Breadcrumb"}
           className="text-sm text-muted-foreground"
         >
-          <Link href={`/${locale}`}>{home}</Link> /{" "}
+          <Link href={locale === "ko" ? "/" : "/en"}>{home}</Link> /{" "}
           <span aria-current="page">{copy.title}</span>
         </nav>
         <header className="mt-5 max-w-3xl">
@@ -53,20 +57,29 @@ export function LocalizedWorkHoursConverterPage({
         <div className="mt-6">
           <WorkHoursConverterCalculator locale={locale} />
         </div>
-        <section className="mt-10 rounded-xl border bg-card p-5">
+        <CalculatorContentGuide
+          locale={locale}
+          method={copy.method}
+          example={copy.example}
+          assumptions={[copy.assumption]}
+          limitations={[copy.cautions, copy.payrollLimit]}
+          reviewedAt="2026-10-30"
+          sources={[
+            {
+              label: "US Naval Observatory: Gregorian calendar",
+              href: "https://aa.usno.navy.mil/faq/calendars",
+            },
+            {
+              label:
+                locale === "ko"
+                  ? "최저임금위원회: 209시간 기준"
+                  : "Minimum Wage Commission: 209-hour basis",
+              href: "https://www.minimumwage.go.kr/minWage/policy/decisionMain.do",
+            },
+          ]}
+        />
+        <section className="mt-6 rounded-xl border bg-card p-5">
           <h2 className="text-xl font-semibold">
-            {locale === "ko" ? "계산 방법" : "How it works"}
-          </h2>
-          <p className="mt-3 text-sm leading-7 text-muted-foreground">
-            {copy.method}
-          </p>
-          <h2 className="mt-6 text-xl font-semibold">
-            {locale === "ko" ? "확인할 점" : "What to consider"}
-          </h2>
-          <p className="mt-3 text-sm leading-7 text-muted-foreground">
-            {copy.cautions}
-          </p>
-          <h2 className="mt-6 text-xl font-semibold">
             {locale === "ko" ? "관련 계산기" : "Related calculators"}
           </h2>
           <div className="mt-3 flex flex-wrap gap-3 text-sm">

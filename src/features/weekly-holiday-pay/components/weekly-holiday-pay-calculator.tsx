@@ -118,10 +118,20 @@ export function WeeklyHolidayPayCalculator({
               placeholder={locale === "ko" ? "예: 40" : "e.g. 40"}
               onChange={(e) => setHours(e.target.value)}
               aria-invalid={Boolean(error)}
-              aria-describedby={error ? errorId : undefined}
+              aria-describedby={
+                error
+                  ? "weekly-holiday-pay-hours-help " + errorId
+                  : "weekly-holiday-pay-hours-help"
+              }
               className={fieldClass}
             />
           </label>
+          <p
+            id="weekly-holiday-pay-hours-help"
+            className="mt-2 text-xs leading-6 text-muted-foreground"
+          >
+            {copy.hoursHelp}
+          </p>
           <label className="mt-4 flex min-h-11 items-center gap-2 rounded-lg border px-3 text-sm">
             <input
               type="checkbox"
