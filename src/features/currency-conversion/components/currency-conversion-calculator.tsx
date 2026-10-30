@@ -12,6 +12,7 @@ import {
   calculateCurrencyConversion,
   type CurrencyConversionResult,
 } from "../calculate";
+import { currencyConversionContent } from "../content";
 import type { CurrencyConversionLocale } from "../metadata";
 
 const currencies = ["USD", "EUR", "GBP", "JPY", "KRW", "CAD", "AUD"] as const;
@@ -162,16 +163,18 @@ export function CurrencyConversionCalculator({
               : `Exchange rate (1 ${baseCurrency} = ? ${quoteCurrency})`}
           </label>
           <input
+            aria-describedby="currency-rate-help"
             id="currency-rate"
             inputMode="decimal"
             className={fieldClass}
             value={rate}
             onChange={(event) => setRate(event.target.value)}
           />
-          <p className="mt-2 text-xs leading-5 text-muted-foreground">
-            {ko
-              ? "이 계산기는 실시간 환율을 가져오지 않습니다. 은행·카드사·공식 환율 제공처에서 확인한 환율을 직접 입력하세요."
-              : "This calculator does not fetch a live FX rate. Enter a rate verified with your bank, card provider, or another authoritative rate source."}
+          <p
+            id="currency-rate-help"
+            className="mt-2 text-xs leading-6 text-muted-foreground"
+          >
+            {currencyConversionContent[locale].rateHelp}
           </p>
           <div className="mt-4 grid grid-cols-[1fr_auto] gap-2">
             <Button type="submit">{ko ? "변환하기" : "Convert"}</Button>

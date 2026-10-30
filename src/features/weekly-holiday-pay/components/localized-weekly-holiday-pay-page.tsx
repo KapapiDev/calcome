@@ -1,3 +1,4 @@
+import { CalculatorContentGuide } from "@/components/calculators/calculator-content-guide";
 import Link from "next/link";
 import {
   JsonLdScript,
@@ -23,7 +24,7 @@ export function LocalizedWeeklyHolidayPayPage({
     path,
     locale,
     breadcrumbs: [
-      { name: homeLabel, path: "/" },
+      { name: homeLabel, path: locale === "ko" ? "/" : "/en" },
       { name: copy.title, path },
     ],
   });
@@ -35,7 +36,7 @@ export function LocalizedWeeklyHolidayPayPage({
           aria-label={locale === "ko" ? "경로" : "Breadcrumb"}
           className="text-sm text-muted-foreground"
         >
-          <Link href="/">{homeLabel}</Link> /{" "}
+          <Link href={locale === "ko" ? "/" : "/en"}>{homeLabel}</Link> /{" "}
           <span aria-current="page">{copy.title}</span>
         </nav>
         <header className="mt-5 max-w-3xl">
@@ -51,10 +52,23 @@ export function LocalizedWeeklyHolidayPayPage({
         <div className="mt-6">
           <WeeklyHolidayPayCalculator locale={locale} />
         </div>
-        <div className="mt-12 grid gap-4 md:grid-cols-2">
-          <Info title={copy.explanationTitle} items={copy.explanation} />
-          <Info title={copy.cautionsTitle} items={copy.cautions} />
-        </div>
+        <CalculatorContentGuide
+          locale={locale}
+          method={copy.explanation.join(" ")}
+          example={copy.example}
+          assumptions={[copy.modelAssumption]}
+          limitations={copy.cautions}
+          reviewedAt="2026-10-30"
+          sources={[
+            {
+              label:
+                locale === "ko"
+                  ? "고용노동부: 주휴 요건과 산정 기준"
+                  : "MOEL: weekly holiday eligibility and hours",
+              href: "https://1350.moel.go.kr/rtmview.do?id=1000278825",
+            },
+          ]}
+        />
         <section className="mt-8">
           <h2 className="text-2xl font-semibold">FAQ</h2>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -72,32 +86,28 @@ export function LocalizedWeeklyHolidayPayPage({
         </section>
         <section className="mt-8 border-t pt-8">
           <h2 className="text-xl font-semibold">
-            {locale === "ko" ? "공식 참고자료" : "Official references"}
+            {locale === "ko" ? "관련 계산기" : "Related calculators"}
           </h2>
-          <a
-            className="mt-3 inline-block text-primary underline"
-            href="https://www.law.go.kr/법령/근로기준법/제55조"
-            target="_blank"
-            rel="noreferrer"
-          >
-            {locale === "ko"
-              ? "국가법령정보센터 근로기준법 제55조"
-              : "Korean Labor Standards Act, Article 55"}
-          </a>
+          <div className="mt-3 flex flex-wrap gap-4 text-sm">
+            <Link
+              className="text-primary underline underline-offset-4"
+              href={"/" + locale + "/employment/minimum-wage"}
+            >
+              {locale === "ko"
+                ? "2026 최저임금 계산기"
+                : "2026 South Korea Minimum Wage Calculator"}
+            </Link>
+            <Link
+              className="text-primary underline underline-offset-4"
+              href={"/" + locale + "/employment/work-hours-converter"}
+            >
+              {locale === "ko"
+                ? "주·월 근무시간 변환기"
+                : "Weekly and Monthly Work-Hours Converter"}
+            </Link>
+          </div>
         </section>
       </div>
     </main>
-  );
-}
-function Info({ title, items }: { title: string; items: readonly string[] }) {
-  return (
-    <section className="rounded-xl border bg-card p-5">
-      <h2 className="text-xl font-semibold">{title}</h2>
-      <ul className="mt-4 list-disc space-y-3 pl-5 text-sm leading-7 text-muted-foreground">
-        {items.map((item) => (
-          <li key={item}>{item}</li>
-        ))}
-      </ul>
-    </section>
   );
 }

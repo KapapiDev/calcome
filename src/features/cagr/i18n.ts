@@ -79,10 +79,12 @@ const dictionaries = {
       breadcrumb: "현재 위치",
       home: "홈",
       calculators: "계산기",
+      example:
+        "시작값 100, 종료값 121, 기간 2년이면 CAGR은 [(121 ÷ 100)^(1 ÷ 2) − 1] × 100 = 10%입니다. 총 성장률 21%를 2로 나눈 10.5%와 다릅니다. 통화나 단위는 두 값에 동일하게 사용하세요.",
       explanationTitle: "CAGR 계산 방법",
       explanation: [
         "CAGR은 종료값을 시작값으로 나눈 뒤 투자 기간의 역수를 거듭제곱해 연평균 복리 변화율로 환산합니다.",
-        "개월 단위 기간은 12로 나누어 년으로 환산하며, 계산 중에는 Decimal.js 정밀도를 유지합니다.",
+        "공식은 [(종료값 ÷ 시작값)^(1 ÷ 기간(년)) − 1] × 100이며, 개월 단위 기간은 12로 나누어 년으로 환산합니다.",
         "성장 경로는 입력한 두 값 사이가 같은 CAGR로 움직였다고 가정한 설명용 경로이며 실제 과거 가격은 아닙니다.",
       ],
       assumptionsTitle: "계산 전 확인하세요",
@@ -110,8 +112,13 @@ const dictionaries = {
           "아닙니다. CAGR은 두 시점의 값만 사용하므로 중간 현금흐름이 있다면 현금흐름 기반 수익률을 별도로 확인해야 합니다.",
         ],
       ] as const,
-      relatedTitle: "관련 계산기",
+      relatedTitle: "관련 가이드와 계산기",
       related: [
+        ["/ko/guides/cagr-vs-average-return", "CAGR과 평균 수익률의 차이"],
+        [
+          "/ko/guides/annualize-growth-correctly",
+          "개월 수익률의 올바른 연환산",
+        ],
         ["/ko/finance/compound-interest", "복리 계산기"],
         ["/ko/finance/savings", "적금 계산기"],
         ["/ko/finance/fixed-deposit", "정기예금 계산기"],
@@ -199,10 +206,12 @@ const dictionaries = {
       breadcrumb: "Breadcrumb",
       home: "Home",
       calculators: "Calculators",
+      example:
+        "For a beginning value of 100, ending value of 121 and two years, CAGR = [(121 ÷ 100)^(1 ÷ 2) − 1] × 100 = 10%. Dividing total growth of 21% by two gives 10.5%, which is not CAGR. Use the same currency or unit for both values.",
       explanationTitle: "How CAGR is calculated",
       explanation: [
         "CAGR divides ending value by beginning value, raises the ratio to the reciprocal of the investment period, and subtracts one.",
-        "Month periods are divided by 12 before applying the formula, while Decimal.js precision is retained through calculation.",
+        "Formula: [(ending value ÷ beginning value)^(1 ÷ years) − 1] × 100. Divide a period in months by 12 to get years.",
         "The growth path is an explanatory constant-CAGR path between the two entered values, not historical price data.",
       ],
       assumptionsTitle: "Important assumptions",
@@ -230,8 +239,13 @@ const dictionaries = {
           "No. CAGR uses only two values. Use a cash-flow-based return measure when contributions or withdrawals occurred.",
         ],
       ] as const,
-      relatedTitle: "Related calculators",
+      relatedTitle: "Related guides and calculators",
       related: [
+        ["/en/guides/cagr-vs-average-return", "CAGR versus average return"],
+        [
+          "/en/guides/annualize-growth-correctly",
+          "Annualize a monthly return correctly",
+        ],
         ["/en/finance/compound-interest", "Compound Interest Calculator"],
         ["/en/finance/savings", "Savings Calculator"],
         ["/en/finance/fixed-deposit", "Fixed Deposit Calculator"],

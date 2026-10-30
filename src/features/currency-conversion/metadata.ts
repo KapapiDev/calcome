@@ -1,22 +1,32 @@
 import type { Metadata } from "next";
+import { absoluteUrl, siteConfig } from "@/config/site";
+import { currencyConversionContent } from "./content";
 
 export type CurrencyConversionLocale = "ko" | "en";
 
 export function createCurrencyConversionMetadata(
   locale: CurrencyConversionLocale,
 ): Metadata {
-  const isKo = locale === "ko";
-  const title = isKo
-    ? "환율 변환 계산기 | CalCome"
-    : "Currency Converter Calculator | Exchange Rate Conversion | CalCome";
-  const description = isKo
-    ? "직접 입력한 환율로 두 통화 사이의 금액을 변환하고 역환율을 확인합니다."
-    : "Use this currency converter calculator to convert an amount with an exchange rate you enter, compare base and quote currencies, and see the inverse rate.";
+  const { metaTitle: title, description } = currencyConversionContent[locale];
   const path = `/${locale}/finance/currency-conversion`;
 
   return {
     title,
     description,
+    openGraph: {
+      title: title + " | " + siteConfig.name,
+      description,
+      url: absoluteUrl(path),
+      locale: locale === "ko" ? "ko_KR" : "en_US",
+      alternateLocale: locale === "ko" ? ["en_US"] : ["ko_KR"],
+      siteName: siteConfig.name,
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: title + " | " + siteConfig.name,
+      description,
+    },
     alternates: {
       canonical: path,
       languages: {
