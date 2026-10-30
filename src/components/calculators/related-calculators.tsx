@@ -33,7 +33,7 @@ const priorityRelatedIds: Readonly<Record<string, readonly string[]>> = {
     "loan-refinancing-savings",
   ],
   ltv: ["mortgage-loan-limit", "dsr", "stress-dsr", "mortgage-payment"],
-  dsr: ["stress-dsr", "mortgage-loan-limit", "ltv", "loan-affordability"],
+  dsr: ["stress-dsr", "mortgage-loan-limit", "ltv", "dti"],
   "stress-dsr": ["dsr", "mortgage-loan-limit", "ltv", "loan-affordability"],
   "mortgage-loan-limit": ["ltv", "dsr", "stress-dsr", "mortgage-payment"],
   cagr: [
@@ -47,6 +47,42 @@ const priorityRelatedIds: Readonly<Record<string, readonly string[]>> = {
     "dollar-cost-averaging",
     "cagr",
     "dividend-yield",
+  ],
+  "bond-yield-to-maturity": [
+    "bond-price",
+    "cagr",
+    "compound-interest",
+    "deposit",
+  ],
+  "crypto-average-cost": [
+    "crypto-profit-loss",
+    "stock-average-cost",
+    "cagr",
+    "dollar-cost-averaging",
+  ],
+  "fire-retirement-target": [
+    "retirement-withdrawal",
+    "savings-goal",
+    "compound-interest",
+    "retirement-pension",
+  ],
+  "average-wage": [
+    "annual-leave-allowance",
+    "severance-pay",
+    "hourly-wage",
+    "net-salary",
+  ],
+  "maternity-leave-benefit": [
+    "parental-leave-benefit",
+    "net-salary",
+    "hourly-wage",
+    "social-insurance",
+  ],
+  "loan-interest-comparison": [
+    "loan-refinancing-savings",
+    "loan",
+    "early-loan-repayment-fee",
+    "dti",
   ],
 };
 

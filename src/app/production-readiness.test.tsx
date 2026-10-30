@@ -30,7 +30,10 @@ describe("production metadata routes", () => {
         "x-default": "/ko",
       },
     });
-    expect(homeMetadata.alternates).toEqual({ canonical: "/" });
+    expect(homeMetadata.alternates).toEqual({
+      canonical: "/",
+      languages: { ko: "/", en: "/en", "x-default": "/" },
+    });
     expect(metadata.openGraph).toMatchObject({
       locale: "ko_KR",
       alternateLocale: "en_US",

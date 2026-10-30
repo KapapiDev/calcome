@@ -56,6 +56,28 @@ describe("RelatedCalculators", () => {
     ).toHaveAttribute("href", "/en/finance/savings");
   });
 
+  it("provides contextual inbound links to the Search Console calculator candidates", () => {
+    const candidates = [
+      "dti",
+      "hourly-wage",
+      "bond-price",
+      "crypto-profit-loss",
+      "retirement-withdrawal",
+      "annual-leave-allowance",
+      "parental-leave-benefit",
+      "loan-refinancing-savings",
+      "compound-interest",
+      "real-estate-brokerage-fee",
+    ] as const;
+    const linkedIds = new Set(
+      allPublishedCalculators.flatMap((calculator) =>
+        getRelatedCalculators(calculator.href).map((related) => related.id),
+      ),
+    );
+
+    expect(candidates.filter((id) => !linkedIds.has(id))).toEqual([]);
+  });
+
   it("does not render recommendations on non-calculator routes", () => {
     pathnameRef.current = "/ko/calculators";
     const { container } = render(<RelatedCalculators locale="ko" />);

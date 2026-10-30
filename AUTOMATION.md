@@ -445,4 +445,3 @@ External GitHub, Vercel, billing, quota, browser, or preview limitations should
 be recorded when relevant, but they must not stall unrelated implementation.
 Only a reproduced product/code defect or a genuinely required user-only action
 should stop the task.
-

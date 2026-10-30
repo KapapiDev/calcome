@@ -19,7 +19,10 @@ describe("trust page metadata", () => {
     ({ metadata, title, path }) => {
       expect(metadata.title).toBe(title);
       expect(metadata.description).toBeTruthy();
-      expect(metadata.alternates).toEqual({ canonical: path });
+      expect(metadata.alternates).toEqual({
+        canonical: path,
+        languages: { ko: path, en: `/en${path}`, "x-default": path },
+      });
       expect(metadata.openGraph).toMatchObject({
         url: `https://www.calcome.com${path}`,
         siteName: "CalCome",
