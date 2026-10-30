@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CalculatorContentGuide } from "@/components/calculators/calculator-content-guide";
 import {
   JsonLdScript,
   createPageStructuredData,
@@ -35,7 +36,7 @@ export function LocalizedBondYieldPage({
           aria-label={locale === "ko" ? "경로" : "Breadcrumb"}
           className="text-sm text-muted-foreground"
         >
-          <Link href="/">{home}</Link> /{" "}
+          <Link href={locale === "ko" ? "/" : "/en"}>{home}</Link> /{" "}
           <span aria-current="page">{copy.title}</span>
         </nav>
         <header className="mt-5 max-w-3xl">
@@ -50,19 +51,44 @@ export function LocalizedBondYieldPage({
         <div className="mt-6">
           <BondYieldCalculator locale={locale} />
         </div>
-        <section className="mt-10 rounded-xl border bg-card p-5">
+        <CalculatorContentGuide
+          locale={locale}
+          method={<p>{copy.method}</p>}
+          example={<p>{copy.example}</p>}
+          assumptions={[copy.assumptions]}
+          limitations={[copy.note, copy.cautions]}
+          reviewedAt="2026-10-30"
+          sources={[
+            {
+              label: "Fidelity — Bond prices, rates, and yields",
+              href: "https://www.fidelity.com/learning-center/investment-products/fixed-income-bonds/bond-prices-rates-yields",
+            },
+          ]}
+        />
+        <section className="mt-6 rounded-xl border bg-card p-5">
           <h2 className="text-xl font-semibold">
-            {locale === "ko" ? "계산 방법" : "How it works"}
+            {locale === "ko"
+              ? "YTM을 더 이해하기"
+              : "Understand YTM in more detail"}
           </h2>
-          <p className="mt-3 text-sm leading-7 text-muted-foreground">
-            {copy.method}
-          </p>
-          <h2 className="mt-6 text-xl font-semibold">
-            {locale === "ko" ? "확인할 점" : "What to consider"}
-          </h2>
-          <p className="mt-3 text-sm leading-7 text-muted-foreground">
-            {copy.cautions}
-          </p>
+          <div className="mt-3 flex flex-wrap gap-3 text-sm">
+            <Link
+              className="inline-flex min-h-11 items-center underline underline-offset-4"
+              href={`/${locale}/guides/ytm-vs-current-yield`}
+            >
+              {locale === "ko"
+                ? "YTM과 현재수익률의 차이"
+                : "YTM vs. current yield"}
+            </Link>
+            <Link
+              className="inline-flex min-h-11 items-center underline underline-offset-4"
+              href={`/${locale}/guides/bond-price-and-yield`}
+            >
+              {locale === "ko"
+                ? "채권 가격과 수익률의 관계"
+                : "Bond price and yield"}
+            </Link>
+          </div>
         </section>
       </div>
     </main>
