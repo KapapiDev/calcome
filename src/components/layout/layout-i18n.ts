@@ -4,6 +4,7 @@ export const sharedLayoutCopy = {
   ko: {
     slogan: "금융 계산을 쉽게.",
     calculators: "계산기",
+    guides: "가이드",
     primaryNavigation: "주요 탐색",
     footerNavigation: "하단 탐색",
     about: "소개",
@@ -19,6 +20,7 @@ export const sharedLayoutCopy = {
   en: {
     slogan: "Finance made simple.",
     calculators: "Calculators",
+    guides: "Guides",
     primaryNavigation: "Primary navigation",
     footerNavigation: "Footer navigation",
     about: "About",

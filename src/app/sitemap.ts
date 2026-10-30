@@ -3,6 +3,7 @@ import type { MetadataRoute } from "next";
 import { allPublishedCalculators } from "@/config/calculator-directory";
 import type { PublishedCalculator } from "@/config/calculators";
 import { absoluteUrl } from "@/config/site";
+import { guideSlugs } from "@/content/guides";
 
 const publicStaticRoutes = [
   { ko: "/", en: "/en" },
@@ -46,6 +47,16 @@ export function calculatorSitemapEntries(
   });
 }
 
+export function guideSitemapEntries(): MetadataRoute.Sitemap {
+  return guideSlugs.flatMap((slug) =>
+    localizedEntries(`/ko/guides/${slug}`, `/en/guides/${slug}`),
+  );
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [...staticSitemapEntries(), ...calculatorSitemapEntries()];
+  return [
+    ...staticSitemapEntries(),
+    ...guideSitemapEntries(),
+    ...calculatorSitemapEntries(),
+  ];
 }

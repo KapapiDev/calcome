@@ -7,17 +7,14 @@ Remaining to Target: 0
 
 ## Current selected task
 
-- [ ] SEO-023 OPEN — Finish the existing guide batch
-  - Effective state: IN_REVIEW, [PR #427](https://github.com/KapapiDev/calcome/pull/427), branch `auto/seo-023`; do not create a duplicate implementation branch.
-  - Five topics / ten localized guide routes are implemented. The 2026-10-02 Vercel preview is Ready; the PR records no completed local preflight and predates the later indexing repair.
-  - Next action: include latest main, reconcile queue/state, review useful content and sources, run current-head preflight, merge, and verify production.
-  - OPEN is the existing checker's single selected-work slot. Actual GitHub state determines the effective lifecycle state.
+- [ ] SEO-025 OPEN — Search performance review and evidence-backed improvement batch
+  - Refresh Search Console 7-day/28-day evidence for established pages before choosing at most three justified existing-page improvements.
+  - Reuse the current queue scope; do not resurrect standalone SEO-024 or archived expansion tasks.
+  - No code change is required when evidence supports no useful improvement; record the decision and next evidence trigger.
 
-## Next development priority
+## Guide observation window
 
-SEO-025 — Search performance review and evidence-backed improvement batch.
-
-After SEO-023 releases, select SEO-025 as the next OPEN task. Refresh the dated search baseline before choosing at most three justified existing-page improvements. Record a separate 14–28 day observation window for the new guides without freezing established-page work. Former SEO-024 trust/answerability criteria are integrated into these tasks; SEO-024 is consolidated, not an unfinished standalone next task and not falsely marked DONE.
+SEO-023's release baseline is 2026-10-30: five topics, ten localized guide routes, and 224 total canonical sitemap URLs. Review the new guides over 2026-11-13 through 2026-11-27 (14–28 days), using the actual production release as the start if delayed. No traffic or ranking outcome is claimed. Established-page analysis may proceed immediately. No automatic monitoring or retry schedule was created.
 
 ## Operational waits
 
@@ -32,6 +29,11 @@ After SEO-023 releases, select SEO-025 as the next OPEN task. Refresh the dated 
   - This account wait does not block guide or search-performance work.
 
 ## Recently completed
+
+- [x] SEO-023 DONE — Publish the measured guide batch
+  - [PR #427](https://github.com/KapapiDev/calcome/pull/427) includes latest main, preserved SEO-026 and the reconciled queue, and releases five topics / ten localized routes.
+  - Added worked examples, explicit assumptions, source links and a visible 2026-10-30 review date; fixed guide index/article language switching and page-specific social metadata.
+  - Required current-head preflight, calculator example checks, and local/production route verification are recorded in the PR. Source references and release checks: `docs/features/measured-guide-cluster.md`.
 
 - [x] OPS-QUEUE-001 DONE — Owner-requested queue reconciliation
   - Replaced the historical expansion/audit backlog with current priorities and explicit external waits; preserved original queue/state snapshots under `docs/archive/`.
@@ -59,5 +61,5 @@ No new production exploit or application failure is asserted by this queue clean
 
 - Current task scopes and order: `TASK_QUEUE.md`; historical detail: `docs/archive/task-queue-2026-10-30.md` and `docs/archive/task-state-2026-10-30.md`.
 - Keep exactly one selected OPEN task and unique task IDs. Reconcile effective IN_REVIEW/IN_PROGRESS states against GitHub before selecting work.
-- Finishing PR #427 must preserve this reconciliation and SEO-026, mark SEO-023 DONE, and select SEO-025 next. Do not restore old OPEN/BLOCKED labels or SEO-024 as next from the older branch.
+- SEO-023 advances to SEO-025; preserve SEO-026 and the reconciliation. Do not restore old OPEN/BLOCKED labels or SEO-024 as next from the older branch.
 - External waits must not create an automatic retry, block unrelated development, or be reported as completed external outcomes.

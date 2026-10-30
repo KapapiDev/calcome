@@ -15,36 +15,19 @@ This file contains current work and explicit waits. Historical scopes and obsole
 
 ## Current priorities
 
-| Track              | Priority                     | Task                                                                      | Actual state               | Next action                                                                                     |
-| ------------------ | ---------------------------- | ------------------------------------------------------------------------- | -------------------------- | ----------------------------------------------------------------------------------------------- |
-| Development 1      | HIGH                         | SEO-023 — Finish the existing guide batch                                 | IN_REVIEW, PR #427         | Include latest main, review the five topics, run full verification, merge and verify production |
-| Operations 1       | HIGH when eligible           | OPS-INDEX-001 — Finish individual indexing requests                       | EXTERNAL_WAIT, daily quota | Resume only the remaining 12 URLs after quota permits; no automatic schedule was authorized     |
-| Development 2      | HIGH                         | SEO-025 — Search performance review and evidence-backed improvement batch | BLOCKED on SEO-023 release | Refresh search evidence before selecting at most three existing-page improvements               |
-| Account operations | MEDIUM when evidence arrives | OPS-ADS-001 — Verify AdSense activation                                   | EXTERNAL_WAIT              | Confirm approval/site status and the intended publisher ID before production ad activation      |
+| Track              | Priority                     | Task                                                                      | Actual state               | Next action                                                                                 |
+| ------------------ | ---------------------------- | ------------------------------------------------------------------------- | -------------------------- | ------------------------------------------------------------------------------------------- |
+| Operations 1       | HIGH when eligible           | OPS-INDEX-001 — Finish individual indexing requests                       | EXTERNAL_WAIT, daily quota | Resume only the remaining 12 URLs after quota permits; no automatic schedule was authorized |
+| Development 1      | HIGH                         | SEO-025 — Search performance review and evidence-backed improvement batch | OPEN                       | Refresh search evidence before selecting at most three existing-page improvements           |
+| Account operations | MEDIUM when evidence arrives | OPS-ADS-001 — Verify AdSense activation                                   | EXTERNAL_WAIT              | Confirm approval/site status and the intended publisher ID before production ad activation  |
 
-## SEO-023 — Finish the existing guide batch
+## SEO-023 — Released guide batch
 
-Status: OPEN selection slot; effective state IN_REVIEW.
+Status: DONE in [PR #427](https://github.com/KapapiDev/calcome/pull/427).
 
-Existing PR: [#427](https://github.com/KapapiDev/calcome/pull/427), branch `auto/seo-023`, last inspected head `30e2f7e891366a087bca76d73a1ee15565f3743b`.
+Five topics (CAGR, annualization, YTM, bond price/yield, currency conversion) provide ten localized routes. The release includes worked examples, assumptions, source links, a visible review date, reciprocal metadata, guide discovery, language switching and sitemap entries. Latest main's SEO-026 repair and the queue reconciliation remain intact. Required checks and production evidence are recorded in the PR; source/release notes are in `docs/features/measured-guide-cluster.md`.
 
-Why first: five topics are already implemented and previewed. Completing this bounded release provides more value than starting a second content or audit project.
-
-Remaining scope:
-
-1. Reuse PR #427. Include latest main and resolve its queue/state changes against these current files; preserve SEO-026 and the operational waits.
-2. Review the existing five topics: CAGR, annualization, YTM, bond price/yield, and currency conversion. They provide ten localized routes. Verify distinct intent, useful examples, correct calculator links, and factual sources; do not expand the batch to reach a larger article count.
-3. Keep concise definitions, assumptions, worked examples, and source/trust cues as release criteria for these guides. Any policy-sensitive factual addition requires current official verification.
-4. Run `npm run automation:preflight` on the final head. The 2026-10-02 Vercel Ready preview is useful evidence, but the PR records no completed local preflight and does not include the later indexing repair.
-5. Merge only after current-head gates pass, then verify production routes, language pairs, discovery, and sitemap coverage. Counts must match the actual released inventory rather than a fabricated target.
-
-Acceptance:
-
-- The existing five topics, their ten localized routes, guide indexes, calculator links, metadata, and sitemap work together in production.
-- Existing calculator behavior, formulas, and public routes remain intact.
-- Current-head required checks pass and production evidence is recorded.
-- In the same implementation PR, mark SEO-023 DONE and select SEO-025 as the next OPEN task; preserve OPS-INDEX-001 and OPS-ADS-001.
-- Do not restore SEO-024 as the next task from the older PR text.
+Release baseline: 2026-10-30, 224 canonical sitemap URLs. Review the new guides over 2026-11-13 through 2026-11-27 (14–28 days), using actual production release as the start if delayed. Keep that observation separate from immediately useful established-page analysis; no unrequested monitor is created.
 
 ## OPS-INDEX-001 — Finish individual indexing requests
 
@@ -77,7 +60,7 @@ Completion means confirmed submission of the remaining eligible requests, or con
 
 ## SEO-025 — Search performance review and evidence-backed improvement batch
 
-Status: BLOCKED on SEO-023 release; next development task. This replaces the old dependency on a standalone SEO-024 AI-search project.
+Status: OPEN; current development task after SEO-023. This replaces the old dependency on a standalone SEO-024 AI-search project.
 
 Why next: the old search baseline is from 2026-09-25. Refreshed evidence should determine the next changes before another broad content rewrite.
 
@@ -113,6 +96,7 @@ Resume when authoritative account evidence confirms the intended publisher ID an
 ## Completed baseline
 
 - 100 registered calculators; the expansion milestone is achieved.
+- SEO-023 adds five topics / ten localized guides; SEO-025 is the next selected task.
 - Home/directory repeat-use and discovery improvements through UX-072; mobile/accessibility and bundle regressions remain covered.
 - SEO-021 reconciliation and SEO-022 measured search snippet improvements are merged.
 - SEO-026 URL, language metadata, and related-link repairs are merged and deployed in [PR #428](https://github.com/KapapiDev/calcome/pull/428); remaining Google operations are tracked above, not mislabeled as unfinished source code.

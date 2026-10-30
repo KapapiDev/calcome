@@ -4,6 +4,7 @@ const localeAwareGlobalPaths = new Set([
   "/",
   "/calculators",
   "/about",
+  "/guides",
   "/privacy",
   "/terms",
   "/contact",
@@ -15,7 +16,7 @@ function localizedPath(pathname: string, locale: CompoundLocale) {
     return `/en${pathname === "/" ? "" : pathname}`;
   }
 
-  return /^\/(?:finance|employment)(?:\/|$)/.test(pathname)
+  return /^\/(?:finance|employment|guides)(?:\/|$)/.test(pathname)
     ? `/${locale}${pathname}`
     : pathname;
 }

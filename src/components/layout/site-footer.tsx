@@ -26,6 +26,11 @@ export function SiteFooter({ locale = "ko" }: { locale?: CompoundLocale }) {
               </Link>
             </li>
             <li>
+              <Link href={href("/guides")} className={footerLinkClass}>
+                {copy.guides}
+              </Link>
+            </li>
+            <li>
               <Link href={href("/about")} className={footerLinkClass}>
                 {copy.about}
               </Link>
