@@ -24,7 +24,7 @@ Read these in this order at every run:
 
 `TASK_STATE.md` is the compact mutable execution ledger. It records the current OPEN task, completed recent tasks, calculator milestone count, security gates, and the next intended task.
 
-`TASK_QUEUE.md` is the task catalog and detailed scope archive. Its historical status labels may be stale and are not the primary execution-state source.
+`TASK_QUEUE.md` contains current priorities, bounded scopes, and explicit waits. Historical queue/state snapshots live under `docs/archive/` and are not execution authorities. Never restart an archived proposal because its snapshot retains an old OPEN or BLOCKED label.
 
 Actual GitHub state overrides stale text in either state file. If actual state and `TASK_STATE.md` disagree, reconcile the state in the same task Pull Request instead of creating a separate cleanup loop.
 
