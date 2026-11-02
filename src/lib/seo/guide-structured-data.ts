@@ -7,6 +7,7 @@ import {
 } from "./structured-data";
 import {
   guideContent,
+  guidePublishedOn,
   guideReviewedOn,
   guideSources,
   type GuideLocale,
@@ -60,7 +61,7 @@ export function createGuideStructuredData(
         mainEntityOfPage: { "@id": absoluteUrl(path) + "#webpage" },
         author,
         publisher: author,
-        datePublished: "2026-10-30",
+        datePublished: guidePublishedOn[slug],
         dateModified: guideReviewedOn,
         citation: guideSources[slug].map((source) => source.href),
       },

@@ -37,10 +37,12 @@ describe("published guide journeys", () => {
     generateStaticParams().map(({ slug }) => ({ locale, slug })),
   );
 
-  it("publishes ten unique localized routes with reciprocal metadata and language switching", async () => {
-    expect(routes).toHaveLength(10);
+  it("publishes every localized route with reciprocal metadata and language switching", async () => {
+    expect(routes).toHaveLength(guideSlugs.length * 2);
     const entries = guideSitemapEntries();
-    expect(new Set(entries.map(({ url }) => url)).size).toBe(10);
+    expect(new Set(entries.map(({ url }) => url)).size).toBe(
+      guideSlugs.length * 2,
+    );
     for (const { locale, slug } of routes) {
       const path = `/${locale}/guides/${slug}`;
       const metadata = await generateMetadata({

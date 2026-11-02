@@ -6,11 +6,21 @@ export const guideSlugs = [
   "ytm-vs-current-yield",
   "bond-price-and-yield",
   "currency-conversion-rate-check",
+  "net-salary-vs-withholding",
 ] as const;
 
 export type GuideSlug = (typeof guideSlugs)[number];
 
 export const guideReviewedOn = "2026-11-02";
+
+export const guidePublishedOn: Record<GuideSlug, string> = {
+  "cagr-vs-average-return": "2026-10-30",
+  "annualize-growth-correctly": "2026-10-30",
+  "ytm-vs-current-yield": "2026-10-30",
+  "bond-price-and-yield": "2026-10-30",
+  "currency-conversion-rate-check": "2026-10-30",
+  "net-salary-vs-withholding": "2026-11-02",
+};
 
 const returnSource = {
   label: "FINRA — Returns, Explained",
@@ -21,6 +31,16 @@ export const guideSources: Record<
   GuideSlug,
   readonly { label: string; href: string }[]
 > = {
+  "net-salary-vs-withholding": [
+    {
+      label: "NTS — Monthly earned-income withholding and tax-table example",
+      href: "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?cntntsId=7862&mi=6583",
+    },
+    {
+      label: "NTS — Annual earned-income tax credits",
+      href: "https://g.nts.go.kr/nts/cm/cntnts/cntntsView.do?cntntsId=7875&mi=6596",
+    },
+  ],
   "cagr-vs-average-return": [returnSource],
   "annualize-growth-correctly": [returnSource],
   "ytm-vs-current-yield": [
@@ -52,10 +72,88 @@ type GuideCopy = {
   description: string;
   calculatorHref: string;
   calculatorLabel: string;
+  relatedCalculators?: readonly { href: string; label: string }[];
   sections: readonly (readonly [string, string])[];
 };
 
 export const guideContent: Record<GuideSlug, Record<GuideLocale, GuideCopy>> = {
+  "net-salary-vs-withholding": {
+    ko: {
+      title: "실수령액 추정과 근로소득 간이세액표는 왜 다를까?",
+      description:
+        "같은 월급이라도 실수령액 계산기의 간편 소득세 추정과 간이세액표 원천징수액이 다른 이유, 가족 수 입력과 비교 방법을 설명합니다.",
+      calculatorHref: "/ko/finance/earned-income-withholding-tax",
+      calculatorLabel: "근로소득 원천징수세액 계산기 열기",
+      relatedCalculators: [
+        { href: "/ko/employment/net-salary", label: "실수령액 계산기 열기" },
+      ],
+      sections: [
+        [
+          "어떤 질문에 답하는 계산인가요?",
+          "실수령액 계산기는 급여에서 보험료와 간편 추정 세금을 뺀 예산용 금액을 보여 줍니다. 근로소득 원천징수세액 계산기는 월 과세급여와 공제대상 가족 수를 간이세액표에 적용해 소득세와 지방소득세를 구합니다. 원천징수액은 최종 연간 세금이나 환급액과 같지 않으며, 원천징수세액 계산기만으로 전체 실수령액을 구할 수 없습니다.",
+        ],
+        [
+          "같은 사람을 입력하려면 가족 수부터 맞추세요",
+          "CalCome 실수령액 계산기의 부양가족 수는 본인을 제외하고, 원천징수세액 계산기의 공제대상 가족 수는 본인을 포함합니다. 본인만 있고 자녀가 없는 예시는 각각 0명과 1명입니다. 같은 숫자를 복사하면 같은 사람을 비교하는 것이 아닐 수 있습니다. 실제 공제대상 가족과 자녀의 요건은 별도로 확인하세요.",
+        ],
+        [
+          "월 350만원의 세금 항목만 비교한 예시",
+          "월 급여 3,500,000원, 상여 0원, 월 비과세 0원, 본인 외 공제대상 가족과 자녀 0명으로 둡니다. 세금 계산 방식만 보기 위해 실수령액 계산기의 국민연금·건강보험·장기요양·고용보험을 모두 끕니다. 이는 비교를 위한 가상 조건이며 보험 가입자가 임의로 납부를 면제받을 수 있다는 뜻이 아닙니다. 이때 간편 소득세는 195,208원, 지방소득세는 19,520원입니다. 간이세액표 방식의 100% 원천징수는 각각 127,220원과 12,720원입니다. 표에는 이 세금 항목만 비교하며 실제 실수령액은 제시하지 않습니다.",
+        ],
+        [
+          "간편 추정값은 어떻게 나왔나요?",
+          "현재 실수령액 모델은 연환산 과세급여 42,000,000원에서 근로소득공제 11,550,000원과 본인 공제 1,500,000원을 뺀 28,950,000원에 누진세율을 적용합니다. 산출세액 3,082,500원에서 이 모델의 간편 근로소득세액공제 상한 740,000원을 빼고 12로 나눈 뒤 원 미만을 버려 195,208원이 됩니다. 이 고정 상한을 포함한 간편 공제는 공식 연간 세액계산의 급여별 공제 한도 등을 모두 반영하지 않습니다. 따라서 연말정산 세금의 재현이나 법정 세액으로 해석하지 마세요.",
+        ],
+        [
+          "80%와 120%는 세율이 아닙니다",
+          "국세청 안내의 3,500천원 이상 3,520천원 미만·공제대상 가족 1명 행은 소득세 127,220원입니다. 원천징수 비율은 이 표 세액에 적용하는 비율입니다. 이 계산기는 소득세와 지방소득세의 10원 미만을 버립니다. 비율을 낮춘다고 최종 연간 세금이 그만큼 줄어드는 것은 아니며, 실제 적용은 회사에 제출한 선택과 급여 지급 조건을 확인해야 합니다.",
+        ],
+        [
+          "급여명세서와 대조할 때",
+          "총급여와 월 과세급여, 상여 지급 시점, 가족 수의 본인 포함 여부, 원천징수 비율을 먼저 맞추세요. 세금 항목끼리 비교한 다음 실제 보험료와 그 밖의 공제를 따로 대조하세요. 이 예시는 자녀가 없으므로 자녀 공제액의 적용일을 검증하는 사례가 아닙니다. 국세청 월 원천징수 안내는 표의 구조·가족 수·비율·해당 행을 확인하는 근거이며, 그 페이지의 모든 요율이 최신이라는 보증은 아닙니다.",
+        ],
+      ],
+    },
+    en: {
+      title: "South Korea Take-Home Estimates vs. Monthly Withholding",
+      description:
+        "Why a simplified take-home salary tax estimate differs from the monthly withholding table, with matched family inputs and a tax-only comparison.",
+      calculatorHref: "/en/finance/earned-income-withholding-tax",
+      calculatorLabel: "Open the Earned Income Withholding Tax Calculator",
+      relatedCalculators: [
+        {
+          href: "/en/employment/net-salary",
+          label: "Open the Net Salary Calculator",
+        },
+      ],
+      sections: [
+        [
+          "Which question does each calculator answer?",
+          "The Net Salary Calculator estimates a budgeting amount after insurance and simplified taxes. The Earned Income Withholding Tax Calculator applies the monthly table to taxable salary and qualifying family count, then calculates income tax and local income tax. Withholding is not the final annual liability or refund. The withholding calculator alone does not calculate complete take-home pay.",
+        ],
+        [
+          "Match the person before comparing the numbers",
+          "CalCome's Net Salary Calculator excludes you from its dependent count; the withholding calculator includes you in its qualifying family count. An employee with no other qualifying family members and no children enters zero in the former and one in the latter. Copying the same count can compare different people. Verify actual family and child eligibility separately.",
+        ],
+        [
+          "A tax-only example at KRW 3.5 million per month",
+          "Use monthly salary KRW 3,500,000, zero bonus, zero monthly non-taxable pay, no other qualifying family members and no children. Turn off pension, health, long-term care and employment insurance in Net Salary solely to isolate the tax methods. This artificial comparison does not imply that an insured employee can choose not to pay contributions. The simplified income tax is KRW 195,208 and local income tax KRW 19,520. The table-based result at 100% is KRW 127,220 and KRW 12,720. Compare these tax components only; no actual take-home pay is presented here.",
+        ],
+        [
+          "Reproducing the simplified estimate",
+          "The current Net Salary model annualizes taxable pay to KRW 42,000,000, subtracts an earned-income deduction of KRW 11,550,000 and a personal deduction of KRW 1,500,000, then applies progressive rates to KRW 28,950,000. It subtracts its simplified fixed earned-income credit cap of KRW 740,000 from calculated tax of KRW 3,082,500, divides by 12 and truncates to whole won: KRW 195,208. These simplified deductions and credits do not implement every wage-dependent credit limit in the official annual calculation. This is not a reproduction of year-end settlement or a statutory tax amount.",
+        ],
+        [
+          "80% and 120% are withholding choices, not tax rates",
+          "The NTS example row for taxable monthly pay from KRW 3,500,000 up to but excluding KRW 3,520,000 and one qualifying family member gives income tax of KRW 127,220. The selected percentage scales that table amount. This calculator truncates income tax and local income tax to KRW 10. Selecting less withholding does not reduce final annual tax by that percentage. Check the choice submitted to the employer and the actual payment conditions.",
+        ],
+        [
+          "Comparing with a payslip",
+          "First align gross versus taxable pay, bonus timing, whether the employee is included in the family count, and the withholding percentage. Compare tax with tax, then reconcile actual insurance and other deductions separately. This child-free example does not verify any child-credit effective date. The monthly NTS reference supports the table structure, family count, percentages and cited salary row; it is not a guarantee that every rate shown on that page is current.",
+        ],
+      ],
+    },
+  },
   "cagr-vs-average-return": {
     ko: {
       title: "CAGR과 평균 수익률은 왜 다를까?",

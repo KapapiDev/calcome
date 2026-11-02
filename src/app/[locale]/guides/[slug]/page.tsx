@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { InfoPage } from "@/components/layout/info-page";
 import {
   getGuide,
+  guidePublishedOn,
   guideReviewedOn,
   guideSlugs,
   guideSources,
@@ -16,6 +17,7 @@ import { createGuideStructuredData } from "@/lib/seo/guide-structured-data";
 import { GuideComparison } from "@/components/content/guide-comparison";
 import { EditorialLinks } from "@/components/content/editorial-links";
 import { absoluteUrl } from "@/config/site";
+import { guideSourceNotes } from "@/content/guide-source-notes";
 
 export function generateStaticParams() {
   // LocaleLayout supplies ko/en; enumerate only this segment's slugs.
@@ -46,7 +48,7 @@ export async function generateMetadata({
       ...metadata.openGraph,
       ...socialLocale(locale),
       type: "article",
-      publishedTime: "2026-10-30",
+      publishedTime: guidePublishedOn[slug as GuideSlug],
       modifiedTime: guideReviewedOn,
       authors: [absoluteUrl(locale === "ko" ? "/about" : "/en/about")],
     },
@@ -111,6 +113,15 @@ export default async function GuidePage({
         >
           {guide.calculatorLabel}
         </Link>
+        {guide.relatedCalculators?.map(({ href, label }) => (
+          <Link
+            key={href}
+            className="mt-4 flex min-h-11 items-center font-semibold text-primary underline-offset-4 hover:underline"
+            href={href}
+          >
+            {label}
+          </Link>
+        ))}
       </section>
       <section>
         <h2 className="text-xl font-semibold">
@@ -125,6 +136,11 @@ export default async function GuidePage({
               >
                 {source.label}
               </a>
+              {guideSourceNotes[source.href] && (
+                <p className="mt-2 text-muted-foreground" data-source-scope>
+                  {guideSourceNotes[source.href][locale]}
+                </p>
+              )}
             </li>
           ))}
         </ul>
@@ -137,8 +153,8 @@ export default async function GuidePage({
       </Link>
       <p className="text-sm leading-6 text-muted-foreground">
         {locale === "ko"
-          ? "이 가이드는 일반적인 정보 제공용이며 금융 또는 투자 자문이 아닙니다."
-          : "This guide is for general information and is not financial or investment advice."}
+          ? "이 가이드는 일반적인 정보 제공용이며 금융, 투자 또는 세무 자문이 아닙니다."
+          : "This guide is for general information and is not financial, investment or tax advice."}
       </p>
     </InfoPage>
   );

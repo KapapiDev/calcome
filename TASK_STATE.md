@@ -30,6 +30,11 @@ SEO-023's release baseline is 2026-10-30: five topics, ten localized guide route
 
 ## Recently completed
 
+- [x] SEO-031 DONE — Owner-requested Astra/Sol review and source-backed payroll comparison
+  - Added a bilingual same-person comparison of the take-home estimate and monthly withholding table, with explicit family-count conventions, tax-only assumptions and reproducible results; connected both calculators and guide indexes.
+  - Annotated guide sources by supported claim and disclosed AI assistance without claiming expert certification. Preserved formulas and 100 calculator identities; canonical sitemap now has 228 URLs.
+  - Review decisions, source limits and acceptance: `docs/SEO_031_EVIDENCE_AND_PAYROLL_COMPARISON.md`. For revised pages, SEO-027 uses complete November 3–16 coverage, preferably through November 30, adjusted to actual release. No monitoring or indexing retry is created.
+
 - [x] SEO-030 DONE — Owner-requested SEO/GEO clarity and editorial improvements
   - Corrected all ten affected branded titles and English home/search/card copy. Published bilingual verification/corrections policy, expanded truthful responsibility/development information and connected it across the site.
   - Added five bilingual comparison tables, linked four calculator identities and aligned guide bylines, sources and structured provenance. Preserved formulas and the 100-calculator inventory; canonical sitemap now has 226 URLs.

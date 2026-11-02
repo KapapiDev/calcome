@@ -1,4 +1,5 @@
 import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
+import { GuideComparison } from "@/components/content/guide-comparison";
 import Link from "next/link";
 import {
   JsonLdScript,
@@ -61,6 +62,11 @@ export function LocalizedEarnedIncomeWithholdingTaxPage({
         <CalculatorWorkedExample
           slug="earned-income-withholding-tax"
           locale={locale}
+        />
+        <GuideComparison
+          slug="net-salary-vs-withholding"
+          locale={locale}
+          linkToGuide
         />
         <section className="mt-10 rounded-xl border bg-card p-5">
           <h2 className="text-xl font-semibold">

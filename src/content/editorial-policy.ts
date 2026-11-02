@@ -9,6 +9,10 @@ export const editorialPolicy = {
     byline: "문서 관리: CalCome 편집 · 검토일: ",
     sections: [
       [
+        "AI 보조와 검증의 범위",
+        "설명 초안·번역·코드 개선과 사례 검토에 AI 도구를 활용합니다. 계산 결과는 AI의 답변을 생성하는 방식이 아니라 공개된 계산 함수로 구합니다. 출처의 적용 범위와 숫자 예시를 대조하고 자동 테스트를 수행하지만, AI 모델 간 교차 검토나 테스트 통과가 독립된 전문가의 검수·자격을 뜻하지는 않습니다. 주요 결정에는 공식 자료와 본인의 조건을 확인하세요.",
+      ],
+      [
         "콘텐츠 책임과 개발 기록",
         "계산기 설명과 가이드는 CalCome 편집 명의로 제공합니다. 개발·수정 이력은 공개 저장소 KapapiDev/calcome에서 확인할 수 있습니다. ‘CalCome 편집’ 표기는 서비스의 편집 주체를 나타내며, 회계사·세무사·노무사 등 외부 전문가의 자격이나 별도 검수를 뜻하지 않습니다.",
       ],
@@ -69,6 +73,10 @@ export const editorialPolicy = {
       "How CalCome checks formulas and official sources, identifies editorial responsibility, and records material corrections.",
     byline: "Maintained by CalCome editorial · Reviewed: ",
     sections: [
+      [
+        "AI assistance and verification scope",
+        "AI tools assist with explanatory drafts, translation, code changes and example review. Calculator outputs come from published calculation functions, rather than generated AI answers. We check source applicability and numerical examples and run automated tests. Cross-review by AI models and passing tests do not constitute independent professional review or credentials. Confirm official information and your own circumstances for consequential decisions.",
+      ],
       [
         "Editorial responsibility and development history",
         "Calculator explanations and guides are published under the CalCome editorial name. Public development and correction history is available in KapapiDev/calcome. This editorial credit identifies the service's publishing responsibility; it does not claim an external accountant, tax adviser or labor specialist's credentials or independent review.",

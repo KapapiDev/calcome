@@ -2,7 +2,7 @@
 
 Reconciled: 2026-10-30, at the owner's request.
 
-Updated: 2026-11-02 for the owner's separately authorized SEO-030 improvements. The traffic-outcome gate remains in effect; implementation authorization does not imply measured ranking gains.
+Updated: 2026-11-02 for the owner's separately authorized SEO-031 Astra/Sol review and improvements. The traffic-outcome gate remains in effect; implementation authorization does not imply measured ranking gains.
 
 This file contains current work and explicit waits. Historical scopes and obsolete status labels are preserved in [the archived queue](docs/archive/task-queue-2026-10-30.md). Use `TASK_STATE.md` and actual GitHub state to select work; never restart an archived proposal because its old snapshot says OPEN or BLOCKED.
 
@@ -16,6 +16,8 @@ This file contains current work and explicit waits. Historical scopes and obsole
 - Preserve formulas, published URLs, Korean/English behavior, the 100-calculator inventory, and all existing validation gates.
 
 ## Current priorities
+
+SEO-031 is the owner's subsequent explicit request for Astra/Sol debate and implementation. It adds the source-scoped payroll model comparison and transparent AI-assistance disclosure described in `docs/SEO_031_EVIDENCE_AND_PAYROLL_COMPARISON.md`. It does not activate SEO-027 early or resume the indexing wait. For pages revised by SEO-031, use complete November 3–16 coverage, preferably through November 30, adjusted to the actual release; keep older windows for unchanged pages.
 
 The owner authorized SEO-028 as a bounded five-calculator improvement/usage pilot, separate from SEO-027's traffic-observation gate. After the pilot, the owner separately authorized SEO-029 to review all remaining 95 calculators and improve necessary content in one PR. This explicit continuation supersedes the pilot's original scope limit; it does not authorize an early ranking-outcome review. Records: `docs/SEO_028_FIVE_CALCULATOR_PILOT.md` and `docs/SEO_029_CALCULATOR_FLEET_REVIEW.md`.
 
