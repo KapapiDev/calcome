@@ -4,6 +4,7 @@ const localeAwareGlobalPaths = new Set([
   "/",
   "/calculators",
   "/about",
+  "/editorial-policy",
   "/guides",
   "/privacy",
   "/terms",

@@ -1,6 +1,7 @@
 export const englishCalculatorDescriptions: Readonly<Record<string, string>> = {
   "weekly-holiday-pay": "Estimate weekly holiday pay from hours and wages.",
-  "severance-pay": "Estimate statutory severance pay.",
+  "severance-pay":
+    "Estimate South Korea severance from eligible service days and applicable average daily wage.",
   "unemployment-benefits": "Estimate unemployment benefit payments.",
   "net-salary": "Estimate take-home salary after deductions.",
   "hourly-wage": "Convert pay and work time to an hourly wage.",
@@ -26,7 +27,7 @@ export const englishCalculatorDescriptions: Readonly<Record<string, string>> = {
   dsr: "Estimate the debt service ratio.",
   "stress-dsr": "Estimate debt service under a stress rate.",
   "mortgage-loan-limit": "Estimate a mortgage borrowing limit.",
-  loan: "Calculate loan payments and total interest.",
+  loan: "Compare repayments, total interest and the payment schedule across loan repayment methods.",
   "loan-interest-comparison": "Compare interest costs across loans.",
   "loan-refinancing-savings": "Estimate savings from refinancing.",
   "balloon-payment": "Calculate payments with a balloon balance.",
@@ -61,9 +62,12 @@ export const englishCalculatorDescriptions: Readonly<Record<string, string>> = {
   "home-sale-net-proceeds": "Estimate net proceeds from a home sale.",
   "rental-yield": "Calculate gross and net rental yield.",
   "apartment-management-fee-budget": "Estimate apartment management fees.",
-  deposit: "Calculate deposit interest and maturity value.",
-  savings: "Project recurring savings growth.",
-  "compound-interest": "Project growth with compound interest.",
+  deposit:
+    "Estimate fixed-deposit interest and after-tax maturity value with simple or monthly compounding.",
+  savings:
+    "Compare recurring deposits, interest and after-tax maturity value from a monthly savings plan.",
+  "compound-interest":
+    "Compare lump-sum and recurring contributions with compounding, tax and inflation assumptions.",
   "savings-goal": "Find contributions for a savings goal.",
   "inflation-purchasing-power": "Estimate inflation and purchasing power.",
   "pension-savings-tax-credit": "Estimate a pension-savings tax credit.",
@@ -73,7 +77,7 @@ export const englishCalculatorDescriptions: Readonly<Record<string, string>> = {
   "retirement-withdrawal": "Estimate sustainable retirement withdrawals.",
   "pension-future-monthly-income": "Project future monthly pension income.",
   "apr-apy-conversion": "Convert between APR and APY.",
-  cagr: "Calculate compound annual growth rate.",
+  cagr: "Annualize the change between starting and ending values over your chosen investment period.",
   "stock-average-cost": "Calculate weighted average stock cost.",
   "stock-profit-loss": "Calculate stock profit, loss, and return.",
   dividend: "Estimate dividend income.",

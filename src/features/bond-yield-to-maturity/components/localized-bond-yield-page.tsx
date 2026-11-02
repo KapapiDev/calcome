@@ -1,3 +1,4 @@
+import { GuideComparison } from "@/components/content/guide-comparison";
 import Link from "next/link";
 import { CalculatorContentGuide } from "@/components/calculators/calculator-content-guide";
 import {
@@ -22,8 +23,11 @@ export function LocalizedBondYieldPage({
     path,
     locale,
     breadcrumbs: [
-      { name: home, path: "/" },
-      { name: calculators, path: "/calculators" },
+      { name: home, path: locale === "ko" ? "/" : "/en" },
+      {
+        name: calculators,
+        path: locale === "ko" ? "/calculators" : "/en/calculators",
+      },
       { name: copy.title, path },
     ],
   });
@@ -64,6 +68,11 @@ export function LocalizedBondYieldPage({
               href: "https://www.fidelity.com/learning-center/investment-products/fixed-income-bonds/bond-prices-rates-yields",
             },
           ]}
+        />
+        <GuideComparison
+          slug="ytm-vs-current-yield"
+          locale={locale}
+          linkToGuide
         />
         <section className="mt-6 rounded-xl border bg-card p-5">
           <h2 className="text-xl font-semibold">

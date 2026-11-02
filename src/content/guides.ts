@@ -10,7 +10,7 @@ export const guideSlugs = [
 
 export type GuideSlug = (typeof guideSlugs)[number];
 
-export const guideReviewedOn = "2026-10-30";
+export const guideReviewedOn = "2026-11-02";
 
 const returnSource = {
   label: "FINRA — Returns, Explained",

@@ -2,6 +2,8 @@
 
 Reconciled: 2026-10-30, at the owner's request.
 
+Updated: 2026-11-02 for the owner's separately authorized SEO-030 improvements. The traffic-outcome gate remains in effect; implementation authorization does not imply measured ranking gains.
+
 This file contains current work and explicit waits. Historical scopes and obsolete status labels are preserved in [the archived queue](docs/archive/task-queue-2026-10-30.md). Use `TASK_STATE.md` and actual GitHub state to select work; never restart an archived proposal because its old snapshot says OPEN or BLOCKED.
 
 ## Priority and execution rules
@@ -73,6 +75,8 @@ Improved three calculator identities: operating profit/margin, part-time monthly
 Status: OPEN, evidence-gated. This is the next meaningful review, not an instruction to start another code batch immediately.
 
 Eligibility: Search Console must cover complete post-release dates 2026-10-31 through at least 2026-11-13; prefer a 28-day view through 2026-11-27. Adjust dates if production release is delayed. A calendar date alone is insufficient when the report lags. The owner resumes manually; do not create a scheduled monitor.
+
+Use per-page release windows. For the guides and four calculator pages substantively revised by SEO-030 on 2026-11-02, require complete 2026-11-03 through November 16 coverage, preferably through November 30; shift if actual release is later. Earlier windows apply only to unchanged pages. Do not mix the two baselines or treat this implementation as a search-outcome review.
 
 Scope when eligible:
 

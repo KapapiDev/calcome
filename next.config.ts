@@ -4,6 +4,11 @@ import { allPublishedCalculators } from "./src/config/calculator-directory";
 
 const localeRedirects = [
   {
+    source: "/ko/editorial-policy",
+    destination: "/editorial-policy",
+    permanent: true,
+  },
+  {
     source: "/ko",
     destination: "/",
     permanent: true,

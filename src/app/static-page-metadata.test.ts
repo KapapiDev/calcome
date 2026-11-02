@@ -8,11 +8,12 @@ import { metadata as guides } from "./guides/page";
 import { metadata as privacy } from "./privacy/page";
 import { metadata as terms } from "./terms/page";
 import { metadata as contact } from "./contact/page";
+import { metadata as editorial } from "./editorial-policy/page";
 import { generateMetadata as localizedDirectory } from "./[locale]/calculators/page";
 import { staticSitemapEntries } from "./sitemap";
 
 describe("canonical static page language discovery", () => {
-  it("matches all seven Korean page alternates to the bilingual sitemap", () => {
+  it("matches all eight Korean page alternates to the bilingual sitemap", () => {
     const pages: Metadata[] = [
       home,
       calculators,
@@ -21,6 +22,7 @@ describe("canonical static page language discovery", () => {
       privacy,
       terms,
       contact,
+      editorial,
     ];
     const sitemap = staticSitemapEntries();
 

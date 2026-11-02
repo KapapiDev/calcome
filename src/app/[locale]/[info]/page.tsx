@@ -9,26 +9,24 @@ import PrivacyPage from "@/app/privacy/page";
 import TermsPage from "@/app/terms/page";
 import { InfoPage } from "@/components/layout/info-page";
 import { guideContent, guideSlugs } from "@/content/guides";
+import EditorialPage from "@/app/editorial-policy/page";
+import { EditorialPolicyPage } from "@/components/content/editorial-policy-page";
+import { AboutContent } from "@/components/content/about-content";
+import { EditorialLinks } from "@/components/content/editorial-links";
+import { editorialPolicy } from "@/content/editorial-policy";
+import { createPageMetadata } from "@/lib/seo/metadata";
 
 const englishPages = {
+  "editorial-policy": {
+    title: editorialPolicy.en.title,
+    description: editorialPolicy.en.description,
+    sections: [],
+  },
   about: {
     title: "About CalCome",
     description:
-      "Learn how CalCome builds clear, practical financial calculators.",
-    sections: [
-      [
-        "Clear calculations",
-        "We aim to make inputs, assumptions, and results easy to understand. Only published and verified calculators are presented as available tools.",
-      ],
-      [
-        "Results are estimates",
-        "Results are informational estimates based on your inputs and the assumptions shown on each calculator. They are not financial, investment, tax, or legal advice.",
-      ],
-      [
-        "Operating principles",
-        "CalCome prioritizes accessibility, performance, clear explanations, and reproducible calculations.",
-      ],
-    ],
+      "CalCome's financial calculators, editorial responsibility, public development history and verification policy.",
+    sections: [],
   },
   guides: {
     title: "How to Use Calculator Results for Decisions",
@@ -121,6 +119,7 @@ const englishPages = {
 type InfoKey = keyof typeof englishPages;
 
 const koreanPages: Record<InfoKey, React.ComponentType> = {
+  "editorial-policy": EditorialPage,
   about: AboutPage,
   guides: GuidesPage,
   privacy: PrivacyPage,
@@ -161,6 +160,11 @@ export async function generateMetadata({
   const page = englishPages[info as InfoKey];
   const path = `/en/${info}`;
   return {
+    ...createPageMetadata({
+      title: page.title,
+      description: page.description,
+      path: `/en/${info}`,
+    }),
     title: page.title,
     description: page.description,
     alternates: {
@@ -183,6 +187,8 @@ export default async function LocalizedInfoPage({
     const KoreanPage = koreanPages[info as InfoKey];
     return <KoreanPage />;
   }
+  if (info === "about") return <AboutContent locale="en" />;
+  if (info === "editorial-policy") return <EditorialPolicyPage locale="en" />;
   const page = englishPages[info as InfoKey];
   return (
     <InfoPage
@@ -222,6 +228,21 @@ export default async function LocalizedInfoPage({
             })}
           </div>
         </section>
+      ) : null}
+      {info === "contact" ? (
+        <>
+          <a
+            className="inline-flex min-h-11 items-center text-primary underline"
+            href="mailto:hello@calcome.com"
+          >
+            hello@calcome.com
+          </a>
+          <p className="text-sm leading-7 text-muted-foreground">
+            Use fictional inputs to reproduce an issue. Do not send passwords,
+            identifiers, account details or other sensitive information.
+          </p>
+          <EditorialLinks locale="en" />
+        </>
       ) : null}
     </InfoPage>
   );

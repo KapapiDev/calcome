@@ -9,6 +9,7 @@ const publicStaticRoutes = [
   { ko: "/", en: "/en" },
   { ko: "/calculators", en: "/en/calculators" },
   { ko: "/about", en: "/en/about" },
+  { ko: "/editorial-policy", en: "/en/editorial-policy" },
   { ko: "/guides", en: "/en/guides" },
   { ko: "/privacy", en: "/en/privacy" },
   { ko: "/terms", en: "/en/terms" },

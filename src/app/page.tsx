@@ -17,6 +17,7 @@ import {
 } from "@/lib/seo/structured-data";
 import { cn } from "@/lib/utils";
 import { staticPageAlternates } from "@/lib/seo/metadata";
+import { EditorialLinks } from "@/components/content/editorial-links";
 
 export const metadata: Metadata = {
   alternates: staticPageAlternates("/"),
@@ -89,6 +90,9 @@ export default function Home() {
             </div>
           </div>
         </section>
+        <div className="mx-auto w-full max-w-6xl px-5 py-8 sm:px-8">
+          <EditorialLinks locale="ko" />
+        </div>
       </main>
     </SiteChrome>
   );

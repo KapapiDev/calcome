@@ -17,6 +17,12 @@ import {
   createWebsiteStructuredData,
 } from "@/lib/seo/structured-data";
 import { cn } from "@/lib/utils";
+import { getEnglishCalculatorName } from "@/config/calculator-directory-calculator-copy";
+import { getEnglishCalculatorDescription } from "@/config/calculator-description-copy";
+import { getEnglishCalculatorSearchAliases } from "@/config/calculator-search-keyword-copy";
+import { getEnglishPrimaryCategoryName } from "@/config/calculator-directory-copy";
+import { EditorialLinks } from "@/components/content/editorial-links";
+import { createPageMetadata } from "@/lib/seo/metadata";
 
 export const englishWebsiteStructuredData = {
   "@context": "https://schema.org",
@@ -26,21 +32,12 @@ export const englishWebsiteStructuredData = {
 function englishCalculator(
   calculator: (typeof directorySearchCalculators)[number],
 ) {
-  const name = `${calculator.id
-    .split("-")
-    .map((part) =>
-      part.toUpperCase() === part
-        ? part
-        : part.charAt(0).toUpperCase() + part.slice(1),
-    )
-    .join(" ")} Calculator`;
   return {
     ...calculator,
-    name,
-    description: `Open the ${name} with clear inputs, assumptions, and results.`,
-    keywords: calculator.keywords.filter((keyword) =>
-      /^[\x00-\x7F]+$/.test(keyword),
-    ),
+    name: getEnglishCalculatorName(calculator.id),
+    description: getEnglishCalculatorDescription(calculator.id),
+    keywords: getEnglishCalculatorSearchAliases(calculator.id),
+    primaryCategory: getEnglishPrimaryCategoryName(calculator.id),
     href: calculator.href.replace(/^\/ko\//, "/en/") as typeof calculator.href,
   };
 }
@@ -54,6 +51,12 @@ export async function generateMetadata({
   if (locale === "ko") return { alternates: { canonical: "/" } };
   if (locale !== "en") return {};
   return {
+    ...createPageMetadata({
+      title: "Financial Calculators",
+      description:
+        "Fast, clear financial calculators for investing, savings, loans, payroll, and everyday money decisions.",
+      path: "/en",
+    }),
     title: "Financial Calculators",
     description:
       "Fast, clear financial calculators for investing, savings, loans, payroll, and everyday money decisions.",
@@ -95,7 +98,7 @@ export default async function LocalizedHome({
             Explore practical calculators for investing, savings, loans,
             payroll, and more.
           </p>
-          <CalculatorSearch calculators={searchCalculators} />
+          <CalculatorSearch calculators={searchCalculators} locale="en" />
           <HomeCategoryEntry locale="en" />
           <CalculatorRepeatUseShortcuts
             calculators={searchCalculators}
@@ -119,7 +122,10 @@ export default async function LocalizedHome({
           <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {popular.map((calculator) => (
               <li key={calculator.id}>
-                <CalculatorCard calculator={calculator} />
+                <CalculatorCard
+                  calculator={calculator}
+                  categoryLabel={calculator.primaryCategory}
+                />
               </li>
             ))}
           </ul>
@@ -136,6 +142,9 @@ export default async function LocalizedHome({
           </div>
         </div>
       </section>
+      <div className="mx-auto w-full max-w-6xl px-5 py-8 sm:px-8">
+        <EditorialLinks locale="en" />
+      </div>
     </main>
   );
 }

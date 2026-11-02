@@ -47,7 +47,7 @@ describe("technical SEO and indexability invariants", () => {
     const entries = sitemap();
     const staticEntries = staticSitemapEntries();
 
-    expect(staticEntries).toHaveLength(14);
+    expect(staticEntries).toHaveLength(16);
     expect(new Set(entries.map((entry) => entry.url)).size).toBe(
       entries.length,
     );

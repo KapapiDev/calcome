@@ -7,8 +7,8 @@ export function createEarnedIncomeWithholdingTaxMetadata(
 ): Metadata {
   const ko = locale === "ko";
   const title = ko
-    ? "근로소득 원천징수세액 계산기 | CalCome"
-    : "South Korea Earned Income Withholding Tax Calculator | CalCome";
+    ? "근로소득 원천징수세액 계산기"
+    : "South Korea Earned Income Withholding Tax Calculator";
   const description = ko
     ? "월 과세급여, 공제대상 가족 수, 8~20세 자녀 수와 80·100·120% 선택으로 월 근로소득 원천징수세액을 계산합니다."
     : "Estimate monthly South Korean earned-income withholding from taxable salary, qualifying dependents, eligible children, and the 80/100/120% election.";

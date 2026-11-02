@@ -1,6 +1,6 @@
 # CalCome Task State
 
-Last Updated: 2026-10-30
+Last Updated: 2026-11-02
 Current Calculator Count: 100
 Target Calculator Count: 100
 Remaining to Target: 0
@@ -29,6 +29,11 @@ SEO-023's release baseline is 2026-10-30: five topics, ten localized guide route
   - This account wait does not block guide or search-performance work.
 
 ## Recently completed
+
+- [x] SEO-030 DONE — Owner-requested SEO/GEO clarity and editorial improvements
+  - Corrected all ten affected branded titles and English home/search/card copy. Published bilingual verification/corrections policy, expanded truthful responsibility/development information and connected it across the site.
+  - Added five bilingual comparison tables, linked four calculator identities and aligned guide bylines, sources and structured provenance. Preserved formulas and the 100-calculator inventory; canonical sitemap now has 226 URLs.
+  - Sources, scope and release checks: `docs/SEO_030_EDITORIAL_AND_COMPARISONS.md`. No ranking/citation uplift or professional qualification is invented. SEO-027 remains the sole OPEN task: for pages revised by this release, wait for complete 2026-11-03–16 coverage (prefer through November 30), adjusted to actual release; retain October windows only for unchanged pages. No monitor or indexing retry was created.
 
 - [x] SEO-029 DONE — Owner-authorized remaining 95 calculator review
   - Reviewed all 95 identities / 190 localized routes after the pilot. Added 91 tailored bilingual worked examples with interpretation, limitations, references and contextual links; retained four adequate existing guides.

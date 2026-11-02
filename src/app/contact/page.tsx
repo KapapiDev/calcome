@@ -1,5 +1,6 @@
 import { InfoPage } from "@/components/layout/info-page";
 import { createPageMetadata } from "@/lib/seo/metadata";
+import { EditorialLinks } from "@/components/content/editorial-links";
 
 export const metadata = createPageMetadata({
   title: "문의",
@@ -41,6 +42,7 @@ export default function ContactPage() {
           민감한 개인정보를 이메일에 포함하지 마세요.
         </p>
       </section>
+      <EditorialLinks locale="ko" />
     </InfoPage>
   );
 }

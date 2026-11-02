@@ -47,7 +47,10 @@ describe("five-calculator sourced improvement pilot", () => {
         expect(container.querySelector('a[href^="https://"]')).not.toBeNull();
         for (const link of container.querySelectorAll('a[href^="/"]')) {
           const href = link.getAttribute("href")!;
-          expect(paths.has(href), href).toBe(true);
+          expect(
+            paths.has(new URL(href, "https://www.calcome.com").pathname),
+            href,
+          ).toBe(true);
           expect(
             locale === "ko" ? !href.startsWith("/en") : href.startsWith("/en"),
             href,

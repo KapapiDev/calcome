@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { EditorialLinks } from "@/components/content/editorial-links";
 import {
   calculatorExamples,
   calculatorExampleSources,
@@ -61,6 +62,7 @@ export function CalculatorWorkedExample({
         </div>
       </div>
       <div className="mt-5 border-t pt-4 text-xs leading-6 text-muted-foreground">
+        <EditorialLinks locale={locale} />
         <p>
           {locale === "ko" ? "설명 검토일" : "Explanation reviewed"}:{" "}
           <time dateTime="2026-10-30">2026-10-30</time>
