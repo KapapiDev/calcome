@@ -1,3 +1,4 @@
+import { CalculatorReferenceCheck } from "@/components/calculators/calculator-reference-check";
 import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import { GuideComparison } from "@/components/content/guide-comparison";
 import Link from "next/link";
@@ -8,6 +9,21 @@ import {
 import { getNetSalaryDictionary, type NetSalaryLocale } from "../i18n";
 import { NetSalaryCalculator } from "./net-salary-calculator";
 const sources = [
+  [
+    "https://www.law.go.kr/LSW/lsRvsDocListP.do?chrClsCd=010102&lsId=001565",
+    "소득세법 법률 제21548호: 2026년 자녀세액공제 연령 경과규정",
+    "Income Tax Act No. 21548: 2026 child-credit age transition",
+  ],
+  [
+    "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?cntntsId=7871&mi=6592",
+    "국세청: 근로소득공제 및 2,000만원 상한",
+    "NTS: earned-income deduction and KRW 20 million ceiling",
+  ],
+  [
+    "https://g.nts.go.kr/nts/cm/cntnts/cntntsView.do?cntntsId=7875&mi=6596",
+    "국세청: 급여별 근로소득세액공제 한도",
+    "NTS: wage-dependent earned-income credit limits",
+  ],
   [
     "https://www.nps.or.kr/pnsinfo/ntpsklg/getOHAF0016M0.do?menuId=MN24001108",
     "국민연금공단",
@@ -90,6 +106,7 @@ export function LocalizedNetSalaryPage({
           <NetSalaryCalculator locale={locale} />
         </div>
         <CalculatorWorkedExample slug="net-salary" locale={locale} />
+        <CalculatorReferenceCheck slug="net-salary" locale={locale} />
         <GuideComparison
           slug="net-salary-vs-withholding"
           locale={locale}

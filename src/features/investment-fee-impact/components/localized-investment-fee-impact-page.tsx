@@ -1,3 +1,4 @@
+import { GuideComparison } from "@/components/content/guide-comparison";
 import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import Link from "next/link";
 import {
@@ -58,6 +59,11 @@ export function LocalizedInvestmentFeeImpactPage({
           <InvestmentFeeImpactCalculator locale={locale} />
         </div>
         <CalculatorWorkedExample slug="investment-fee-impact" locale={locale} />
+        <GuideComparison
+          slug="investment-fees-compound"
+          locale={locale}
+          linkToGuide
+        />
         <section className="mt-10 rounded-xl border bg-card p-5">
           <h2 className="text-xl font-semibold">
             {locale === "ko" ? "계산 방법" : "How it works"}

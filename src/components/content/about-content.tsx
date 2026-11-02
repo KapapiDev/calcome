@@ -2,6 +2,7 @@ import Link from "next/link";
 import { InfoPage } from "@/components/layout/info-page";
 import { EditorialLinks } from "./editorial-links";
 import { developmentRepository } from "@/content/editorial-policy";
+import { OperatorContact } from "./operator-contact";
 
 export function AboutContent({ locale }: { locale: "ko" | "en" }) {
   const ko = locale === "ko";
@@ -11,10 +12,11 @@ export function AboutContent({ locale }: { locale: "ko" | "en" }) {
       title={ko ? "CalCome 소개" : "About CalCome"}
       description={
         ko
-          ? "CalCome(캘컴)은 누구나 이해하기 쉬운 금융 계산기를 제공합니다. 입력값·가정·검증 근거를 확인하며 사용할 수 있습니다."
+          ? "칼컴(CalCome)은 누구나 이해하기 쉬운 금융 계산기를 제공합니다. 입력값·가정·검증 근거를 확인하며 사용할 수 있습니다."
           : "CalCome provides financial calculators with clear inputs, assumptions and verifiable calculation references."
       }
     >
+      <OperatorContact locale={locale} />
       <section>
         <h2 className="text-2xl font-semibold">
           {ko ? "무엇을 제공하나요?" : "What we publish"}

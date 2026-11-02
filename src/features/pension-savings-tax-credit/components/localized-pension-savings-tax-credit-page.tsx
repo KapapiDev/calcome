@@ -1,3 +1,4 @@
+import { CalculatorReferenceCheck } from "@/components/calculators/calculator-reference-check";
 import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import Link from "next/link";
 import {
@@ -61,6 +62,10 @@ export function LocalizedPensionSavingsTaxCreditPage({
           <PensionSavingsTaxCreditCalculator locale={locale} />
         </div>
         <CalculatorWorkedExample
+          slug="pension-savings-tax-credit"
+          locale={locale}
+        />
+        <CalculatorReferenceCheck
           slug="pension-savings-tax-credit"
           locale={locale}
         />

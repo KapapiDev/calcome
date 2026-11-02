@@ -30,6 +30,11 @@ SEO-023's release baseline is 2026-10-30: five topics, ten localized guide route
 
 ## Recently completed
 
+- [x] SEO-032 DONE — Owner-requested source verification and improvements without external expert review
+  - Added truthful bilingual CalCome operator/content responsibility and email contact. Scoped source applicability across all 100 calculator identities and published 12 reproducible reference checks without claiming professional certification.
+  - Corrected confirmed take-home deduction/credit cap defects and annual child-credit eligibility wording; added three bilingual cost-comparison guides, bringing the sitemap to 234 canonical URLs. Preserved existing calculator identities and routes.
+  - Scope, sources and acceptance: `docs/SEO_032_SOURCE_VERIFICATION.md`; exact-head preflight and live deployment evidence accompany the implementation PR. SEO-027 remains the sole OPEN evidence-gated task; no monitoring or indexing retry is created.
+
 - [x] SEO-031 DONE — Owner-requested Astra/Sol review and source-backed payroll comparison
   - Added a bilingual same-person comparison of the take-home estimate and monthly withholding table, with explicit family-count conventions, tax-only assumptions and reproducible results; connected both calculators and guide indexes.
   - Annotated guide sources by supported claim and disclosed AI assistance without claiming expert certification. Preserved formulas and 100 calculator identities; canonical sitemap now has 228 URLs.

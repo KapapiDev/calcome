@@ -166,8 +166,14 @@ describe("SEO/GEO clarity and editorial provenance", () => {
       );
       expect(article).toMatchObject({
         headline: guideContent[slug][locale].title,
-        datePublished:
-          slug === "net-salary-vs-withholding" ? "2026-11-02" : "2026-10-30",
+        datePublished: [
+          "net-salary-vs-withholding",
+          "loan-term-total-interest",
+          "refinancing-break-even",
+          "investment-fees-compound",
+        ].includes(slug)
+          ? "2026-11-02"
+          : "2026-10-30",
         dateModified: "2026-11-02",
         author: { "@type": "Organization", name: "CalCome" },
       });

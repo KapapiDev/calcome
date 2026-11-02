@@ -1,3 +1,4 @@
+import { GuideComparison } from "@/components/content/guide-comparison";
 import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import Link from "next/link";
 import {
@@ -57,6 +58,11 @@ export function LocalizedLoanRefinancingPage({
         <CalculatorWorkedExample
           slug="loan-refinancing-savings"
           locale={locale}
+        />
+        <GuideComparison
+          slug="refinancing-break-even"
+          locale={locale}
+          linkToGuide
         />
         <div className="mt-12 grid gap-4 md:grid-cols-2">
           <Info title={copy.explanationTitle} items={copy.explanation} />

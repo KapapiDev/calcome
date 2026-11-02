@@ -1,3 +1,4 @@
+import { CalculatorReferenceCheck } from "@/components/calculators/calculator-reference-check";
 import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import Link from "next/link";
 import {
@@ -91,6 +92,7 @@ export function LocalizedSocialInsurancePage({
           <SocialInsuranceCalculator locale={locale} />
         </div>
         <CalculatorWorkedExample slug="social-insurance" locale={locale} />
+        <CalculatorReferenceCheck slug="social-insurance" locale={locale} />
         <div className="mt-12 grid gap-4 md:grid-cols-2">
           <Info title={copy.explanationTitle} items={copy.explanation} />
           <Info title={copy.assumptionsTitle} items={copy.assumptions} />

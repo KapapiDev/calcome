@@ -59,6 +59,7 @@ export function LocalizedBusinessCashRunwayPage({
         </div>
 
         <CalculatorContentGuide
+          calculatorId="business-cash-runway"
           locale={locale}
           method={copy.method}
           example={copy.example}

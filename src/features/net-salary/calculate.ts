@@ -12,7 +12,7 @@ const zero = () => new Decimal(0);
 const money = (value: Decimal) =>
   Decimal.max(value, 0).toDecimalPlaces(0, Decimal.ROUND_DOWN);
 
-function earnedIncomeDeduction(gross: Decimal) {
+export function earnedIncomeDeduction(gross: Decimal) {
   if (gross.lte(5_000_000)) return gross.mul("0.7");
   if (gross.lte(15_000_000))
     return new Decimal(3_500_000).plus(gross.minus(5_000_000).mul("0.4"));
@@ -20,7 +20,30 @@ function earnedIncomeDeduction(gross: Decimal) {
     return new Decimal(7_500_000).plus(gross.minus(15_000_000).mul("0.15"));
   if (gross.lte(100_000_000))
     return new Decimal(12_000_000).plus(gross.minus(45_000_000).mul("0.05"));
-  return new Decimal(14_750_000).plus(gross.minus(100_000_000).mul("0.02"));
+  return Decimal.min(
+    new Decimal(14_750_000).plus(gross.minus(100_000_000).mul("0.02")),
+    20_000_000,
+  );
+}
+
+// NTS earned-income credits / Income Tax Act Article 59(2).
+// Gross here is annual taxable employment pay, excluding non-taxable pay.
+export function earnedIncomeTaxCreditLimit(gross: Decimal) {
+  if (gross.lte(33_000_000)) return new Decimal(740_000);
+  if (gross.lte(70_000_000))
+    return Decimal.max(
+      new Decimal(740_000).minus(gross.minus(33_000_000).mul("0.008")),
+      660_000,
+    );
+  if (gross.lte(120_000_000))
+    return Decimal.max(
+      new Decimal(660_000).minus(gross.minus(70_000_000).mul("0.5")),
+      500_000,
+    );
+  return Decimal.max(
+    new Decimal(500_000).minus(gross.minus(120_000_000).mul("0.5")),
+    200_000,
+  );
 }
 
 function progressiveTax(base: Decimal) {
@@ -64,7 +87,10 @@ function estimatedMonthlyIncomeTax(
   const earnedCredit = calculated.lte(1_300_000)
     ? calculated.mul("0.55")
     : new Decimal(715_000).plus(calculated.minus(1_300_000).mul("0.3"));
-  const cappedCredit = Decimal.min(earnedCredit, 740_000);
+  const cappedCredit = Decimal.min(
+    earnedCredit,
+    earnedIncomeTaxCreditLimit(annualTaxableGross),
+  );
   const childMonthlyCredit =
     children === 0
       ? zero()

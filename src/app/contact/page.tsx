@@ -1,6 +1,7 @@
 import { InfoPage } from "@/components/layout/info-page";
 import { createPageMetadata } from "@/lib/seo/metadata";
 import { EditorialLinks } from "@/components/content/editorial-links";
+import { OperatorContact } from "@/components/content/operator-contact";
 
 export const metadata = createPageMetadata({
   title: "문의",
@@ -25,13 +26,8 @@ export default function ContactPage() {
           오류를 제보할 때는 문제를 재현할 수 있는 단계와 기대한 결과를 함께
           적어 주세요.
         </p>
-        <a
-          href="mailto:hello@calcome.com"
-          className="mt-6 inline-flex min-h-11 items-center rounded-lg bg-primary px-5 text-sm font-medium text-primary-foreground hover:bg-primary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        >
-          hello@calcome.com
-        </a>
       </section>
+      <OperatorContact locale="ko" />
 
       <section className="rounded-xl border bg-muted/40 p-5">
         <h2 className="text-xl font-semibold tracking-tight">

@@ -1,6 +1,12 @@
+import {
+  costGuideSlugs,
+  costGuideSources,
+  costGuideContent,
+} from "./cost-comparison-guides";
 export type GuideLocale = "ko" | "en";
 
 export const guideSlugs = [
+  ...costGuideSlugs,
   "cagr-vs-average-return",
   "annualize-growth-correctly",
   "ytm-vs-current-yield",
@@ -14,6 +20,9 @@ export type GuideSlug = (typeof guideSlugs)[number];
 export const guideReviewedOn = "2026-11-02";
 
 export const guidePublishedOn: Record<GuideSlug, string> = {
+  "loan-term-total-interest": "2026-11-02",
+  "refinancing-break-even": "2026-11-02",
+  "investment-fees-compound": "2026-11-02",
   "cagr-vs-average-return": "2026-10-30",
   "annualize-growth-correctly": "2026-10-30",
   "ytm-vs-current-yield": "2026-10-30",
@@ -31,6 +40,7 @@ export const guideSources: Record<
   GuideSlug,
   readonly { label: string; href: string }[]
 > = {
+  ...costGuideSources,
   "net-salary-vs-withholding": [
     {
       label: "NTS — Monthly earned-income withholding and tax-table example",
@@ -77,6 +87,7 @@ type GuideCopy = {
 };
 
 export const guideContent: Record<GuideSlug, Record<GuideLocale, GuideCopy>> = {
+  ...costGuideContent,
   "net-salary-vs-withholding": {
     ko: {
       title: "실수령액 추정과 근로소득 간이세액표는 왜 다를까?",
@@ -98,11 +109,11 @@ export const guideContent: Record<GuideSlug, Record<GuideLocale, GuideCopy>> = {
         ],
         [
           "월 350만원의 세금 항목만 비교한 예시",
-          "월 급여 3,500,000원, 상여 0원, 월 비과세 0원, 본인 외 공제대상 가족과 자녀 0명으로 둡니다. 세금 계산 방식만 보기 위해 실수령액 계산기의 국민연금·건강보험·장기요양·고용보험을 모두 끕니다. 이는 비교를 위한 가상 조건이며 보험 가입자가 임의로 납부를 면제받을 수 있다는 뜻이 아닙니다. 이때 간편 소득세는 195,208원, 지방소득세는 19,520원입니다. 간이세액표 방식의 100% 원천징수는 각각 127,220원과 12,720원입니다. 표에는 이 세금 항목만 비교하며 실제 실수령액은 제시하지 않습니다.",
+          "월 급여 3,500,000원, 상여 0원, 월 비과세 0원, 본인 외 공제대상 가족과 자녀 0명으로 둡니다. 세금 계산 방식만 보기 위해 실수령액 계산기의 국민연금·건강보험·장기요양·고용보험을 모두 끕니다. 이는 비교를 위한 가상 조건이며 보험 가입자가 임의로 납부를 면제받을 수 있다는 뜻이 아닙니다. 이때 간편 소득세는 201,208원, 지방소득세는 20,120원입니다. 간이세액표 방식의 100% 원천징수는 각각 127,220원과 12,720원입니다. 표에는 이 세금 항목만 비교하며 실제 실수령액은 제시하지 않습니다.",
         ],
         [
           "간편 추정값은 어떻게 나왔나요?",
-          "현재 실수령액 모델은 연환산 과세급여 42,000,000원에서 근로소득공제 11,550,000원과 본인 공제 1,500,000원을 뺀 28,950,000원에 누진세율을 적용합니다. 산출세액 3,082,500원에서 이 모델의 간편 근로소득세액공제 상한 740,000원을 빼고 12로 나눈 뒤 원 미만을 버려 195,208원이 됩니다. 이 고정 상한을 포함한 간편 공제는 공식 연간 세액계산의 급여별 공제 한도 등을 모두 반영하지 않습니다. 따라서 연말정산 세금의 재현이나 법정 세액으로 해석하지 마세요.",
+          "현재 실수령액 모델은 연환산 과세급여 42,000,000원에서 근로소득공제 11,550,000원과 본인 공제 1,500,000원을 뺀 28,950,000원에 누진세율을 적용합니다. 이 급여의 근로소득세액공제 한도는 740,000−(42,000,000−33,000,000)×0.008=668,000원입니다. 산출세액 3,082,500원에서 668,000원을 빼고 12로 나눈 뒤 원 미만을 버려 201,208원이 됩니다. 모델은 급여별 공제 한도와 근로소득공제 2,000만원 상한을 반영하지만 다른 연말정산 공제·감면이나 월 간이세액표의 가정 전체를 재현하지 않습니다. 따라서 이 예시를 최종 연말정산 세금이나 법정 월 원천징수액으로 해석하지 마세요.",
         ],
         [
           "80%와 120%는 세율이 아닙니다",
@@ -137,11 +148,11 @@ export const guideContent: Record<GuideSlug, Record<GuideLocale, GuideCopy>> = {
         ],
         [
           "A tax-only example at KRW 3.5 million per month",
-          "Use monthly salary KRW 3,500,000, zero bonus, zero monthly non-taxable pay, no other qualifying family members and no children. Turn off pension, health, long-term care and employment insurance in Net Salary solely to isolate the tax methods. This artificial comparison does not imply that an insured employee can choose not to pay contributions. The simplified income tax is KRW 195,208 and local income tax KRW 19,520. The table-based result at 100% is KRW 127,220 and KRW 12,720. Compare these tax components only; no actual take-home pay is presented here.",
+          "Use monthly salary KRW 3,500,000, zero bonus, zero monthly non-taxable pay, no other qualifying family members and no children. Turn off pension, health, long-term care and employment insurance in Net Salary solely to isolate the tax methods. This artificial comparison does not imply that an insured employee can choose not to pay contributions. The simplified income tax is KRW 201,208 and local income tax KRW 20,120. The table-based result at 100% is KRW 127,220 and KRW 12,720. Compare these tax components only; no actual take-home pay is presented here.",
         ],
         [
           "Reproducing the simplified estimate",
-          "The current Net Salary model annualizes taxable pay to KRW 42,000,000, subtracts an earned-income deduction of KRW 11,550,000 and a personal deduction of KRW 1,500,000, then applies progressive rates to KRW 28,950,000. It subtracts its simplified fixed earned-income credit cap of KRW 740,000 from calculated tax of KRW 3,082,500, divides by 12 and truncates to whole won: KRW 195,208. These simplified deductions and credits do not implement every wage-dependent credit limit in the official annual calculation. This is not a reproduction of year-end settlement or a statutory tax amount.",
+          "The current Net Salary model annualizes taxable pay to KRW 42,000,000, subtracts an earned-income deduction of KRW 11,550,000 and a personal deduction of KRW 1,500,000, then applies progressive rates to KRW 28,950,000. The wage-dependent credit cap is 740,000−(42,000,000−33,000,000)×0.008 = KRW 668,000. Subtracting this from calculated tax of KRW 3,082,500, dividing by 12 and truncating to whole won gives KRW 201,208. The model includes wage-dependent credit limits and the KRW 20 million earned-income deduction ceiling, but does not reproduce all year-end deductions, reliefs or monthly-table assumptions. This is not a final year-end liability or statutory monthly withholding amount.",
         ],
         [
           "80% and 120% are withholding choices, not tax rates",
