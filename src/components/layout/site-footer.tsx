@@ -60,7 +60,9 @@ export function SiteFooter({ locale = "ko" }: { locale?: CompoundLocale }) {
             </li>
             <li>
               <a href="https://aipickkit.com" className={footerLinkClass}>
-                {locale === "ko" ? "AI 선물 추천" : "AI gift picker"}
+                {locale === "ko"
+                  ? "AI 모델·비용 비교 — AI PickKit"
+                  : "AI model & cost comparison — AI PickKit"}
               </a>
             </li>
           </ul>
