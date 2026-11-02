@@ -54,7 +54,7 @@ describe("English calculator directory copy", () => {
 
   it("uses explicit calculator-specific English descriptions", () => {
     expect(getEnglishCalculatorDescription("compound-interest")).toBe(
-      "Project growth with compound interest.",
+      "Compare lump-sum and recurring contributions with compounding, tax and inflation assumptions.",
     );
     expect(getEnglishCalculatorDescription("ltv")).toContain(
       "loan-to-value ratio",

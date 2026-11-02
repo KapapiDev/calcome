@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { EditorialLinks } from "@/components/content/editorial-links";
 
 export type CalculatorContentSource = {
   label: string;
@@ -86,6 +87,7 @@ export function CalculatorContentGuide({
       </div>
 
       <div className="mt-6 border-t pt-4 text-xs leading-6 text-muted-foreground">
+        <EditorialLinks locale={locale} />
         <p>
           {copy.reviewed}: <time dateTime={reviewedAt}>{reviewedAt}</time>
         </p>

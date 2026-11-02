@@ -7,8 +7,8 @@ export function createRetirementIncomeTaxMetadata(
 ): Metadata {
   const ko = locale === "ko";
   const title = ko
-    ? "퇴직소득세 계산기 | CalCome"
-    : "South Korea Retirement Income Tax Calculator | CalCome";
+    ? "퇴직소득세 계산기"
+    : "South Korea Retirement Income Tax Calculator";
   const description = ko
     ? "퇴직급여, 비과세 퇴직급여와 근속연수로 퇴직소득세와 지방소득세를 계산합니다."
     : "Estimate South Korean retirement income tax and local income tax from retirement pay, non-taxable retirement pay, and years of service.";

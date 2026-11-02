@@ -1,3 +1,4 @@
+import { GuideComparison } from "@/components/content/guide-comparison";
 import { CalculatorContentGuide } from "@/components/calculators/calculator-content-guide";
 import Link from "next/link";
 import {
@@ -70,6 +71,11 @@ export function LocalizedCurrencyConversionPage({
               href: "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html",
             },
           ]}
+        />
+        <GuideComparison
+          slug="currency-conversion-rate-check"
+          locale={locale}
+          linkToGuide
         />
         <p className="mt-5 text-sm">
           <Link

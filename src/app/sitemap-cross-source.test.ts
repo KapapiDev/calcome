@@ -39,7 +39,10 @@ describe("sitemap and redirect cross-source regression", () => {
     expect(redirectBySource.get("/en/en/finance/rent-conversion-rate")).toBe(
       "/en/finance/rent-conversion-rate",
     );
-    expect(localeRedirects).toHaveLength(allPublishedCalculators.length + 2);
+    expect(redirectBySource.get("/ko/editorial-policy")).toBe(
+      "/editorial-policy",
+    );
+    expect(localeRedirects).toHaveLength(allPublishedCalculators.length + 3);
 
     for (const calculator of allPublishedCalculators) {
       const source =

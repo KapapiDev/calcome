@@ -4,7 +4,12 @@ import { describe, expect, it } from "vitest";
 import { allPublishedCalculators } from "@/config/calculator-directory";
 import { localizedDestination } from "@/components/layout/language-routing";
 import { SiteFooter } from "@/components/layout/site-footer";
-import { guideContent, guideSlugs, guideSources } from "@/content/guides";
+import {
+  guideContent,
+  guideSlugs,
+  guideSources,
+  guideReviewedOn,
+} from "@/content/guides";
 import { calculateBondYield } from "@/features/bond-yield-to-maturity/calculate";
 import { calculateCagr } from "@/features/cagr/calculate";
 import { calculateCurrencyConversion } from "@/features/currency-conversion/calculate";
@@ -94,7 +99,7 @@ describe("published guide journeys", () => {
       }
       expect(container.querySelector("time")).toHaveAttribute(
         "dateTime",
-        "2026-10-30",
+        guideReviewedOn,
       );
       expect(
         screen.getByRole("link", {

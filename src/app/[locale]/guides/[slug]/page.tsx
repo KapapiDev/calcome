@@ -11,6 +11,11 @@ import {
   type GuideSlug,
 } from "@/content/guides";
 import { createPageMetadata, socialLocale } from "@/lib/seo/metadata";
+import { JsonLdScript } from "@/lib/seo/structured-data";
+import { createGuideStructuredData } from "@/lib/seo/guide-structured-data";
+import { GuideComparison } from "@/components/content/guide-comparison";
+import { EditorialLinks } from "@/components/content/editorial-links";
+import { absoluteUrl } from "@/config/site";
 
 export function generateStaticParams() {
   // LocaleLayout supplies ko/en; enumerate only this segment's slugs.
@@ -37,7 +42,14 @@ export async function generateMetadata({
   });
   return {
     ...metadata,
-    openGraph: { ...metadata.openGraph, ...socialLocale(locale) },
+    openGraph: {
+      ...metadata.openGraph,
+      ...socialLocale(locale),
+      type: "article",
+      publishedTime: "2026-10-30",
+      modifiedTime: guideReviewedOn,
+      authors: [absoluteUrl(locale === "ko" ? "/about" : "/en/about")],
+    },
     alternates: {
       canonical: locale === "ko" ? koPath : enPath,
       languages: { ko: koPath, en: enPath, "x-default": koPath },
@@ -61,12 +73,23 @@ export default async function GuidePage({
       title={guide.title}
       description={guide.description}
     >
+      <JsonLdScript
+        data={createGuideStructuredData(locale, slug as GuideSlug)}
+      />
       <p className="text-sm text-muted-foreground">
+        <Link
+          className="inline-flex min-h-11 items-center text-primary underline"
+          href={locale === "ko" ? "/about" : "/en/about"}
+        >
+          {locale === "ko" ? "CalCome 편집" : "CalCome editorial"}
+        </Link>
         {locale === "ko"
-          ? "CalCome 편집 · 내용 및 출처 확인: "
-          : "CalCome editorial · Content and sources checked: "}
+          ? " · 내용 및 출처 확인: "
+          : " · Content and sources checked: "}
         <time dateTime={guideReviewedOn}>{guideReviewedOn}</time>
       </p>
+      <EditorialLinks locale={locale} />
+      <GuideComparison slug={slug as GuideSlug} locale={locale} />
       {guide.sections.map(([heading, body]) => (
         <section key={heading}>
           <h2 className="text-2xl font-semibold tracking-tight">{heading}</h2>

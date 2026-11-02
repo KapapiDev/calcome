@@ -65,7 +65,11 @@ export function createPageMetadata({
   path: `/${string}`;
 }): Metadata {
   const socialTitle = `${title} | ${siteConfig.name}`;
-  const socialImageAlt = "CalCome - 금융 계산을 쉽게.";
+  const locale = path === "/en" || path.startsWith("/en/") ? "en" : "ko";
+  const socialImageAlt =
+    locale === "en"
+      ? "CalCome - Financial calculations, made simple."
+      : "CalCome - 금융 계산을 쉽게.";
 
   return {
     title,
@@ -76,7 +80,7 @@ export function createPageMetadata({
       description,
       type: "website",
       url: absoluteUrl(path),
-      locale: siteConfig.locale,
+      ...socialLocale(locale),
       siteName: siteConfig.name,
       images: [
         {

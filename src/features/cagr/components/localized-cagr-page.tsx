@@ -1,3 +1,4 @@
+import { GuideComparison } from "@/components/content/guide-comparison";
 import { CalculatorContentGuide } from "@/components/calculators/calculator-content-guide";
 import Link from "next/link";
 
@@ -87,6 +88,11 @@ export function LocalizedCagrPage({ locale }: { locale: CagrLocale }) {
               href: "https://syndication.finra.org/content/key-concepts-return-and-rate-return",
             },
           ]}
+        />
+        <GuideComparison
+          slug="cagr-vs-average-return"
+          locale={locale}
+          linkToGuide
         />
         <section className="mt-8" aria-labelledby="cagr-faq">
           <h2 id="cagr-faq" className="text-2xl font-semibold">

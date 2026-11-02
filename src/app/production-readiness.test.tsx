@@ -194,7 +194,7 @@ describe("production recovery and navigation", () => {
       name: "하단 탐색",
     });
     expect(footerNavigation).toHaveTextContent(
-      "계산기가이드소개개인정보처리방침이용약관문의",
+      "계산기가이드소개검증·수정 기준개인정보처리방침이용약관문의",
     );
     expect(screen.getByRole("link", { name: "계산기" })).toHaveAttribute(
       "href",
@@ -204,6 +204,9 @@ describe("production recovery and navigation", () => {
       "href",
       "/about",
     );
+    expect(
+      screen.getByRole("link", { name: "검증·수정 기준" }),
+    ).toHaveAttribute("href", "/editorial-policy");
     expect(
       screen.getByRole("link", { name: "개인정보처리방침" }),
     ).toHaveAttribute("href", "/privacy");

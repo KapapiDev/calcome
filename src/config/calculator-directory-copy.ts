@@ -77,3 +77,12 @@ assertEnglishDirectoryCategoryCopyCoverage(
 );
 
 export const englishDirectoryCategoryCopy = englishDirectoryCategoryCopySource;
+
+export function getEnglishPrimaryCategoryName(calculatorId: string) {
+  const category = calculatorDirectoryCategories.find((entry) =>
+    entry.calculatorIds.some((id) => id === calculatorId),
+  );
+  if (!category)
+    throw new Error(`Unknown calculator category: ${calculatorId}`);
+  return englishDirectoryCategoryCopy[category.id].name;
+}

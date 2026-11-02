@@ -36,6 +36,14 @@ export function SiteFooter({ locale = "ko" }: { locale?: CompoundLocale }) {
               </Link>
             </li>
             <li>
+              <Link
+                href={href("/editorial-policy")}
+                className={footerLinkClass}
+              >
+                {copy.editorial}
+              </Link>
+            </li>
+            <li>
               <Link href={href("/privacy")} className={footerLinkClass}>
                 {copy.privacy}
               </Link>

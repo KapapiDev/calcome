@@ -289,8 +289,14 @@ describe("remaining calculator worked-example release", () => {
         expect(entry.related.length).toBeGreaterThan(0);
         for (const link of holder.querySelectorAll('a[href^="/"]')) {
           const href = link.getAttribute("href")!;
-          expect(paths.has(href), slug + ": " + href).toBe(true);
-          expect(href.startsWith("/" + locale + "/"), href).toBe(true);
+          const target = new URL(href, "https://www.calcome.com");
+          expect(paths.has(target.pathname), slug + ": " + href).toBe(true);
+          expect(
+            locale === "en"
+              ? target.pathname.startsWith("/en/")
+              : !target.pathname.startsWith("/en/"),
+            href,
+          ).toBe(true);
           expect(link.textContent?.trim()).toBeTruthy();
         }
         for (const source of entry.sources) {

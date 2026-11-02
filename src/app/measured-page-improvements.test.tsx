@@ -60,7 +60,12 @@ describe("measured calculator page improvements", () => {
         expect(metadata(locale).description).toBe(copy[locale].description);
         expect(metadata(locale).title).toBe(copy[locale].metaTitle);
         for (const link of container.querySelectorAll('a[href^="/"]')) {
-          expect(publishedPaths.has(link.getAttribute("href")!)).toBe(true);
+          expect(
+            publishedPaths.has(
+              new URL(link.getAttribute("href")!, "https://www.calcome.com")
+                .pathname,
+            ),
+          ).toBe(true);
         }
         unmount();
       }
