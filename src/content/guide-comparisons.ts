@@ -13,6 +13,40 @@ export const guideComparisons: Record<
   GuideSlug,
   Record<GuideLocale, ComparisonCopy>
 > = {
+  "net-salary-vs-withholding": {
+    ko: {
+      question: "같은 월급을 넣었는데 소득세가 왜 다른가요?",
+      assumption:
+        "월 과세급여 3,500,000원, 상여·비과세·자녀 없음, 본인만 있는 가상 비교입니다. 실수령액 계산기 가족 수는 0, 원천징수 계산기는 1입니다. 실수령액의 보험 항목은 모두 꺼서 세금 계산 방식만 비교하며, 표의 금액은 실수령액이 아닙니다.",
+      columns: ["계산 방식", "소득세 · 지방소득세", "세금 합계"],
+      rows: [
+        ["실수령액 모델의 간편 추정", "195,208원 · 19,520원", "214,728원"],
+        ["간이세액표 · 80%", "101,770원 · 10,170원", "111,940원"],
+        ["간이세액표 · 100%", "127,220원 · 12,720원", "139,940원"],
+        ["간이세액표 · 120%", "152,660원 · 15,260원", "167,920원"],
+      ],
+      takeaway:
+        "간편 연환산 모델의 공제·세액공제 가정과 월 간이세액표의 가정은 다릅니다. 가족 수 입력과 세금 항목을 맞춰 비교하고, 실제 급여는 회사의 과세급여·보험료·선택 비율을 확인하세요. 이 비교는 보험료 납부 제외를 권하거나 최종 세금을 예측하지 않습니다.",
+    },
+    en: {
+      question: "Why do the income-tax amounts differ for the same salary?",
+      assumption:
+        "Use hypothetical monthly taxable pay of KRW 3,500,000, no bonus, non-taxable pay or children, and the employee alone. Enter family counts zero in Net Salary and one in Withholding. Turn all Net Salary insurance items off solely to compare tax methods; these figures are not take-home pay.",
+      columns: ["Method", "Income tax · local income tax", "Combined taxes"],
+      rows: [
+        [
+          "Simplified Net Salary estimate",
+          "KRW 195,208 · 19,520",
+          "KRW 214,728",
+        ],
+        ["Monthly table · 80%", "KRW 101,770 · 10,170", "KRW 111,940"],
+        ["Monthly table · 100%", "KRW 127,220 · 12,720", "KRW 139,940"],
+        ["Monthly table · 120%", "KRW 152,660 · 15,260", "KRW 167,920"],
+      ],
+      takeaway:
+        "The annualized estimate's deductions and credits differ from monthly-table assumptions. Match family inputs and tax components, then check actual taxable pay, insurance and your selected withholding percentage. This comparison does not recommend skipping insurance or predict final annual tax.",
+    },
+  },
   "cagr-vs-average-return": {
     ko: {
       question: "평균 수익률이 양수인데 원금은 그대로일 수 있나요?",

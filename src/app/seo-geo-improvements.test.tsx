@@ -149,9 +149,12 @@ describe("SEO/GEO clarity and editorial provenance", () => {
       );
       const copy = guideComparisons[slug][locale];
       const table = screen.getByRole("table", { name: copy.question });
-      expect(table.querySelectorAll("tbody tr")).toHaveLength(3);
+      const expectedRows = slug === "net-salary-vs-withholding" ? 4 : 3;
+      expect(table.querySelectorAll("tbody tr")).toHaveLength(expectedRows);
       expect(table.querySelectorAll('thead th[scope="col"]')).toHaveLength(3);
-      expect(table.querySelectorAll('tbody th[scope="row"]')).toHaveLength(3);
+      expect(table.querySelectorAll('tbody th[scope="row"]')).toHaveLength(
+        expectedRows,
+      );
       for (const row of copy.rows)
         for (const cell of row) expect(table.textContent).toContain(cell);
       const graph = JSON.parse(
@@ -163,7 +166,8 @@ describe("SEO/GEO clarity and editorial provenance", () => {
       );
       expect(article).toMatchObject({
         headline: guideContent[slug][locale].title,
-        datePublished: "2026-10-30",
+        datePublished:
+          slug === "net-salary-vs-withholding" ? "2026-11-02" : "2026-10-30",
         dateModified: "2026-11-02",
         author: { "@type": "Organization", name: "CalCome" },
       });

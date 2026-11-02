@@ -1,4 +1,5 @@
 import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
+import { GuideComparison } from "@/components/content/guide-comparison";
 import Link from "next/link";
 import {
   JsonLdScript,
@@ -89,6 +90,11 @@ export function LocalizedNetSalaryPage({
           <NetSalaryCalculator locale={locale} />
         </div>
         <CalculatorWorkedExample slug="net-salary" locale={locale} />
+        <GuideComparison
+          slug="net-salary-vs-withholding"
+          locale={locale}
+          linkToGuide
+        />
         <div className="mt-12 grid gap-4 md:grid-cols-2">
           <Info title={copy.explanationTitle} items={copy.explanation} />
           <Info title={copy.assumptionsTitle} items={copy.assumptions} />
