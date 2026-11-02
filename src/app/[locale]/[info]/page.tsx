@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { OperatorContact } from "@/components/content/operator-contact";
 import { notFound } from "next/navigation";
 
 import AboutPage from "@/app/about/page";
@@ -231,12 +232,7 @@ export default async function LocalizedInfoPage({
       ) : null}
       {info === "contact" ? (
         <>
-          <a
-            className="inline-flex min-h-11 items-center text-primary underline"
-            href="mailto:hello@calcome.com"
-          >
-            hello@calcome.com
-          </a>
+          <OperatorContact locale="en" />
           <p className="text-sm leading-7 text-muted-foreground">
             Use fictional inputs to reproduce an issue. Do not send passwords,
             identifiers, account details or other sensitive information.

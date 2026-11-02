@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { EditorialLinks } from "@/components/content/editorial-links";
+import { CalculatorSourceContext } from "./calculator-source-context";
 
 export type CalculatorContentSource = {
   label: string;
@@ -14,6 +15,7 @@ type CalculatorContentGuideProps = {
   limitations: readonly ReactNode[];
   reviewedAt: string;
   sources?: readonly CalculatorContentSource[];
+  calculatorId?: string;
 };
 
 export function CalculatorContentGuide({
@@ -24,6 +26,7 @@ export function CalculatorContentGuide({
   limitations,
   reviewedAt,
   sources = [],
+  calculatorId,
 }: CalculatorContentGuideProps) {
   const copy =
     locale === "ko"
@@ -108,6 +111,11 @@ export function CalculatorContentGuide({
             ))}
           </div>
         ) : null}
+        <CalculatorSourceContext
+          locale={locale}
+          sources={sources}
+          calculatorId={calculatorId}
+        />
       </div>
     </section>
   );

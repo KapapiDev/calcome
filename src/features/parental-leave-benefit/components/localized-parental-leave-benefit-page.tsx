@@ -1,3 +1,4 @@
+import { CalculatorReferenceCheck } from "@/components/calculators/calculator-reference-check";
 import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import Link from "next/link";
 import {
@@ -71,6 +72,10 @@ export function LocalizedParentalLeaveBenefitPage({
           <ParentalLeaveBenefitCalculator locale={locale} />
         </div>
         <CalculatorWorkedExample
+          slug="parental-leave-benefit"
+          locale={locale}
+        />
+        <CalculatorReferenceCheck
           slug="parental-leave-benefit"
           locale={locale}
         />

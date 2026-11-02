@@ -1,3 +1,4 @@
+import { CalculatorReferenceCheck } from "@/components/calculators/calculator-reference-check";
 import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import { GuideComparison } from "@/components/content/guide-comparison";
 import Link from "next/link";
@@ -60,6 +61,10 @@ export function LocalizedEarnedIncomeWithholdingTaxPage({
           <EarnedIncomeWithholdingTaxCalculator locale={locale} />
         </div>
         <CalculatorWorkedExample
+          slug="earned-income-withholding-tax"
+          locale={locale}
+        />
+        <CalculatorReferenceCheck
           slug="earned-income-withholding-tax"
           locale={locale}
         />

@@ -2,7 +2,7 @@
 
 Reconciled: 2026-10-30, at the owner's request.
 
-Updated: 2026-11-02 for the owner's separately authorized SEO-031 Astra/Sol review and improvements. The traffic-outcome gate remains in effect; implementation authorization does not imply measured ranking gains.
+Updated: 2026-11-02 for the owner's separately authorized SEO-032 source verification and practical improvements excluding external expert review. The traffic-outcome gate remains in effect; implementation authorization does not imply measured ranking gains.
 
 This file contains current work and explicit waits. Historical scopes and obsolete status labels are preserved in [the archived queue](docs/archive/task-queue-2026-10-30.md). Use `TASK_STATE.md` and actual GitHub state to select work; never restart an archived proposal because its old snapshot says OPEN or BLOCKED.
 
@@ -16,6 +16,8 @@ This file contains current work and explicit waits. Historical scopes and obsole
 - Preserve formulas, published URLs, Korean/English behavior, the 100-calculator inventory, and all existing validation gates.
 
 ## Current priorities
+
+SEO-032 continues the owner's explicit improvement request: truthful CalCome operator/email responsibility, source applicability across 100 calculators, 12 scoped numerical reference checks, confirmed payroll corrections, and three original bilingual cost comparisons. Scope and acceptance are in `docs/SEO_032_SOURCE_VERIFICATION.md`. External expert review is excluded. This does not activate SEO-027 early, resume indexing, or schedule monitoring. All changed pages use the actual November release baseline and complete November 3–16 coverage (prefer through November 30), shifted if deployed later.
 
 SEO-031 is the owner's subsequent explicit request for Astra/Sol debate and implementation. It adds the source-scoped payroll model comparison and transparent AI-assistance disclosure described in `docs/SEO_031_EVIDENCE_AND_PAYROLL_COMPARISON.md`. It does not activate SEO-027 early or resume the indexing wait. For pages revised by SEO-031, use complete November 3–16 coverage, preferably through November 30, adjusted to the actual release; keep older windows for unchanged pages.
 

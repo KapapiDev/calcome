@@ -1,3 +1,4 @@
+import { GuideComparison } from "@/components/content/guide-comparison";
 import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import Link from "next/link";
 import {
@@ -64,6 +65,11 @@ export function LocalizedLoanPage({ locale }: { locale: LoanLocale }) {
           <LoanCalculator locale={locale} />
         </div>
         <CalculatorWorkedExample slug="loan" locale={locale} />
+        <GuideComparison
+          slug="loan-term-total-interest"
+          locale={locale}
+          linkToGuide
+        />
         <div className="mt-12 grid gap-4 md:grid-cols-2">
           <section
             className="rounded-xl border bg-card p-5"

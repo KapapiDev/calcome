@@ -30,15 +30,15 @@ describe("payroll method comparison", () => {
       localIncomeTax: true,
     });
     // Independent arithmetic for this model, not an official annual tax oracle:
-    // (14m × 6% + (28.95m − 14m) × 15% − fixed 740k credit) / 12.
-    const annualModelTax = 14_000_000 * 0.06 + 14_950_000 * 0.15 - 740_000;
-    expect(annualModelTax).toBe(2_342_500);
+    // (14m × 6% + (28.95m − 14m) × 15% − wage-dependent 668k credit) / 12.
+    const annualModelTax = 14_000_000 * 0.06 + 14_950_000 * 0.15 - 668_000;
+    expect(annualModelTax).toBe(2_414_500);
     expect(result.deductions.incomeTax.toNumber()).toBe(
       Math.floor(annualModelTax / 12),
     );
-    expect(result.deductions.incomeTax.toNumber()).toBe(195_208);
-    expect(result.deductions.localIncomeTax.toNumber()).toBe(19_520);
-    expect(result.monthlyDeductions.toNumber()).toBe(214_728);
+    expect(result.deductions.incomeTax.toNumber()).toBe(201_208);
+    expect(result.deductions.localIncomeTax.toNumber()).toBe(20_120);
+    expect(result.monthlyDeductions.toNumber()).toBe(221_328);
     for (const key of [
       "pension",
       "health",
@@ -79,7 +79,7 @@ describe("payroll method comparison", () => {
       const { container, unmount } = render(
         await GuidePage({ params: Promise.resolve({ locale, slug }) }),
       );
-      expect(screen.getByRole("table")).toHaveTextContent("214,728");
+      expect(screen.getByRole("table")).toHaveTextContent("221,328");
       expect(screen.getByRole("table")).toHaveTextContent("139,940");
       expect(
         screen.getByRole("heading", {
@@ -112,7 +112,15 @@ describe("payroll method comparison", () => {
   );
 
   it("preserves the original publication dates of the five existing guides", () => {
-    for (const existing of guideSlugs.filter((item) => item !== slug)) {
+    const originalGuides = [
+      "cagr-vs-average-return",
+      "annualize-growth-correctly",
+      "ytm-vs-current-yield",
+      "bond-price-and-yield",
+      "currency-conversion-rate-check",
+    ] as const;
+    for (const existing of originalGuides) {
+      expect(guideSlugs).toContain(existing);
       expect(guidePublishedOn[existing]).toBe("2026-10-30");
       const { "@graph": graph } = createGuideStructuredData("en", existing) as {
         "@graph": Record<string, unknown>[];

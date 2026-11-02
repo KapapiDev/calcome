@@ -1,4 +1,5 @@
 import type { GuideLocale, GuideSlug } from "./guides";
+import { costGuideComparisons } from "./cost-comparison-guides";
 
 export const comparisonReviewedOn = "2026-11-02";
 type ComparisonCopy = {
@@ -13,6 +14,7 @@ export const guideComparisons: Record<
   GuideSlug,
   Record<GuideLocale, ComparisonCopy>
 > = {
+  ...costGuideComparisons,
   "net-salary-vs-withholding": {
     ko: {
       question: "같은 월급을 넣었는데 소득세가 왜 다른가요?",
@@ -20,7 +22,7 @@ export const guideComparisons: Record<
         "월 과세급여 3,500,000원, 상여·비과세·자녀 없음, 본인만 있는 가상 비교입니다. 실수령액 계산기 가족 수는 0, 원천징수 계산기는 1입니다. 실수령액의 보험 항목은 모두 꺼서 세금 계산 방식만 비교하며, 표의 금액은 실수령액이 아닙니다.",
       columns: ["계산 방식", "소득세 · 지방소득세", "세금 합계"],
       rows: [
-        ["실수령액 모델의 간편 추정", "195,208원 · 19,520원", "214,728원"],
+        ["실수령액 모델의 간편 추정", "201,208원 · 20,120원", "221,328원"],
         ["간이세액표 · 80%", "101,770원 · 10,170원", "111,940원"],
         ["간이세액표 · 100%", "127,220원 · 12,720원", "139,940원"],
         ["간이세액표 · 120%", "152,660원 · 15,260원", "167,920원"],
@@ -36,8 +38,8 @@ export const guideComparisons: Record<
       rows: [
         [
           "Simplified Net Salary estimate",
-          "KRW 195,208 · 19,520",
-          "KRW 214,728",
+          "KRW 201,208 · 20,120",
+          "KRW 221,328",
         ],
         ["Monthly table · 80%", "KRW 101,770 · 10,170", "KRW 111,940"],
         ["Monthly table · 100%", "KRW 127,220 · 12,720", "KRW 139,940"],

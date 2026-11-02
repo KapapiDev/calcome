@@ -1,10 +1,12 @@
 import type { GuideLocale } from "./guides";
+import { costGuideSourceNotes } from "./cost-comparison-guides";
 
 // Describe the claim supported by each source; none endorses CalCome's outputs.
 export const guideSourceNotes: Record<string, Record<GuideLocale, string>> = {
+  ...costGuideSourceNotes,
   "https://g.nts.go.kr/nts/cm/cntnts/cntntsView.do?cntntsId=7875&mi=6596": {
-    ko: "국세청의 연간 근로소득 세액공제 안내입니다. 급여 구간에 따라 근로소득세액공제 한도가 달라지므로, 실수령액 모델의 고정된 간편 상한으로 공식 연말정산 세액을 재현할 수 없다는 범위 설명에 사용합니다. 월 원천징수표의 세액을 이 자료로 산출한 것은 아닙니다.",
-    en: "NTS guidance on annual earned-income tax credits explains that credit limits vary with salary. It supports the limitation that the Net Salary model's fixed simplified cap does not reproduce the official year-end calculation. This reference is not the basis for the monthly withholding-table amount.",
+    ko: "국세청의 연간 근로소득 세액공제 안내입니다. 급여 구간에 따른 세액공제 한도와 연 과세급여 4,200만원의 668,000원 한도를 확인하는 근거입니다. 월 원천징수표의 세액을 이 자료로 산출한 것은 아니며 다른 공제·감면과 개인 요건은 별도입니다.",
+    en: "NTS guidance on annual earned-income tax credits supports wage-dependent credit limits, including the KRW 668,000 cap at KRW 42 million in annual taxable employment pay. It is not the basis for the monthly withholding-table amount; other deductions, reliefs and individual eligibility remain separate.",
   },
   "https://syndication.finra.org/content/how-are-your-investments-doing-returns-explained":
     {

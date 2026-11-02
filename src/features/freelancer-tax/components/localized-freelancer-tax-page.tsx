@@ -1,3 +1,4 @@
+import { CalculatorReferenceCheck } from "@/components/calculators/calculator-reference-check";
 import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import Link from "next/link";
 import {
@@ -55,6 +56,7 @@ export function LocalizedFreelancerTaxPage({
           <FreelancerTaxCalculator locale={locale} />
         </div>
         <CalculatorWorkedExample slug="freelancer-3-3-tax" locale={locale} />
+        <CalculatorReferenceCheck slug="freelancer-3-3-tax" locale={locale} />
         <div className="mt-12 grid gap-4 md:grid-cols-2">
           <Info title={copy.explanationTitle} items={copy.explanation} />
           <Info title={copy.cautionsTitle} items={copy.cautions} />

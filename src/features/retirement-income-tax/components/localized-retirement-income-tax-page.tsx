@@ -1,3 +1,4 @@
+import { CalculatorReferenceCheck } from "@/components/calculators/calculator-reference-check";
 import { CalculatorWorkedExample } from "@/components/calculators/calculator-worked-example";
 import Link from "next/link";
 import {
@@ -59,6 +60,10 @@ export function LocalizedRetirementIncomeTaxPage({
           <RetirementIncomeTaxCalculator locale={locale} />
         </div>
         <CalculatorWorkedExample slug="retirement-income-tax" locale={locale} />
+        <CalculatorReferenceCheck
+          slug="retirement-income-tax"
+          locale={locale}
+        />
         <section className="mt-10 rounded-xl border bg-card p-5">
           <h2 className="text-xl font-semibold">
             {ko ? "2026년 계산 기준" : "2026 calculation basis"}

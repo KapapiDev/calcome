@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { OperatorContact } from "./operator-contact";
 import { InfoPage } from "@/components/layout/info-page";
 import {
   developmentRepository,
@@ -17,6 +18,7 @@ export function EditorialPolicyPage({ locale }: { locale: "ko" | "en" }) {
       title={copy.title}
       description={copy.description}
     >
+      <OperatorContact locale={locale} />
       <p className="text-sm text-muted-foreground">
         {copy.byline}
         <time dateTime={editorialPolicyReviewedOn}>

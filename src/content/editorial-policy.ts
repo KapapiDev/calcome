@@ -42,6 +42,24 @@ export const editorialPolicy = {
     changes: [
       {
         date: "2026-11-02",
+        title: "연간 자녀세액공제와 월 간이세액표의 자녀 요건 구분",
+        body: "연환산 실수령액 추정에 일괄 표시하던 ‘8~20세’를 ‘공제요건을 확인한 자녀’로 바꾸고, 2026년 연간 공제의 9세 이상 경과규정과 2017년생의 해당 경과규정 제외를 안내했습니다. 생년·기본공제 자격은 자동 판정하지 않습니다. 월 간이세액표 별표 2의 8~20세 규정은 별개이므로 원천징수 계산기의 그 기준은 변경하지 않았습니다.",
+        href: "/ko/employment/net-salary",
+        label: "자녀 입력과 적용 범위 확인",
+        source:
+          "https://www.law.go.kr/LSW/lsRvsDocListP.do?chrClsCd=010102&lsId=001565",
+      },
+      {
+        date: "2026-11-02",
+        title: "실수령액 추정의 급여별 세액공제·근로소득공제 상한 수정",
+        body: "근로소득 세액공제 한도를 모든 급여에 연 74만원으로 적용하던 오류를 급여 구간별 한도로 수정하고, 근로소득공제의 연 2,000만원 상한을 반영했습니다. 월 과세급여 350만원·본인만·자녀와 보험 공제 없는 비교에서 월 소득세는 195,208원에서 201,208원으로 바뀝니다. 해당 경계값과 예시를 회귀 테스트로 확인했습니다. 실제 월 원천징수표나 모든 연말정산 공제를 구현한 모델은 아닙니다.",
+        href: "/ko/employment/net-salary",
+        label: "수정된 계산과 검증 사례",
+        source:
+          "https://g.nts.go.kr/nts/cm/cntnts/cntntsView.do?cntntsId=7875&mi=6596",
+      },
+      {
+        date: "2026-11-02",
         title: "검증 기준과 비교 사례 공개",
         body: "검증·편집 및 수정 절차를 공개하고, 기존 가이드에 조건별 비교 사례를 추가했습니다. 이 변경 자체는 계산 공식이나 세율을 바꾸지 않습니다.",
         href: "/guides",
@@ -105,6 +123,26 @@ export const editorialPolicy = {
     reporting: "Report a calculation issue",
     sourceLabel: "Supporting reference",
     changes: [
+      {
+        date: "2026-11-02",
+        title:
+          "Distinguished annual child-credit eligibility from monthly withholding",
+        body: "Replaced the annualized take-home estimator's blanket ages 8–20 label with eligibility-checked children, explaining the 2026 age-nine transition and the exclusion of 2017 births from that transition. Birth-year and basic-deduction eligibility are not automatically determined. The separate monthly withholding Annex 2 retains ages 8–20; that calculator's rule is unchanged.",
+        href: "/en/employment/net-salary",
+        label: "Check child inputs and scope",
+        source:
+          "https://www.law.go.kr/LSW/lsRvsDocListP.do?chrClsCd=010102&lsId=001565",
+      },
+      {
+        date: "2026-11-02",
+        title:
+          "Corrected wage-dependent tax-credit and earned-income deduction caps",
+        body: "Replaced the incorrectly fixed KRW 740,000 annual earned-income credit limit with wage-dependent caps, and applied the KRW 20m earned-income deduction ceiling. For the tax-only KRW 3.5m monthly-pay example with the employee alone, no children and no insurance deductions, monthly income tax changes from KRW 195,208 to KRW 201,208. Boundary and example regression tests cover the correction. The model is not the statutory monthly table or a complete annual settlement.",
+        href: "/en/employment/net-salary",
+        label: "Corrected calculator and reference case",
+        source:
+          "https://g.nts.go.kr/nts/cm/cntnts/cntntsView.do?cntntsId=7875&mi=6596",
+      },
       {
         date: "2026-11-02",
         title: "Verification policy and comparison cases published",

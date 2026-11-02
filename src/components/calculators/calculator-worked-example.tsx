@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { EditorialLinks } from "@/components/content/editorial-links";
+import { CalculatorSourceContext } from "./calculator-source-context";
 import {
   calculatorExamples,
   calculatorExampleSources,
@@ -87,6 +88,14 @@ export function CalculatorWorkedExample({
             })}
           </p>
         )}
+        <CalculatorSourceContext
+          locale={locale}
+          calculatorId={slug}
+          sources={entry.sources.map((key) => ({
+            label: calculatorExampleSources[key][locale],
+            href: calculatorExampleSources[key].href,
+          }))}
+        />
       </div>
       <nav
         className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm"
